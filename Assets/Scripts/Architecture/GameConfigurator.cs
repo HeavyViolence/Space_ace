@@ -1,5 +1,6 @@
 using SpaceAce.Auxiliary;
 using SpaceAce.Main;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,14 +12,22 @@ namespace SpaceAce
         {
             #region constants
 
+            public const float MinWidthDelta = 0.05f;
+            public const float MaxWidthDelta = 0.1f;
+            public const float DefaultWidthDelta = 0.075f;
+
             #endregion
 
             #region dependency injection
 
             [SerializeField] private int _idGeneratorSeed;
 
-            [SerializeField] private GameObject _spaceBackgroundPrefab;
+            [SerializeField] private float _spaceBackgroundWidthDelta = DefaultWidthDelta;
             [SerializeField] private List<Material> _spaceBackgroundMaterials;
+
+            [SerializeField] private List<LevelConfig> _levelConfigs;
+
+            [SerializeField] private AnimationCurve _fadingCurve;
 
             #endregion
 
@@ -56,9 +65,17 @@ namespace SpaceAce
                 MasterCameraHolder cameraHolder = new();
                 MasterAudioListenerHolder audioListenerHolder = new(cameraHolder.MasterCameraAnchor);
 
+                SpaceBackground background = new(cameraHolder.ViewportLowerLeftCornerWorldPosition,
+                                                 cameraHolder.ViewportLowerRightCornerWorldPosition,
+                                                 cameraHolder.MasterCamera.aspect,
+                                                 _spaceBackgroundWidthDelta,
+                                                 _spaceBackgroundMaterials);
+
                 _gameServices.Add(cameraHolder);
                 _gameServices.Add(audioListenerHolder);
-                _gameServices.Add(new SpaceBackground(_spaceBackgroundPrefab, _spaceBackgroundMaterials));
+                _gameServices.Add(background);
+                _gameServices.Add(new GameModeLoader(_levelConfigs));
+                _gameServices.Add(new ScreenFader(_fadingCurve));
             }
 
             private void InitializeGameServices()

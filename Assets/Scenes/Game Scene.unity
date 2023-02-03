@@ -168,7 +168,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _idGeneratorSeed: 410523505
-  _spaceBackgroundPrefab: {fileID: 3980504243742306567, guid: 54e2a5f5dca06bf4dba878bc8e66fb45, type: 3}
+  _spaceBackgroundWidthDelta: 0.075
   _spaceBackgroundMaterials:
   - {fileID: 2100000, guid: 432d23af520513547b8f92e87b38a5d1, type: 2}
   - {fileID: 2100000, guid: 86746cbb7ef60fc45a0853bf68f27f34, type: 2}
@@ -178,3 +178,47 @@ MonoBehaviour:
   - {fileID: 2100000, guid: cb65811633eb616469b6bb1be8422ab9, type: 2}
   - {fileID: 2100000, guid: 0e62538bf57772d46b11613704554498, type: 2}
   - {fileID: 2100000, guid: 5fda5fc7762a4494e85c2d17ecdcc5bf, type: 2}
+  _levelConfigs:
+  - {fileID: 11400000, guid: d1f0432dc14482145ad53480a940f144, type: 2}
+  _fadingCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: -0.002053388
+      outSlope: -0.002053388
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 1
+    - serializedVersion: 3
+      time: 0.45
+      value: 1
+      inSlope: -0.003623312
+      outSlope: -0.003623312
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 1
+    - serializedVersion: 3
+      time: 0.55
+      value: 1
+      inSlope: -0.00010908892
+      outSlope: -0.00010908892
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 1
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4

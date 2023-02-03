@@ -13,10 +13,15 @@ namespace SpaceAce
             public GameObject MasterCameraAnchor { get; }
             public Camera MasterCamera { get; }
 
-            public float LeftViewportBound { get; }
-            public float RightViewportBound { get; }
-            public float UpperViewportBound { get; }
-            public float LowerViewportBound { get; }
+            public Vector2 ViewportLowerLeftCornerWorldPosition { get; }
+            public Vector2 ViewportUpperLeftCornerWorldPosition { get; }
+            public Vector2 ViewportLowerRightCornerWorldPosition { get; }
+            public Vector2 ViewportUpperRightCornerWorldPosition { get; }
+
+            public float ViewportLeftBound => ViewportLowerLeftCornerWorldPosition.x;
+            public float ViewportRightBound => ViewportLowerRightCornerWorldPosition.x;
+            public float ViewportUpperBound => ViewportUpperLeftCornerWorldPosition.y;
+            public float ViewportLowerBound => ViewportLowerLeftCornerWorldPosition.y;
 
             public MasterCameraHolder()
             {
@@ -31,16 +36,16 @@ namespace SpaceAce
                 MasterCamera.orthographicSize = CameraSize;
                 MasterCamera.transform.position = new Vector3(0f, 0f, -1f);
 
-                LeftViewportBound = MasterCamera.ViewportToWorldPoint(new Vector3(0f, 0f, 0f)).x;
-                RightViewportBound = MasterCamera.ViewportToWorldPoint(new Vector3(1f, 0f, 0f)).x;
-                UpperViewportBound = MasterCamera.ViewportToWorldPoint(new Vector3(0f, 1f, 0f)).y;
-                LowerViewportBound = MasterCamera.ViewportToWorldPoint(new Vector3(0f, 0f, 0f)).y;
+                ViewportLowerLeftCornerWorldPosition = MasterCamera.ViewportToWorldPoint(new Vector3(0f, 0f, 0f));
+                ViewportUpperLeftCornerWorldPosition = MasterCamera.ViewportToWorldPoint(new Vector3(0f, 1f, 0f));
+                ViewportLowerRightCornerWorldPosition = MasterCamera.ViewportToWorldPoint(new Vector3(1f, 0f, 0f));
+                ViewportUpperRightCornerWorldPosition = MasterCamera.ViewportToWorldPoint(new Vector3(1f, 1f, 0f));
             }
 
-            public bool InsideViewport(Vector2 position, float delta = 0f) => position.x + delta > LeftViewportBound &&
-                                                                              position.x - delta < RightViewportBound &&
-                                                                              position.y - delta < UpperViewportBound &&
-                                                                              position.y + delta > LowerViewportBound;
+            public bool InsideViewport(Vector2 position, float delta = 0f) => position.x + delta > ViewportLeftBound &&
+                                                                              position.x - delta < ViewportRightBound &&
+                                                                              position.y - delta < ViewportUpperBound &&
+                                                                              position.y + delta > ViewportLowerBound;
             
             #region interfaces
 

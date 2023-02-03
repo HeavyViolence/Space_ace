@@ -12,15 +12,24 @@ namespace SpaceAce
             private SerializedProperty _idGeneratorSeed;
 
             private bool _showSpaceBackgroundSettings = false;
-            private SerializedProperty _spaceBackgroundPrefab;
+            private SerializedProperty _spaceBackgroundWidthDelta;
             private SerializedProperty _spaceBackgroundMaterials;
+
+            private SerializedProperty _levelConfigs;
+
+            private bool _showScreenFaderSettings = false;
+            private SerializedProperty _fadingCurve;
 
             private void OnEnable()
             {
                 _idGeneratorSeed = serializedObject.FindProperty("_idGeneratorSeed");
 
-                _spaceBackgroundPrefab = serializedObject.FindProperty("_spaceBackgroundPrefab");
+                _spaceBackgroundWidthDelta = serializedObject.FindProperty("_spaceBackgroundWidthDelta");
                 _spaceBackgroundMaterials = serializedObject.FindProperty("_spaceBackgroundMaterials");
+
+                _levelConfigs = serializedObject.FindProperty("_levelConfigs");
+
+                _fadingCurve = serializedObject.FindProperty("_fadingCurve");
             }
 
             public override void OnInspectorGUI()
@@ -39,8 +48,19 @@ namespace SpaceAce
 
                 if (_showSpaceBackgroundSettings)
                 {
-                    EditorGUILayout.PropertyField(_spaceBackgroundPrefab, new GUIContent("Space background prefab"));
+                    EditorGUILayout.Slider(_spaceBackgroundWidthDelta, GameConfigurator.MinWidthDelta, GameConfigurator.MaxWidthDelta, "Width delta");
                     EditorGUILayout.PropertyField(_spaceBackgroundMaterials, new GUIContent("Space background materials"));
+                }
+
+                EditorGUILayout.Separator();
+                EditorGUILayout.PropertyField(_levelConfigs, new GUIContent("Level configs"));
+
+                EditorGUILayout.Separator();
+                _showScreenFaderSettings = EditorGUILayout.Foldout(_showScreenFaderSettings, "Screen fader settings");
+
+                if (_showScreenFaderSettings)
+                {
+                    EditorGUILayout.PropertyField(_fadingCurve, new GUIContent("Fading curve"));
                 }
 
                 serializedObject.ApplyModifiedProperties();
