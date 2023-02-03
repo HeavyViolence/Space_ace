@@ -100,12 +100,20 @@ namespace SpaceAce.Main
 
         public void OnSubscribe()
         {
-
+            if (GameServices.TryGetService(out GameModeLoader loader))
+            {
+                loader.MainMenuLoadingStarted += (s, e) => PerformScreenFading(e.Delay * 2f);
+                loader.LevelLoadingStarted += (s, e) => PerformScreenFading(e.Delay * 2f);
+            }
         }
 
         public void OnUnsubscribe()
         {
-
+            if (GameServices.TryGetService(out GameModeLoader loader))
+            {
+                loader.MainMenuLoadingStarted -= (s, e) => PerformScreenFading(e.Delay * 2f);
+                loader.LevelLoadingStarted -= (s, e) => PerformScreenFading(e.Delay * 2f);
+            }
         }
 
         public void OnClear()

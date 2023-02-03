@@ -1,12 +1,19 @@
 using SpaceAce.Architecture;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace SpaceAce.Main
 {
     public sealed class GameModeLoader : IInitializable
     {
+        private const float GameModesLoadingDelay = 1f;
+
+        public event EventHandler<LoadingStartedEventArgs> MainMenuLoadingStarted;
         public event EventHandler MainMeunuLoaded;
+
+        public event EventHandler<LoadingStartedEventArgs> LevelLoadingStarted;
         public event EventHandler<LevelLoadedEventArgs> LevelLoaded;
 
         private readonly HashSet<LevelConfig> _levelConfigs;
@@ -23,43 +30,45 @@ namespace SpaceAce.Main
 
         public void LoadMainMenu()
         {
-            if (GameServices.TryGetService(out ScreenFader fader))
-            {
-                fader.FadedOut += delegate
-                {
-                    MainMeunuLoaded?.Invoke(this, EventArgs.Empty);
-                };
+            CoroutineRunner.RunRoutine(MainMenuLoader());
 
-                fader.PerformScreenFading();
+            IEnumerator MainMenuLoader()
+            {
+                MainMenuLoadingStarted?.Invoke(this, new LoadingStartedEventArgs(GameModesLoadingDelay));
+
+                yield return new WaitForSeconds(GameModesLoadingDelay);
+
+                MainMeunuLoaded?.Invoke(this, EventArgs.Empty);
             }
         }
 
         public void LoadGameLevel(EnemyType type, LevelDifficulty difficulty)
         {
-            if (GameServices.TryGetService(out ScreenFader fader))
+            CoroutineRunner.RunRoutine(GameLevelLoader());
+
+            IEnumerator GameLevelLoader()
             {
-                fader.FadedOut += delegate
+                LevelLoadingStarted?.Invoke(this, new LoadingStartedEventArgs(GameModesLoadingDelay));
+
+                yield return new WaitForSeconds(GameModesLoadingDelay);
+
+                bool necessaryLevelConfigFound = false;
+
+                foreach (var config in _levelConfigs)
                 {
-                    bool necessaryLevelConfigFound = false;
-
-                    foreach (var levelConfig in _levelConfigs)
+                    if (config.VerifyIdentityMatch(type, difficulty) == true)
                     {
-                        if (levelConfig.VerifyIdentityMatch(type, difficulty) == true)
-                        {
-                            necessaryLevelConfigFound = true;
-                            LevelLoaded?.Invoke(this, new LevelLoadedEventArgs(levelConfig));
+                        necessaryLevelConfigFound = true;
+                        LevelLoaded?.Invoke(this, new LevelLoadedEventArgs(config));
 
-                            break;
-                        }
+                        break;
                     }
+                }
 
-                    if (necessaryLevelConfigFound == false)
-                    {
-                        throw new LevelLoadFailedException(type, difficulty);
-                    }
-                };
-
-                fader.PerformScreenFading();
+                if (necessaryLevelConfigFound == false)
+                {
+                    throw new LevelLoadFailedException(type, difficulty);
+                }
             }
         }
 
@@ -84,7 +93,10 @@ namespace SpaceAce.Main
         {
             GameServices.Deregister(this);
 
+            MainMenuLoadingStarted = null;
             MainMeunuLoaded = null;
+
+            LevelLoadingStarted = null;
             LevelLoaded = null;
         }
 
