@@ -100,7 +100,7 @@ namespace SpaceAce.Main
 
         public void OnSubscribe()
         {
-            if (GameServices.TryGetService(out GameModeLoader loader))
+            if (GameServices.TryGetService(out GameModeLoader loader) == true)
             {
                 loader.MainMenuLoadingStarted += (s, e) => PerformScreenFading(e.Delay * 2f);
                 loader.LevelLoadingStarted += (s, e) => PerformScreenFading(e.Delay * 2f);
@@ -109,7 +109,7 @@ namespace SpaceAce.Main
 
         public void OnUnsubscribe()
         {
-            if (GameServices.TryGetService(out GameModeLoader loader))
+            if (GameServices.TryGetService(out GameModeLoader loader) == true)
             {
                 loader.MainMenuLoadingStarted -= (s, e) => PerformScreenFading(e.Delay * 2f);
                 loader.LevelLoadingStarted -= (s, e) => PerformScreenFading(e.Delay * 2f);

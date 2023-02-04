@@ -41,7 +41,7 @@ namespace SpaceAce
 
             public static bool TryGetService<T>(out T service)
             {
-                if (_services.TryGetValue(typeof(T), out var value))
+                if (_services.TryGetValue(typeof(T), out var value) == true)
                 {
                     service = (T)value;
 

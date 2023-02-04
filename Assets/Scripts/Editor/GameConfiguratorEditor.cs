@@ -14,6 +14,7 @@ namespace SpaceAce
             private bool _showSpaceBackgroundSettings = false;
             private SerializedProperty _spaceBackgroundWidthDelta;
             private SerializedProperty _spaceBackgroundMaterials;
+            private SerializedProperty _dustfieldPrefab;
 
             private SerializedProperty _levelConfigs;
 
@@ -26,6 +27,7 @@ namespace SpaceAce
 
                 _spaceBackgroundWidthDelta = serializedObject.FindProperty("_spaceBackgroundWidthDelta");
                 _spaceBackgroundMaterials = serializedObject.FindProperty("_spaceBackgroundMaterials");
+                _dustfieldPrefab = serializedObject.FindProperty("_dustfieldPrefab");
 
                 _levelConfigs = serializedObject.FindProperty("_levelConfigs");
 
@@ -50,6 +52,7 @@ namespace SpaceAce
                 {
                     EditorGUILayout.Slider(_spaceBackgroundWidthDelta, GameConfigurator.MinWidthDelta, GameConfigurator.MaxWidthDelta, "Width delta");
                     EditorGUILayout.PropertyField(_spaceBackgroundMaterials, new GUIContent("Space background materials"));
+                    EditorGUILayout.PropertyField(_dustfieldPrefab, new GUIContent("Dustfield prefab"));
                 }
 
                 EditorGUILayout.Separator();

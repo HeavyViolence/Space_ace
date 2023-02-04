@@ -178,6 +178,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: cb65811633eb616469b6bb1be8422ab9, type: 2}
   - {fileID: 2100000, guid: 0e62538bf57772d46b11613704554498, type: 2}
   - {fileID: 2100000, guid: 5fda5fc7762a4494e85c2d17ecdcc5bf, type: 2}
+  _dustfieldPrefab: {fileID: 2687368098952566325, guid: 3493f522ece17874fbb849951da65594, type: 3}
   _levelConfigs:
   - {fileID: 11400000, guid: d1f0432dc14482145ad53480a940f144, type: 2}
   _fadingCurve:

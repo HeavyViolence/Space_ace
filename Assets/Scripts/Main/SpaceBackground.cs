@@ -15,6 +15,7 @@ namespace SpaceAce
 
             private readonly List<Material> _spaceBackgroundMaterials;
             private readonly MeshRenderer _spaceBackgroundMeshRenderer;
+            private readonly ParticleSystem _dustfield;
 
             private float _scrollSpeed = MinScrollSpeed;
 
@@ -25,7 +26,8 @@ namespace SpaceAce
                                    Vector2 viewportLowerRightPoint,
                                    float aspectRatio,
                                    float widthDelta,
-                                   IEnumerable<Material> spaceBackgroundMaterials)
+                                   IEnumerable<Material> spaceBackgroundMaterials,
+                                   GameObject dustfieldPrefab)
             {
 
                 if (spaceBackgroundMaterials is null)
@@ -44,6 +46,23 @@ namespace SpaceAce
                 int materialIndex = UnityEngine.Random.Range(0, _spaceBackgroundMaterials.Count);
                 _spaceBackgroundMeshRenderer.sharedMaterial = _spaceBackgroundMaterials[materialIndex];
                 _spaceBackgroundMeshRenderer.sharedMaterial.mainTextureOffset = new Vector2(0f, UnityEngine.Random.Range(0f, 1f));
+
+                if (dustfieldPrefab == null)
+                {
+                    throw new ArgumentNullException(nameof(dustfieldPrefab), $"Attempted to pass an empty dustfield {nameof(ParticleSystem)} prefab!");
+                }
+
+                var dustfieldAhchor = UnityEngine.Object.Instantiate(dustfieldPrefab, Vector3.zero, Quaternion.identity);
+                dustfieldAhchor.transform.parent = SpaceBackgroundAnchor.transform;
+
+                if (dustfieldAhchor.TryGetComponent(out ParticleSystem system))
+                {
+                    _dustfield = system;
+                }
+                else
+                {
+                    throw new MissingComponentException($"Passed dustfield prefab doesn't contain a {nameof(ParticleSystem)} component!");
+                }
             }
 
             private (GameObject anchor, MeshRenderer renderer) ConstructSpaceBackground(Vector2 viewportLowerLeftPoint,
@@ -97,7 +116,7 @@ namespace SpaceAce
 
             public void OnSubscribe()
             {
-                if (GameServices.TryGetService(out GameModeLoader loader))
+                if (GameServices.TryGetService(out GameModeLoader loader) == true)
                 {
                     loader.LevelLoaded += LevelLoadedEventHandler;
                     loader.MainMeunuLoaded += MainMenuLoadedEventHandler;
@@ -106,7 +125,7 @@ namespace SpaceAce
 
             public void OnUnsubscribe()
             {
-                if (GameServices.TryGetService(out GameModeLoader loader))
+                if (GameServices.TryGetService(out GameModeLoader loader) == true)
                 {
                     loader.LevelLoaded -= LevelLoadedEventHandler;
                     loader.MainMeunuLoaded -= MainMenuLoadedEventHandler;
@@ -135,6 +154,7 @@ namespace SpaceAce
             private void LevelLoadedEventHandler(object sender, LevelLoadedEventArgs e)
             {
                 ScrollSpeed = DefaultScrollSpeed;
+                _dustfield.Play();
 
                 int materialIndex = UnityEngine.Random.Range(0, _spaceBackgroundMaterials.Count);
                 _spaceBackgroundMeshRenderer.sharedMaterial = _spaceBackgroundMaterials[materialIndex];
@@ -143,6 +163,7 @@ namespace SpaceAce
             private void MainMenuLoadedEventHandler(object sender, EventArgs e)
             {
                 ScrollSpeed = MinScrollSpeed;
+                _dustfield.Stop();
             }
 
             #endregion

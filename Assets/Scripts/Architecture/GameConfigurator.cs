@@ -1,6 +1,6 @@
 using SpaceAce.Auxiliary;
 using SpaceAce.Main;
-using System.Collections;
+using SpaceAce.Main.Saving;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -24,6 +24,7 @@ namespace SpaceAce
 
             [SerializeField] private float _spaceBackgroundWidthDelta = DefaultWidthDelta;
             [SerializeField] private List<Material> _spaceBackgroundMaterials;
+            [SerializeField] private GameObject _dustfieldPrefab;
 
             [SerializeField] private List<LevelConfig> _levelConfigs;
 
@@ -69,13 +70,17 @@ namespace SpaceAce
                                                  cameraHolder.ViewportLowerRightCornerWorldPosition,
                                                  cameraHolder.MasterCamera.aspect,
                                                  _spaceBackgroundWidthDelta,
-                                                 _spaceBackgroundMaterials);
+                                                 _spaceBackgroundMaterials,
+                                                 _dustfieldPrefab);
 
                 _gameServices.Add(cameraHolder);
                 _gameServices.Add(audioListenerHolder);
                 _gameServices.Add(background);
                 _gameServices.Add(new GameModeLoader(_levelConfigs));
                 _gameServices.Add(new ScreenFader(_fadingCurve));
+
+                _gameServices.Add(new SavingSystem(_idGenerator.Next().GetHashCode()));
+                _gameServices.Add(new CameraShaker(_idGenerator.Next(), cameraHolder.MasterCameraAnchor));
             }
 
             private void InitializeGameServices()
