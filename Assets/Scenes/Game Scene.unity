@@ -223,3 +223,5 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  _audioMixer: {fileID: 24100000, guid: fcf8532f154bbae47942ff673836eca5, type: 2}
+  _music: {fileID: 11400000, guid: 0132c4cce5cdb7e46887618a1a6b41f4, type: 2}

@@ -1,31 +1,26 @@
-using System;
-
-namespace SpaceAce
+namespace SpaceAce.Architecture
 {
-    namespace Architecture
+    public sealed class GameServiceFastAccess<T>
     {
-        public sealed class GameServiceFastAccess<T> where T : Type
+        private T _access;
+
+        public T Access
         {
-            private T _access = null;
-
-            public T Access
+            get
             {
-                get
+                if (_access is null)
                 {
-                    if (_access is null)
+                    if (GameServices.TryGetService(out T service) == true)
                     {
-                        if (GameServices.TryGetService(out T service))
-                        {
-                            _access = service;
-                        }
-                        else
-                        {
-                            throw new UnregisteredGameServiceAccessAttemptException(typeof(T));
-                        }
+                        _access = service;
                     }
-
-                    return _access;
+                    else
+                    {
+                        throw new UnregisteredGameServiceAccessAttemptException(typeof(T));
+                    }
                 }
+
+                return _access;
             }
         }
     }

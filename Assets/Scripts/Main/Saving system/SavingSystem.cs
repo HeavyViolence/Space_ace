@@ -114,7 +114,7 @@ namespace SpaceAce.Main.Saving
             }
         }
 
-        private string GetSaveFilePath(ISavable entity) => Path.Combine(SavesDirectory, entity.SaveName + SavesExtension);
+        private string GetSaveFilePath(ISavable entity) => Path.Combine(SavesDirectory, entity.ID + SavesExtension);
 
         private void SaveMetadata()
         {
@@ -260,7 +260,6 @@ namespace SpaceAce.Main.Saving
         public void OnClear()
         {
             GameServices.Deregister(this);
-            SaveMetadata();
         }
 
         #endregion

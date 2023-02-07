@@ -21,6 +21,10 @@ namespace SpaceAce
             private bool _showScreenFaderSettings = false;
             private SerializedProperty _fadingCurve;
 
+            private bool _showAudioSettings = false;
+            private SerializedProperty _audioMixer;
+            private SerializedProperty _music;
+
             private void OnEnable()
             {
                 _idGeneratorSeed = serializedObject.FindProperty("_idGeneratorSeed");
@@ -32,6 +36,9 @@ namespace SpaceAce
                 _levelConfigs = serializedObject.FindProperty("_levelConfigs");
 
                 _fadingCurve = serializedObject.FindProperty("_fadingCurve");
+
+                _audioMixer = serializedObject.FindProperty("_audioMixer");
+                _music = serializedObject.FindProperty("_music");
             }
 
             public override void OnInspectorGUI()
@@ -64,6 +71,15 @@ namespace SpaceAce
                 if (_showScreenFaderSettings)
                 {
                     EditorGUILayout.PropertyField(_fadingCurve, new GUIContent("Fading curve"));
+                }
+
+                EditorGUILayout.Separator();
+                _showAudioSettings = EditorGUILayout.Foldout(_showAudioSettings, "Audio settings");
+
+                if (_showAudioSettings)
+                {
+                    EditorGUILayout.PropertyField(_audioMixer, new GUIContent("Audio mixer"));
+                    EditorGUILayout.PropertyField(_music, new GUIContent("Music"));
                 }
 
                 serializedObject.ApplyModifiedProperties();

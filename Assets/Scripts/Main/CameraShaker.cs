@@ -34,14 +34,12 @@ namespace SpaceAce.Main
         }
 
         public string ID { get; }
-        public string SaveName => "Camera shaker settings";
-        public Type StateCustomType => null;
 
         public CameraShaker(string id, GameObject masterCameraAnchor)
         {
             if (string.IsNullOrEmpty(id) || string.IsNullOrWhiteSpace(id))
             {
-                throw new ArgumentNullException("Attempted to pass an empty ID!");
+                throw new ArgumentNullException("Attempted to pass an invalid ID!");
             }
 
             ID = id;

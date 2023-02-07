@@ -1,8 +1,11 @@
 using SpaceAce.Auxiliary;
 using SpaceAce.Main;
+using SpaceAce.Main.Audio;
+using SpaceAce.Main.ObjectPooling;
 using SpaceAce.Main.Saving;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 namespace SpaceAce
 {
@@ -30,6 +33,9 @@ namespace SpaceAce
 
             [SerializeField] private AnimationCurve _fadingCurve;
 
+            [SerializeField] private AudioMixer _audioMixer;
+            [SerializeField] private AudioCollection _music;
+
             #endregion
 
             #region private fields
@@ -46,6 +52,11 @@ namespace SpaceAce
                 CreateGameServices();
                 InitializeGameServices();
                 PerformEventsSubscriptionForGameServices();
+            }
+
+            private void Start()
+            {
+                RunGameServices();
             }
 
             private void Update()
@@ -78,9 +89,12 @@ namespace SpaceAce
                 _gameServices.Add(background);
                 _gameServices.Add(new GameModeLoader(_levelConfigs));
                 _gameServices.Add(new ScreenFader(_fadingCurve));
+                _gameServices.Add(new MultiobjectPool());
 
                 _gameServices.Add(new SavingSystem(_idGenerator.Next().GetHashCode()));
                 _gameServices.Add(new CameraShaker(_idGenerator.Next(), cameraHolder.MasterCameraAnchor));
+                _gameServices.Add(new AudioPlayer(_idGenerator.Next(), _audioMixer));
+                _gameServices.Add(new MusicPlayer(_idGenerator.Next(), _music));
             }
 
             private void InitializeGameServices()
@@ -136,6 +150,17 @@ namespace SpaceAce
                     if (service is IUpdatable value)
                     {
                         value.OnUpdate();
+                    }
+                }
+            }
+
+            private void RunGameServices()
+            {
+                foreach (var service in _gameServices)
+                {
+                    if (service is IRunnable value)
+                    {
+                        value.OnRun();
                     }
                 }
             }
