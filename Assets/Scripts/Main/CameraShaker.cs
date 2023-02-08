@@ -33,6 +33,7 @@ namespace SpaceAce.Main
             }
         }
 
+        public string SaveName => "Camera shaker settings";
         public string ID { get; }
 
         public CameraShaker(string id, GameObject masterCameraAnchor)

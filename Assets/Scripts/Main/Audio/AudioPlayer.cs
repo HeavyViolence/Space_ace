@@ -25,7 +25,8 @@ namespace SpaceAce.Main.Audio
         private bool _suppressSaveRequest = false;
         private readonly AudioMixer _audioMixer;
 
-        public string ID { get; private set; }
+        public string ID { get; }
+        public string SaveName => "Audio player settings";
         public float MasterVolume { get; private set; }
         public float ShootingVolume { get; private set; }
         public float ExplosionsVolume { get; private set; }

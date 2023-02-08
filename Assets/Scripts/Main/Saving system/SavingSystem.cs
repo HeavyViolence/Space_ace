@@ -114,7 +114,7 @@ namespace SpaceAce.Main.Saving
             }
         }
 
-        private string GetSaveFilePath(ISavable entity) => Path.Combine(SavesDirectory, entity.ID + SavesExtension);
+        private string GetSaveFilePath(ISavable entity) => Path.Combine(SavesDirectory, entity.SaveName + SavesExtension);
 
         private void SaveMetadata()
         {
