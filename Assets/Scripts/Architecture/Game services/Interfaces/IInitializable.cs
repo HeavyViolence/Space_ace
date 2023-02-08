@@ -1,13 +1,10 @@
-namespace SpaceAce
+namespace SpaceAce.Architecture
 {
-    namespace Architecture
+    public interface IInitializable
     {
-        public interface IInitializable
-        {
-            public void OnInitialize();
-            public void OnSubscribe();
-            public void OnUnsubscribe();
-            public void OnClear();
-        }
+        void OnInitialize();
+        void OnSubscribe();
+        void OnUnsubscribe();
+        void OnClear();
     }
 }

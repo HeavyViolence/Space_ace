@@ -1,10 +1,7 @@
-namespace SpaceAce
+namespace SpaceAce.Architecture
 {
-    namespace Architecture
+    public interface IUpdatable
     {
-        public interface IUpdatable
-        {
-            public void OnUpdate();
-        }
+        void OnUpdate();
     }
 }

@@ -17,14 +17,18 @@ namespace SpaceAce.Main.Saving
 
         private readonly HashSet<Type> _knownSavableDataTypes = new() { typeof(object[]) };
         private readonly HashSet<ISavable> _registeredEntities = new();
-
-        private readonly int _metadataSaveSeed;
+        private readonly string _id;
 
         private string MetadataPath => Path.Combine(SavesDirectory, MetadataFileName + SavesExtension);
 
-        public SavingSystem(int metadataSaveSeed)
+        public SavingSystem(string id)
         {
-            _metadataSaveSeed = metadataSaveSeed;
+            if (string.IsNullOrEmpty(id) || string.IsNullOrWhiteSpace(id))
+            {
+                throw new ArgumentNullException(nameof(id), "Attempted to pass an invalid ID!");
+            }
+
+            _id = id;
         }
 
         public bool Register(ISavable entity)
@@ -128,7 +132,7 @@ namespace SpaceAce.Main.Saving
                 knownTypesNames.Add(type.FullName);
             }
 
-            byte[] key = GetRandomBytes(_metadataSaveSeed, EncryptionKeyLength);
+            byte[] key = GetRandomBytes(_id.GetHashCode(), EncryptionKeyLength);
             byte[] metadata = Serialize(knownTypesNames);
             byte[] encryptedMetadata = Encrypt(metadata, key);
 
@@ -145,7 +149,7 @@ namespace SpaceAce.Main.Saving
                     using FileStream metadataFileStream = new(MetadataPath, FileMode.Open, FileAccess.Read);
                     using BinaryReader metadataFileReader = new(metadataFileStream);
 
-                    byte[] key = GetRandomBytes(_metadataSaveSeed, EncryptionKeyLength);
+                    byte[] key = GetRandomBytes(_id.GetHashCode(), EncryptionKeyLength);
                     byte[] encryptedMetadata = metadataFileReader.ReadBytes((int)metadataFileStream.Length);
                     byte[] metadata = Decrypt(encryptedMetadata, key);
                     List<string> knownTypesNames = new();

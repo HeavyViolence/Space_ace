@@ -91,7 +91,7 @@ namespace SpaceAce
                 _gameServices.Add(new ScreenFader(_fadingCurve));
                 _gameServices.Add(new MultiobjectPool());
 
-                _gameServices.Add(new SavingSystem(_idGenerator.Next().GetHashCode()));
+                _gameServices.Add(new SavingSystem(_idGenerator.Next()));
                 _gameServices.Add(new CameraShaker(_idGenerator.Next(), cameraHolder.MasterCameraAnchor));
                 _gameServices.Add(new AudioPlayer(_idGenerator.Next(), _audioMixer));
                 _gameServices.Add(new MusicPlayer(_idGenerator.Next(), _music));
