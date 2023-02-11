@@ -1,4 +1,5 @@
 using SpaceAce.Architecture;
+using SpaceAce.Auxiliary;
 using SpaceAce.Main.Saving;
 using System;
 using System.Collections;
@@ -27,9 +28,9 @@ namespace SpaceAce.Main.Audio
 
         public MusicPlayer(string id, AudioCollection music)
         {
-            if (string.IsNullOrEmpty(id) || string.IsNullOrWhiteSpace(id))
+            if (StringID.IsValid(id) == false)
             {
-                throw new ArgumentNullException(nameof(id), "Attempted to set an invalid ID!");
+                throw new InvalidStringIDException();
             }
 
             ID = id;
@@ -92,6 +93,10 @@ namespace SpaceAce.Main.Audio
             {
                 system.Register(this);
             }
+            else
+            {
+                throw new UnregisteredGameServiceAccessAttemptException(typeof(SavingSystem));
+            }
         }
 
         public void OnUnsubscribe()
@@ -99,6 +104,10 @@ namespace SpaceAce.Main.Audio
             if (GameServices.TryGetService(out SavingSystem system) == true)
             {
                 system.Deregister(this);
+            }
+            else
+            {
+                throw new UnregisteredGameServiceAccessAttemptException(typeof(SavingSystem));
             }
         }
 

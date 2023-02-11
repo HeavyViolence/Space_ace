@@ -38,7 +38,7 @@ namespace SpaceAce.Auxiliary
 
 				_idBuilder.Append(symbol);
 
-				if (i != IDLength - 1 && i % ChunkSize == ChunkSize - 1)
+				if (i % ChunkSize == ChunkSize - 1 && i != IDLength - 1)
 				{
 					_idBuilder.Append(ChunkSeparator);
 				}
@@ -59,13 +59,46 @@ namespace SpaceAce.Auxiliary
 
 				s_cryptoIDBuilder.Append(symbol);
 
-				if (i != IDLength - 1 && i % ChunkSize == ChunkSize - 1)
+				if (i % ChunkSize == ChunkSize - 1 && i != IDLength - 1)
 				{
 					s_cryptoIDBuilder.Append(ChunkSeparator);
 				}
 			}
 
 			return s_cryptoIDBuilder.ToString();
+		}
+
+		public static bool IsValid(string candidate)
+		{
+			if (string.IsNullOrEmpty(candidate) ||
+				string.IsNullOrWhiteSpace(candidate))
+			{
+				return false;
+			}
+
+			if (candidate.Length != IDLength + ChunkSeparatorsPerID)
+			{
+				return false;
+			}
+
+			int validSymbols = 0;
+			int chunkSeparators = 0;
+
+			foreach (var symbol in candidate)
+			{
+				if (char.IsLetterOrDigit(symbol))
+				{
+					validSymbols++;
+				}
+
+				if (symbol.Equals(ChunkSeparator))
+				{
+					chunkSeparators++;
+				}
+			}
+
+			return validSymbols == IDLength &&
+				   chunkSeparators == ChunkSeparatorsPerID;
 		}
 
 		public override bool Equals(object obj) => Equals(obj as StringID);

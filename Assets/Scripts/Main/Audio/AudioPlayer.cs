@@ -38,9 +38,9 @@ namespace SpaceAce.Main.Audio
 
         public AudioPlayer(string id, AudioMixer audioMixer)
         {
-            if (string.IsNullOrEmpty(id) || string.IsNullOrWhiteSpace(id))
+            if (StringID.IsValid(id) == false)
             {
-                throw new ArgumentNullException(nameof(id), "Attempted to set an invalid ID!");
+                throw new InvalidStringIDException();
             }
 
             ID = id;
@@ -120,10 +120,7 @@ namespace SpaceAce.Main.Audio
                     }
             }
 
-            if (_suppressSaveRequest == false)
-            {
-                SavingRequested?.Invoke(this, EventArgs.Empty);
-            }
+            if (_suppressSaveRequest == false) SavingRequested?.Invoke(this, EventArgs.Empty);
         }
 
         public AudioAccess Play(AudioProperties properties) => ConfigureAudioSource(FindAvailableAudioSource(), properties);
@@ -176,7 +173,7 @@ namespace SpaceAce.Main.Audio
             source.priority = byte.MaxValue;
             source.volume = 0f;
             source.spatialBlend = 0f;
-            source.pitch = AudioCollection.DefaultPitch;
+            source.pitch = 1f;
             source.reverbZoneMix = 0f;
 
             source.transform.parent = _audioSourcePoolAnchor;
@@ -277,6 +274,10 @@ namespace SpaceAce.Main.Audio
             {
                 system.Register(this);
             }
+            else
+            {
+                throw new UnregisteredGameServiceAccessAttemptException(typeof(SavingSystem));
+            }
         }
 
         public void OnUnsubscribe()
@@ -284,6 +285,10 @@ namespace SpaceAce.Main.Audio
             if (GameServices.TryGetService(out SavingSystem system) == true)
             {
                 system.Deregister(this);
+            }
+            else
+            {
+                throw new UnregisteredGameServiceAccessAttemptException(typeof(SavingSystem));
             }
         }
 
@@ -305,6 +310,8 @@ namespace SpaceAce.Main.Audio
         {
             if (state is AudioPlayerSavableData value)
             {
+                _suppressSaveRequest = true;
+
                 MasterVolume = value.MasterVolume;
                 MusicVolume = value.MusicVolume;
                 ShootingVolume = value.ShootingVolume;
@@ -313,6 +320,8 @@ namespace SpaceAce.Main.Audio
                 BackgroundVolume = value.BackgroundVolume;
                 NotificationsVolume = value.NotificationsVolume;
                 InteractionsVolume = value.InteractionsVolume;
+
+                _suppressSaveRequest = false;
             }
             else
             {

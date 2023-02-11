@@ -12,9 +12,11 @@ namespace SpaceAce.Main
         private const float MaxAmplitude = 1f;
         private const float MaxAttenuation = 2f;
         private const float MaxFrequency = 10f;
-        private const float Cutoff = 0.01f;
+        private const float AmplitudeCutoff = 0.01f;
 
         public event EventHandler SavingRequested;
+
+        private bool _suppressSaveRequest = false;
 
         private Rigidbody2D _body;
         private int _activeShakers = 0;
@@ -29,7 +31,11 @@ namespace SpaceAce.Main
             set
             {
                 _shakingEnabled = value;
-                SavingRequested?.Invoke(this, EventArgs.Empty);
+
+                if (_suppressSaveRequest == false)
+                {
+                    SavingRequested?.Invoke(this, EventArgs.Empty);
+                }
             }
         }
 
@@ -38,9 +44,9 @@ namespace SpaceAce.Main
 
         public CameraShaker(string id, GameObject masterCameraAnchor)
         {
-            if (string.IsNullOrEmpty(id) || string.IsNullOrWhiteSpace(id))
+            if (StringID.IsValid(id) == false)
             {
-                throw new ArgumentNullException("Attempted to pass an invalid ID!");
+                throw new InvalidStringIDException();
             }
 
             ID = id;
@@ -86,7 +92,7 @@ namespace SpaceAce.Main
             frequency = Mathf.Clamp(frequency, 0f, MaxFrequency);
 
             float timer = 0f;
-            float duration = -1f * Mathf.Log(Cutoff, (float)Math.E) / attenuation;
+            float duration = -1f * Mathf.Log(AmplitudeCutoff, (float)Math.E) / attenuation;
 
             while (timer < duration)
             {
@@ -121,6 +127,10 @@ namespace SpaceAce.Main
             {
                 system.Register(this);
             }
+            else
+            {
+                throw new UnregisteredGameServiceAccessAttemptException(typeof(SavingSystem));
+            }
         }
 
         public void OnUnsubscribe()
@@ -128,6 +138,10 @@ namespace SpaceAce.Main
             if (GameServices.TryGetService(out SavingSystem system) == true)
             {
                 system.Deregister(this);
+            }
+            else
+            {
+                throw new UnregisteredGameServiceAccessAttemptException(typeof(SavingSystem));
             }
         }
 
@@ -142,7 +156,11 @@ namespace SpaceAce.Main
         {
             if (state is bool value)
             {
+                _suppressSaveRequest = true;
+
                 ShakingEnabled = value;
+
+                _suppressSaveRequest = false;
             }
             else
             {

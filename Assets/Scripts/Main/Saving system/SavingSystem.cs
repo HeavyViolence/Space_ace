@@ -1,4 +1,5 @@
 using SpaceAce.Architecture;
+using SpaceAce.Auxiliary;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -23,9 +24,9 @@ namespace SpaceAce.Main.Saving
 
         public SavingSystem(string id)
         {
-            if (string.IsNullOrEmpty(id) || string.IsNullOrWhiteSpace(id))
+            if (StringID.IsValid(id) == false)
             {
-                throw new ArgumentNullException(nameof(id), "Attempted to pass an invalid ID!");
+                throw new InvalidStringIDException();
             }
 
             _id = id;

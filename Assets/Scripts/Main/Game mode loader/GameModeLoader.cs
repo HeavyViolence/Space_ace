@@ -6,12 +6,12 @@ using UnityEngine;
 
 namespace SpaceAce.Main
 {
-    public sealed class GameModeLoader : IInitializable
+    public sealed class GameModeLoader : IInitializable, IRunnable
     {
         private const float GameModesLoadingDelay = 1f;
 
         public event EventHandler<LoadingStartedEventArgs> MainMenuLoadingStarted;
-        public event EventHandler MainMeunuLoaded;
+        public event EventHandler MainMenuLoaded;
 
         public event EventHandler<LoadingStartedEventArgs> LevelLoadingStarted;
         public event EventHandler<LevelLoadedEventArgs> LevelLoaded;
@@ -38,7 +38,7 @@ namespace SpaceAce.Main
 
                 yield return new WaitForSeconds(GameModesLoadingDelay);
 
-                MainMeunuLoaded?.Invoke(this, EventArgs.Empty);
+                MainMenuLoaded?.Invoke(this, EventArgs.Empty);
             }
         }
 
@@ -94,10 +94,15 @@ namespace SpaceAce.Main
             GameServices.Deregister(this);
 
             MainMenuLoadingStarted = null;
-            MainMeunuLoaded = null;
+            MainMenuLoaded = null;
 
             LevelLoadingStarted = null;
             LevelLoaded = null;
+        }
+
+        public void OnRun()
+        {
+            MainMenuLoaded(this, EventArgs.Empty);
         }
 
         #endregion

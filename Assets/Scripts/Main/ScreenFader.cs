@@ -105,6 +105,10 @@ namespace SpaceAce.Main
                 loader.MainMenuLoadingStarted += (s, e) => PerformScreenFading(e.Delay * 2f);
                 loader.LevelLoadingStarted += (s, e) => PerformScreenFading(e.Delay * 2f);
             }
+            else
+            {
+                throw new UnregisteredGameServiceAccessAttemptException(typeof(GameModeLoader));
+            }
         }
 
         public void OnUnsubscribe()
@@ -113,6 +117,10 @@ namespace SpaceAce.Main
             {
                 loader.MainMenuLoadingStarted -= (s, e) => PerformScreenFading(e.Delay * 2f);
                 loader.LevelLoadingStarted -= (s, e) => PerformScreenFading(e.Delay * 2f);
+            }
+            else
+            {
+                throw new UnregisteredGameServiceAccessAttemptException(typeof(GameModeLoader));
             }
         }
 

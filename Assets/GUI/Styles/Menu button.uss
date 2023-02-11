@@ -1,0 +1,29 @@
+.menu-button {
+    width: 350px;
+    height: 40px;
+    font-size: 24px;
+    -unity-font-style: bold;
+    border-bottom-width: 8px;
+    border-top-left-radius: 16px;
+    border-bottom-left-radius: 16px;
+    border-top-right-radius: 16px;
+    border-bottom-right-radius: 16px;
+    border-left-color: rgb(126, 255, 255);
+    border-right-color: rgb(126, 255, 255);
+    border-top-color: rgb(126, 255, 255);
+    border-bottom-color: rgb(126, 255, 255);
+    border-right-width: 1px;
+    border-top-width: 1px;
+    border-left-width: 1px;
+    transition-duration: 0.1s;
+    transition-timing-function: ease-in-out-elastic;
+}
+
+.menu-button:hover {
+    border-left-color: rgba(126, 126, 255, 255);
+    border-right-color: rgba(126, 126, 255, 255);
+    border-top-color: rgba(126, 126, 255, 255);
+    border-bottom-color: rgba(126, 126, 255, 255);
+    width: 385px;
+    height: 44px;
+}

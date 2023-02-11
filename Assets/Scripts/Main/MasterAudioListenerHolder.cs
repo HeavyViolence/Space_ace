@@ -1,4 +1,5 @@
 using SpaceAce.Architecture;
+using System;
 using UnityEngine;
 
 namespace SpaceAce
@@ -11,6 +12,11 @@ namespace SpaceAce
 
             public MasterAudioListenerHolder(GameObject masterCameraAnchor)
             {
+                if (masterCameraAnchor == null)
+                {
+                    throw new ArgumentNullException(nameof(masterCameraAnchor), "Attempted to pass an empty master camera anchor object!");
+                }
+
                 MasterAudioListener = masterCameraAnchor.AddComponent<AudioListener>();
             }
 

@@ -1,4 +1,5 @@
 using SpaceAce.Auxiliary;
+using SpaceAce.Levelry;
 using SpaceAce.Main;
 using SpaceAce.Main.Audio;
 using SpaceAce.Main.ObjectPooling;
@@ -26,7 +27,8 @@ namespace SpaceAce
             [SerializeField] private int _idGeneratorSeed;
 
             [SerializeField] private float _spaceBackgroundWidthDelta = DefaultWidthDelta;
-            [SerializeField] private List<Material> _spaceBackgroundMaterials;
+            [SerializeField] private Material _mainMenuSpaceBackground;
+            [SerializeField] private List<Material> _spaceBackgrounds;
             [SerializeField] private GameObject _dustfieldPrefab;
 
             [SerializeField] private List<LevelConfig> _levelConfigs;
@@ -81,7 +83,8 @@ namespace SpaceAce
                                                  cameraHolder.ViewportLowerRightCornerWorldPosition,
                                                  cameraHolder.MasterCamera.aspect,
                                                  _spaceBackgroundWidthDelta,
-                                                 _spaceBackgroundMaterials,
+                                                 _mainMenuSpaceBackground,
+                                                 _spaceBackgrounds,
                                                  _dustfieldPrefab);
 
                 _gameServices.Add(cameraHolder);
@@ -90,11 +93,13 @@ namespace SpaceAce
                 _gameServices.Add(new GameModeLoader(_levelConfigs));
                 _gameServices.Add(new ScreenFader(_fadingCurve));
                 _gameServices.Add(new MultiobjectPool());
+                _gameServices.Add(new LevelCompleter());
 
                 _gameServices.Add(new SavingSystem(_idGenerator.Next()));
                 _gameServices.Add(new CameraShaker(_idGenerator.Next(), cameraHolder.MasterCameraAnchor));
                 _gameServices.Add(new AudioPlayer(_idGenerator.Next(), _audioMixer));
                 _gameServices.Add(new MusicPlayer(_idGenerator.Next(), _music));
+                _gameServices.Add(new LevelsUnlocker(_idGenerator.Next()));
             }
 
             private void InitializeGameServices()
