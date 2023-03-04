@@ -24,6 +24,9 @@ namespace SpaceAce.Editors
         private SerializedProperty _audioMixer;
         private SerializedProperty _music;
 
+        private bool _showUISettings = false;
+        private SerializedProperty _uiContainer;
+
         private void OnEnable()
         {
             _idGeneratorSeed = serializedObject.FindProperty("_idGeneratorSeed");
@@ -39,6 +42,8 @@ namespace SpaceAce.Editors
 
             _audioMixer = serializedObject.FindProperty("_audioMixer");
             _music = serializedObject.FindProperty("_music");
+
+            _uiContainer = serializedObject.FindProperty("_uiContainer");
         }
 
         public override void OnInspectorGUI()
@@ -55,7 +60,7 @@ namespace SpaceAce.Editors
             EditorGUILayout.Separator();
             _showSpaceBackgroundSettings = EditorGUILayout.Foldout(_showSpaceBackgroundSettings, "Space background settings");
 
-            if (_showSpaceBackgroundSettings)
+            if (_showSpaceBackgroundSettings == true)
             {
                 EditorGUILayout.Slider(_spaceBackgroundWidthDelta, GameConfigurator.MinWidthDelta, GameConfigurator.MaxWidthDelta, "Width delta");
                 EditorGUILayout.PropertyField(_mainMenuSpaceBackground, new GUIContent("Main menu space background"));
@@ -69,7 +74,7 @@ namespace SpaceAce.Editors
             EditorGUILayout.Separator();
             _showScreenFaderSettings = EditorGUILayout.Foldout(_showScreenFaderSettings, "Screen fader settings");
 
-            if (_showScreenFaderSettings)
+            if (_showScreenFaderSettings == true)
             {
                 EditorGUILayout.PropertyField(_fadingCurve, new GUIContent("Fading curve"));
             }
@@ -77,10 +82,18 @@ namespace SpaceAce.Editors
             EditorGUILayout.Separator();
             _showAudioSettings = EditorGUILayout.Foldout(_showAudioSettings, "Audio settings");
 
-            if (_showAudioSettings)
+            if (_showAudioSettings == true)
             {
                 EditorGUILayout.PropertyField(_audioMixer, new GUIContent("Audio mixer"));
                 EditorGUILayout.PropertyField(_music, new GUIContent("Music"));
+            }
+
+            EditorGUILayout.Separator();
+            _showUISettings = EditorGUILayout.Foldout(_showUISettings, "UI settings");
+
+            if (_showUISettings == true)
+            {
+                EditorGUILayout.PropertyField(_uiContainer, new GUIContent("UI container"));
             }
 
             serializedObject.ApplyModifiedProperties();

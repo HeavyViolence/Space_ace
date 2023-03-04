@@ -1,0 +1,11 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/Style%20sheets/Styles.uss?fileID=7433441132597879392&amp;guid=ee4b2c8d9220537499ff57b1f8678e67&amp;type=3#Styles" />
+    <ui:Label text="Space Ace" display-tooltip-when-elided="true" name="game_headline_label" style="-unity-font-definition: none; -unity-font: url(&apos;project://database/Assets/UI/Fonts/Space%20age.ttf?fileID=12800000&amp;guid=2be26e11a65883646be6d1062c254750&amp;type=3#Space age&apos;); font-size: 192px; -unity-text-align: middle-center; color: rgb(156, 156, 255); margin-top: 32px;" />
+    <ui:VisualElement name="buttons_container" style="width: 35%; margin-left: 32.5%; margin-right: 32.5%; margin-top: 128px;">
+        <ui:Button text="Play" display-tooltip-when-elided="true" name="play-button" class="menu-button" />
+        <ui:Button text="Inventory" display-tooltip-when-elided="true" name="inventory-button" class="menu-button" />
+        <ui:Button text="Armory" display-tooltip-when-elided="true" name="armory-button" class="menu-button" />
+        <ui:Button text="Settings" display-tooltip-when-elided="true" name="settings-button" class="menu-button" />
+        <ui:Button text="Credits" display-tooltip-when-elided="true" name="credits-button" class="menu-button" />
+    </ui:VisualElement>
+</ui:UXML>

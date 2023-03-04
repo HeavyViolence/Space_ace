@@ -154,6 +154,11 @@ namespace SpaceAce.Main
 
         public void SetState(object state)
         {
+            if (state is null)
+            {
+                throw new EmptySavableStateEntryException(typeof(bool));
+            }
+
             if (state is bool value)
             {
                 _suppressSaveRequest = true;

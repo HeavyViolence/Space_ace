@@ -226,3 +226,4 @@ MonoBehaviour:
     m_RotationOrder: 4
   _audioMixer: {fileID: 24100000, guid: fcf8532f154bbae47942ff673836eca5, type: 2}
   _music: {fileID: 11400000, guid: 0132c4cce5cdb7e46887618a1a6b41f4, type: 2}
+  _uiContainer: {fileID: 11400000, guid: fcce1a269e242564fad797ae34df88b7, type: 2}

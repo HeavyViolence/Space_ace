@@ -6,18 +6,20 @@ namespace SpaceAce.Auxiliary
 {
 	public sealed class StringID : IEquatable<StringID>
 	{
-		private const string Symbols = "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz0123456789";
+		private const string AllowedSymbols = "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz0123456789";
+		public const string Default = "0000-0000-0000-0000";
+
+		private const char ChunkSeparator = '-';
+
 		private const int IDLength = 16;
 		private const int ChunkSize = 4;
-		private const int ChunkSeparatorsPerID = IDLength / ChunkSize - 1;
-		private const char ChunkSeparator = '-';
 
 		private static readonly RandomNumberGenerator s_generator = RandomNumberGenerator.Create();
 		private static readonly byte[] s_randomCryptoBytes = new byte[IDLength];
-		private static readonly StringBuilder s_cryptoIDBuilder = new(IDLength + ChunkSeparatorsPerID);
+		private static readonly StringBuilder s_cryptoIDBuilder = new(Default.Length);
 
 		private Random _random;
-		private StringBuilder _idBuilder = new(IDLength + ChunkSeparatorsPerID);
+		private StringBuilder _idBuilder = new(Default.Length);
 
 		public int Seed { get; }
 
@@ -33,8 +35,8 @@ namespace SpaceAce.Auxiliary
 
 			for (int i = 0; i < IDLength; i++)
 			{
-				int index = _random.Next(0, Symbols.Length);
-				char symbol = Symbols[index];
+				int index = _random.Next(0, AllowedSymbols.Length);
+				char symbol = AllowedSymbols[index];
 
 				_idBuilder.Append(symbol);
 
@@ -54,8 +56,8 @@ namespace SpaceAce.Auxiliary
 
 			for (int i = 0; i < IDLength; i++)
 			{
-				byte index = (byte)(s_randomCryptoBytes[i] % Symbols.Length);
-				char symbol = Symbols[index];
+				byte index = (byte)(s_randomCryptoBytes[i] % AllowedSymbols.Length);
+				char symbol = AllowedSymbols[index];
 
 				s_cryptoIDBuilder.Append(symbol);
 
@@ -70,35 +72,30 @@ namespace SpaceAce.Auxiliary
 
 		public static bool IsValid(string candidate)
 		{
-			if (string.IsNullOrEmpty(candidate) ||
-				string.IsNullOrWhiteSpace(candidate))
+			if (string.IsNullOrEmpty(candidate) || string.IsNullOrWhiteSpace(candidate))
 			{
 				return false;
 			}
 
-			if (candidate.Length != IDLength + ChunkSeparatorsPerID)
+			if (candidate.Length != Default.Length)
 			{
 				return false;
 			}
 
-			int validSymbols = 0;
-			int chunkSeparators = 0;
-
-			foreach (var symbol in candidate)
+			for (int i = 0; i < candidate.Length; i++)
 			{
-				if (char.IsLetterOrDigit(symbol))
+				if (candidate[i] == ChunkSeparator && Default[i] != ChunkSeparator)
 				{
-					validSymbols++;
+					return false;
 				}
 
-				if (symbol.Equals(ChunkSeparator))
+				if (char.IsLetterOrDigit(candidate[i]) != char.IsLetterOrDigit(Default[i]))
 				{
-					chunkSeparators++;
+					return false;
 				}
 			}
 
-			return validSymbols == IDLength &&
-				   chunkSeparators == ChunkSeparatorsPerID;
+			return true;
 		}
 
 		public override bool Equals(object obj) => Equals(obj as StringID);

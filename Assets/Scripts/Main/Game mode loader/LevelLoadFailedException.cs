@@ -6,11 +6,11 @@ namespace SpaceAce.Main
     {
         private const string ErrorMessage = "Game mode loader doesn't contain the necessary level config!";
 
-        public (EnemyType type, LevelDifficulty difficulty) MissingLevelConfigIdentity { get; }
+        public int MissingLevelConfig { get; }
 
-        public LevelLoadFailedException(EnemyType type, LevelDifficulty difficulty) : base(ErrorMessage)
+        public LevelLoadFailedException(int levelConfig) : base(ErrorMessage)
         {
-            MissingLevelConfigIdentity = (type, difficulty);
+            MissingLevelConfig = levelConfig;
         }
     }
 }

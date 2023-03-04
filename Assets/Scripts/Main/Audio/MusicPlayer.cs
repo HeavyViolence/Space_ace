@@ -125,6 +125,11 @@ namespace SpaceAce.Main.Audio
 
         public void SetState(object state)
         {
+            if (state is null)
+            {
+                throw new EmptySavableStateEntryException(typeof(float));
+            }
+
             if (state is float value)
             {
                 PlaybackInterval = value;

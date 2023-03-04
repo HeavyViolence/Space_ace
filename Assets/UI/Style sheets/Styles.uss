@@ -1,0 +1,176 @@
+.menu-button {
+    padding-left: 0;
+    margin-bottom: 32px;
+    -unity-font: url('project://database/Assets/UI/Fonts/Space%20age.ttf?fileID=12800000&guid=2be26e11a65883646be6d1062c254750&type=3#Space age');
+    -unity-font-definition: none;
+    font-size: 48px;
+    color: rgb(156, 156, 255);
+    background-color: rgba(71, 69, 85, 0.75);
+    -unity-text-outline-width: 0;
+    border-left-color: rgb(156, 156, 255);
+    border-right-color: rgb(156, 156, 255);
+    border-top-color: rgb(156, 156, 255);
+    border-bottom-color: rgb(156, 156, 255);
+    border-left-width: 8px;
+    border-right-width: 8px;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    border-top-left-radius: 16px;
+    border-bottom-left-radius: 16px;
+    border-top-right-radius: 16px;
+    border-bottom-right-radius: 16px;
+    transition-duration: 0.2s;
+    -unity-text-align: middle-center;
+    white-space: nowrap;
+}
+
+.menu-button:hover {
+    margin-bottom: 32px;
+    -unity-text-align: middle-center;
+    white-space: nowrap;
+    font-size: 48px;
+    -unity-font: url('project://database/Assets/UI/Fonts/Space%20age.ttf?fileID=12800000&guid=2be26e11a65883646be6d1062c254750&type=3#Space age');
+    -unity-font-definition: none;
+    color: rgb(255, 171, 144);
+    border-left-color: rgb(255, 171, 144);
+    border-right-color: rgb(255, 171, 144);
+    border-top-color: rgb(255, 171, 144);
+    border-bottom-color: rgb(255, 171, 144);
+    border-left-width: 12px;
+    border-right-width: 12px;
+    border-top-left-radius: 24px;
+    border-bottom-left-radius: 24px;
+    border-top-right-radius: 24px;
+    border-bottom-right-radius: 24px;
+    rotate: 1deg;
+    transition-duration: 0.2s;
+    background-color: rgba(92, 64, 62, 0.75);
+}
+
+.menu-button:active {
+    -unity-text-align: middle-center;
+    white-space: nowrap;
+    -unity-font: url('project://database/Assets/UI/Fonts/Space%20age.ttf?fileID=12800000&guid=2be26e11a65883646be6d1062c254750&type=3#Space age');
+    -unity-font-definition: none;
+    font-size: 48px;
+    color: rgb(255, 209, 110);
+    border-left-color: rgb(255, 209, 110);
+    border-right-color: rgb(255, 209, 110);
+    border-top-color: rgb(255, 209, 110);
+    border-bottom-color: rgb(255, 209, 110);
+    border-left-width: 16px;
+    border-right-width: 16px;
+    border-top-left-radius: 24px;
+    border-bottom-left-radius: 24px;
+    border-top-right-radius: 24px;
+    border-bottom-right-radius: 24px;
+    rotate: -1deg;
+    transition-duration: 0.1s;
+    background-color: rgba(78, 70, 55, 0.75);
+}
+
+.menu-header {
+    -unity-text-align: middle-center;
+    font-size: 96px;
+    color: rgb(156, 156, 255);
+    -unity-font: url('project://database/Assets/UI/Fonts/Space%20age.ttf?fileID=12800000&guid=2be26e11a65883646be6d1062c254750&type=3#Space age');
+    -unity-font-definition: none;
+    margin-top: 32px;
+}
+
+.level-button {
+    -unity-font: url('project://database/Assets/UI/Fonts/Space%20age.ttf?fileID=12800000&guid=2be26e11a65883646be6d1062c254750&type=3#Space age');
+    -unity-font-definition: none;
+    width: 96px;
+    height: 96px;
+    color: rgba(156, 156, 255, 255);
+    font-size: 48px;
+    background-color: rgba(71, 69, 85, 0.75);
+    border-left-color: rgb(156, 156, 255);
+    border-right-color: rgb(156, 156, 255);
+    border-top-color: rgb(156, 156, 255);
+    border-bottom-color: rgb(156, 156, 255);
+    border-bottom-width: 8px;
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-top-left-radius: 16px;
+    border-bottom-left-radius: 16px;
+    border-top-right-radius: 16px;
+    border-bottom-right-radius: 16px;
+    transition-duration: 0.2s;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-left: 8px;
+    margin-right: 8px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    -unity-text-align: middle-center;
+}
+
+.level-button:hover {
+    -unity-text-align: middle-center;
+    font-size: 48px;
+    -unity-font: url('project://database/Assets/UI/Fonts/Space%20age.ttf?fileID=12800000&guid=2be26e11a65883646be6d1062c254750&type=3#Space age');
+    -unity-font-definition: none;
+    margin-left: 8px;
+    margin-right: 8px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    color: rgba(255, 171, 144, 255);
+    background-color: rgba(92, 64, 62, 0.75);
+    border-left-color: rgba(255, 171, 144, 255);
+    border-right-color: rgba(255, 171, 144, 255);
+    border-top-color: rgba(255, 171, 144, 255);
+    border-bottom-color: rgba(255, 171, 144, 255);
+    border-top-left-radius: 16px;
+    border-bottom-left-radius: 16px;
+    border-top-right-radius: 16px;
+    border-bottom-right-radius: 16px;
+    border-bottom-width: 8px;
+    transition-duration: 0.2s;
+    rotate: 1deg;
+}
+
+.level-button:active {
+    -unity-text-align: middle-center;
+    font-size: 48px;
+    margin-left: 8px;
+    margin-right: 8px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    color: rgba(255, 209, 110, 255);
+    background-color: rgba(78, 70, 55, 0.75);
+    border-left-color: rgba(255, 209, 110, 255);
+    border-right-color: rgba(255, 209, 110, 255);
+    border-top-color: rgba(255, 209, 110, 255);
+    border-bottom-color: rgba(255, 209, 110, 255);
+    border-top-left-radius: 16px;
+    border-bottom-left-radius: 16px;
+    border-top-right-radius: 16px;
+    border-bottom-right-radius: 16px;
+    border-bottom-width: 8px;
+    rotate: -1deg;
+    transition-duration: 0.1s;
+}
+
+.level-button:focus {
+    border-left-color: rgba(255, 209, 110, 255);
+    border-right-color: rgba(255, 209, 110, 255);
+    border-top-color: rgba(255, 209, 110, 255);
+    border-bottom-color: rgba(255, 209, 110, 255);
+    background-color: rgba(78, 70, 55, 0.75);
+    -unity-font: url('project://database/Assets/UI/Fonts/Space%20age.ttf?fileID=12800000&guid=2be26e11a65883646be6d1062c254750&type=3#Space age');
+    -unity-font-definition: none;
+    font-size: 48px;
+    -unity-text-align: middle-center;
+    color: rgba(255, 209, 110, 255);
+    transition-duration: 0.2s;
+    border-top-left-radius: 16px;
+    border-bottom-left-radius: 16px;
+    border-top-right-radius: 16px;
+    border-bottom-right-radius: 16px;
+    border-bottom-width: 8px;
+}

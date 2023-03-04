@@ -1,4 +1,5 @@
 using SpaceAce.Architecture;
+using SpaceAce.Levelry;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ namespace SpaceAce.Main
 {
     public sealed class GameModeLoader : IInitializable, IRunnable
     {
-        private const float GameModesLoadingDelay = 1f;
+        private const float GameModeLoadingDelay = 1f;
 
         public event EventHandler<LoadingStartedEventArgs> MainMenuLoadingStarted;
         public event EventHandler MainMenuLoaded;
@@ -34,29 +35,34 @@ namespace SpaceAce.Main
 
             IEnumerator MainMenuLoader()
             {
-                MainMenuLoadingStarted?.Invoke(this, new LoadingStartedEventArgs(GameModesLoadingDelay));
+                MainMenuLoadingStarted?.Invoke(this, new LoadingStartedEventArgs(GameModeLoadingDelay));
 
-                yield return new WaitForSeconds(GameModesLoadingDelay);
+                yield return new WaitForSeconds(GameModeLoadingDelay);
 
                 MainMenuLoaded?.Invoke(this, EventArgs.Empty);
             }
         }
 
-        public void LoadGameLevel(EnemyType type, LevelDifficulty difficulty)
+        public void LoadLevel(int levelIndex)
         {
+            if (levelIndex < LevelConfig.MinLevelIndex || levelIndex > LevelConfig.MaxLevelIndex)
+            {
+                throw new ArgumentOutOfRangeException(nameof(levelIndex), "Attempted to pass an invalid level index!");
+            }
+
             CoroutineRunner.RunRoutine(GameLevelLoader());
 
             IEnumerator GameLevelLoader()
             {
-                LevelLoadingStarted?.Invoke(this, new LoadingStartedEventArgs(GameModesLoadingDelay));
+                LevelLoadingStarted?.Invoke(this, new LoadingStartedEventArgs(GameModeLoadingDelay));
 
-                yield return new WaitForSeconds(GameModesLoadingDelay);
+                yield return new WaitForSeconds(GameModeLoadingDelay);
 
                 bool necessaryLevelConfigFound = false;
 
                 foreach (var config in _levelConfigs)
                 {
-                    if (config.VerifyIdentityMatch(type, difficulty) == true)
+                    if (config.LevelIndex == levelIndex)
                     {
                         necessaryLevelConfigFound = true;
                         LevelLoaded?.Invoke(this, new LevelLoadedEventArgs(config));
@@ -67,9 +73,22 @@ namespace SpaceAce.Main
 
                 if (necessaryLevelConfigFound == false)
                 {
-                    throw new LevelLoadFailedException(type, difficulty);
+                    throw new LevelLoadFailedException(levelIndex);
                 }
             }
+        }
+
+        public LevelConfig GetLevelConfig(int levelIndex)
+        {
+            foreach (var config in _levelConfigs)
+            {
+                if (config.LevelIndex == levelIndex)
+                {
+                    return config;
+                }
+            }
+
+            throw new Exception($"{nameof(LevelConfig)} for level #{levelIndex} is absent from the collection!");
         }
 
         #region interfaces

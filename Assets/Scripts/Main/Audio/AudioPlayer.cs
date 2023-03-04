@@ -20,21 +20,13 @@ namespace SpaceAce.Main.Audio
 
         private readonly Dictionary<string, AudioSource> _activeAudioSources = new(MaxAudioSources);
         private readonly Stack<AudioSource> _availableAudioSources = new(MaxAudioSources);
-        private Transform _audioSourcePoolAnchor;
-
-        private bool _suppressSaveRequest = false;
         private readonly AudioMixer _audioMixer;
+        private Transform _audioSourcePoolAnchor;
+        private bool _suppressSaveRequest = false;
 
         public string ID { get; }
         public string SaveName => "Audio player settings";
-        public float MasterVolume { get; private set; }
-        public float ShootingVolume { get; private set; }
-        public float ExplosionsVolume { get; private set; }
-        public float InteractionsVolume { get; private set; }
-        public float MusicVolume { get; private set; }
-        public float BackgroundVolume { get; private set; }
-        public float InterfaceVolume { get; private set; }
-        public float NotificationsVolume { get; private set; }
+        public AudioPlayerSettings Settings { get; private set; }
 
         public AudioPlayer(string id, AudioMixer audioMixer)
         {
@@ -51,76 +43,38 @@ namespace SpaceAce.Main.Audio
             }
 
             _audioMixer = audioMixer;
-
+            Settings = AudioPlayerSettings.Default;
             CreateAudioSourcePool();
         }
 
-        public void SetMasterVolume(float volume) => SetVolume("Master volume", volume);
+        public void ApplySettings(AudioPlayerSettings settings)
+        {
+            if (settings is null)
+            {
+                throw new ArgumentNullException(nameof(settings), $"Attempted to apply an empty {nameof(AudioPlayerSettings)}!");
+            }
 
-        public void SetShootingVolume(float volume) => SetVolume("Shooting volume", volume);
+            SetVolume("Master volume", settings.MasterVolume);
+            SetVolume("Shooting volume", settings.ShootingVolume);
+            SetVolume("Explosions volume", settings.ExplosionsVolume);
+            SetVolume("Background volume", settings.BackgroundVolume);
+            SetVolume("Interface volume", settings.InterfaceVolume);
+            SetVolume("Music volume", settings.MusicVolume);
+            SetVolume("Interactions volume", settings.InteractionsVolume);
+            SetVolume("Notifications volume", settings.NotificationsVolume);
 
-        public void SetExplosionsVolume(float volume) => SetVolume("Explosions volume", volume);
+            Settings = settings;
 
-        public void SetBackgroundVolume(float volume) => SetVolume("Background volume", volume);
-
-        public void SetInterfaceVolume(float volume) => SetVolume("Interface volume", volume);
-
-        public void SetMusicVolume(float volume) => SetVolume("Music volume", volume);
-
-        public void SetInteractionsVolume(float volume) => SetVolume("Interactions volume", volume);
-
-        public void SetNotificationsVolume(float volume) => SetVolume("Notifications volume", volume);
+            if (_suppressSaveRequest == false)
+            {
+                SavingRequested?.Invoke(this, EventArgs.Empty);
+            }
+        }
 
         private void SetVolume(string name, float volume)
         {
             float clampedVolume = Mathf.Clamp(volume, MinVolume, MaxVolume);
             _audioMixer.SetFloat(name, clampedVolume);
-
-            switch (name)
-            {
-                case "Master volume":
-                    {
-                        MasterVolume = volume;
-                        break;
-                    }
-                case "Shooting volume":
-                    {
-                        ShootingVolume = volume;
-                        break;
-                    }
-                case "Explosions volume":
-                    {
-                        ExplosionsVolume = volume;
-                        break;
-                    }
-                case "Background volume":
-                    {
-                        BackgroundVolume = volume;
-                        break;
-                    }
-                case "Interface volume":
-                    {
-                        InterfaceVolume = volume;
-                        break;
-                    }
-                case "Music volume":
-                    {
-                        MusicVolume = volume;
-                        break;
-                    }
-                case "Interactions volume":
-                    {
-                        InteractionsVolume = volume;
-                        break;
-                    }
-                case "Notifications volume":
-                    {
-                        NotificationsVolume = volume;
-                        break;
-                    }
-            }
-
-            if (_suppressSaveRequest == false) SavingRequested?.Invoke(this, EventArgs.Empty);
         }
 
         public AudioAccess Play(AudioProperties properties) => ConfigureAudioSource(FindAvailableAudioSource(), properties);
@@ -297,35 +251,26 @@ namespace SpaceAce.Main.Audio
             GameServices.Deregister(this);
         }
 
-        public object GetState() => new AudioPlayerSavableData(MasterVolume,
-                                                               MusicVolume,
-                                                               ShootingVolume,
-                                                               ExplosionsVolume,
-                                                               InterfaceVolume,
-                                                               BackgroundVolume,
-                                                               NotificationsVolume,
-                                                               InteractionsVolume);
+        public object GetState() => Settings;
 
         public void SetState(object state)
         {
-            if (state is AudioPlayerSavableData value)
+            if (state is null)
+            {
+                throw new EmptySavableStateEntryException(typeof(AudioPlayerSettings));
+            }
+
+            if (state is AudioPlayerSettings value)
             {
                 _suppressSaveRequest = true;
 
-                MasterVolume = value.MasterVolume;
-                MusicVolume = value.MusicVolume;
-                ShootingVolume = value.ShootingVolume;
-                ExplosionsVolume = value.ExplosionsVolume;
-                InterfaceVolume = value.InterfaceVolume;
-                BackgroundVolume = value.BackgroundVolume;
-                NotificationsVolume = value.NotificationsVolume;
-                InteractionsVolume = value.InteractionsVolume;
+                ApplySettings(value);
 
                 _suppressSaveRequest = false;
             }
             else
             {
-                throw new LoadedSavableEntityStateTypeMismatchException(state.GetType(), typeof(AudioPlayerSavableData), GetType());
+                throw new LoadedSavableEntityStateTypeMismatchException(state.GetType(), typeof(AudioPlayerSettings), GetType());
             }
         }
 
