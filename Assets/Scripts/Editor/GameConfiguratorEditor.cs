@@ -1,4 +1,5 @@
 using SpaceAce.Architecture;
+using SpaceAce.Main;
 using UnityEditor;
 using UnityEngine;
 
@@ -8,6 +9,9 @@ namespace SpaceAce.Editors
     public sealed class GameConfiguratorEditor : Editor
     {
         private SerializedProperty _idGeneratorSeed;
+
+        private bool _showCameraSettings = false;
+        private SerializedProperty _cameraSize;
 
         private bool _showSpaceBackgroundSettings = false;
         private SerializedProperty _spaceBackgroundWidthDelta;
@@ -30,6 +34,8 @@ namespace SpaceAce.Editors
         private void OnEnable()
         {
             _idGeneratorSeed = serializedObject.FindProperty("_idGeneratorSeed");
+
+            _cameraSize = serializedObject.FindProperty("_cameraSize");
 
             _spaceBackgroundWidthDelta = serializedObject.FindProperty("_spaceBackgroundWidthDelta");
             _mainMenuSpaceBackground = serializedObject.FindProperty("_mainMenuSpaceBackground");
@@ -55,6 +61,14 @@ namespace SpaceAce.Editors
             if (_idGeneratorSeed.intValue == 0)
             {
                 _idGeneratorSeed.intValue = Random.Range(1, int.MaxValue);
+            }
+
+            EditorGUILayout.Separator();
+            _showCameraSettings = EditorGUILayout.Foldout(_showCameraSettings, "Camera settings");
+
+            if (_showCameraSettings == true)
+            {
+                EditorGUILayout.Slider(_cameraSize, MasterCameraHolder.MinCameraSize, MasterCameraHolder.MaxCameraSize, "Camera size");
             }
 
             EditorGUILayout.Separator();

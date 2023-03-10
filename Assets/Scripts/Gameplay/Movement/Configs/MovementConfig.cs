@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace SpaceAce.Gameplay.Movement
 {
-    [CreateAssetMenu(fileName = "Movement config", menuName = "Space ace/Configs/Movement config")]
+    [CreateAssetMenu(fileName = "Movement config", menuName = "Space ace/Configs/Movement/Movement config")]
     public class MovementConfig : ScriptableObject
     {
         public const float MaxSpeed = 50f;
@@ -35,7 +35,7 @@ namespace SpaceAce.Gameplay.Movement
         [SerializeField] private AudioCollection _collisionAudio = null;
         [SerializeField] private bool _cameraShakeOnCollisionEnabled = false;
 
-        private readonly GameServiceFastAccess<MasterCameraHolder> _masterCameraHolder = new();
+        private static readonly GameServiceFastAccess<MasterCameraHolder> s_masterCameraHolder = new();
 
         public float HorizontalSpeed => _horizontalSpeed + _horizontalSpeedRandomDeviation * AuxMath.RandomNormal;
         public float VerticalSpeed => _verticalSpeed + _verticalSpeedRandomDeviation * AuxMath.RandomNormal;
@@ -58,22 +58,22 @@ namespace SpaceAce.Gameplay.Movement
                     return VerticalSpeed;
                 }
 
-                return Mathf.Sqrt(HorizontalSpeed * HorizontalSpeed + VerticalSpeed + VerticalSpeed);
+                return Mathf.Sqrt(HorizontalSpeed * HorizontalSpeed + VerticalSpeed * VerticalSpeed);
             }
         }
 
         public bool CustomBoundsEnabled => _customBoundsEnabled;
-        public float LeftBound => CustomBoundsEnabled ? _masterCameraHolder.Access.ViewportLeftBound * _sideBoundsDisplacement
-                                                      : _masterCameraHolder.Access.ViewportLeftBound;
-        public float RightBound => CustomBoundsEnabled ? _masterCameraHolder.Access.ViewportRightBound * _sideBoundsDisplacement
-                                                       : _masterCameraHolder.Access.ViewportRightBound;
-        public float UpperBound => CustomBoundsEnabled ? _masterCameraHolder.Access.ViewportUpperBound * _upperBoundDisplacement
-                                                       : _masterCameraHolder.Access.ViewportUpperBound;
-        public float LowerBound => CustomBoundsEnabled ? _masterCameraHolder.Access.ViewportLowerBound * _lowerBoundDisplacement
-                                                       : _masterCameraHolder.Access.ViewportLowerBound;
+        public float LeftBound => CustomBoundsEnabled ? s_masterCameraHolder.Access.ViewportLeftBound * _sideBoundsDisplacement
+                                                      : s_masterCameraHolder.Access.ViewportLeftBound;
+        public float RightBound => CustomBoundsEnabled ? s_masterCameraHolder.Access.ViewportRightBound * _sideBoundsDisplacement
+                                                       : s_masterCameraHolder.Access.ViewportRightBound;
+        public float UpperBound => CustomBoundsEnabled ? s_masterCameraHolder.Access.ViewportUpperBound * _upperBoundDisplacement
+                                                       : s_masterCameraHolder.Access.ViewportUpperBound;
+        public float LowerBound => CustomBoundsEnabled ? s_masterCameraHolder.Access.ViewportLowerBound * _lowerBoundDisplacement
+                                                       : s_masterCameraHolder.Access.ViewportLowerBound;
 
         public bool CollisionDamageEnabled => _collisionDamageEnabled;
-        public float CollisionDamage => _collisionDamage * _collisionDamageRandomDeviation * AuxMath.RandomNormal;
+        public float CollisionDamage => CollisionDamageEnabled ? _collisionDamage + _collisionDamageRandomDeviation * AuxMath.RandomNormal : 0f;
         public AudioCollection CollisionAudio => _collisionAudio;
         public bool CameraShakeOnCollisionEnabled => _cameraShakeOnCollisionEnabled;
     }

@@ -25,6 +25,8 @@ namespace SpaceAce.Architecture
 
         [SerializeField] private int _idGeneratorSeed;
 
+        [SerializeField] private float _cameraSize = MasterCameraHolder.MinCameraSize;
+
         [SerializeField] private float _spaceBackgroundWidthDelta = DefaultWidthDelta;
         [SerializeField] private Material _mainMenuSpaceBackground;
         [SerializeField] private List<Material> _spaceBackgrounds;
@@ -77,7 +79,7 @@ namespace SpaceAce.Architecture
         {
             _idGenerator = new(_idGeneratorSeed);
 
-            MasterCameraHolder cameraHolder = new();
+            MasterCameraHolder cameraHolder = new(_cameraSize);
             MasterAudioListenerHolder audioListenerHolder = new(cameraHolder.MasterCameraAnchor);
 
             SpaceBackground background = new(cameraHolder.ViewportLowerLeftCornerWorldPosition,

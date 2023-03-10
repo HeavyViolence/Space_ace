@@ -1,11 +1,13 @@
 using SpaceAce.Architecture;
+using System;
 using UnityEngine;
 
 namespace SpaceAce.Main
 {
     public sealed class MasterCameraHolder : IInitializable
     {
-        private const float CameraSize = 40f;
+        public const float MinCameraSize = 8f;
+        public const float MaxCameraSize = 64f;
 
         public GameObject MasterObject { get; }
         public GameObject MasterCameraAnchor { get; }
@@ -21,8 +23,14 @@ namespace SpaceAce.Main
         public float ViewportUpperBound => ViewportUpperLeftCornerWorldPosition.y;
         public float ViewportLowerBound => ViewportLowerLeftCornerWorldPosition.y;
 
-        public MasterCameraHolder()
+        public MasterCameraHolder(float cameraSize)
         {
+            if (cameraSize < MinCameraSize || cameraSize > MaxCameraSize)
+            {
+                throw new ArgumentOutOfRangeException(nameof(cameraSize),
+                    $"Camera size must be within the following range: [{MinCameraSize} : {MaxCameraSize}]!");
+            }
+
             MasterObject = new("Master camera holder");
 
             MasterCameraAnchor = new("Master camera anchor");
@@ -31,7 +39,7 @@ namespace SpaceAce.Main
             MasterCamera = MasterCameraAnchor.AddComponent<Camera>();
             MasterCamera.transform.parent = MasterObject.transform;
             MasterCamera.orthographic = true;
-            MasterCamera.orthographicSize = CameraSize;
+            MasterCamera.orthographicSize = cameraSize;
             MasterCamera.transform.position = new Vector3(0f, 0f, -1f);
 
             ViewportLowerLeftCornerWorldPosition = MasterCamera.ViewportToWorldPoint(new Vector3(0f, 0f, 0f));

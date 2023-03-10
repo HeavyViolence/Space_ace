@@ -168,6 +168,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _idGeneratorSeed: 410523505
+  _cameraSize: 40
   _spaceBackgroundWidthDelta: 0.075
   _mainMenuSpaceBackground: {fileID: 2100000, guid: a2d75102e3e15cc43b8e3833ae47a054, type: 2}
   _spaceBackgrounds:

@@ -9,7 +9,7 @@ namespace SpaceAce.Main
     public sealed class ScreenFader : IInitializable
     {
         public const float MinFadeDuration = 0.5f;
-        public const float MaxFadeDuration = 4f;
+        public const float MaxFadeDuration = 5f;
         public const float DefaultFadeDuration = 2f;
 
         public event EventHandler FadingStarted, FadedOut, FadingCompleted;

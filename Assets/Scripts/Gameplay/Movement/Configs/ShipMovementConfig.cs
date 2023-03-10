@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace SpaceAce.Gameplay.Movement
 {
-    [CreateAssetMenu(fileName = "Ship movement config", menuName = "Space ace/Configs/Ship movement config")]
+    [CreateAssetMenu(fileName = "Ship movement config", menuName = "Space ace/Configs/Movement/Ship movement config")]
     public sealed class ShipMovementConfig : MovementConfig
     {
         public const float MinSpeedDuration = 0.5f;

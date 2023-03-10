@@ -8,7 +8,7 @@ namespace SpaceAce.Gameplay.Movement
         Left, Right, Random
     }
 
-    [CreateAssetMenu(fileName = "Rotation config", menuName = "Space ace/Configs/Rotation config")]
+    [CreateAssetMenu(fileName = "Rotation config", menuName = "Space ace/Configs/Movement/Rotation config")]
     public sealed class RotationConfig : ScriptableObject
     {
         private const float DegreesPerSecondPerRotationPerMinute = 5f;
