@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace SpaceAce.Main.ObjectPooling
 {
-    [CreateAssetMenu(fileName = "Object pool entry", menuName = "Space ace/Configs/Object pool entry")]
+    [CreateAssetMenu(fileName = "Object pool entry", menuName = "Space ace/Object pooling/Object pool entry")]
     public sealed class ObjectPoolEntry : ScriptableObject, IEquatable<ObjectPoolEntry>
     {
         [SerializeField] private GameObject _prefab = null;

@@ -9,7 +9,7 @@ namespace SpaceAce.Gameplay.Movement
     [CreateAssetMenu(fileName = "Movement config", menuName = "Space ace/Configs/Movement/Movement config")]
     public class MovementConfig : ScriptableObject
     {
-        public const float MaxSpeed = 50f;
+        public const float MaxSpeed = 100f;
 
         public const float MaxBoundDisplacement = 2f;
         public const float DefaultBoundDisplacement = 1f;
@@ -37,8 +37,14 @@ namespace SpaceAce.Gameplay.Movement
 
         private static readonly GameServiceFastAccess<MasterCameraHolder> s_masterCameraHolder = new();
 
+        public float MinHorizontalSpeed => _horizontalSpeed - _horizontalSpeedRandomDeviation;
+        public float MaxHorizontalSpeed => _horizontalSpeed + _horizontalSpeedRandomDeviation;
         public float HorizontalSpeed => _horizontalSpeed + _horizontalSpeedRandomDeviation * AuxMath.RandomNormal;
+
+        public float MinVerticalSpeed => _verticalSpeed - _verticalSpeedRandomDeviation;
+        public float MaxVerticalSpeed => _verticalSpeed + _verticalSpeedRandomDeviation;
         public float VerticalSpeed => _verticalSpeed + _verticalSpeedRandomDeviation * AuxMath.RandomNormal;
+
         public float Speed2D
         {
             get

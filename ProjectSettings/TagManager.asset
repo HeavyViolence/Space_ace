@@ -11,15 +11,15 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Player
+  - Player projectiles
+  - Enemies
+  - Enemy projectiles
+  - Bosses
+  - Meteors
+  - Space debris
+  - Mines
+  - Loot
   - 
   - 
   - 
@@ -40,4 +40,31 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Mines
+    uniqueID: 3833994025
+    locked: 0
+  - name: Enemies
+    uniqueID: 440621235
+    locked: 0
+  - name: Bosses
+    uniqueID: 1508380229
+    locked: 0
+  - name: Enemy projectiles
+    uniqueID: 3311181575
+    locked: 0
+  - name: Meteors
+    uniqueID: 3995712827
+    locked: 0
+  - name: Space debris
+    uniqueID: 2336338981
+    locked: 0
+  - name: Loot
+    uniqueID: 428617293
+    locked: 0
+  - name: Player
+    uniqueID: 2420514477
+    locked: 0
+  - name: Player projectiles
+    uniqueID: 2106981765
     locked: 0

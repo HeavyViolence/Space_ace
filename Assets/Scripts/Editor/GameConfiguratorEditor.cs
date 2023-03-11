@@ -23,6 +23,7 @@ namespace SpaceAce.Editors
 
         private bool _showScreenFaderSettings = false;
         private SerializedProperty _fadingCurve;
+        private SerializedProperty _fadingColor;
 
         private bool _showAudioSettings = false;
         private SerializedProperty _audioMixer;
@@ -30,6 +31,10 @@ namespace SpaceAce.Editors
 
         private bool _showUISettings = false;
         private SerializedProperty _uiContainer;
+
+        private bool _showPlayerSettings = false;
+        private SerializedProperty _defaultPlayerShip;
+        private SerializedProperty _objectPoolEntryLookupTable;
 
         private void OnEnable()
         {
@@ -45,11 +50,15 @@ namespace SpaceAce.Editors
             _levelConfigs = serializedObject.FindProperty("_levelConfigs");
 
             _fadingCurve = serializedObject.FindProperty("_fadingCurve");
+            _fadingColor = serializedObject.FindProperty("_fadingColor");
 
             _audioMixer = serializedObject.FindProperty("_audioMixer");
             _music = serializedObject.FindProperty("_music");
 
             _uiContainer = serializedObject.FindProperty("_uiContainer");
+
+            _defaultPlayerShip = serializedObject.FindProperty("_defaultPlayerShip");
+            _objectPoolEntryLookupTable = serializedObject.FindProperty("_objectPoolEntryLookupTable");
         }
 
         public override void OnInspectorGUI()
@@ -91,6 +100,7 @@ namespace SpaceAce.Editors
             if (_showScreenFaderSettings == true)
             {
                 EditorGUILayout.PropertyField(_fadingCurve, new GUIContent("Fading curve"));
+                EditorGUILayout.PropertyField(_fadingColor, new GUIContent("Fading color"));
             }
 
             EditorGUILayout.Separator();
@@ -108,6 +118,15 @@ namespace SpaceAce.Editors
             if (_showUISettings == true)
             {
                 EditorGUILayout.PropertyField(_uiContainer, new GUIContent("UI container"));
+            }
+
+            EditorGUILayout.Separator();
+            _showPlayerSettings = EditorGUILayout.Foldout(_showPlayerSettings, "Player settings");
+
+            if (_showPlayerSettings == true)
+            {
+                EditorGUILayout.PropertyField(_defaultPlayerShip, new GUIContent("Default player ship"));
+                EditorGUILayout.PropertyField(_objectPoolEntryLookupTable, new GUIContent("Object pool entry lookup table"));
             }
 
             serializedObject.ApplyModifiedProperties();

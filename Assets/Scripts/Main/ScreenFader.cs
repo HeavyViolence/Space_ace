@@ -16,14 +16,14 @@ namespace SpaceAce.Main
 
         private Image _faderImage;
 
-        private readonly Color32 _inactiveFadeColor = new(32, 32, 32, 0);
-        private readonly Color32 _activeFadeColor = new (32, 32, 32, 255);
+        private readonly Color32 _inactiveFadeColor;
+        private readonly Color32 _activeFadeColor;
 
         private readonly AnimationCurve _fadingCurve;
 
         public bool FadeIsActive { get; private set; } = false;
 
-        public ScreenFader(AnimationCurve fadingCurve)
+        public ScreenFader(AnimationCurve fadingCurve, Color32 fadingColor)
         {
             if (fadingCurve == null)
             {
@@ -31,6 +31,8 @@ namespace SpaceAce.Main
             }
 
             _fadingCurve = fadingCurve;
+            _inactiveFadeColor = new(fadingColor.r, fadingColor.g, fadingColor.b, 0);
+            _activeFadeColor = fadingColor;
 
             GameObject canvasAnchor = new("Screen fader");
 

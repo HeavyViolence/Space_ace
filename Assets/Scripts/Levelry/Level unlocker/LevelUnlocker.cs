@@ -85,8 +85,7 @@ namespace SpaceAce.Levelry
             GameServices.Deregister(this);
         }
 
-        public object GetState() => new LevelUnlockerSavableData(_passedLevels,
-                                                                 _unlockedLevels);
+        public object GetState() => new LevelUnlockerSavableData(_passedLevels, _unlockedLevels);
 
         public void SetState(object state)
         {

@@ -1,4 +1,5 @@
 using SpaceAce.Auxiliary;
+using SpaceAce.Gameplay.Players;
 using SpaceAce.Levelry;
 using SpaceAce.Main;
 using SpaceAce.Main.Audio;
@@ -35,11 +36,15 @@ namespace SpaceAce.Architecture
         [SerializeField] private List<LevelConfig> _levelConfigs;
 
         [SerializeField] private AnimationCurve _fadingCurve;
+        [SerializeField] private Color32 _fadingColor;
 
         [SerializeField] private AudioMixer _audioMixer;
         [SerializeField] private AudioCollection _music;
 
         [SerializeField] private UIAssets _uiContainer;
+
+        [SerializeField] private ObjectPoolEntry _defaultPlayerShip;
+        [SerializeField] private ObjectPoolEntryLookupTable _objectPoolEntryLookupTable;
 
         #endregion
 
@@ -69,6 +74,11 @@ namespace SpaceAce.Architecture
             UpdateGameServices();
         }
 
+        private void FixedUpdate()
+        {
+            FixedUpdateGameServices();
+        }
+
         private void OnDestroy()
         {
             PerformEventsUnsubscriptionForGameServices();
@@ -94,7 +104,7 @@ namespace SpaceAce.Architecture
             _gameServices.Add(audioListenerHolder);
             _gameServices.Add(background);
             _gameServices.Add(new GameModeLoader(_levelConfigs));
-            _gameServices.Add(new ScreenFader(_fadingCurve));
+            _gameServices.Add(new ScreenFader(_fadingCurve, _fadingColor));
             _gameServices.Add(new MultiobjectPool());
             _gameServices.Add(new LevelCompleter());
             _gameServices.Add(new GamePauser());
@@ -106,6 +116,7 @@ namespace SpaceAce.Architecture
             _gameServices.Add(new MusicPlayer(_idGenerator.Next(), _music));
             _gameServices.Add(new LevelUnlocker(_idGenerator.Next()));
             _gameServices.Add(new BestLevelsRunsStatisticsCollector(_idGenerator.Next()));
+            _gameServices.Add(new Player(_idGenerator.Next(), _defaultPlayerShip, _objectPoolEntryLookupTable));
         }
 
         private void InitializeGameServices()
@@ -161,6 +172,17 @@ namespace SpaceAce.Architecture
                 if (service is IUpdatable value)
                 {
                     value.OnUpdate();
+                }
+            }
+        }
+
+        private void FixedUpdateGameServices()
+        {
+            foreach (var service in _gameServices)
+            {
+                if (service is IFixedUpdatable value)
+                {
+                    value.OnFixedUpdate();
                 }
             }
         }

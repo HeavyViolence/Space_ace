@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e28717c9c0314764cbcd989589681ca2, type: 3}
+  m_Name: Player ship 1.1 movement config
+  m_EditorClassIdentifier: 
+  _horizontalSpeed: 25
+  _horizontalSpeedRandomDeviation: 0
+  _verticalSpeed: 15
+  _verticalSpeedRandomDeviation: 0
+  _customBoundsEnabled: 1
+  _upperBoundDisplacement: 0
+  _lowerBoundDisplacement: 0.77
+  _sideBoundsDisplacement: 0.93
+  _collisionDamageEnabled: 1
+  _collisionDamage: 1000
+  _collisionDamageRandomDeviation: 100
+  _collisionAudio: {fileID: 0}
+  _cameraShakeOnCollisionEnabled: 1
