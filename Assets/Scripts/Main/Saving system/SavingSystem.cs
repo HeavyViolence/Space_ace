@@ -124,7 +124,7 @@ namespace SpaceAce.Main.Saving
         private void SaveMetadata()
         {
             using FileStream metadataFileStream = new(MetadataPath, FileMode.Create, FileAccess.Write);
-            List<string> knownTypesNames = new(_knownSavableDataTypes.Count);
+            List<string> knownTypesNames = new(_knownSavableDataTypes.Count + 1);
 
             _knownSavableDataTypes.Add(knownTypesNames.GetType());
 

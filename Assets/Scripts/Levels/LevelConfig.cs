@@ -2,7 +2,7 @@ using SpaceAce.Main.ObjectPooling;
 using System;
 using UnityEngine;
 
-namespace SpaceAce.Levelry
+namespace SpaceAce.Levels
 {
     public enum EnemyType
     {

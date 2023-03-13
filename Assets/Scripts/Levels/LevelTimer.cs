@@ -3,7 +3,7 @@ using SpaceAce.Main;
 using UnityEngine;
 using System;
 
-namespace SpaceAce.Levelry
+namespace SpaceAce.Levels
 {
     public sealed class LevelTimer : IInitializable, IUpdatable
     {

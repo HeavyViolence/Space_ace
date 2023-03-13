@@ -1,5 +1,5 @@
 using SpaceAce.Architecture;
-using SpaceAce.Levelry;
+using SpaceAce.Levels;
 using System;
 using System.Collections;
 using System.Collections.Generic;

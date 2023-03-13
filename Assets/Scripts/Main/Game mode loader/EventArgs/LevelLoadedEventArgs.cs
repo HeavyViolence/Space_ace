@@ -1,4 +1,4 @@
-using SpaceAce.Levelry;
+using SpaceAce.Levels;
 using System;
 
 namespace SpaceAce.Main

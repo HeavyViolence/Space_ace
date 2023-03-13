@@ -4,7 +4,7 @@ using SpaceAce.Main.Saving;
 using System;
 using System.Collections.Generic;
 
-namespace SpaceAce.Levelry
+namespace SpaceAce.Levels
 {
     public sealed class BestLevelsRunsStatisticsCollector : IInitializable, ISavable
     {

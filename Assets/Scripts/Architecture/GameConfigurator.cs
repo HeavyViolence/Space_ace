@@ -1,6 +1,6 @@
 using SpaceAce.Auxiliary;
 using SpaceAce.Gameplay.Players;
-using SpaceAce.Levelry;
+using SpaceAce.Levels;
 using SpaceAce.Main;
 using SpaceAce.Main.Audio;
 using SpaceAce.Main.ObjectPooling;

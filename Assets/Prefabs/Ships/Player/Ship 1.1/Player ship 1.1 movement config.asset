@@ -23,5 +23,5 @@ MonoBehaviour:
   _collisionDamageEnabled: 1
   _collisionDamage: 1000
   _collisionDamageRandomDeviation: 100
-  _collisionAudio: {fileID: 0}
+  _collisionAudio: {fileID: 11400000, guid: 471460b549d279a4eb610d416435977f, type: 2}
   _cameraShakeOnCollisionEnabled: 1

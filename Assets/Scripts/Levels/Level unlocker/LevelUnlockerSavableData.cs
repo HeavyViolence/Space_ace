@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 
-namespace SpaceAce.Levelry
+namespace SpaceAce.Levels
 {
     [DataContract]
     public sealed class LevelUnlockerSavableData

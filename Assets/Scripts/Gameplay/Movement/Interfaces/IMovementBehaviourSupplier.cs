@@ -5,6 +5,6 @@ namespace SpaceAce.Gameplay.Movement
 {
     public interface IMovementBehaviourSupplier
     {
-        void SupplyMovementBehaviour(Action<Rigidbody2D> behaviour, bool applyOnEveryPhysicsUpdate);
+        void SupplyMovementBehaviour(Action<Rigidbody2D> behaviour);
     }
 }

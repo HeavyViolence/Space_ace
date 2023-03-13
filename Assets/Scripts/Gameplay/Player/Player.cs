@@ -1,6 +1,6 @@
 using SpaceAce.Architecture;
 using SpaceAce.Auxiliary;
-using SpaceAce.Levelry;
+using SpaceAce.Levels;
 using SpaceAce.Main;
 using SpaceAce.Main.ObjectPooling;
 using SpaceAce.Main.Saving;
@@ -24,9 +24,7 @@ namespace SpaceAce.Gameplay.Players
         public string SaveName => "Player";
         public ObjectPoolEntry SelectedPlayerShip { get; private set; }
 
-        public Player(string id,
-                      ObjectPoolEntry defaultPlayerShip,
-                      ObjectPoolEntryLookupTable table)
+        public Player(string id, ObjectPoolEntry defaultPlayerShip, ObjectPoolEntryLookupTable table)
         {
             if (StringID.IsValid(id) == false)
             {
@@ -203,6 +201,11 @@ namespace SpaceAce.Gameplay.Players
 
         public void SetSelectedPlayerShip(ObjectPoolEntry entry)
         {
+            if (entry == null)
+            {
+                throw new ArgumentNullException(nameof(entry), "Attempted to pass an empty selected player ship!");
+            }
+
             SelectedPlayerShip = entry;
             SavingRequested?.Invoke(this, EventArgs.Empty);
         }

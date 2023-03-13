@@ -14,8 +14,6 @@ namespace SpaceAce.Gameplay.Movement
 
         public event EventHandler Escaped;
 
-        private bool _movementBehaviourInitiallyApplied = false;
-
         protected Rigidbody2D Body { get; private set; } = null;
         protected Action<Rigidbody2D> MovementBehaviour { get; set; } = null;
         protected bool ApplyMovementBehaviourOnEveryPhysicsUpdate { get; set; } = false;
@@ -35,7 +33,6 @@ namespace SpaceAce.Gameplay.Movement
         protected virtual void OnDisable()
         {
             ApplyMovementBehaviourOnEveryPhysicsUpdate = false;
-            _movementBehaviourInitiallyApplied = false;
             MovementBehaviour = null;
             Escaped = null;
         }
@@ -47,15 +44,7 @@ namespace SpaceAce.Gameplay.Movement
                 return;
             }
 
-            if (_movementBehaviourInitiallyApplied == false)
-            {
-                MovementBehaviour(Body);
-                _movementBehaviourInitiallyApplied = true;
-            }
-            else if (ApplyMovementBehaviourOnEveryPhysicsUpdate == true)
-            {
-                MovementBehaviour(Body);
-            }
+            MovementBehaviour(Body);
         }
 
         public void BeginWatchForEscape(Func<bool> escapeCondition)

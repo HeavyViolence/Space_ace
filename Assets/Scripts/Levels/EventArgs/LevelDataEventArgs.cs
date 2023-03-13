@@ -1,6 +1,6 @@
 using System;
 
-namespace SpaceAce.Levelry
+namespace SpaceAce.Levels
 {
     public sealed class LevelDataEventArgs : EventArgs
     {
