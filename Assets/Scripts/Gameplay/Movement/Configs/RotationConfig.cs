@@ -11,8 +11,6 @@ namespace SpaceAce.Gameplay.Movement
     [CreateAssetMenu(fileName = "Rotation config", menuName = "Space ace/Configs/Movement/Rotation config")]
     public sealed class RotationConfig : ScriptableObject
     {
-        private const float DegreesPerSecondPerRotationPerMinute = 5f;
-
         public const float MinRPM = 0f;
         public const float MaxRPM = 60f;
         public const float DefaultRPM = 15f;
@@ -22,32 +20,31 @@ namespace SpaceAce.Gameplay.Movement
         [SerializeField] private float _rpm = DefaultRPM;
         [SerializeField] private float _rpmRandomDeviation = 0f;
 
-        private float RandomizedRPM => _rpm + _rpmRandomDeviation * AuxMath.RandomNormal;
+        public RangedFloat RotationsPerMinute { get; private set; }
 
-        public float SignedRotationsPerMinute
+        private void OnEnable()
         {
-            get
+            switch (_rotationDirection)
             {
-                switch (_rotationDirection)
-                {
-                    case RotationDirection.Left:
-                        {
-                            return -1f * RandomizedRPM;
-                        }
-                    case RotationDirection.Right:
-                        {
-                            return RandomizedRPM;
-                        }
-                    case RotationDirection.Random:
-                        {
-                            return RandomizedRPM * AuxMath.RandomSign;
-                        }
-                }
+                case RotationDirection.Left:
+                    {
+                        RotationsPerMinute = new(-1f * _rpm, _rpmRandomDeviation);
 
-                return Mathf.NegativeInfinity;
+                        break;
+                    }
+                case RotationDirection.Right:
+                    {
+                        RotationsPerMinute = new(_rpm, _rpmRandomDeviation);
+
+                        break;
+                    }
+                case RotationDirection.Random:
+                    {
+                        RotationsPerMinute = new(_rpm * AuxMath.RandomNormal, _rpmRandomDeviation);
+
+                        break;
+                    }
             }
         }
-
-        public float SignedDegreesPerSecond => SignedRotationsPerMinute * DegreesPerSecondPerRotationPerMinute;
     }
 }

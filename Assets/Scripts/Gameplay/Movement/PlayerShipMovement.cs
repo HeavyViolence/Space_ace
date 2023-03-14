@@ -7,11 +7,14 @@ namespace SpaceAce.Gameplay.Movement
     {
         private const float SpawnPositionDisplacementFactor = 0.5f;
 
+        private Vector2 _speed2D;
+
         protected override void OnEnable()
         {
             base.OnEnable();
 
             transform.position = new(0f, Config.LowerBound * SpawnPositionDisplacementFactor, 0f);
+            _speed2D = new(Config.HorizontalSpeed.RandomValue, Config.VerticalSpeed.RandomValue);
         }
 
         private Vector2 ClampMovementDirection(Vector2 rawMovementDirection)
@@ -45,8 +48,7 @@ namespace SpaceAce.Gameplay.Movement
         public void Move(Vector2 direction)
         {
             Vector2 clampedDirection = ClampMovementDirection(direction);
-            Vector2 speed2D = new(Config.HorizontalSpeed, Config.VerticalSpeed);
-            Vector2 velocity = Time.fixedDeltaTime * clampedDirection * speed2D;
+            Vector2 velocity = Time.fixedDeltaTime * clampedDirection * _speed2D;
 
             Body.MovePosition(Body.position + velocity);
         }

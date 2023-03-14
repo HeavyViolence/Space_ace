@@ -37,34 +37,24 @@ namespace SpaceAce.Gameplay.Movement
 
         private static readonly GameServiceFastAccess<MasterCameraHolder> s_masterCameraHolder = new();
 
-        public float MinHorizontalSpeed => _horizontalSpeed - _horizontalSpeedRandomDeviation;
-        public float MaxHorizontalSpeed => _horizontalSpeed + _horizontalSpeedRandomDeviation;
-        public float HorizontalSpeed => _horizontalSpeed + _horizontalSpeedRandomDeviation * AuxMath.RandomNormal;
-
-        public float MinVerticalSpeed => _verticalSpeed - _verticalSpeedRandomDeviation;
-        public float MaxVerticalSpeed => _verticalSpeed + _verticalSpeedRandomDeviation;
-        public float VerticalSpeed => _verticalSpeed + _verticalSpeedRandomDeviation * AuxMath.RandomNormal;
+        public RangedFloat HorizontalSpeed { get; private set; }
+        public RangedFloat VerticalSpeed { get; private set; }
 
         public float Speed2D
         {
             get
             {
-                if (HorizontalSpeed == 0f && VerticalSpeed == 0f)
+                if (HorizontalSpeed.IsZeroed == false)
                 {
-                    return 0f;
+                    return HorizontalSpeed.RandomValue;
                 }
 
-                if (HorizontalSpeed != 0f && VerticalSpeed == 0f)
+                if (VerticalSpeed.IsZeroed == false)
                 {
-                    return HorizontalSpeed;
+                    return VerticalSpeed.RandomValue;
                 }
 
-                if (HorizontalSpeed == 0f && VerticalSpeed != 0f)
-                {
-                    return VerticalSpeed;
-                }
-
-                return Mathf.Sqrt(HorizontalSpeed * HorizontalSpeed + VerticalSpeed * VerticalSpeed);
+                return 0f;
             }
         }
 
@@ -79,8 +69,15 @@ namespace SpaceAce.Gameplay.Movement
                                                        : s_masterCameraHolder.Access.ViewportLowerBound;
 
         public bool CollisionDamageEnabled => _collisionDamageEnabled;
-        public float CollisionDamage => CollisionDamageEnabled ? _collisionDamage + _collisionDamageRandomDeviation * AuxMath.RandomNormal : 0f;
+        public RangedFloat CollisionDamage { get; private set; }
         public AudioCollection CollisionAudio => _collisionAudio;
         public bool CameraShakeOnCollisionEnabled => _cameraShakeOnCollisionEnabled;
+
+        private void OnEnable()
+        {
+            HorizontalSpeed = new(_horizontalSpeed, _horizontalSpeedRandomDeviation);
+            VerticalSpeed = new(_verticalSpeed, _verticalSpeedRandomDeviation);
+            CollisionDamage = CollisionDamageEnabled ? new(_collisionDamage, _collisionDamageRandomDeviation) : RangedFloat.Zero;
+        }
     }
 }

@@ -39,7 +39,7 @@ namespace SpaceAce.Gameplay.Movement
 
         protected virtual void CollisionHitEventHandler(object sender, HitEventArgs e)
         {
-            e.DamageReceiver.ApplyDamage(Config.CollisionDamage);
+            e.DamageReceiver.ApplyDamage(Config.CollisionDamage.RandomValue);
             Config.CollisionAudio.PlayRandomAudioClip(e.HitPosition);
 
             if (Config.CameraShakeOnCollisionEnabled)

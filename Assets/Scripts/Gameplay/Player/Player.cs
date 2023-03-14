@@ -48,7 +48,6 @@ namespace SpaceAce.Gameplay.Players
             _objectPoolEntryLookupTable = table;
 
             _gameControls = new();
-            _gameControls.Menus.Enable();
             _gameControls.Gameplay.Disable();
         }
 

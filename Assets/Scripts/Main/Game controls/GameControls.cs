@@ -149,34 +149,6 @@ public partial class @GameControls : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 }
             ]
-        },
-        {
-            ""name"": ""Menus"",
-            ""id"": ""d431a269-ee97-460e-8b52-9d983a2fa920"",
-            ""actions"": [
-                {
-                    ""name"": ""Back"",
-                    ""type"": ""Button"",
-                    ""id"": ""8f1067b0-8473-4c28-af7a-c48c1c68f3a0"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                }
-            ],
-            ""bindings"": [
-                {
-                    ""name"": """",
-                    ""id"": ""0c2fdbef-acca-48cd-9eed-0a17b755c05c"",
-                    ""path"": ""<Keyboard>/escape"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard and mouse"",
-                    ""action"": ""Back"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                }
-            ]
         }
     ],
     ""controlSchemes"": [
@@ -201,9 +173,6 @@ public partial class @GameControls : IInputActionCollection2, IDisposable
         // Gameplay
         m_Gameplay = asset.FindActionMap("Gameplay", throwIfNotFound: true);
         m_Gameplay_Movement = m_Gameplay.FindAction("Movement", throwIfNotFound: true);
-        // Menus
-        m_Menus = asset.FindActionMap("Menus", throwIfNotFound: true);
-        m_Menus_Back = m_Menus.FindAction("Back", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -292,39 +261,6 @@ public partial class @GameControls : IInputActionCollection2, IDisposable
         }
     }
     public GameplayActions @Gameplay => new GameplayActions(this);
-
-    // Menus
-    private readonly InputActionMap m_Menus;
-    private IMenusActions m_MenusActionsCallbackInterface;
-    private readonly InputAction m_Menus_Back;
-    public struct MenusActions
-    {
-        private @GameControls m_Wrapper;
-        public MenusActions(@GameControls wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Back => m_Wrapper.m_Menus_Back;
-        public InputActionMap Get() { return m_Wrapper.m_Menus; }
-        public void Enable() { Get().Enable(); }
-        public void Disable() { Get().Disable(); }
-        public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(MenusActions set) { return set.Get(); }
-        public void SetCallbacks(IMenusActions instance)
-        {
-            if (m_Wrapper.m_MenusActionsCallbackInterface != null)
-            {
-                @Back.started -= m_Wrapper.m_MenusActionsCallbackInterface.OnBack;
-                @Back.performed -= m_Wrapper.m_MenusActionsCallbackInterface.OnBack;
-                @Back.canceled -= m_Wrapper.m_MenusActionsCallbackInterface.OnBack;
-            }
-            m_Wrapper.m_MenusActionsCallbackInterface = instance;
-            if (instance != null)
-            {
-                @Back.started += instance.OnBack;
-                @Back.performed += instance.OnBack;
-                @Back.canceled += instance.OnBack;
-            }
-        }
-    }
-    public MenusActions @Menus => new MenusActions(this);
     private int m_KeyboardandmouseSchemeIndex = -1;
     public InputControlScheme KeyboardandmouseScheme
     {
@@ -337,9 +273,5 @@ public partial class @GameControls : IInputActionCollection2, IDisposable
     public interface IGameplayActions
     {
         void OnMovement(InputAction.CallbackContext context);
-    }
-    public interface IMenusActions
-    {
-        void OnBack(InputAction.CallbackContext context);
     }
 }

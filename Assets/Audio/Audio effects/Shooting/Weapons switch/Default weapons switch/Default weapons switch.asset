@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e306b4f91fb5134299a8e77f710254e, type: 3}
+  m_Name: Default weapons switch
+  m_EditorClassIdentifier: 
+  _audioClips:
+  - {fileID: 8300000, guid: 12f978e47b0604343898bda86e61c48d, type: 3}
+  - {fileID: 8300000, guid: adbb120619ec642aeb0c445de30399f3, type: 3}
+  - {fileID: 8300000, guid: ce69d1c9494ad4691b3bc7e03185bfe0, type: 3}
+  - {fileID: 8300000, guid: e972790c095e14f10b52866e2b538397, type: 3}
+  - {fileID: 8300000, guid: 7470798f827e146d4affc814b25583a2, type: 3}
+  - {fileID: 8300000, guid: 997e09b4306b645b2b17e5712d406044, type: 3}
+  - {fileID: 8300000, guid: 9b1e31b3d5d1a493eb2914ad82bb6821, type: 3}
+  - {fileID: 8300000, guid: 6d462e5b7b872495ca68e3892868fce2, type: 3}
+  - {fileID: 8300000, guid: 909960abceee0445197664f96695e6d2, type: 3}
+  - {fileID: 8300000, guid: 62c3ccd5c67d4402faffddf726196f79, type: 3}
+  - {fileID: 8300000, guid: 1eb2efb30a78a47d48574a123cde1f67, type: 3}
+  - {fileID: 8300000, guid: 9b0706a07e4ea44979cf0394787153b6, type: 3}
+  - {fileID: 8300000, guid: dccffc70375434265a6356cbadb7717a, type: 3}
+  - {fileID: 8300000, guid: 56d08d3997b624a98bab91f5627fd032, type: 3}
+  - {fileID: 8300000, guid: 725ebbb2e238e45d7b039031760b4e40, type: 3}
+  - {fileID: 8300000, guid: ca618f0fdb0c9462095ac70a23dc9416, type: 3}
+  - {fileID: 8300000, guid: 35abaae92343f4a06afc697d5e6700bb, type: 3}
+  - {fileID: 8300000, guid: f1599d641ccee46d981e9947cacf175b, type: 3}
+  _outputAudioGroup: {fileID: -557927281123615115, guid: fcf8532f154bbae47942ff673836eca5, type: 2}
+  _volume: 1
+  _volumeDeviation: 0.25
+  _priority: 2
+  _spatialBlend: 0.5
+  _spatialBlendDeviation: 0
+  _pitch: 1
+  _pitchDeviation: 0.25
