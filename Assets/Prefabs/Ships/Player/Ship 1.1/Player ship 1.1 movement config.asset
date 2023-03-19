@@ -18,8 +18,8 @@ MonoBehaviour:
   _verticalSpeedRandomDeviation: 0
   _customBoundsEnabled: 1
   _upperBoundDisplacement: 0
-  _lowerBoundDisplacement: 0.77
-  _sideBoundsDisplacement: 0.93
+  _lowerBoundDisplacement: 0.87
+  _sideBoundsDisplacement: 0.955
   _collisionDamageEnabled: 1
   _collisionDamage: 1000
   _collisionDamageRandomDeviation: 100

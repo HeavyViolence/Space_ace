@@ -17,12 +17,13 @@ namespace SpaceAce.Gameplay.Players
 
         private ObjectPoolEntryLookupTable _objectPoolEntryLookupTable;
         private GameControls _gameControls;
-        private IPlayerShipMovementController _playerShipMovementController;
-        private GameObject _activePlayerShip;
+        private GameObject _activeShip;
+
+        private IMovementController _shipMovementController;
 
         public string ID { get; }
         public string SaveName => "Player";
-        public ObjectPoolEntry SelectedPlayerShip { get; private set; }
+        public ObjectPoolEntry SelectedShip { get; private set; }
 
         public Player(string id, ObjectPoolEntry defaultPlayerShip, ObjectPoolEntryLookupTable table)
         {
@@ -38,7 +39,7 @@ namespace SpaceAce.Gameplay.Players
                 throw new ArgumentNullException(nameof(defaultPlayerShip), "Attempted to pass an empty default player ship!");
             }
 
-            SelectedPlayerShip = defaultPlayerShip;
+            SelectedShip = defaultPlayerShip;
 
             if (table == null)
             {
@@ -126,14 +127,10 @@ namespace SpaceAce.Gameplay.Players
 
         public void OnFixedUpdate()
         {
-            if (_gameControls.Gameplay.enabled)
-            {
-                var movementDirection = _gameControls.Gameplay.Movement.ReadValue<Vector2>();
-                _playerShipMovementController.Move(movementDirection);
-            }
+            MoveShip();
         }
 
-        public object GetState() => new PlayerSavableData(SelectedPlayerShip.AnchorName);
+        public object GetState() => new PlayerSavableData(SelectedShip.AnchorName);
 
         public void SetState(object state)
         {
@@ -144,9 +141,9 @@ namespace SpaceAce.Gameplay.Players
 
             if (state is PlayerSavableData value)
             {
-                if (_objectPoolEntryLookupTable.TryGetEntryByName(value.SelectedPlayerShipAnchorName, out var entry) == true)
+                if (_objectPoolEntryLookupTable.TryGetEntryByName(value.SelectedShipAnchorName, out var entry) == true)
                 {
-                    SelectedPlayerShip = entry;
+                    SelectedShip = entry;
                 }
             }
             else
@@ -163,20 +160,29 @@ namespace SpaceAce.Gameplay.Players
 
         #endregion
 
+        private void MoveShip()
+        {
+            if (_gameControls.Gameplay.enabled)
+            {
+                var movementDirection = _gameControls.Gameplay.Movement.ReadValue<Vector2>();
+                _shipMovementController.Move(movementDirection);
+            }
+        }
+
         #region event handlers
 
         private void LevelLoadedEventHandler(object sender, LevelLoadedEventArgs e)
         {
-            SelectedPlayerShip.EnsureObjectPoolExistence();
-            _activePlayerShip = s_multiobjectPool.Access.GetObject(SelectedPlayerShip.AnchorName);
+            SelectedShip.EnsureObjectPoolExistence();
+            _activeShip = s_multiobjectPool.Access.GetObject(SelectedShip.AnchorName);
 
-            if (_activePlayerShip.TryGetComponent(out IPlayerShipMovementController controller) == true)
+            if (_activeShip.TryGetComponent(out IMovementController movementController) == true)
             {
-                _playerShipMovementController = controller;
+                _shipMovementController = movementController;
             }
             else
             {
-                throw new MissingComponentException($"Player ship is missing a mandatory component of type {typeof(IPlayerShipMovementController)}!");
+                throw new MissingComponentException($"Player ship is missing a mandatory component of type {typeof(IMovementController)}!");
             }
 
             _gameControls.Gameplay.Enable();
@@ -184,10 +190,12 @@ namespace SpaceAce.Gameplay.Players
 
         private void MainMenuLoadedEventHandler(object sender, EventArgs e)
         {
-            if (_activePlayerShip != null)
+            if (_activeShip != null)
             {
-                s_multiobjectPool.Access.ReleaseObject(SelectedPlayerShip.AnchorName, _activePlayerShip);
-                _activePlayerShip = null;
+                s_multiobjectPool.Access.ReleaseObject(SelectedShip.AnchorName, _activeShip);
+
+                _activeShip = null;
+                _shipMovementController = null;
             }
         }
 
@@ -202,10 +210,10 @@ namespace SpaceAce.Gameplay.Players
         {
             if (entry == null)
             {
-                throw new ArgumentNullException(nameof(entry), "Attempted to pass an empty selected player ship!");
+                throw new ArgumentNullException(nameof(entry), "Attempted to pass an empty selected ship!");
             }
 
-            SelectedPlayerShip = entry;
+            SelectedShip = entry;
             SavingRequested?.Invoke(this, EventArgs.Empty);
         }
     }

@@ -7,18 +7,17 @@ namespace SpaceAce.Gameplay.Players
     public sealed class PlayerSavableData
     {
         [DataMember]
-        public string SelectedPlayerShipAnchorName { get; private set; }
+        public string SelectedShipAnchorName { get; private set; }
 
-        public PlayerSavableData(string selectedPlayerShipAnchorName)
+        public PlayerSavableData(string selectedShipAnchorName)
         {
-            if (string.IsNullOrEmpty(selectedPlayerShipAnchorName) ||
-                string.IsNullOrWhiteSpace(selectedPlayerShipAnchorName))
+            if (string.IsNullOrEmpty(selectedShipAnchorName) ||
+                string.IsNullOrWhiteSpace(selectedShipAnchorName))
             {
-                throw new ArgumentNullException(nameof(selectedPlayerShipAnchorName),
-                                                "Attepted to pass an empty selected player ship anchor name!");
+                throw new ArgumentNullException(nameof(selectedShipAnchorName), "Attepted to pass an empty selected ship anchor name!");
             }
 
-            SelectedPlayerShipAnchorName = selectedPlayerShipAnchorName;
+            SelectedShipAnchorName = selectedShipAnchorName;
         }
     }
 }

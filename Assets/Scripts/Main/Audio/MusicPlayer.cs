@@ -66,7 +66,7 @@ namespace SpaceAce.Main.Audio
         {
             while (true)
             {
-                _currentTrackAccess = _music.PlayRandomAudioClip(Vector2.zero);
+                _currentTrackAccess = _music.PlayNonRepeatingRandomAudioClip(Vector2.zero);
 
                 yield return new WaitForSeconds(PlaybackInterval + _currentTrackAccess.PlaybackDuration);
             }

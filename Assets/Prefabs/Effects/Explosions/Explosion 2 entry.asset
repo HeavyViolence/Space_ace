@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ba49e7649797e2b46a4f61e12fa4e2f9, type: 3}
-  m_Name: Player ship 1.1 object pool entry
+  m_Name: Explosion 2 entry
   m_EditorClassIdentifier: 
-  _prefab: {fileID: 2403042305234591589, guid: 2c52196b52d34df419daca9d40f6d17a, type: 3}
-  _anchorName: player ship 1.1
+  _prefab: {fileID: 8372153070486645961, guid: 96ce089f7a3700f48955fcdbb6665c45, type: 3}
+  _anchorName: explosion 2

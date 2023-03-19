@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace SpaceAce.Gameplay.Movement
 {
-    public sealed class PlayerShipMovement : CollidableMovement, IPlayerShipMovementController
+    public sealed class PlayerShipMovement : CollidableMovement, IMovementController
     {
         private const float SpawnPositionDisplacementFactor = 0.5f;
 

@@ -18,7 +18,7 @@ TagManager:
   - Bosses
   - Meteors
   - Space debris
-  - Mines
+  - Bombs
   - Loot
   - 
   - 
@@ -41,8 +41,11 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Mines
+  - name: Bombs
     uniqueID: 3833994025
+    locked: 0
+  - name: Enemy projectiles
+    uniqueID: 3311181575
     locked: 0
   - name: Enemies
     uniqueID: 440621235
@@ -50,8 +53,8 @@ TagManager:
   - name: Bosses
     uniqueID: 1508380229
     locked: 0
-  - name: Enemy projectiles
-    uniqueID: 3311181575
+  - name: Enemy projectile hits
+    uniqueID: 922456709
     locked: 0
   - name: Meteors
     uniqueID: 3995712827
@@ -62,9 +65,15 @@ TagManager:
   - name: Loot
     uniqueID: 428617293
     locked: 0
+  - name: Player projectiles
+    uniqueID: 2106981765
+    locked: 0
   - name: Player
     uniqueID: 2420514477
     locked: 0
-  - name: Player projectiles
-    uniqueID: 2106981765
+  - name: Player projectile hits
+    uniqueID: 34549763
+    locked: 0
+  - name: Explosions
+    uniqueID: 2150429601
     locked: 0

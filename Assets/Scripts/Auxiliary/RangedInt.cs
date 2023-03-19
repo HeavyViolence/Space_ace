@@ -14,7 +14,7 @@ namespace SpaceAce.Auxiliary
         public int MaxValue { get; }
         public int RandomValue => _random.Next(MinValue, MaxValue + 1);
         public int RangeWidth => MaxValue - MinValue;
-        public int Mean => MinValue + RangeWidth / 2;
+        public float Mean => (MinValue + MaxValue) / 2f;
         public bool IsZeroed => Equals(Zero);
 
         public RangedInt(int pivot, int range)
@@ -75,9 +75,11 @@ namespace SpaceAce.Auxiliary
 
         public override bool Equals(object obj) => Equals(obj as RangedInt);
 
-        public bool Equals(RangedInt other) => other is not null && Mean.Equals(other.Mean);
+        public bool Equals(RangedInt other) => other is not null &&
+                                               RangeWidth.Equals(other.RangeWidth) &&
+                                               Mean.Equals(other.Mean);
 
-        public override int GetHashCode() => Mean.GetHashCode();
+        public override int GetHashCode() => RangeWidth.GetHashCode() ^ Mean.GetHashCode();
 
         public int CompareTo(RangedInt other)
         {
@@ -96,6 +98,19 @@ namespace SpaceAce.Auxiliary
                 return 1;
             }
 
+            if (Mean == other.Mean)
+            {
+                if (RangeWidth < other.RangeWidth)
+                {
+                    return -1;
+                }
+
+                if (RangeWidth > other.RangeWidth)
+                {
+                    return 1;
+                }
+            }
+
             return 0;
         }
 
@@ -109,6 +124,19 @@ namespace SpaceAce.Auxiliary
             if (x.Mean > y.Mean)
             {
                 return 1;
+            }
+
+            if (x.Mean == y.Mean)
+            {
+                if (x.RangeWidth < y.RangeWidth)
+                {
+                    return -1;
+                }
+
+                if (x.RangeWidth > y.RangeWidth)
+                {
+                    return 1;
+                }
             }
 
             return 0;
@@ -143,7 +171,14 @@ namespace SpaceAce.Auxiliary
                 return true;
             }
 
-            return x.Mean > y.Mean;
+            if (x.Mean == y.Mean)
+            {
+                return x.RangeWidth > y.RangeWidth;
+            }
+            else
+            {
+                return x.Mean > y.Mean;
+            }
         }
 
         public static bool operator <(RangedInt x, RangedInt y)
@@ -158,7 +193,14 @@ namespace SpaceAce.Auxiliary
                 return true;
             }
 
-            return x.Mean < y.Mean;
+            if (x.Mean == y.Mean)
+            {
+                return x.RangeWidth < y.RangeWidth;
+            }
+            else
+            {
+                return x.Mean < y.Mean;
+            }
         }
 
         public static bool operator >=(RangedInt x, RangedInt y) => x > y || x == y;

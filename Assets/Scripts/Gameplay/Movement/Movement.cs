@@ -16,23 +16,15 @@ namespace SpaceAce.Gameplay.Movement
 
         protected Rigidbody2D Body { get; private set; } = null;
         protected Action<Rigidbody2D> MovementBehaviour { get; set; } = null;
-        protected bool ApplyMovementBehaviourOnEveryPhysicsUpdate { get; set; } = false;
 
         protected virtual void Awake()
         {
             Body = GetComponent<Rigidbody2D>();
-
-            Body.bodyType = RigidbodyType2D.Kinematic;
-            Body.simulated = true;
-            Body.useFullKinematicContacts = true;
-            Body.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
-            Body.sleepMode = RigidbodySleepMode2D.StartAwake;
-            Body.interpolation = RigidbodyInterpolation2D.Interpolate;
+            SetupRigidbody(Body);
         }
 
         protected virtual void OnDisable()
         {
-            ApplyMovementBehaviourOnEveryPhysicsUpdate = false;
             MovementBehaviour = null;
             Escaped = null;
         }
@@ -45,6 +37,16 @@ namespace SpaceAce.Gameplay.Movement
             }
 
             MovementBehaviour(Body);
+        }
+
+        protected virtual void SetupRigidbody(Rigidbody2D body)
+        {
+            body.bodyType = RigidbodyType2D.Kinematic;
+            body.simulated = true;
+            body.useFullKinematicContacts = true;
+            body.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+            body.sleepMode = RigidbodySleepMode2D.StartAwake;
+            body.interpolation = RigidbodyInterpolation2D.Interpolate;
         }
 
         public void BeginWatchForEscape(Func<bool> escapeCondition)

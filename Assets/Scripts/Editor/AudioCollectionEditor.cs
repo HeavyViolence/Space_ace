@@ -12,18 +12,19 @@ namespace SpaceAce.Editors
         private SerializedProperty _outputAudioGroup;
 
         private SerializedProperty _volume;
-        private SerializedProperty _volumeDeviation;
+        private SerializedProperty _volumeRandomDeviation;
 
         private SerializedProperty _priority;
 
         private SerializedProperty _spatialBlend;
-        private SerializedProperty _spatialBlendDeviation;
+        private SerializedProperty _spatialBlendRandomDeviation;
 
         private SerializedProperty _pitch;
-        private SerializedProperty _pitchDeviation;
+        private SerializedProperty _pitchRandomDeviation;
 
         private AudioCollection _target = null;
         private AudioSource _audioPreviewer = null;
+        private int _lastAppliedSettingsHashSum = 0;
 
         private void OnEnable()
         {
@@ -32,15 +33,15 @@ namespace SpaceAce.Editors
             _outputAudioGroup = serializedObject.FindProperty("_outputAudioGroup");
 
             _volume = serializedObject.FindProperty("_volume");
-            _volumeDeviation = serializedObject.FindProperty("_volumeDeviation");
+            _volumeRandomDeviation = serializedObject.FindProperty("_volumeRandomDeviation");
 
             _priority = serializedObject.FindProperty("_priority");
 
             _spatialBlend = serializedObject.FindProperty("_spatialBlend");
-            _spatialBlendDeviation = serializedObject.FindProperty("_spatialBlendDeviation");
+            _spatialBlendRandomDeviation = serializedObject.FindProperty("_spatialBlendRandomDeviation");
 
             _pitch = serializedObject.FindProperty("_pitch");
-            _pitchDeviation = serializedObject.FindProperty("_pitchDeviation");
+            _pitchRandomDeviation = serializedObject.FindProperty("_pitchRandomDeviation");
 
             _target = (AudioCollection)target;
         }
@@ -56,26 +57,33 @@ namespace SpaceAce.Editors
 
             EditorGUILayout.Separator();
             EditorGUILayout.Slider(_volume, 0f, 1f, "Volume 1 unit away");
-            EditorGUILayout.Slider(_volumeDeviation, 0f, _volume.floatValue, "Random deviation");
+            EditorGUILayout.Slider(_volumeRandomDeviation, 0f, _volume.floatValue, "Max random deviation");
 
             EditorGUILayout.Separator();
             EditorGUILayout.PropertyField(_priority, new GUIContent("Audio priority"));
 
             EditorGUILayout.Separator();
-            EditorGUILayout.Slider(_spatialBlend, 0f, 1f, "Spatial blend");
-            EditorGUILayout.Slider(_spatialBlendDeviation, 0f, _spatialBlend.floatValue, "Random deviation");
+            EditorGUILayout.Slider(_spatialBlend, AudioCollection.MinSpatialBlend, AudioCollection.MaxSpatialBlend, "Spatial blend");
+            EditorGUILayout.Slider(_spatialBlendRandomDeviation, 0f, _spatialBlend.floatValue, "Max random deviation");
 
             EditorGUILayout.Separator();
             EditorGUILayout.Slider(_pitch, AudioCollection.MinPitch, AudioCollection.MaxPitch, "Pitch");
-            EditorGUILayout.Slider(_pitchDeviation, 0f, _pitch.floatValue, "Random deviation");
-
+            EditorGUILayout.Slider(_pitchRandomDeviation, 0f, _pitch.floatValue, "Max random deviation");
             EditorGUILayout.Separator();
 
             if (GUILayout.Button("Preview audio"))
             {
-                if (_target.ClipsAmount == 0)
+                if (_target.AudioClipsAmount == 0)
                 {
                     return;
+                }
+
+                int currentSettingsHashSum = GetCurrentSettingsHashSum();
+
+                if (_lastAppliedSettingsHashSum != currentSettingsHashSum)
+                {
+                    _lastAppliedSettingsHashSum = currentSettingsHashSum;
+                    _target.ApplySettings();
                 }
 
                 if (_audioPreviewer != null)
@@ -89,9 +97,9 @@ namespace SpaceAce.Editors
                 _audioPreviewer = audioPreviewObject.AddComponent<AudioSource>();
 
                 _audioPreviewer.clip = _target.RandomAudioClip;
-                _audioPreviewer.spatialBlend = 0f;
-                _audioPreviewer.pitch = _target.Pitch;
-                _audioPreviewer.volume = _target.Volume;
+                _audioPreviewer.spatialBlend = _target.SpatialBlend.RandomValue;
+                _audioPreviewer.pitch = _target.Pitch.RandomValue;
+                _audioPreviewer.volume = _target.Volume.RandomValue;
                 _audioPreviewer.outputAudioMixerGroup = _target.OutputAudioGroup;
 
                 _audioPreviewer.Play();
@@ -108,6 +116,22 @@ namespace SpaceAce.Editors
             }
 
             serializedObject.ApplyModifiedProperties();
+        }
+
+        private int GetCurrentSettingsHashSum()
+        {
+            int sum = 0;
+
+            sum += _volume.floatValue.GetHashCode();
+            sum += _volumeRandomDeviation.floatValue.GetHashCode();
+
+            sum += _spatialBlend.floatValue.GetHashCode();
+            sum += _spatialBlendRandomDeviation.floatValue.GetHashCode();
+
+            sum += _pitch.floatValue.GetHashCode();
+            sum += _pitchRandomDeviation.floatValue.GetHashCode();
+
+            return sum;
         }
     }
 }
