@@ -7,47 +7,55 @@ namespace SpaceAce.Editors
     [CustomEditor(typeof(HealthConfig))]
     public sealed class HealthConfigEditor : Editor
     {
-        private SerializedProperty _healthLimit;
-        private SerializedProperty _healthLimitRandomDeviation;
+        private SerializedProperty _maxHealth;
+        private SerializedProperty _maxHealthRandomDeviation;
 
-        private SerializedProperty _regenEnabled;
-        private SerializedProperty _regenPerSecond;
-        private SerializedProperty _regenPerSecondRandomDeviation;
+        private SerializedProperty _regenerationEnabled;
+        private SerializedProperty _regenerationPerSecond;
+        private SerializedProperty _regenerationPerSecondRandomDeviation;
 
         private SerializedProperty _deathEffect;
         private SerializedProperty _deathAudio;
 
-        private SerializedProperty _cameraShakeOnDamagedEnabled;
+        private SerializedProperty _cameraShakeOnDamaged;
+
+        private HealthConfig _target;
 
         private void OnEnable()
         {
-            _healthLimit = serializedObject.FindProperty("_healthLimit");
-            _healthLimitRandomDeviation = serializedObject.FindProperty("_healthLimitRandomDeviation");
+            _maxHealth = serializedObject.FindProperty("_maxHealth");
+            _maxHealthRandomDeviation = serializedObject.FindProperty("_maxHealthRandomDeviation");
 
-            _regenEnabled = serializedObject.FindProperty("_regenEnabled");
-            _regenPerSecond = serializedObject.FindProperty("_regenPerSecond");
-            _regenPerSecondRandomDeviation = serializedObject.FindProperty("_regenPerSecondRandomDeviation");
+            _regenerationEnabled = serializedObject.FindProperty("_regenerationEnabled");
+            _regenerationPerSecond = serializedObject.FindProperty("_regenerationPerSecond");
+            _regenerationPerSecondRandomDeviation = serializedObject.FindProperty("_regenerationPerSecondRandomDeviation");
 
             _deathEffect = serializedObject.FindProperty("_deathEffect");
             _deathAudio = serializedObject.FindProperty("_deathAudio");
 
-            _cameraShakeOnDamagedEnabled = serializedObject.FindProperty("_cameraShakeOnDamagedEnabled");
+            _cameraShakeOnDamaged = serializedObject.FindProperty("_cameraShakeOnDamaged");
+
+            _target = (HealthConfig)target;
         }
 
         public override void OnInspectorGUI()
         {
             serializedObject.Update();
 
-            EditorGUILayout.Slider(_healthLimit, HealthConfig.MinHealth, HealthConfig.MaxHealth, "Max health");
-            EditorGUILayout.Slider(_healthLimitRandomDeviation, 0f, _healthLimit.floatValue, "Max random deviation");
+            EditorGUILayout.Slider(_maxHealth, HealthConfig.MinHealth, HealthConfig.MaxHealth, "Max health");
+            EditorGUILayout.Slider(_maxHealthRandomDeviation, 0f, _maxHealth.floatValue, "Max random deviation");
+
+            _maxHealthRandomDeviation.floatValue = Mathf.Clamp(_maxHealthRandomDeviation.floatValue, 0f, _maxHealth.floatValue);
 
             EditorGUILayout.Separator();
-            EditorGUILayout.PropertyField(_regenEnabled, new GUIContent("Enable health regeneration"));
+            EditorGUILayout.PropertyField(_regenerationEnabled, new GUIContent("Enable health regeneration"));
 
-            if (_regenEnabled.boolValue == true)
+            if (_regenerationEnabled.boolValue == true)
             {
-                EditorGUILayout.Slider(_regenPerSecond, HealthConfig.MinHealthRegenPerSecond, HealthConfig.MaxHealthRegenPerSecond, "Regen per second");
-                EditorGUILayout.Slider(_regenPerSecondRandomDeviation, 0f, _regenPerSecond.floatValue, "Max random deviation");
+                EditorGUILayout.Slider(_regenerationPerSecond, HealthConfig.MinHealthRegenerationPerSecond, HealthConfig.MaxHealthRegenerationPerSecond, "Regeneration per second");
+                EditorGUILayout.Slider(_regenerationPerSecondRandomDeviation, 0f, _regenerationPerSecond.floatValue, "Max random deviation");
+
+                _regenerationPerSecondRandomDeviation.floatValue = Mathf.Clamp(_regenerationPerSecondRandomDeviation.floatValue, 0f, _regenerationPerSecond.floatValue);
             }
 
             EditorGUILayout.Separator();
@@ -55,7 +63,14 @@ namespace SpaceAce.Editors
             EditorGUILayout.PropertyField(_deathAudio, new GUIContent("Death audio"));
 
             EditorGUILayout.Separator();
-            EditorGUILayout.PropertyField(_cameraShakeOnDamagedEnabled, new GUIContent("Camera shake upon damage"));
+            EditorGUILayout.PropertyField(_cameraShakeOnDamaged, new GUIContent("Camera shake on damage"));
+
+            EditorGUILayout.Separator();
+
+            if (GUILayout.Button("Apply settings"))
+            {
+                _target.ApplySettings();
+            }
 
             serializedObject.ApplyModifiedProperties();
         }

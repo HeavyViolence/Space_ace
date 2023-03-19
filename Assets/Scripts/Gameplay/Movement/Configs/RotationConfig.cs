@@ -24,6 +24,11 @@ namespace SpaceAce.Gameplay.Movement
 
         private void OnEnable()
         {
+            ApplySettings();
+        }
+
+        public void ApplySettings()
+        {
             switch (_rotationDirection)
             {
                 case RotationDirection.Left:

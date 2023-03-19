@@ -24,6 +24,8 @@ namespace SpaceAce.Editors
         private SerializedProperty _collisionAudio;
         private SerializedProperty _cameraShakeOnCollisionEnabled;
 
+        private MovementConfig _target;
+
         protected virtual void OnEnable()
         {
             _horizontalSpeed = serializedObject.FindProperty("_horizontalSpeed");
@@ -42,6 +44,8 @@ namespace SpaceAce.Editors
             _collisionDamageRandomDeviation = serializedObject.FindProperty("_collisionDamageRandomDeviation");
             _collisionAudio = serializedObject.FindProperty("_collisionAudio");
             _cameraShakeOnCollisionEnabled = serializedObject.FindProperty("_cameraShakeOnCollisionEnabled");
+
+            _target = (MovementConfig)target;
         }
 
         public override void OnInspectorGUI()
@@ -49,19 +53,15 @@ namespace SpaceAce.Editors
             serializedObject.Update();
 
             EditorGUILayout.Slider(_horizontalSpeed, 0f, MovementConfig.MaxSpeed, "Horizontal speed");
-            
-            if (_horizontalSpeed.floatValue > 0f)
-            {
-                EditorGUILayout.Slider(_horizontalSpeedRandomDeviation, 0f, _horizontalSpeed.floatValue, "Max random deviation");
-            }
+            EditorGUILayout.Slider(_horizontalSpeedRandomDeviation, 0f, _horizontalSpeed.floatValue, "Max random deviation");
+
+            _horizontalSpeedRandomDeviation.floatValue = Mathf.Clamp(_horizontalSpeedRandomDeviation.floatValue, 0f, _horizontalSpeed.floatValue);
 
             EditorGUILayout.Separator();
             EditorGUILayout.Slider(_verticalSpeed, 0f, MovementConfig.MaxSpeed, "Vertical speed");
+            EditorGUILayout.Slider(_verticalSpeedRandomDeviation, 0f, _verticalSpeed.floatValue, "Max random deviation");
 
-            if (_verticalSpeed.floatValue > 0f)
-            {
-                EditorGUILayout.Slider(_verticalSpeedRandomDeviation, 0f, _verticalSpeed.floatValue, "Max random deviation");
-            }
+            _verticalSpeedRandomDeviation.floatValue = Mathf.Clamp(_verticalSpeedRandomDeviation.floatValue, 0f, _verticalSpeed.floatValue);
 
             EditorGUILayout.Separator();
             EditorGUILayout.PropertyField(_customBoundsEnabled, new GUIContent("Enable custom bounds"));
@@ -80,8 +80,18 @@ namespace SpaceAce.Editors
             {
                 EditorGUILayout.Slider(_collisionDamage, MovementConfig.MinCollisionDamage, MovementConfig.MaxCollisionDamage, "Collision damage");
                 EditorGUILayout.Slider(_collisionDamageRandomDeviation, 0f, _collisionDamage.floatValue, "Max random deviation");
+
+                _collisionDamageRandomDeviation.floatValue = Mathf.Clamp(_collisionDamageRandomDeviation.floatValue, 0f, _collisionDamage.floatValue);
+
                 EditorGUILayout.PropertyField(_collisionAudio, new GUIContent("Collision audio"));
-                EditorGUILayout.PropertyField(_cameraShakeOnCollisionEnabled, new GUIContent("Camera shake"));
+                EditorGUILayout.PropertyField(_cameraShakeOnCollisionEnabled, new GUIContent("Camera shake on collision"));
+            }
+
+            EditorGUILayout.Separator();
+
+            if (GUILayout.Button("Apply settings"))
+            {
+                _target.ApplySettings();
             }
 
             serializedObject.ApplyModifiedProperties();

@@ -9,15 +9,19 @@ namespace SpaceAce.Editors
     {
         private SerializedProperty _armorEnabled;
 
-        private SerializedProperty _armorValue;
-        private SerializedProperty _armorValueRandomDeviation;
+        private SerializedProperty _armor;
+        private SerializedProperty _armorRandomDeviation;
+
+        private ArmorConfig _target;
 
         private void OnEnable()
         {
             _armorEnabled = serializedObject.FindProperty("_armorEnabled");
 
-            _armorValue = serializedObject.FindProperty("_armorValue");
-            _armorValueRandomDeviation = serializedObject.FindProperty("_armorValueRandomDeviation");
+            _armor = serializedObject.FindProperty("_armor");
+            _armorRandomDeviation = serializedObject.FindProperty("_armorRandomDeviation");
+
+            _target = (ArmorConfig)target;
         }
 
         public override void OnInspectorGUI()
@@ -29,8 +33,17 @@ namespace SpaceAce.Editors
             if (_armorEnabled.boolValue == true)
             {
                 EditorGUILayout.Separator();
-                EditorGUILayout.Slider(_armorValue, ArmorConfig.MinArmor, ArmorConfig.MaxArmor, "Armor");
-                EditorGUILayout.Slider(_armorValueRandomDeviation, 0f, _armorValue.floatValue, "Max random deviation");
+                EditorGUILayout.Slider(_armor, ArmorConfig.MinArmor, ArmorConfig.MaxArmor, "Armor");
+                EditorGUILayout.Slider(_armorRandomDeviation, 0f, _armor.floatValue, "Max random deviation");
+
+                _armorRandomDeviation.floatValue = Mathf.Clamp(_armorRandomDeviation.floatValue, 0f, _armor.floatValue);
+            }
+
+            EditorGUILayout.Separator();
+
+            if (GUILayout.Button("Apply settings"))
+            {
+                _target.ApplySettings();
             }
 
             serializedObject.ApplyModifiedProperties();

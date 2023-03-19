@@ -11,13 +11,20 @@ namespace SpaceAce.Gameplay.Damageables
 
         [SerializeField] private bool _armorEnabled = false;
 
-        [SerializeField] private float _armorValue = MinArmor;
-        [SerializeField] private float _armorValueRandomDeviation = 0f;
+        [SerializeField] private float _armor = MinArmor;
+        [SerializeField] private float _armorRandomDeviation = 0f;
 
         public bool ArmorEnabled => _armorEnabled;
+        public RangedFloat Armor { get; private set; }
 
-        public float RandomArmorValue => ArmorEnabled ? _armorValue + _armorValueRandomDeviation * AuxMath.RandomNormal : MinArmor;
-        public float MinArmorValue => ArmorEnabled ? _armorValue - _armorValueRandomDeviation : MinArmor;
-        public float MaxArmorvalue => ArmorEnabled ? _armorValue + _armorValueRandomDeviation : MinArmor;
+        private void OnEnable()
+        {
+            ApplySettings();
+        }
+
+        public void ApplySettings()
+        {
+            Armor = ArmorEnabled ? new(_armor, _armorRandomDeviation) : RangedFloat.Zero;
+        }
     }
 }

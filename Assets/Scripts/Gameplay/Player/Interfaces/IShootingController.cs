@@ -2,10 +2,9 @@ namespace SpaceAce.Gameplay.Players
 {
     public interface IShootingController
     {
-        int AvailableWeaponGroups { get; }
-
-        void SwitchToPreviousWeaponGroup();
-        void SwitchToNextWeaponGroup();
-        void Shoot();
+        bool Shoot();
+        bool StopShooting();
+        bool SwitchToNextWeapons();
+        bool SwitchToPreviousWeapons();
     }
 }

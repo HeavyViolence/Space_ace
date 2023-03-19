@@ -29,7 +29,7 @@ namespace SpaceAce.Gameplay.Damageables
 
         protected virtual void OnEnable()
         {
-            MaxValue = _config.RandomHealthLimit;
+            MaxValue = _config.HealthCeiling.RandomValue;
             Value = MaxValue;
             RegenPerSecond = GetRegenPerSecond();
             RegainedValue = 0f;
@@ -51,11 +51,11 @@ namespace SpaceAce.Gameplay.Damageables
             RestoreHealthIfRegenIsEnabled();
         }
 
-        protected virtual float GetRegenPerSecond() => _config.RandomRegenPerSecond;
+        protected virtual float GetRegenPerSecond() => _config.Regeneration.RandomValue;
 
         private void RestoreHealthIfRegenIsEnabled()
         {
-            if (_config.RegenEnabled && ValueIsFull == false)
+            if (_config.RegenerationEnabled && ValueIsFull == false)
             {
                 float regainedValue = RegenPerSecond * Time.deltaTime;
 

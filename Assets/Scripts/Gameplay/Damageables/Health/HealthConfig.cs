@@ -11,36 +11,43 @@ namespace SpaceAce.Gameplay.Damageables
         public const float MinHealth = 100f;
         public const float MaxHealth = 10000f;
 
-        public const float MinHealthRegenPerSecond = 10f;
-        public const float MaxHealthRegenPerSecond = 1000f;
+        public const float MinHealthRegenerationPerSecond = 10f;
+        public const float MaxHealthRegenerationPerSecond = 1000f;
 
-        [SerializeField] private float _healthLimit = MinHealth;
-        [SerializeField] private float _healthLimitRandomDeviation = 0f;
+        [SerializeField] private float _maxHealth = MinHealth;
+        [SerializeField] private float _maxHealthRandomDeviation = 0f;
 
-        [SerializeField] private bool _regenEnabled = false;
-        [SerializeField] private float _regenPerSecond = MinHealthRegenPerSecond;
-        [SerializeField] private float _regenPerSecondRandomDeviation = 0f;
+        [SerializeField] private bool _regenerationEnabled = false;
+        [SerializeField] private float _regeneartionPerSecond = MinHealthRegenerationPerSecond;
+        [SerializeField] private float _regenerationPerSecondRandomDeviation = 0f;
 
         [SerializeField] private ObjectPoolEntry _deathEffect = null;
         [SerializeField] private AudioCollection _deathAudio = null;
 
-        [SerializeField] private bool _cameraShakeOnDamagedEnabled = false;
+        [SerializeField] private bool _cameraShakeOnDamaged = false;
 
-        public float RandomHealthLimit => _healthLimit + _healthLimitRandomDeviation * AuxMath.RandomNormal;
-        public float MinHealthLimit => _healthLimit - _healthLimitRandomDeviation;
-        public float MaxHealthLimit => _healthLimit + _healthLimitRandomDeviation;
+        public RangedFloat HealthCeiling { get; private set; }
 
-        public bool RegenEnabled => _regenEnabled;
-        public float MinRegenPerSecond => RegenEnabled ? _regenPerSecond - _regenPerSecondRandomDeviation : 0f;
-        public float MaxRegenPerSecond => RegenEnabled ? _regenPerSecond + _regenPerSecondRandomDeviation : 0f;
-        public float RandomRegenPerSecond => RegenEnabled ? _regenPerSecond + _regenPerSecondRandomDeviation * AuxMath.RandomNormal : 0f;
+        public bool RegenerationEnabled => _regenerationEnabled;
+        public RangedFloat Regeneration { get; private set; }
 
         public string DeathEffectAnchorName => _deathEffect.AnchorName;
 
         public AudioCollection DeathAudio => _deathAudio;
 
-        public bool CameraShakeOnDamagedEnabled => _cameraShakeOnDamagedEnabled;
+        public bool CameraShakeOnDamagedEnabled => _cameraShakeOnDamaged;
+
+        private void OnEnable()
+        {
+            ApplySettings();
+        }
 
         public void EnsureDeathEffectObjectPoolExistence() => _deathEffect.EnsureObjectPoolExistence();
+
+        public void ApplySettings()
+        {
+            HealthCeiling = new(_maxHealth, _maxHealthRandomDeviation);
+            Regeneration = RegenerationEnabled ? new(_regeneartionPerSecond, _regenerationPerSecondRandomDeviation) : RangedFloat.Zero;
+        }
     }
 }

@@ -1,5 +1,6 @@
 using SpaceAce.Gameplay.Movement;
 using UnityEditor;
+using UnityEngine;
 
 namespace SpaceAce.Editors
 {
@@ -18,6 +19,8 @@ namespace SpaceAce.Editors
         private SerializedProperty _verticalSpeedTranstitionDuration;
         private SerializedProperty _verticalSpeedTranstitionDurationRandomDeviation;
 
+        private ShipMovementConfig _target;
+
         protected override void OnEnable()
         {
             base.OnEnable();
@@ -33,6 +36,8 @@ namespace SpaceAce.Editors
 
             _verticalSpeedTranstitionDuration = serializedObject.FindProperty("_verticalSpeedTranstitionDuration");
             _verticalSpeedTranstitionDurationRandomDeviation = serializedObject.FindProperty("_verticalSpeedTranstitionDurationRandomDeviation");
+
+            _target = (ShipMovementConfig)target;
         }
 
         public override void OnInspectorGUI()
@@ -42,14 +47,18 @@ namespace SpaceAce.Editors
             serializedObject.Update();
 
             EditorGUILayout.Separator();
-            EditorGUILayout.Slider(_horizontalSpeedDuration,
-                                   ShipMovementConfig.MinSpeedDuration,
+            EditorGUILayout.Slider(_horizontalSpeedDuration, ShipMovementConfig.MinSpeedDuration,
                                    ShipMovementConfig.MaxSpeedDuration,
                                    "Horizontal speed duration");
             EditorGUILayout.Slider(_horizontalSpeedDurationRandomDeviation,
                                    0f,
                                    _horizontalSpeedDuration.floatValue,
                                    "Max random deviation");
+
+            _horizontalSpeedDurationRandomDeviation.floatValue = Mathf.Clamp(_horizontalSpeedDurationRandomDeviation.floatValue,
+                                                                             0f,
+                                                                             _horizontalSpeedDuration.floatValue);
+
             EditorGUILayout.Slider(_horizontalSpeedTransitionDuration,
                                    ShipMovementConfig.MinSpeedTransitionDuration,
                                    ShipMovementConfig.MaxSpeedTransitionDuration,
@@ -58,6 +67,10 @@ namespace SpaceAce.Editors
                                    0f,
                                    _horizontalSpeedTransitionDuration.floatValue,
                                    "Max random deviation");
+
+            _horizontalSpeedTransitionDurationRandomDeviation.floatValue = Mathf.Clamp(_horizontalSpeedTransitionDurationRandomDeviation.floatValue,
+                                                                                       0f,
+                                                                                       _horizontalSpeedTransitionDuration.floatValue);
 
             EditorGUILayout.Separator();
             EditorGUILayout.Slider(_verticalSpeedDuration,
@@ -68,6 +81,11 @@ namespace SpaceAce.Editors
                                    0f,
                                    _verticalSpeedDuration.floatValue,
                                    "Max random deviation");
+
+            _verticalSpeedDurationRandomDeviation.floatValue = Mathf.Clamp(_verticalSpeedDurationRandomDeviation.floatValue,
+                                                                           0f,
+                                                                           _verticalSpeedDuration.floatValue);
+
             EditorGUILayout.Slider(_verticalSpeedTranstitionDuration,
                                    ShipMovementConfig.MinSpeedTransitionDuration,
                                    ShipMovementConfig.MaxSpeedTransitionDuration,
@@ -76,6 +94,17 @@ namespace SpaceAce.Editors
                                    0f,
                                    _verticalSpeedTranstitionDuration.floatValue,
                                    "Max random deviation");
+
+            _verticalSpeedTranstitionDurationRandomDeviation.floatValue = Mathf.Clamp(_verticalSpeedTranstitionDurationRandomDeviation.floatValue,
+                                                                                      0f,
+                                                                                      _verticalSpeedTranstitionDuration.floatValue);
+
+            EditorGUILayout.Separator();
+
+            if (GUILayout.Button("Apply settings"))
+            {
+                _target.ApplySettings();
+            }
 
             serializedObject.ApplyModifiedProperties();
         }

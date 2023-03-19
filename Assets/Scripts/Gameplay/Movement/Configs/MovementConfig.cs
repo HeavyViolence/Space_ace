@@ -75,6 +75,11 @@ namespace SpaceAce.Gameplay.Movement
 
         private void OnEnable()
         {
+            ApplySettings();
+        }
+
+        public void ApplySettings()
+        {
             HorizontalSpeed = new(_horizontalSpeed, _horizontalSpeedRandomDeviation);
             VerticalSpeed = new(_verticalSpeed, _verticalSpeedRandomDeviation);
             CollisionDamage = CollisionDamageEnabled ? new(_collisionDamage, _collisionDamageRandomDeviation) : RangedFloat.Zero;

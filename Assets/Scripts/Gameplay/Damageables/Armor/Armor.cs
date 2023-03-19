@@ -14,7 +14,7 @@ namespace SpaceAce.Gameplay.Damageables
 
         protected void OnEnable()
         {
-            Value = _config.RandomArmorValue;
+            Value = _config.Armor.RandomValue;
             BlockedDamage = 0f;
         }
 
