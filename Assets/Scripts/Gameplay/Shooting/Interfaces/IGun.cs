@@ -2,7 +2,8 @@ namespace SpaceAce.Gameplay.Shooting
 {
     public interface IGun
     {
-        int ID { get; }
+        int GunGroupID { get; }
+        bool ReadyToFire { get; }
         bool Fire();
         bool StopFire();
     }

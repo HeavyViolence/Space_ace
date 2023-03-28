@@ -5,7 +5,7 @@ namespace SpaceAce.Architecture
 {
     public static class GameServices
     {
-        private static readonly Dictionary<Type, object> _services = new();
+        private static readonly Dictionary<Type, object> s_services = new();
 
         public static void Register(object service)
         {
@@ -14,12 +14,12 @@ namespace SpaceAce.Architecture
                 throw new EmptyGameServiceRegistrationAttemptException();
             }
 
-            if (_services.ContainsKey(service.GetType()))
+            if (s_services.ContainsKey(service.GetType()))
             {
                 throw new DuplicateGameServiceRegistrationAttemptException(service);
             }
 
-            _services.Add(service.GetType(), service);
+            s_services.Add(service.GetType(), service);
         }
 
         public static void Deregister(object service)
@@ -29,17 +29,17 @@ namespace SpaceAce.Architecture
                 throw new EmptyGameServiceDeregistrationAttemptException();
             }
 
-            if (_services.ContainsKey(service.GetType()) == false)
+            if (s_services.ContainsKey(service.GetType()) == false)
             {
                 throw new UnregisteredGameServiceDeregistrationAttemptException(service);
             }
 
-            _services.Remove(service.GetType());
+            s_services.Remove(service.GetType());
         }
 
         public static bool TryGetService<T>(out T service)
         {
-            if (_services.TryGetValue(typeof(T), out var value) == true)
+            if (s_services.TryGetValue(typeof(T), out var value) == true)
             {
                 service = (T)value;
 

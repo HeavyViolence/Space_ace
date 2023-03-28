@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace SpaceAce.Gameplay.Players
 {
-    public sealed class Player : IInitializable, ISavable, IFixedUpdatable
+    public sealed class Player : IInitializable, ISavable, IFixedUpdatable, IUpdatable
     {
         private static readonly GameServiceFastAccess<MultiobjectPool> s_multiobjectPool = new();
 
@@ -20,6 +20,7 @@ namespace SpaceAce.Gameplay.Players
         private GameObject _activeShip;
 
         private IMovementController _shipMovementController;
+        private IShootingController _shipShootingController;
 
         public string ID { get; }
         public string SaveName => "Player";
@@ -61,6 +62,8 @@ namespace SpaceAce.Gameplay.Players
 
         public void OnSubscribe()
         {
+            _gameControls.Gameplay.Shooting.performed += (c) => _shipShootingController.Shoot();
+
             if (GameServices.TryGetService(out SavingSystem system) == true)
             {
                 system.Register(this);
@@ -92,6 +95,8 @@ namespace SpaceAce.Gameplay.Players
 
         public void OnUnsubscribe()
         {
+            _gameControls.Gameplay.Shooting.performed -= (c) => _shipShootingController.Shoot();
+
             if (GameServices.TryGetService(out SavingSystem system) == true)
             {
                 system.Deregister(this);
@@ -123,6 +128,11 @@ namespace SpaceAce.Gameplay.Players
         public void OnClear()
         {
             GameServices.Deregister(this);
+        }
+
+        public void OnUpdate()
+        {
+            WeaponsSwitchHandler();
         }
 
         public void OnFixedUpdate()
@@ -162,10 +172,28 @@ namespace SpaceAce.Gameplay.Players
 
         private void MoveShip()
         {
-            if (_gameControls.Gameplay.enabled)
+            if (_gameControls.Gameplay.Movement.enabled && _shipMovementController is not null)
             {
                 var movementDirection = _gameControls.Gameplay.Movement.ReadValue<Vector2>();
                 _shipMovementController.Move(movementDirection);
+            }
+        }
+
+        private void WeaponsSwitchHandler()
+        {
+            if (_gameControls.Gameplay.WeaponsSwitch.enabled && _shipShootingController is not null)
+            {
+                float value = _gameControls.Gameplay.WeaponsSwitch.ReadValue<float>();
+
+                if (value > 0f)
+                {
+                    _shipShootingController.SwitchToNextWeapons();
+                }
+
+                if (value < 0f)
+                {
+                    _shipShootingController.SwitchToPreviousWeapons();
+                }
             }
         }
 
@@ -185,6 +213,15 @@ namespace SpaceAce.Gameplay.Players
                 throw new MissingComponentException($"Player ship is missing a mandatory component of type {typeof(IMovementController)}!");
             }
 
+            if (_activeShip.TryGetComponent(out IShootingController shootingController) == true)
+            {
+                _shipShootingController = shootingController;
+            }
+            else
+            {
+                throw new MissingComponentException($"Player ship is missing a mandatory component of type {typeof(IShootingController)}!");
+            }
+
             _gameControls.Gameplay.Enable();
         }
 
@@ -202,6 +239,7 @@ namespace SpaceAce.Gameplay.Players
         private void LevelConcludedEventHandler(object sender, EventArgs e)
         {
             _gameControls.Gameplay.Disable();
+            _shipShootingController.StopShooting();
         }
 
         #endregion

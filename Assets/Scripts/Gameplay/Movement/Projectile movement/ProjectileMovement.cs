@@ -1,11 +1,10 @@
 using SpaceAce.Gameplay.Shooting;
-using System;
 using UnityEngine;
 
 namespace SpaceAce.Gameplay.Movement
 {
     [RequireComponent(typeof(DamageDealer))]
-    public abstract class ProjectileMovement : Movement, IMovementBehaviourSupplier
+    public abstract class ProjectileMovement : Movement
     {
         protected override void SetupRigidbody(Rigidbody2D body)
         {
@@ -20,7 +19,5 @@ namespace SpaceAce.Gameplay.Movement
             body.sleepMode = RigidbodySleepMode2D.StartAwake;
             body.interpolation = RigidbodyInterpolation2D.Interpolate;
         }
-
-        public void SupplyMovementBehaviour(Action<Rigidbody2D> behaviour) => MovementBehaviour = behaviour;
     }
 }

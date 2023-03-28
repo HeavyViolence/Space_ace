@@ -3,7 +3,7 @@ namespace SpaceAce.Gameplay.Players
     public interface IShootingController
     {
         bool Shoot();
-        bool StopShooting();
+        void StopShooting();
         bool SwitchToNextWeapons();
         bool SwitchToPreviousWeapons();
     }

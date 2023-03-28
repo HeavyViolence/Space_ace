@@ -15,8 +15,8 @@ namespace SpaceAce.Auxiliary
 		private const int ChunkSize = 4;
 
 		private static readonly RandomNumberGenerator s_generator = RandomNumberGenerator.Create();
-		private static readonly byte[] s_randomCryptoBytes = new byte[IDLength];
-		private static readonly StringBuilder s_cryptoIDBuilder = new(Default.Length);
+		private static readonly byte[] s_randomCryptosafeBytes = new byte[IDLength];
+		private static readonly StringBuilder s_cryptosafeIDBuilder = new(Default.Length);
 
 		private Random _random;
 		private StringBuilder _idBuilder = new(Default.Length);
@@ -51,23 +51,23 @@ namespace SpaceAce.Auxiliary
 
 		public static string NextCryptosafe()
 		{
-			s_cryptoIDBuilder.Clear();
-			s_generator.GetBytes(s_randomCryptoBytes);
+			s_cryptosafeIDBuilder.Clear();
+			s_generator.GetBytes(s_randomCryptosafeBytes);
 
 			for (int i = 0; i < IDLength; i++)
 			{
-				byte index = (byte)(s_randomCryptoBytes[i] % AllowedSymbols.Length);
+				byte index = (byte)(s_randomCryptosafeBytes[i] % AllowedSymbols.Length);
 				char symbol = AllowedSymbols[index];
 
-				s_cryptoIDBuilder.Append(symbol);
+				s_cryptosafeIDBuilder.Append(symbol);
 
 				if (i % ChunkSize == ChunkSize - 1 && i != IDLength - 1)
 				{
-					s_cryptoIDBuilder.Append(ChunkSeparator);
+					s_cryptosafeIDBuilder.Append(ChunkSeparator);
 				}
 			}
 
-			return s_cryptoIDBuilder.ToString();
+			return s_cryptosafeIDBuilder.ToString();
 		}
 
 		public static bool IsValid(string candidate)

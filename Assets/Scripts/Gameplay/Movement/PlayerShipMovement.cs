@@ -17,6 +17,14 @@ namespace SpaceAce.Gameplay.Movement
             _speed2D = new(Config.HorizontalSpeed.RandomValue, Config.VerticalSpeed.RandomValue);
         }
 
+        public void Move(Vector2 direction)
+        {
+            Vector2 clampedDirection = ClampMovementDirection(direction);
+            Vector2 velocity = Time.fixedDeltaTime * clampedDirection * _speed2D;
+
+            Body.MovePosition(Body.position + velocity);
+        }
+
         private Vector2 ClampMovementDirection(Vector2 rawMovementDirection)
         {
             float x = rawMovementDirection.x;
@@ -43,14 +51,6 @@ namespace SpaceAce.Gameplay.Movement
             }
 
             return new Vector2(x, y);
-        }
-
-        public void Move(Vector2 direction)
-        {
-            Vector2 clampedDirection = ClampMovementDirection(direction);
-            Vector2 velocity = Time.fixedDeltaTime * clampedDirection * _speed2D;
-
-            Body.MovePosition(Body.position + velocity);
         }
     }
 }

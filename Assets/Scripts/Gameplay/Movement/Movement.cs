@@ -7,15 +7,16 @@ using UnityEngine;
 namespace SpaceAce.Gameplay.Movement
 {
     [RequireComponent(typeof(Rigidbody2D))]
-    public abstract class Movement : MonoBehaviour, IEscapable
+    public abstract class Movement : MonoBehaviour, IEscapable, IMovementBehaviourSupplier
     {
         protected static readonly GameServiceFastAccess<MasterCameraHolder> MasterCameraHolder = new();
         protected static readonly GameServiceFastAccess<CameraShaker> CameraShaker = new();
 
         public event EventHandler Escaped;
 
-        protected Rigidbody2D Body { get; private set; } = null;
-        protected Action<Rigidbody2D> MovementBehaviour { get; set; } = null;
+        protected Rigidbody2D Body { get; private set; }
+        protected MovementBehaviour MovementBehaviour { get; set; }
+        protected MovementBehaviourSettings MovementSettings { get; set; }
 
         protected virtual void Awake()
         {
@@ -31,12 +32,12 @@ namespace SpaceAce.Gameplay.Movement
 
         protected virtual void FixedUpdate()
         {
-            if (MovementBehaviour is null)
+            if (MovementBehaviour is null || MovementSettings is null)
             {
                 return;
             }
 
-            MovementBehaviour(Body);
+            MovementBehaviour(Body, MovementSettings.Direction, MovementSettings.Speed);
         }
 
         protected virtual void SetupRigidbody(Rigidbody2D body)
@@ -76,6 +77,12 @@ namespace SpaceAce.Gameplay.Movement
 
                 Escaped?.Invoke(this, EventArgs.Empty);
             }
+        }
+
+        public void SupplyMovementBehaviour(MovementBehaviour behaviour, MovementBehaviourSettings settings)
+        {
+            MovementBehaviour = behaviour;
+            MovementSettings = settings;
         }
     }
 }

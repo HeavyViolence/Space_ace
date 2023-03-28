@@ -30,12 +30,12 @@ namespace SpaceAce.Gameplay.Shooting
         public const float MaxCooldown = 10f;
 
         public const float MinDispersion = 0f;
-        public const float MaxDispersion = 3f;
-        public const float DefaultDispersion = 1f;
+        public const float MaxDispersion = 0.1f;
+        public const float DefaultDispersion = 0.05f;
 
         public const float MinConvergenceAngle = 0f;
-        public const float MaxConvergenceAngle = 1;
-        public const float DefaultConvergenceAngle = 0.3f;
+        public const float MaxConvergenceAngle = 0.1f;
+        public const float DefaultConvergenceAngle = 0.02f;
 
         [SerializeField] private int _gunGroupID = MinGunGroupID;
 

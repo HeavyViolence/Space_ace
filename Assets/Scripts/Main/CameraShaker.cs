@@ -67,13 +67,13 @@ namespace SpaceAce.Main
             _body.constraints = RigidbodyConstraints2D.FreezeRotation;
         }
 
-        public void ShakeOnShotFired() => Shake(0.02f, 2f, 2f);
+        public void ShakeOnShotFired() => Shake(0.05f, 2f, 2f);
 
         public void ShakeOnDeath() => Shake(0.2f, 2f, 1f);
 
         public void ShakeOnCollision() => Shake(0.1f, 2f, 2f);
 
-        public void ShakeOnHit() => Shake(0.05f, 2f, 2f);
+        public void ShakeOnHit() => Shake(0.075f, 2f, 2f);
 
         public void Shake(float amplitude, float attenuation, float frequency)
         {
