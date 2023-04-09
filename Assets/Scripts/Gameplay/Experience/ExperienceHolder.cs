@@ -11,12 +11,17 @@ namespace SpaceAce.Gameplay.Experience
 
         [SerializeField] private ExperienceConfig _config;
 
+        [SerializeField] private bool _experienceDisabled = false;
+
         private IEnumerable<IExperienceSource> _experienceSources = null;
         private float _lifespanTimer;
 
         private void Awake()
         {
-            _experienceSources = FindAllExperienceSources();
+            if (_experienceDisabled == false)
+            {
+                _experienceSources = FindAllExperienceSources();
+            }
         }
 
         private void OnEnable()
@@ -26,7 +31,8 @@ namespace SpaceAce.Gameplay.Experience
 
         private void Update()
         {
-            if (_config.ExperienceDepletionEnabled &&
+            if (_experienceDisabled == false &&
+                _config.ExperienceDepletionEnabled &&
                 s_masterCameraHolder.Access.InsideViewport(transform.position) == true &&
                 _lifespanTimer < _config.ExperienceDepletionDuration)
             {
@@ -70,6 +76,11 @@ namespace SpaceAce.Gameplay.Experience
 
         public (float earned, float lost, float total) GetValues()
         {
+            if (_experienceDisabled)
+            {
+                return (0f, 0f, 0f);
+            }
+
             float totalValue = 0f;
 
             foreach (var source in _experienceSources)

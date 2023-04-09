@@ -19,8 +19,6 @@ namespace SpaceAce.Editors
         private SerializedProperty _verticalSpeedTranstitionDuration;
         private SerializedProperty _verticalSpeedTranstitionDurationRandomDeviation;
 
-        private ShipMovementConfig _target;
-
         protected override void OnEnable()
         {
             base.OnEnable();
@@ -37,7 +35,7 @@ namespace SpaceAce.Editors
             _verticalSpeedTranstitionDuration = serializedObject.FindProperty("_verticalSpeedTranstitionDuration");
             _verticalSpeedTranstitionDurationRandomDeviation = serializedObject.FindProperty("_verticalSpeedTranstitionDurationRandomDeviation");
 
-            _target = (ShipMovementConfig)target;
+            BaseSettingsButtonEnabled = false;
         }
 
         public override void OnInspectorGUI()
@@ -103,7 +101,8 @@ namespace SpaceAce.Editors
 
             if (GUILayout.Button("Apply settings"))
             {
-                _target.ApplySettings();
+                var config = target as ShipMovementConfig;
+                config.ApplySettings();
             }
 
             serializedObject.ApplyModifiedProperties();

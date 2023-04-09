@@ -92,6 +92,10 @@ GameObject:
   - component: {fileID: 2403042305234591588}
   - component: {fileID: 6926238852550854128}
   - component: {fileID: 8838076682829709945}
+  - component: {fileID: 1523477150}
+  - component: {fileID: 1523477149}
+  - component: {fileID: 1523477148}
+  - component: {fileID: 1523477147}
   m_Layer: 6
   m_Name: Player ship 1.1
   m_TagString: Untagged
@@ -190,6 +194,58 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _weaponsSwitchAudio: {fileID: 11400000, guid: 05cb6b5bff9df5d4d9feecb459303045, type: 2}
+--- !u!114 &1523477150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2403042305234591589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb2c16a4e7a083641849a958309c90c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _config: {fileID: 0}
+  _experienceDisabled: 1
+--- !u!114 &1523477149
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2403042305234591589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c437d5f3d3d23824ca433fbab68a4d2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1523477148
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2403042305234591589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1f7d54e09fccd94582003a285b8e218, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _config: {fileID: 11400000, guid: 53b7b293bd5ecb448933afd229c5da9b, type: 2}
+--- !u!114 &1523477147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2403042305234591589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 468c59d2107397e4e900434584a8d96c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _config: {fileID: 11400000, guid: b5b279c58ab7caf47b65300635a133f8, type: 2}
 --- !u!1 &3156877151933164556
 GameObject:
   m_ObjectHideFlags: 0

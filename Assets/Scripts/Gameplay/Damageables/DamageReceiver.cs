@@ -8,7 +8,7 @@ using UnityEngine;
 namespace SpaceAce.Gameplay.Damageables
 {
     [RequireComponent(typeof(ExperienceHolder))]
-    public sealed class DamageReceiver : MonoBehaviour
+    public sealed class DamageReceiver : MonoBehaviour, IDamageable, IDestroyable
     {
         public event EventHandler<DamageReceivedEventArgs> DamageReceived;
         public event EventHandler<DestroyedEventArgs> Destroyed;
@@ -84,11 +84,6 @@ namespace SpaceAce.Gameplay.Damageables
 
         public void ApplyDamage(float damage)
         {
-            if (s_masterCameraHolder.Access.InsideViewport(transform.position) == false)
-            {
-                return;
-            }
-
             float damageToBeDealt = _armor.Enabled ? _armor.GetDamageToBeDealt(damage) : damage;
 
             _health.DealDamage(damageToBeDealt);

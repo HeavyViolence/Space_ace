@@ -16,7 +16,8 @@ namespace SpaceAce.Gameplay.Movement
 
         protected Rigidbody2D Body { get; private set; }
         protected MovementBehaviour MovementBehaviour { get; set; }
-        protected MovementBehaviourSettings MovementSettings { get; set; }
+        protected Vector2 Direction { get; set; }
+        protected float Speed { get; set; }
 
         protected virtual void Awake()
         {
@@ -32,12 +33,12 @@ namespace SpaceAce.Gameplay.Movement
 
         protected virtual void FixedUpdate()
         {
-            if (MovementBehaviour is null || MovementSettings is null)
+            if (MovementBehaviour is null)
             {
                 return;
             }
 
-            MovementBehaviour(Body, MovementSettings.Direction, MovementSettings.Speed);
+            MovementBehaviour(Body, Direction, Speed);
         }
 
         protected virtual void SetupRigidbody(Rigidbody2D body)
@@ -79,10 +80,11 @@ namespace SpaceAce.Gameplay.Movement
             }
         }
 
-        public void SupplyMovementBehaviour(MovementBehaviour behaviour, MovementBehaviourSettings settings)
+        public void SupplyMovementBehaviour(MovementBehaviour behaviour, Vector2 direction, float speed)
         {
             MovementBehaviour = behaviour;
-            MovementSettings = settings;
+            Direction = direction;
+            Speed = speed;
         }
     }
 }

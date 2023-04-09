@@ -229,7 +229,7 @@ namespace SpaceAce.Gameplay.Players
         {
             if (_activeShip != null)
             {
-                s_multiobjectPool.Access.ReleaseObject(SelectedShip.AnchorName, _activeShip);
+                s_multiobjectPool.Access.ReleaseObject(SelectedShip.AnchorName, _activeShip, () => true);
 
                 _activeShip = null;
                 _shipMovementController = null;

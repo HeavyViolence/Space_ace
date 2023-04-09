@@ -21,8 +21,6 @@ namespace SpaceAce.Editors
         private SerializedProperty _nextWeaponsSwitchDelay;
         private SerializedProperty _nextWeaponsSwitchDelayRandomDeviation;
 
-        private ShootingConfig _target;
-
         private void OnEnable()
         {
             _firstFireDelay = serializedObject.FindProperty("_firstFireDelay");
@@ -38,8 +36,6 @@ namespace SpaceAce.Editors
 
             _nextWeaponsSwitchDelay = serializedObject.FindProperty("_nextWeaponsSwitchDelay");
             _nextWeaponsSwitchDelayRandomDeviation = serializedObject.FindProperty("_nextWeaponsSwitchDelayRandomDeviation");
-
-            _target = (ShootingConfig)target;
         }
 
         public override void OnInspectorGUI()
@@ -95,7 +91,8 @@ namespace SpaceAce.Editors
 
             if (GUILayout.Button("Apply settings"))
             {
-                _target.ApplySettings();
+                var config = target as ShootingConfig;
+                config.ApplySettings();
             }
 
             serializedObject.ApplyModifiedProperties();

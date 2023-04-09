@@ -12,16 +12,12 @@ namespace SpaceAce.Editors
         private SerializedProperty _armor;
         private SerializedProperty _armorRandomDeviation;
 
-        private ArmorConfig _target;
-
         private void OnEnable()
         {
             _armorEnabled = serializedObject.FindProperty("_armorEnabled");
 
             _armor = serializedObject.FindProperty("_armor");
             _armorRandomDeviation = serializedObject.FindProperty("_armorRandomDeviation");
-
-            _target = (ArmorConfig)target;
         }
 
         public override void OnInspectorGUI()
@@ -43,7 +39,8 @@ namespace SpaceAce.Editors
 
             if (GUILayout.Button("Apply settings"))
             {
-                _target.ApplySettings();
+                var config = target as ArmorConfig;
+                config.ApplySettings();
             }
 
             serializedObject.ApplyModifiedProperties();

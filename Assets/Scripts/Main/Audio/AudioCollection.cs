@@ -101,7 +101,7 @@ namespace SpaceAce.Main.Audio
 
         private void ReplenishNonRepeatingAudioClipsIndices()
         {
-            var indices = AuxMath.GenerateRandomNumbersWithoutRepetition(0, _audioClips.Count, _audioClips.Count);
+            var indices = AuxMath.GetRandomNumbersWithoutRepetition(0, _audioClips.Count, _audioClips.Count);
             var enumerator = indices.GetEnumerator();
 
             while (enumerator.MoveNext() == true)

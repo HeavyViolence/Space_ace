@@ -19,8 +19,6 @@ namespace SpaceAce.Editors
 
         private SerializedProperty _cameraShakeOnDamaged;
 
-        private HealthConfig _target;
-
         private void OnEnable()
         {
             _maxHealth = serializedObject.FindProperty("_maxHealth");
@@ -34,8 +32,6 @@ namespace SpaceAce.Editors
             _deathAudio = serializedObject.FindProperty("_deathAudio");
 
             _cameraShakeOnDamaged = serializedObject.FindProperty("_cameraShakeOnDamaged");
-
-            _target = (HealthConfig)target;
         }
 
         public override void OnInspectorGUI()
@@ -69,7 +65,8 @@ namespace SpaceAce.Editors
 
             if (GUILayout.Button("Apply settings"))
             {
-                _target.ApplySettings();
+                var config = target as HealthConfig;
+                config.ApplySettings();
             }
 
             serializedObject.ApplyModifiedProperties();

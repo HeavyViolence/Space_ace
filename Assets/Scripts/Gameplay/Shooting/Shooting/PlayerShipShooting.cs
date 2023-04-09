@@ -8,8 +8,8 @@ namespace SpaceAce.Gameplay.Shooting
 
         public void StopShooting() => StopActiveWeaponGroupShooting();
 
-        public bool SwitchToNextWeapons() => ActivateNextWeaponGroup();
+        public bool SwitchToNextWeapons() => ActivateNextWeaponGroup(true);
 
-        public bool SwitchToPreviousWeapons() => ActivatePreviousWeaponGroup();
+        public bool SwitchToPreviousWeapons() => ActivatePreviousWeaponGroup(true);
     }
 }

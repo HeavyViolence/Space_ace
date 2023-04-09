@@ -15,7 +15,7 @@ namespace SpaceAce.Auxiliary
         public static float RotationsPerMinuteToDegreesPerSecond(float value) => value * DegreesPerSecondPerRotationPerMinute;
         public static float DegreesPerSecondToRotationsPerMinute(float value) => value / DegreesPerSecondPerRotationPerMinute;
 
-        public static IEnumerable<int> GenerateRandomNumbersWithoutRepetition(int min, int max, int amount)
+        public static IEnumerable<int> GetRandomNumbersWithoutRepetition(int min, int max, int amount)
         {
             if (min >= max)
             {
@@ -28,7 +28,6 @@ namespace SpaceAce.Auxiliary
             }
 
             Random random = new();
-
             List<int> availableNumbers = Enumerable.Range(min, max - min).ToList();
             List<int> generatedNumbers = new(amount);
 
@@ -38,6 +37,29 @@ namespace SpaceAce.Auxiliary
 
                 generatedNumbers.Add(availableNumbers[index]);
                 availableNumbers.RemoveAt(index);
+            }
+
+            return generatedNumbers;
+        }
+
+        public static IEnumerable<int> GetRandomNumbersWithoutRepetition(IEnumerable<int> availableNumbers, int amount)
+        {
+            if (availableNumbers.Count() < amount)
+            {
+                throw new ArgumentOutOfRangeException(nameof(amount), $"Amount of random numbers to generate must not surpass the available numbers count!");
+            }
+
+            Random random = new();
+            HashSet<int> numbersToUse = new(availableNumbers);
+            List<int> generatedNumbers = new(amount);
+
+            for (int i = 0; i < amount; i++)
+            {
+                int index = random.Next(0, numbersToUse.Count);
+                int randomNumberFromRange = numbersToUse.ElementAt(index);
+
+                generatedNumbers.Add(randomNumberFromRange);
+                numbersToUse.Remove(index);
             }
 
             return generatedNumbers;

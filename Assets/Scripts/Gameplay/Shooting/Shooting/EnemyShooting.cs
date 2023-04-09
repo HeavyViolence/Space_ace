@@ -11,39 +11,41 @@ namespace SpaceAce.Gameplay.Shooting
 
         [SerializeField] private ShootingConfig _config;
 
-        private float _weaponsSwitchTimer = 0f;
-        private float _nextWeaponsSwitchDelay = 0f;
+        private float _weaponsSwitchTimer;
+        private float _nextWeaponsSwitchDelay;
 
         Coroutine _firingRoutine;
 
-        private IGun _gunToFire;
-
-        protected override void OnEnable()
+        protected sealed override void OnEnable()
         {
             base.OnEnable();
 
             _firingRoutine = StartCoroutine(FireForever());
+            _weaponsSwitchTimer = 0f;
             _nextWeaponsSwitchDelay = _config.FirstWeaponsSwitchDelay.RandomValue;
         }
 
         private void OnDisable()
         {
             StopCoroutine(_firingRoutine);
-
             _firingRoutine = null;
         }
 
         private void Update()
         {
-            if (_weaponsSwitchTimer < _nextWeaponsSwitchDelay &&
-                s_masterCameraHolder.Access.InsideViewport(transform.position) == true)
+            if (s_masterCameraHolder.Access.InsideViewport(transform.position) == true)
             {
-                _weaponsSwitchTimer += Time.deltaTime;
-            }
-            else
-            {
-                _weaponsSwitchTimer = 0f;
-                _nextWeaponsSwitchDelay = _config.NextWeaponsSwitchDealy.RandomValue;
+                if (_weaponsSwitchTimer < _nextWeaponsSwitchDelay)
+                {
+                    _weaponsSwitchTimer += Time.deltaTime;
+                }
+                else
+                {
+                    _weaponsSwitchTimer = 0f;
+                    _nextWeaponsSwitchDelay = _config.NextWeaponsSwitchDealy.RandomValue;
+
+                    ActivateNextWeaponGroup(true);
+                }
             }
         }
 
@@ -58,21 +60,16 @@ namespace SpaceAce.Gameplay.Shooting
 
             while (true)
             {
-                while (_weaponsSwitchTimer < _nextWeaponsSwitchDelay)
+                var gunToFire = NextActiveGun;
+
+                while (gunToFire.ReadyToFire == false)
                 {
-                    _gunToFire = NextActiveGun;
-
-                    while (_gunToFire.ReadyToFire == false)
-                    {
-                        yield return null;
-                    }
-
-                    _gunToFire.Fire();
-
-                    yield return new WaitForSeconds(_config.NextFireDelay.RandomValue);
+                    yield return null;
                 }
 
-                ActivateNextWeaponGroup();
+                gunToFire.Fire();
+
+                yield return new WaitForSeconds(_config.NextFireDelay.RandomValue);
             }
         }
     }

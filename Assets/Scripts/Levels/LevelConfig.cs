@@ -1,19 +1,10 @@
+using SpaceAce.Gameplay.Spawning;
 using SpaceAce.Main.ObjectPooling;
 using System;
 using UnityEngine;
 
 namespace SpaceAce.Levels
 {
-    public enum EnemyType
-    {
-        Pirates, Aliens, Sweepers
-    }
-
-    public enum LevelDifficulty
-    {
-        Easy, Medium, Hard, Ace
-    }
-
     [CreateAssetMenu(fileName = "Level config", menuName = "Space ace/Configs/Level config")]
     public sealed class LevelConfig : ScriptableObject, IEquatable<LevelConfig>
     {
@@ -28,25 +19,23 @@ namespace SpaceAce.Levels
 
         [SerializeField] private int _levelIndex = MinLevelIndex;
 
-        [SerializeField] private EnemyType _enemyType = EnemyType.Pirates;
-        [SerializeField] private LevelDifficulty _difficulty = LevelDifficulty.Easy;
-
         [SerializeField] private int _crystalsReward = MinCrystalsReward;
         [SerializeField] private int _experienceReward = MinExperienceReward;
 
         [SerializeField] private bool _bossEnabled = false;
         [SerializeField] ObjectPoolEntry _boss;
 
-        public int LevelIndex => _levelIndex;
+        [SerializeField] private SpawnerConfig _enemySpawnerConfig;
 
-        public EnemyType EnemyType => _enemyType;
-        public LevelDifficulty Difficulty => _difficulty;
+        public int LevelIndex => _levelIndex;
 
         public int CrystalsReward => _crystalsReward;
         public int ExperienceReward => _experienceReward;
 
         public bool BossEnabled => _bossEnabled;
         public ObjectPoolEntry Boss => _boss;
+
+        public SpawnerConfig EnemySpawnerConfig => _enemySpawnerConfig;
 
         #region IEquatable
 

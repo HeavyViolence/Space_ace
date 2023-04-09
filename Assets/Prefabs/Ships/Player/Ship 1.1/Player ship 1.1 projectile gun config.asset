@@ -15,7 +15,7 @@ MonoBehaviour:
   _gunGroupID: 0
   _projectile: {fileID: 11400000, guid: 2fc4a7373a046b04986e1a61e69a4749, type: 2}
   _projectileHitEffect: {fileID: 11400000, guid: 8d5c5790c43124f4eaffd2a3fcc42fbb, type: 2}
-  _projectileSpeed: 75
+  _projectileSpeed: 80
   _projectileSpeedRandomDeviation: 5
   _projectileDamage: 50
   _projectileDamageRandomDeviation: 5

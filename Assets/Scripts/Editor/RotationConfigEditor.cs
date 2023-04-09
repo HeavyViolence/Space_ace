@@ -12,16 +12,12 @@ namespace SpaceAce.Editors
         private SerializedProperty _rpm;
         private SerializedProperty _rpmRandomDeviation;
 
-        private RotationConfig _target;
-
         private void OnEnable()
         {
             _rotationDirection = serializedObject.FindProperty("_rotationDirection");
 
             _rpm = serializedObject.FindProperty("_rpm");
             _rpmRandomDeviation = serializedObject.FindProperty("_rpmRandomDeviation");
-
-            _target = (RotationConfig)target;
         }
 
         public override void OnInspectorGUI()
@@ -40,7 +36,8 @@ namespace SpaceAce.Editors
 
             if (GUILayout.Button("Apply settings"))
             {
-                _target.ApplySettings();
+                var config = target as RotationConfig;
+                config.ApplySettings();
             }
 
             serializedObject.ApplyModifiedProperties();

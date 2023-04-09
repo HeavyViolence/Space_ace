@@ -9,27 +9,25 @@ namespace SpaceAce.Editors
     {
         private SerializedProperty _levelIndex;
 
-        private SerializedProperty _enemyType;
-        private SerializedProperty _difficulty;
-
         private SerializedProperty _crystalsReward;
         private SerializedProperty _experienceReward;
 
         private SerializedProperty _bossEnabled;
         private SerializedProperty _boss;
 
+        private SerializedProperty _enemySpawnerConfig;
+
         private void OnEnable()
         {
             _levelIndex = serializedObject.FindProperty("_levelIndex");
-
-            _enemyType = serializedObject.FindProperty("_enemyType");
-            _difficulty = serializedObject.FindProperty("_difficulty");
 
             _crystalsReward = serializedObject.FindProperty("_crystalsReward");
             _experienceReward = serializedObject.FindProperty("_experienceReward");
 
             _bossEnabled = serializedObject.FindProperty("_bossEnabled");
             _boss = serializedObject.FindProperty("_boss");
+
+            _enemySpawnerConfig = serializedObject.FindProperty("_enemySpawnerConfig");
         }
 
         public override void OnInspectorGUI()
@@ -37,10 +35,6 @@ namespace SpaceAce.Editors
             serializedObject.Update();
 
             EditorGUILayout.IntSlider(_levelIndex, LevelConfig.MinLevelIndex, LevelConfig.MaxLevelIndex, "Level index");
-
-            EditorGUILayout.Separator();
-            EditorGUILayout.PropertyField(_enemyType, new GUIContent("Enemy type"));
-            EditorGUILayout.PropertyField(_difficulty, new GUIContent("Difficulty"));
 
             EditorGUILayout.Separator();
             EditorGUILayout.IntSlider(_crystalsReward, LevelConfig.MinCrystalsReward, LevelConfig.MaxCrystalsReward, "Crystals reward");
@@ -53,6 +47,9 @@ namespace SpaceAce.Editors
             {
                 EditorGUILayout.PropertyField(_boss, new GUIContent("Boss"));
             }
+
+            EditorGUILayout.Separator();
+            EditorGUILayout.PropertyField(_enemySpawnerConfig, new GUIContent("Enemy spawner config"));
 
             serializedObject.ApplyModifiedProperties();
         }

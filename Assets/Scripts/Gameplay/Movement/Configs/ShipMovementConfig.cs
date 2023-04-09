@@ -26,13 +26,26 @@ namespace SpaceAce.Gameplay.Movement
         [SerializeField] private float _verticalSpeedTranstitionDuration = DefaultSpeedTransitionDuration;
         [SerializeField] private float _verticalSpeedTranstitionDurationRandomDeviation = 0f;
 
-        public float HorizontalSpeedDuration => _horizontalSpeedDuration +
-                                                _horizontalSpeedDurationRandomDeviation * AuxMath.RandomNormal;
-        public float HorizontalSpeedTransitionDuration => _horizontalSpeedTransitionDuration +
-                                                          _horizontalSpeedTransitionDurationRandomDeviation * AuxMath.RandomNormal;
-        public float VerticalSpeedDuration => _verticalSpeedDuration +
-                                              _verticalSpeedDurationRandomDeviation * AuxMath.RandomNormal;
-        public float VerticalSpeedTransitionDuration => _verticalSpeedTranstitionDuration +
-                                                        _verticalSpeedTranstitionDurationRandomDeviation * AuxMath.RandomNormal;
+        public RangedFloat HorizontalSpeedDuration { get; private set; }
+        public RangedFloat HorizontalSpeedTransitionDuration { get; private set; }
+
+        public RangedFloat VerticalSpeedDuration { get; private set; }
+        public RangedFloat VerticalSpeedTransitionDuration { get; private set; }
+
+        private void OnEnable()
+        {
+            ApplySettings();
+        }
+
+        public sealed override void ApplySettings()
+        {
+            base.ApplySettings();
+
+            HorizontalSpeedDuration = new(_horizontalSpeedDuration, _horizontalSpeedDurationRandomDeviation);
+            HorizontalSpeedTransitionDuration = new(_horizontalSpeedTransitionDuration, _horizontalSpeedTransitionDurationRandomDeviation);
+
+            VerticalSpeedDuration = new(_verticalSpeedDuration, _verticalSpeedDurationRandomDeviation);
+            VerticalSpeedTransitionDuration = new(_verticalSpeedTranstitionDuration, _verticalSpeedTranstitionDurationRandomDeviation);
+        }
     }
 }

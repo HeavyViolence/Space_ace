@@ -78,7 +78,7 @@ namespace SpaceAce.Gameplay.Movement
             ApplySettings();
         }
 
-        public void ApplySettings()
+        public virtual void ApplySettings()
         {
             HorizontalSpeed = new(_horizontalSpeed, _horizontalSpeedRandomDeviation);
             VerticalSpeed = new(_verticalSpeed, _verticalSpeedRandomDeviation);

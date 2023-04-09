@@ -11,6 +11,7 @@ namespace SpaceAce.Main.ObjectPooling
     {
         private readonly Dictionary<string, ObjectPool<GameObject>> _multiobjectPool = new();
         private readonly Dictionary<string, GameObject> _poolAnchors = new();
+
         private readonly GameObject _masterAnchor;
 
         public MultiobjectPool()
@@ -22,12 +23,12 @@ namespace SpaceAce.Main.ObjectPooling
         {
             if (string.IsNullOrEmpty(anchorName) || string.IsNullOrWhiteSpace(anchorName))
             {
-                throw new ArgumentNullException(nameof(anchorName), $"New object pool anchor has an unacceptable value!");
+                throw new ArgumentNullException(nameof(anchorName), $"Attempted to assign an invalid anchor name to a new object pool anchor!");
             }
 
             if (sample == null)
             {
-                throw new ArgumentNullException(nameof(sample), $"An empty sample object has been passed!");
+                throw new ArgumentNullException(nameof(sample), $"Attempted to pass an empty sample object!");
             }
 
             if (_multiobjectPool.ContainsKey(anchorName) == false)
@@ -80,38 +81,6 @@ namespace SpaceAce.Main.ObjectPooling
             }
         }
 
-        public void ReleaseObject(string anchorName, GameObject member, float delay = 0f)
-        {
-            if (member == null)
-            {
-                throw new ArgumentNullException(nameof(member), "Attempted to release an empty object to an object pool!");
-            }
-
-            if (member.activeInHierarchy == false)
-            {
-                return;
-            }
-
-            CoroutineRunner.RunRoutine(ReleaseObjectDelayed());
-
-            IEnumerator ReleaseObjectDelayed()
-            {
-                if (delay > 0f)
-                {
-                    yield return new WaitForSeconds(delay);
-                }
-
-                if (_multiobjectPool.TryGetValue(anchorName, out var pool) == true)
-                {
-                    pool.Release(member);
-                }
-                else
-                {
-                    throw new MissingObjectPoolException(anchorName);
-                }
-            }
-        }
-
         public void ReleaseObject(string anchorName, GameObject member, Func<bool> condition, float delay = 0f)
         {
             if (member == null)
@@ -140,13 +109,16 @@ namespace SpaceAce.Main.ObjectPooling
 
                 yield return null;
 
-                if (_multiobjectPool.TryGetValue(anchorName, out var pool) == true)
+                if (member.activeInHierarchy == true)
                 {
-                    pool.Release(member);
-                }
-                else
-                {
-                    throw new MissingObjectPoolException(anchorName);
+                    if (_multiobjectPool.TryGetValue(anchorName, out var pool) == true)
+                    {
+                        pool.Release(member);
+                    }
+                    else
+                    {
+                        throw new MissingObjectPoolException(anchorName);
+                    }
                 }
             }
         }

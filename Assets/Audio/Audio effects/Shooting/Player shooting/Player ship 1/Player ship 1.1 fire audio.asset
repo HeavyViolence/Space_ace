@@ -22,7 +22,7 @@ MonoBehaviour:
   _outputAudioGroup: {fileID: -557927281123615115, guid: fcf8532f154bbae47942ff673836eca5, type: 2}
   _volume: 1
   _volumeRandomDeviation: 0.1
-  _priority: 1
+  _priority: 0
   _spatialBlend: 0.5
   _spatialBlendRandomDeviation: 0
   _pitch: 1.25

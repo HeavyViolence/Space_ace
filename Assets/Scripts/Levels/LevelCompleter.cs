@@ -9,9 +9,6 @@ namespace SpaceAce.Levels
         public event EventHandler<LevelDataEventArgs> LevelPassed, LevelFailed;
         public event EventHandler LevelConcluded;
 
-        private EnemyType _enemyType;
-        private LevelDifficulty _difficulty;
-
         #region interfaces
 
         public void OnInitialize()
@@ -52,8 +49,7 @@ namespace SpaceAce.Levels
 
         private void LevelLoadedEventHandler(object sender, LevelLoadedEventArgs e)
         {
-            _enemyType = e.LevelConfig.EnemyType;
-            _difficulty = e.LevelConfig.Difficulty;
+
         }
     }
 }

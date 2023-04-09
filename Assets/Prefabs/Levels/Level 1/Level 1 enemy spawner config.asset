@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30aad3f40d7c46d4ca74adfc46978cf0, type: 3}
+  m_Name: Level 1 enemy spawner config
+  m_EditorClassIdentifier: 
+  _spawnableEntities:
+  - {fileID: 11400000, guid: 372d0ecf5c98c8148883e6c67b381fa4, type: 2}
+  _firstSpawnDelay: 5
+  _firstSpawnDelayRandomDeviation: 0.5
+  _spawnDelay: 1.5
+  _spawnDelayRandomDeviation: 0.5
+  _uniqueEntitiesInWave: 1
+  _uniqueEntitiesInWaveRandomDeviation: 0
+  _waveLength: 5
+  _waveLengthRandomDeviation: 1
+  _spawnForever: 0
+  _amountToSpawn: 30
+  _amountToSpawnRandomDeviation: 3
+  _haltUntilClear: 1

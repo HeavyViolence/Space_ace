@@ -4,6 +4,7 @@ namespace SpaceAce.Gameplay.Shooting
     {
         int GunGroupID { get; }
         bool ReadyToFire { get; }
+        float MaxDamagePerSecond { get; }
         bool Fire();
         bool StopFire();
     }

@@ -37,8 +37,6 @@ namespace SpaceAce.Editors
 
         private SerializedProperty _cameraShakeOnShot;
 
-        private ProjectileGunConfig _target;
-
         private void OnEnable()
         {
             _gunGroupID = serializedObject.FindProperty("_gunGroupID");
@@ -70,8 +68,6 @@ namespace SpaceAce.Editors
             _fireAudio = serializedObject.FindProperty("_fireAudio");
 
             _cameraShakeOnShot = serializedObject.FindProperty("_cameraShakeOnShot");
-
-            _target = (ProjectileGunConfig)target;
         }
 
         public override void OnInspectorGUI()
@@ -132,7 +128,8 @@ namespace SpaceAce.Editors
             
             if (GUILayout.Button("Apply settings"))
             {
-                _target.ApplySettings();
+                var config = target as ProjectileGunConfig;
+                config.ApplySettings();
             }
 
             serializedObject.ApplyModifiedProperties();

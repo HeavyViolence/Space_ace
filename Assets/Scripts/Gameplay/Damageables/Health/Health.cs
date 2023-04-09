@@ -97,7 +97,7 @@ namespace SpaceAce.Gameplay.Damageables
         {
             GameObject deathEffect = s_multiobjectPool.Access.GetObject(_config.DeathEffectAnchorName);
             deathEffect.transform.SetPositionAndRotation(transform.position, Quaternion.identity);
-            s_multiobjectPool.Access.ReleaseObject(_config.DeathEffectAnchorName, deathEffect, DeathEffectLifetime);
+            s_multiobjectPool.Access.ReleaseObject(_config.DeathEffectAnchorName, deathEffect, () => true, DeathEffectLifetime);
 
             _config.DeathAudio.PlayRandomAudioClip(transform.position);
             s_cameraShaker.Access.ShakeOnDeath();

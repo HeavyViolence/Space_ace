@@ -24,7 +24,7 @@ namespace SpaceAce.Editors
         private SerializedProperty _collisionAudio;
         private SerializedProperty _cameraShakeOnCollisionEnabled;
 
-        private MovementConfig _target;
+        protected bool BaseSettingsButtonEnabled { get; set; } = true;
 
         protected virtual void OnEnable()
         {
@@ -44,8 +44,6 @@ namespace SpaceAce.Editors
             _collisionDamageRandomDeviation = serializedObject.FindProperty("_collisionDamageRandomDeviation");
             _collisionAudio = serializedObject.FindProperty("_collisionAudio");
             _cameraShakeOnCollisionEnabled = serializedObject.FindProperty("_cameraShakeOnCollisionEnabled");
-
-            _target = (MovementConfig)target;
         }
 
         public override void OnInspectorGUI()
@@ -89,9 +87,10 @@ namespace SpaceAce.Editors
 
             EditorGUILayout.Separator();
 
-            if (GUILayout.Button("Apply settings"))
+            if (BaseSettingsButtonEnabled && GUILayout.Button("Apply settings"))
             {
-                _target.ApplySettings();
+                var config = target as MovementConfig;
+                config.ApplySettings();
             }
 
             serializedObject.ApplyModifiedProperties();

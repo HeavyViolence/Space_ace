@@ -21,6 +21,11 @@ namespace SpaceAce.Gameplay.Shooting
         private float _currentCooldown = 0f;
         private Coroutine _firingRoutine;
 
+        public float MaxDamagePerSecond => _config.ProjectileDamage.MaxValue *
+                                           _config.ProjectilesPerShot.MaxValue *
+                                           _config.FireRate.MaxValue *
+                                           _config.FireDuration.MaxValue * 2f /
+                                           (_config.FireDuration.MaxValue + _config.Cooldown.MinValue);
         public bool ReadyToFire => _firingRoutine == null && _cooldownTimer > _currentCooldown;
         public bool CoolingDown => _firingRoutine == null && _cooldownTimer < _currentCooldown;
         public bool IsFiring => _firingRoutine != null;
@@ -34,7 +39,6 @@ namespace SpaceAce.Gameplay.Shooting
         protected virtual float NextCooldown => _config.Cooldown.RandomValue;
         protected virtual float NextDispersion => _config.Dispersion.RandomValue;
         protected virtual float ConvergenceAngle => _config.GetConvergenceAngle(IsRightHandedGun);
-        protected virtual Vector2 ProjectileDirection => new(ConvergenceAngle + NextDispersion, transform.up.y);
         protected MovementBehaviour ProjectileMovementBehaviour { get; set; }
 
         private void Awake()
@@ -60,7 +64,7 @@ namespace SpaceAce.Gameplay.Shooting
         {
             if (ReadyToFire)
             {
-                _firingRoutine = StartCoroutine(FiringCoroutine());
+                _firingRoutine = StartCoroutine(FiringRoutine());
 
                 return true;
             }
@@ -81,7 +85,7 @@ namespace SpaceAce.Gameplay.Shooting
             return false;
         }
 
-        private IEnumerator FiringCoroutine()
+        private IEnumerator FiringRoutine()
         {
             int shotsToFire = Mathf.RoundToInt(NextFireRate * NextFireDuration);
 
@@ -112,8 +116,6 @@ namespace SpaceAce.Gameplay.Shooting
             float dispersion = NextDispersion;
             Vector2 projectileDirection = new(ConvergenceAngle + dispersion, transform.up.y);
 
-            MovementBehaviourSettings movementSettings = new(projectileDirection, NextProjectileSpeed);
-
             projectile.transform.position = transform.position;
             projectile.transform.rotation = transform.rotation * Quaternion.Euler(0f, 0f, dispersion);
 
@@ -121,7 +123,7 @@ namespace SpaceAce.Gameplay.Shooting
                                                    projectile,
                                                    () => s_masterCameraHolder.Access.InsideViewport(projectile.transform.position) == false);
 
-            SupplyProjectileMovementBehaviour(projectile, ProjectileMovementBehaviour, movementSettings);
+            SupplyProjectileMovementBehaviour(projectile, ProjectileMovementBehaviour, projectileDirection, NextProjectileSpeed);
             AwaitProjectileHit(projectile);
 
             if (_config.CameraShakeOnShotEnabled)
@@ -130,11 +132,11 @@ namespace SpaceAce.Gameplay.Shooting
             }
         }
 
-        private void SupplyProjectileMovementBehaviour(GameObject projectile, MovementBehaviour behaviour, MovementBehaviourSettings settings)
+        private void SupplyProjectileMovementBehaviour(GameObject projectile, MovementBehaviour behaviour, Vector2 direction, float speed)
         {
             if (projectile.TryGetComponent(out IMovementBehaviourSupplier supplier) == true)
             {
-                supplier.SupplyMovementBehaviour(behaviour, settings);
+                supplier.SupplyMovementBehaviour(behaviour, direction, speed);
             }
             else
             {
@@ -150,12 +152,12 @@ namespace SpaceAce.Gameplay.Shooting
                 {
                     e.DamageReceiver.ApplyDamage(NextProjectileDamage);
 
-                    s_multiobjectPool.Access.ReleaseObject(_config.Projectile.AnchorName, projectile);
+                    s_multiobjectPool.Access.ReleaseObject(_config.Projectile.AnchorName, projectile, () => true);
 
                     var hitEffect = s_multiobjectPool.Access.GetObject(_config.ProjectileHitEffect.AnchorName);
                     hitEffect.transform.position = e.HitPosition;
 
-                    s_multiobjectPool.Access.ReleaseObject(_config.ProjectileHitEffect.AnchorName, hitEffect, HitEffectDuration);
+                    s_multiobjectPool.Access.ReleaseObject(_config.ProjectileHitEffect.AnchorName, hitEffect, () => true, HitEffectDuration);
                 };
             }
             else

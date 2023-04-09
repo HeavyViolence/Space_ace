@@ -48,8 +48,8 @@ namespace SpaceAce.Gameplay.Shooting
         {
             FirstFireDelay = new(_firstFireDelay, _firstFireDelayRandomDeviation);
             NextFireDelay = new(_nextFireDelay, _nextFireDelayRandomDeviation);
-            FirstWeaponsSwitchDelay = WeaponsSwitchEnabled ? new(_firstWeaponsSwitchDelay, _firstWeaponsSwitchDelayRandomDeviation) : RangedFloat.Zero;
-            NextWeaponsSwitchDealy = WeaponsSwitchEnabled ? new(_nextWeaponsSwitchDelay, _nextWeaponsSwitchDelayRandomDeviation) : RangedFloat.Zero;
+            FirstWeaponsSwitchDelay = WeaponsSwitchEnabled ? new(_firstWeaponsSwitchDelay, _firstWeaponsSwitchDelayRandomDeviation) : RangedFloat.Max;
+            NextWeaponsSwitchDealy = WeaponsSwitchEnabled ? new(_nextWeaponsSwitchDelay, _nextWeaponsSwitchDelayRandomDeviation) : RangedFloat.Max;
         }
     }
 }

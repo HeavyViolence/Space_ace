@@ -6,6 +6,6 @@ namespace SpaceAce.Gameplay.Movement
 
     public interface IMovementBehaviourSupplier
     {
-        void SupplyMovementBehaviour(MovementBehaviour behaviour, MovementBehaviourSettings settings);
+        void SupplyMovementBehaviour(MovementBehaviour behaviour, Vector2 direction, float speed);
     }
 }

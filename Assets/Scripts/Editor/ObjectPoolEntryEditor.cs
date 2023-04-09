@@ -10,14 +10,10 @@ namespace SpaceAce.Editors
         private SerializedProperty _prefab;
         private SerializedProperty _anchorName;
 
-        private ObjectPoolEntry _target;
-
         private void OnEnable()
         {
             _prefab = serializedObject.FindProperty("_prefab");
             _anchorName = serializedObject.FindProperty("_anchorName");
-
-            _target = (ObjectPoolEntry)target;
         }
 
         public override void OnInspectorGUI()
@@ -31,7 +27,8 @@ namespace SpaceAce.Editors
 
             if (GUILayout.Button("Set proper anchor name"))
             {
-                _anchorName.stringValue = _target.Prefab.name.ToLower();
+                var entry = target as ObjectPoolEntry;
+                _anchorName.stringValue = entry.Prefab.name.ToLower();
             }
 
             if (GUILayout.Button("Clear anchor name"))

@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af0192d5da50ba1418833218b2d30f29, type: 3}
+  m_Name: Pirate fighter shooting config
+  m_EditorClassIdentifier: 
+  _firstFireDelay: 3
+  _firstFireDelayRandomDeviation: 1
+  _nextFireDelay: 4
+  _nextFireDelayRandomDeviation: 1
+  _enableWeaponsSwitch: 0
+  _firstWeaponsSwitchDelay: 0
+  _firstWeaponsSwitchDelayRandomDeviation: 0
+  _nextWeaponsSwitchDelay: 0
+  _nextWeaponsSwitchDelayRandomDeviation: 0
