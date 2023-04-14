@@ -40,24 +40,6 @@ namespace SpaceAce.Gameplay.Movement
         public RangedFloat HorizontalSpeed { get; private set; }
         public RangedFloat VerticalSpeed { get; private set; }
 
-        public float Speed2D
-        {
-            get
-            {
-                if (HorizontalSpeed.IsZeroed == false)
-                {
-                    return HorizontalSpeed.RandomValue;
-                }
-
-                if (VerticalSpeed.IsZeroed == false)
-                {
-                    return VerticalSpeed.RandomValue;
-                }
-
-                return 0f;
-            }
-        }
-
         public bool CustomBoundsEnabled => _customBoundsEnabled;
         public float LeftBound => CustomBoundsEnabled ? s_masterCameraHolder.Access.ViewportLeftBound * _sideBoundsDisplacement
                                                       : s_masterCameraHolder.Access.ViewportLeftBound;

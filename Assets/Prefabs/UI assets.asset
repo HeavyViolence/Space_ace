@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: UI assets
   m_EditorClassIdentifier: 
   _settings: {fileID: 11400000, guid: a4ca0a2c11eaafd4392fff70961494df, type: 2}
+  _buttonClickAudio: {fileID: 11400000, guid: f63e3fbc21968924aa8af6edaf45d1ac, type: 2}
   _mainMenu: {fileID: 9197481963319205126, guid: 84cb6008774612543a3d8d8491e4213e, type: 3}
   _playMenu: {fileID: 9197481963319205126, guid: d6e3873d64361ae4e88230195a7901d0, type: 3}

@@ -1,4 +1,5 @@
 using SpaceAce.Auxiliary;
+using SpaceAce.Gameplay.Amplifications;
 using SpaceAce.Main.ObjectPooling;
 using System;
 using System.Collections.Generic;
@@ -46,6 +47,8 @@ namespace SpaceAce.Gameplay.Spawning
 
         [SerializeField] private bool _haltUntilClear = false;
 
+        [SerializeField] private AmplificationConfig _amplificationConfig;
+
         public RangedFloat FirstSpawnDelay { get; private set; }
 
         public RangedFloat SpawnDelay { get; private set; }
@@ -61,6 +64,8 @@ namespace SpaceAce.Gameplay.Spawning
         public bool HaltUntilClear => _haltUntilClear;
 
         public int UniqueEntitiesAmount => _spawnableEntities.Count;
+
+        public AmplificationConfig AmplificationConfig => _amplificationConfig;
 
         private void OnEnable()
         {
@@ -104,11 +109,9 @@ namespace SpaceAce.Gameplay.Spawning
 
             for (int i = 0; i < waveLength; i++)
             {
-                float seed = UnityEngine.Random.Range(0f, 1f);
-
                 for (int j = 0; j < spawnProbabilities.Count; j++)
                 {
-                    if (seed < spawnProbabilities[j])
+                    if (AuxMath.Random < spawnProbabilities[j])
                     {
                         var entry = (entitiesToSpawnAnchorNames[j], i == 0 ? FirstSpawnDelay.RandomValue : SpawnDelay.RandomValue);
                         proceduralWave.Add(entry);

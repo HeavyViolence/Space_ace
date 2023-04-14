@@ -102,7 +102,7 @@ namespace SpaceAce.Auxiliary
 
 		public bool Equals(StringID other) => other is not null && other.Seed.Equals(Seed);
 
-		public override int GetHashCode() => _random.GetHashCode();
+		public override int GetHashCode() => Seed.GetHashCode();
 
 		public static bool operator ==(StringID x, StringID y)
 		{

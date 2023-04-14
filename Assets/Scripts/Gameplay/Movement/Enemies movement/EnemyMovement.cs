@@ -1,5 +1,6 @@
 using SpaceAce.Architecture;
 using SpaceAce.Auxiliary.StateMachines;
+using SpaceAce.Gameplay.Amplifications;
 using SpaceAce.Gameplay.Experience;
 using SpaceAce.Gameplay.Shooting;
 using SpaceAce.Main;
@@ -11,7 +12,7 @@ namespace SpaceAce.Gameplay.Movement.EnemyMovement
 {
     [RequireComponent(typeof(DamageDealer))]
     [RequireComponent(typeof(Rigidbody2D))]
-    public abstract class EnemyMovement : MonoBehaviourStateMachine, IEscapable, IExperienceSource
+    public abstract class EnemyMovement : MonoBehaviourStateMachine, IEscapable, IExperienceSource, IAmplifiable
     {
         private static readonly GameServiceFastAccess<CameraShaker> s_cameraShaker = new();
         protected static readonly GameServiceFastAccess<MasterCameraHolder> s_masterCameraHolder = new();
@@ -22,7 +23,24 @@ namespace SpaceAce.Gameplay.Movement.EnemyMovement
 
         private DamageDealer _collisionDamageDealer;
 
-        public ShipMovementConfig Config => _config;
+        private float _speedAmplifier = 1f;
+        private float _speedDurationAmplifier = 1f;
+        private float _speedTransitionDurationAmplifier = 1f;
+        private float _collisionDmageAmplifier = 1f;
+
+        public float HorizontalSpeed => _config.HorizontalSpeed.RandomValue * _speedAmplifier;
+        public float HorizontalSpeedDuration => _config.HorizontalSpeedDuration.RandomValue * _speedDurationAmplifier;
+        public float HorizontalSpeedTransitionDuration => _config.HorizontalSpeedTransitionDuration.RandomValue * _speedTransitionDurationAmplifier;
+        public float VerticalSpeed => _config.VerticalSpeed.RandomValue * _speedAmplifier;
+        public float VerticalSpeedDuration => _config.VerticalSpeedDuration.RandomValue * _speedDurationAmplifier;
+        public float VerticalSpeedTransitionDuration => _config.VerticalSpeedTransitionDuration.RandomValue * _speedTransitionDurationAmplifier;
+        public float LeftBound => _config.LeftBound;
+        public float RightBound => _config.RightBound;
+        public float UpperBound => _config.UpperBound;
+        public float LowerBound => _config.LowerBound;
+        public float CollisionDamage => _config.CollisionDamageEnabled ? _config.CollisionDamage.RandomValue * _collisionDmageAmplifier : 0f;
+
+
         public Vector2 PreviousStateExitVelocity { get; set; }
         public Rigidbody2D Body { get; private set; }
 
@@ -35,6 +53,11 @@ namespace SpaceAce.Gameplay.Movement.EnemyMovement
         protected override void OnInitialize()
         {
             _collisionDamageDealer.Hit += CollisionHitEventHandler;
+
+            _speedAmplifier = 1f;
+            _speedDurationAmplifier = 1f;
+            _speedTransitionDurationAmplifier = 1f;
+            _collisionDmageAmplifier = 1f;
         }
 
         private void OnDisable()
@@ -59,10 +82,10 @@ namespace SpaceAce.Gameplay.Movement.EnemyMovement
 
         private void CollisionHitEventHandler(object sender, HitEventArgs e)
         {
-            if (Config.CollisionDamageEnabled)
+            if (_config.CollisionDamageEnabled)
             {
-                e.DamageReceiver?.ApplyDamage(Config.CollisionDamage.RandomValue);
-                Config.CollisionAudio.PlayRandomAudioClip(e.HitPosition);
+                e.DamageReceiver?.ApplyDamage(CollisionDamage);
+                _config.CollisionAudio.PlayRandomAudioClip(e.HitPosition);
 
                 if (_config.CameraShakeOnCollisionEnabled)
                 {
@@ -108,6 +131,14 @@ namespace SpaceAce.Gameplay.Movement.EnemyMovement
             value += _config.VerticalSpeed.MaxValue / _config.VerticalSpeedTransitionDuration.MinValue;
 
             return value;
+        }
+
+        public void Amplify(float factor)
+        {
+            _speedAmplifier *= factor;
+            _speedDurationAmplifier /= factor;
+            _speedTransitionDurationAmplifier /= factor;
+            _collisionDmageAmplifier *= factor;
         }
     }
 }

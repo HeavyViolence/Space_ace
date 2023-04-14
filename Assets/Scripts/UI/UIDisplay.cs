@@ -165,18 +165,24 @@ namespace SpaceAce.UI
         {
             DisableMainMenu();
             EnablePlayMenu();
+
+            _uiAssets.ButtonClickAudio.PlayRandomAudioClip(Vector2.zero);
         }
 
         private void PlayMenuPlayButtonClickedEventHandler()
         {
             DisablePlayMenu();
+
             _gameModeLoader.Access.LoadLevel(_selectedLevelIndex);
+            _uiAssets.ButtonClickAudio.PlayRandomAudioClip(Vector2.zero);
         }
 
         private void PlayMenuBackButtonCkickedEventHandler()
         {
             DisablePlayMenu();
             EnableMainMenu();
+
+            _uiAssets.ButtonClickAudio.PlayRandomAudioClip(Vector2.zero);
         }
 
         private void LevelButtonClickedEventHandler(Button levelButton, Button playButton)
@@ -190,6 +196,8 @@ namespace SpaceAce.UI
 
             var selectedLevelStatistics = _bestLevelsRunsStatisticsCollector.Access.GetStatistics(_selectedLevelIndex);
             UpdateLevelStatisticsDisplay(selectedLevelStatistics);
+
+            _uiAssets.ButtonClickAudio.PlayRandomAudioClip(Vector2.zero);
         }
 
         private void UpdateLevelStatisticsDisplay(BestLevelRunStatistics statistics)

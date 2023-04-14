@@ -21,9 +21,9 @@ namespace SpaceAce.Gameplay.Damageables
         private bool _restoredEventToBeCalled = false;
 
         public float Value { get; private set; }
-        public float MaxValue { get; private set; }
+        public float MaxValue { get; protected set; }
         public float ValuePercentage => Value / MaxValue;
-        public float RegenPerSecond { get; private set; }
+        public float RegenPerSecond { get; protected set; }
         public bool ValueIsFull => Value > MaxValue;
         public float RegainedValue { get; private set; }
 

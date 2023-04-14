@@ -8,7 +8,7 @@ using UnityEngine;
 namespace SpaceAce.Gameplay.Damageables
 {
     [RequireComponent(typeof(ExperienceHolder))]
-    public sealed class DamageReceiver : MonoBehaviour, IDamageable, IDestroyable
+    public abstract class DamageReceiver : MonoBehaviour, IDamageable, IDestroyable
     {
         public event EventHandler<DamageReceivedEventArgs> DamageReceived;
         public event EventHandler<DestroyedEventArgs> Destroyed;

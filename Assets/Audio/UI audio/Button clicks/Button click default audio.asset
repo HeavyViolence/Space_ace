@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e306b4f91fb5134299a8e77f710254e, type: 3}
+  m_Name: Button click default audio
+  m_EditorClassIdentifier: 
+  _audioClips:
+  - {fileID: 8300000, guid: cde0712e2125fea4ab46190803748e2f, type: 3}
+  - {fileID: 8300000, guid: 39967aa46d5def14aad4fb573126a67a, type: 3}
+  - {fileID: 8300000, guid: 8604d3ecfd3a7d04d9c1440322cdc131, type: 3}
+  - {fileID: 8300000, guid: 1f4413d7ac931904cbb3a7c15f9e3474, type: 3}
+  - {fileID: 8300000, guid: 9e83486a1e6531a4180fd8b28ba20781, type: 3}
+  - {fileID: 8300000, guid: e57748cf35d25f6418e010afeec9be97, type: 3}
+  - {fileID: 8300000, guid: 558700a1bacdea043ac1017e19461d58, type: 3}
+  - {fileID: 8300000, guid: 2d11a91eb6d2d06438283173765eda47, type: 3}
+  - {fileID: 8300000, guid: b0cf6fcca207f904597777867770c1a2, type: 3}
+  - {fileID: 8300000, guid: 2a0b519fcc3d7104d83a1c7ac0671237, type: 3}
+  - {fileID: 8300000, guid: d970c41f366230942b045b16a16a4eb8, type: 3}
+  - {fileID: 8300000, guid: 1fe40b75b38d99e47a7a020764804cf4, type: 3}
+  - {fileID: 8300000, guid: 030029f8f39df8c4e9ce37fb8d66c348, type: 3}
+  - {fileID: 8300000, guid: a64cffd1755373e4aaf6a61e9b217968, type: 3}
+  - {fileID: 8300000, guid: 3b8f9b6b674002347aeb374a8e4b0faa, type: 3}
+  - {fileID: 8300000, guid: 30f6d68a45aa2d74496daaf683551eca, type: 3}
+  - {fileID: 8300000, guid: e2d1d6d7a306382409d2268d9be76e85, type: 3}
+  - {fileID: 8300000, guid: 275bbafee62775d4b9bffea57a05ea13, type: 3}
+  - {fileID: 8300000, guid: 34388a908333dc34095f6b64b9f95d49, type: 3}
+  - {fileID: 8300000, guid: e13ff62ff68d14d4d8abd136b7daa5d1, type: 3}
+  - {fileID: 8300000, guid: 7e314411869d1124c853f292923b8a65, type: 3}
+  - {fileID: 8300000, guid: 552000e6693493a47b5d516037379cc8, type: 3}
+  _outputAudioGroup: {fileID: -7841326190588035989, guid: fcf8532f154bbae47942ff673836eca5, type: 2}
+  _volume: 1
+  _volumeRandomDeviation: 0
+  _priority: 0
+  _spatialBlend: 0
+  _spatialBlendRandomDeviation: 0
+  _pitch: 1
+  _pitchRandomDeviation: 0.25

@@ -14,16 +14,16 @@ namespace SpaceAce.Gameplay.Movement.EnemyMovement
             {
                 if (Owner.PreviousStateExitVelocity.x > 0f)
                 {
-                    return Owner.Config.HorizontalSpeed.RandomValue;
+                    return Owner.HorizontalSpeed;
                 }
                 else
                 {
-                    return -1f * Owner.Config.HorizontalSpeed.RandomValue;
+                    return -1f * Owner.HorizontalSpeed;
                 }
             }
             else
             {
-                return Owner.Config.HorizontalSpeed.RandomValue * AuxMath.RandomSign;
+                return Owner.HorizontalSpeed * AuxMath.RandomSign;
             }
         }
 
@@ -31,23 +31,23 @@ namespace SpaceAce.Gameplay.Movement.EnemyMovement
         {
             if (Owner.PreviousStateType.Equals(typeof(FlyForward)))
             {
-                return Owner.Config.VerticalSpeed.RandomValue * AuxMath.RandomSign * EntryVerticalSpeedFactor;
+                return Owner.VerticalSpeed * AuxMath.RandomSign * EntryVerticalSpeedFactor;
             }
 
             if (StateHasJustBegun)
             {
                 if (Owner.PreviousStateExitVelocity.y > 0f)
                 {
-                    return Owner.Config.VerticalSpeed.RandomValue;
+                    return Owner.VerticalSpeed;
                 }
                 else
                 {
-                    return -1f * Owner.Config.VerticalSpeed.RandomValue;
+                    return -1f * Owner.VerticalSpeed;
                 }
             }
             else
             {
-                return Owner.Config.VerticalSpeed.RandomValue * AuxMath.RandomSign;
+                return Owner.VerticalSpeed * AuxMath.RandomSign;
             }
         }
     }

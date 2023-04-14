@@ -9,7 +9,7 @@ namespace SpaceAce.Gameplay.Damageables
         [SerializeField] private ArmorConfig _config;
 
         public bool Enabled => _config.ArmorEnabled;
-        public float Value { get; private set; }
+        public float Value { get; protected set; }
         public float BlockedDamage { get; private set; }
 
         protected void OnEnable()

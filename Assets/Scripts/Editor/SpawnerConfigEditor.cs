@@ -28,6 +28,8 @@ namespace SpaceAce.Editors
 
         private SerializedProperty _haltUntilClear;
 
+        private SerializedProperty _amplificationConfig;
+
         private SpawnerConfig _target;
 
         private void OnEnable()
@@ -52,6 +54,8 @@ namespace SpaceAce.Editors
             _amountToSpawnRandomDeviation = serializedObject.FindProperty("_amountToSpawnRandomDeviation");
 
             _haltUntilClear = serializedObject.FindProperty("_haltUntilClear");
+
+            _amplificationConfig = serializedObject.FindProperty("_amplificationConfig");
 
             _target = (SpawnerConfig)target;
         }
@@ -101,6 +105,9 @@ namespace SpaceAce.Editors
 
             EditorGUILayout.Separator();
             EditorGUILayout.PropertyField(_haltUntilClear, new GUIContent("Halt until clear"));
+
+            EditorGUILayout.Separator();
+            EditorGUILayout.PropertyField(_amplificationConfig, new GUIContent("Amplification config"));
 
             EditorGUILayout.Separator();
 

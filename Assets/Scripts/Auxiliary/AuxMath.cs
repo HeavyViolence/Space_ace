@@ -8,6 +8,7 @@ namespace SpaceAce.Auxiliary
     {
         private const float DegreesPerSecondPerRotationPerMinute = 6f;
 
+        public static float Random => UnityEngine.Random.Range(0f, 1f);
         public static float RandomNormal => UnityEngine.Random.Range(-1f, 1f);
         public static float RandomSign => RandomNormal > 0f ? 1f : -1f;
         public static bool RandomBoolean => RandomSign > 0f;

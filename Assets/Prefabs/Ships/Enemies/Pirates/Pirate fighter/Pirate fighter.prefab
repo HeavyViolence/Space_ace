@@ -46,11 +46,12 @@ GameObject:
   - component: {fileID: 4560740076638076994}
   - component: {fileID: 4560740076638077020}
   - component: {fileID: 4560740076638077023}
-  - component: {fileID: 4560740076638077022}
   - component: {fileID: 4560740076638076993}
   - component: {fileID: 4560740076638077018}
   - component: {fileID: 4560740076638077021}
   - component: {fileID: 5432048469450908694}
+  - component: {fileID: 6244290535508205606}
+  - component: {fileID: -6018448770865221636}
   m_Layer: 8
   m_Name: Pirate fighter
   m_TagString: Untagged
@@ -137,18 +138,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _config: {fileID: 11400000, guid: 762265b3a99b18f4896907719b7a4e4b, type: 2}
   _experienceDisabled: 0
---- !u!114 &4560740076638077022
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4560740076638076997}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c437d5f3d3d23824ca433fbab68a4d2c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &4560740076638076993
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -202,6 +191,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _config: {fileID: 11400000, guid: 98c4247ad449f314bbfcd84e32fe4c29, type: 2}
+--- !u!114 &6244290535508205606
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4560740076638076997}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 401cf4fbe60cf7c46bc82d2f429b493a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-6018448770865221636
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4560740076638076997}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04837dcec8e4c07459f2a1a5403c4a18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4560740076788680733
 GameObject:
   m_ObjectHideFlags: 0

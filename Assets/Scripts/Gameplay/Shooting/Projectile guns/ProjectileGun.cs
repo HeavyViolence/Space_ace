@@ -21,7 +21,7 @@ namespace SpaceAce.Gameplay.Shooting
         private float _currentCooldown = 0f;
         private Coroutine _firingRoutine;
 
-        public float MaxDamagePerSecond => _config.ProjectileDamage.MaxValue *
+        public virtual float MaxDamagePerSecond => _config.ProjectileDamage.MaxValue *
                                            _config.ProjectilesPerShot.MaxValue *
                                            _config.FireRate.MaxValue *
                                            _config.FireDuration.MaxValue * 2f /

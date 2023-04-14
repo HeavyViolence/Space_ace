@@ -1,5 +1,6 @@
 using SpaceAce.Architecture;
 using SpaceAce.Auxiliary;
+using SpaceAce.Gameplay.Damageables;
 using SpaceAce.Levels;
 using SpaceAce.Main;
 using SpaceAce.Main.ObjectPooling;
@@ -14,6 +15,7 @@ namespace SpaceAce.Gameplay.Players
         private static readonly GameServiceFastAccess<MultiobjectPool> s_multiobjectPool = new();
 
         public event EventHandler SavingRequested;
+        public event EventHandler<PlayerShipSpawnedEventArgs> ShipSpawned;
 
         private ObjectPoolEntryLookupTable _objectPoolEntryLookupTable;
         private GameControls _gameControls;
@@ -220,6 +222,15 @@ namespace SpaceAce.Gameplay.Players
             else
             {
                 throw new MissingComponentException($"Player ship is missing a mandatory component of type {typeof(IShootingController)}!");
+            }
+
+            if (_activeShip.TryGetComponent(out IDestroyable destroyable) == true)
+            {
+                ShipSpawned?.Invoke(this, new PlayerShipSpawnedEventArgs(destroyable));
+            }
+            else
+            {
+                throw new MissingComponentException($"Player ship is missing a mandatory component of type {typeof(IDestroyable)}!");
             }
 
             _gameControls.Gameplay.Enable();

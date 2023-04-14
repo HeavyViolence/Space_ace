@@ -1,4 +1,6 @@
 using SpaceAce.Architecture;
+using SpaceAce.Auxiliary;
+using SpaceAce.Gameplay.Amplifications;
 using SpaceAce.Gameplay.Damageables;
 using SpaceAce.Gameplay.Movement;
 using SpaceAce.Levels;
@@ -127,6 +129,19 @@ namespace SpaceAce.Gameplay.Spawning
             else
             {
                 throw new MissingComponentException($"Spawned entity is missing a mandatory component of type {typeof(IEscapable)}!");
+            }
+
+            if (AuxMath.Random < Config.AmplificationConfig.AmplificationProbability.RandomValue)
+            {
+                if (entity.TryGetComponent(out Amplifier amplifier) == true)
+                {
+                    amplifier.Amplify(Config.AmplificationConfig.AmplificationFactor);
+                    Config.AmplificationConfig.AmplifiedEntitySpawnAudio.PlayRandomAudioClip(Vector2.zero);
+                }
+                else
+                {
+                    throw new MissingComponentException($"Spawned entity is missing a mandatory component of type {typeof(Amplifier)}!");
+                }
             }
 
             SpawnedAmount++;
