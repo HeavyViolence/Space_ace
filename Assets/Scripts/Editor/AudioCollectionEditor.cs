@@ -1,4 +1,6 @@
 using SpaceAce.Main.Audio;
+using System.Collections;
+using Unity.EditorCoroutines.Editor;
 using UnityEditor;
 using UnityEngine;
 
@@ -7,6 +9,14 @@ namespace SpaceAce.Editors
     [CustomEditor(typeof(AudioCollection))]
     public sealed class AudioCollectionEditor : Editor
     {
+        private const int MinConsecutiveAudioPreviewAmount = 2;
+        private const int MaxConsecutiveAudioPreviewAmount = 10;
+        private const int DefaultConsecutiveAudioPreviewAmount = 4;
+
+        private const float MinConsecutiveAudioPreviewDelay = 0.1f;
+        private const float MaxConsecutiveAudioPreviewDelay = 1f;
+        private const float DefaultConsecutiveAudioPreviewDelay = 0.5f;
+
         private SerializedProperty _audioClips;
 
         private SerializedProperty _outputAudioGroup;
@@ -25,6 +35,11 @@ namespace SpaceAce.Editors
         private AudioCollection _target = null;
         private AudioSource _audioPreviewer = null;
         private int _lastAppliedSettingsHashSum = 0;
+
+        private bool _consecutiveAudioPreviewEnabled = false;
+        private int _consecutiveAudioPreviewAmount = DefaultConsecutiveAudioPreviewAmount;
+        private float _consecutiveAudioPreviewDelay = DefaultConsecutiveAudioPreviewDelay;
+        private EditorCoroutine _consecutiveAudioPreview = null;
 
         private void OnEnable()
         {
@@ -69,6 +84,23 @@ namespace SpaceAce.Editors
             EditorGUILayout.Separator();
             EditorGUILayout.Slider(_pitch, AudioCollection.MinPitch, AudioCollection.MaxPitch, "Pitch");
             EditorGUILayout.Slider(_pitchRandomDeviation, 0f, _pitch.floatValue, "Max random deviation");
+
+            EditorGUILayout.Separator();
+            _consecutiveAudioPreviewEnabled = EditorGUILayout.Toggle("Consecutive audio preview", _consecutiveAudioPreviewEnabled);
+
+            if (_consecutiveAudioPreviewEnabled)
+            {
+                _consecutiveAudioPreviewAmount = EditorGUILayout.IntSlider("Amount",
+                                                                           _consecutiveAudioPreviewAmount,
+                                                                           MinConsecutiveAudioPreviewAmount,
+                                                                           MaxConsecutiveAudioPreviewAmount);
+
+                _consecutiveAudioPreviewDelay = EditorGUILayout.Slider("Delay",
+                                                                       _consecutiveAudioPreviewDelay,
+                                                                       MinConsecutiveAudioPreviewDelay,
+                                                                       MaxConsecutiveAudioPreviewDelay);
+            }
+
             EditorGUILayout.Separator();
 
             if (GUILayout.Button("Preview audio"))
@@ -93,9 +125,62 @@ namespace SpaceAce.Editors
                     _audioPreviewer = null;
                 }
 
-                GameObject audioPreviewObject = EditorUtility.CreateGameObjectWithHideFlags("Audio preview", hideFlags);
-                _audioPreviewer = audioPreviewObject.AddComponent<AudioSource>();
+                if (_consecutiveAudioPreviewEnabled)
+                {
+                    _consecutiveAudioPreview = EditorCoroutineUtility.StartCoroutineOwnerless(ConsecutiveAudioPreview(_consecutiveAudioPreviewAmount,
+                                                                                                                      _consecutiveAudioPreviewDelay));
+                }
+                else
+                {
+                    AudioPreview();
+                }
+            }
 
+            if (GUILayout.Button("Stop audio preview"))
+            {
+                if (_consecutiveAudioPreviewEnabled)
+                {
+                    if (_consecutiveAudioPreview != null)
+                    {
+                        EditorCoroutineUtility.StopCoroutine(_consecutiveAudioPreview);
+                        _consecutiveAudioPreview = null;
+                    }
+                }
+                else
+                {
+                    if (_audioPreviewer != null && _audioPreviewer.isPlaying)
+                    {
+                        _audioPreviewer.Stop();
+                        DestroyImmediate(_audioPreviewer.gameObject);
+                        _audioPreviewer = null;
+                    }
+                }
+            }
+
+            serializedObject.ApplyModifiedProperties();
+        }
+
+        private void AudioPreview()
+        {
+            GameObject audioPreviewObject = EditorUtility.CreateGameObjectWithHideFlags("Audio preview", hideFlags);
+            _audioPreviewer = audioPreviewObject.AddComponent<AudioSource>();
+
+            _audioPreviewer.clip = _target.RandomAudioClip;
+            _audioPreviewer.spatialBlend = _target.SpatialBlend.RandomValue;
+            _audioPreviewer.pitch = _target.Pitch.RandomValue;
+            _audioPreviewer.volume = _target.Volume.RandomValue;
+            _audioPreviewer.outputAudioMixerGroup = _target.OutputAudioGroup;
+
+            _audioPreviewer.Play();
+        }
+
+        private IEnumerator ConsecutiveAudioPreview(int amount, float delay)
+        {
+            GameObject consecutiveAudioPreviewObject = EditorUtility.CreateGameObjectWithHideFlags("Audio preview", hideFlags);
+            _audioPreviewer = consecutiveAudioPreviewObject.AddComponent<AudioSource>();
+
+            for (int i = 0; i < amount; i++)
+            {
                 _audioPreviewer.clip = _target.RandomAudioClip;
                 _audioPreviewer.spatialBlend = _target.SpatialBlend.RandomValue;
                 _audioPreviewer.pitch = _target.Pitch.RandomValue;
@@ -103,19 +188,9 @@ namespace SpaceAce.Editors
                 _audioPreviewer.outputAudioMixerGroup = _target.OutputAudioGroup;
 
                 _audioPreviewer.Play();
-            }
 
-            if (GUILayout.Button("Stop audio preview"))
-            {
-                if (_audioPreviewer != null && _audioPreviewer.isPlaying)
-                {
-                    _audioPreviewer.Stop();
-                    DestroyImmediate(_audioPreviewer.gameObject);
-                    _audioPreviewer = null;
-                }
+                yield return new EditorWaitForSeconds(delay);
             }
-
-            serializedObject.ApplyModifiedProperties();
         }
 
         private int GetCurrentSettingsHashSum()

@@ -4,6 +4,7 @@ using SpaceAce.Gameplay.Spawning;
 using SpaceAce.Main;
 using System;
 using System.Collections;
+using UnityEngine;
 
 namespace SpaceAce.Levels
 {
@@ -12,6 +13,7 @@ namespace SpaceAce.Levels
         public event EventHandler<LevelDataEventArgs> LevelPassed, LevelFailed, LevelConcluded;
 
         private int _loadedLevelIndex = 0;
+        private Coroutine _allEnemiesDefeatedAwaiter;
 
         #region interfaces
 
@@ -82,6 +84,12 @@ namespace SpaceAce.Levels
         {
             _loadedLevelIndex = 0;
 
+            if (_allEnemiesDefeatedAwaiter != null)
+            {
+                CoroutineRunner.StopRoutine(_allEnemiesDefeatedAwaiter);
+                _allEnemiesDefeatedAwaiter = null;
+            }
+
             if (GameServices.TryGetService(out Player player) == true)
             {
                 player.ShipSpawned -= PlayerShipSpawnedEventHandler;
@@ -112,13 +120,11 @@ namespace SpaceAce.Levels
 
         private void EnemySpawnEndedEventHandler(object sender, EventArgs e)
         {
-            var enemySpawner = sender as EnemySpawner;
+            _allEnemiesDefeatedAwaiter = CoroutineRunner.RunRoutine(AwaitAllEnemiesDefeat(sender as EnemySpawner));
 
-            CoroutineRunner.RunRoutine(AwaitAllEnemiesDefeat());
-
-            IEnumerator AwaitAllEnemiesDefeat()
+            IEnumerator AwaitAllEnemiesDefeat(EnemySpawner spawner)
             {
-                while (enemySpawner.AliveAmount > 0)
+                while (spawner.AliveAmount > 0)
                 {
                     yield return null;
                 }

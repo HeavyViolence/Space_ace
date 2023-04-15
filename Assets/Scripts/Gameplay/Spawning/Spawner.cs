@@ -8,6 +8,7 @@ using SpaceAce.Main;
 using SpaceAce.Main.ObjectPooling;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace SpaceAce.Gameplay.Spawning
@@ -25,6 +26,7 @@ namespace SpaceAce.Gameplay.Spawning
         public event EventHandler SpawnStarted, SpawnPaused, SpawnResumed, SpawnEnded;
         public event EventHandler<EntitySpawnedEventArgs> EntitySpawned;
 
+        private readonly HashSet<(GameObject entity, string anchorname)> _aliveEntities = new();
         private Coroutine _spawningRoutine;
 
         private float MinHorizontalSpawnPosition => s_masterCameraHolder.Access.ViewportLeftBound * SpawnPositionWidthIndentFactor;
@@ -33,7 +35,7 @@ namespace SpaceAce.Gameplay.Spawning
 
         public SpawnerConfig Config { get; protected set; }
         public int SpawnedAmount { get; protected set; }
-        public int AliveAmount { get; protected set; }
+        public int AliveAmount => _aliveEntities.Count;
         public int AmountToSpawn { get; protected set; }
         public bool SpawnIsActive => _spawningRoutine != null;
 
@@ -96,6 +98,8 @@ namespace SpaceAce.Gameplay.Spawning
             var entity = s_multiobjectPool.Access.GetObject(anchorName);
             entity.transform.SetPositionAndRotation(spawnPosition, GetSpawnedEntityRotation());
 
+            _aliveEntities.Add((entity, anchorName));
+
             IEscapable escapable;
             IDestroyable destroyable;
 
@@ -106,7 +110,7 @@ namespace SpaceAce.Gameplay.Spawning
                 d.Destroyed += (s, e) =>
                 {
                     s_multiobjectPool.Access.ReleaseObject(anchorName, entity, () => true);
-                    AliveAmount--;
+                    _aliveEntities.Remove((entity, anchorName));
                 };
             }
             else
@@ -123,7 +127,7 @@ namespace SpaceAce.Gameplay.Spawning
                 e.Escaped += (s, e) =>
                 {
                     s_multiobjectPool.Access.ReleaseObject(anchorName, entity, () => true);
-                    AliveAmount--;
+                    _aliveEntities.Remove((entity, anchorName));
                 };
             }
             else
@@ -145,8 +149,6 @@ namespace SpaceAce.Gameplay.Spawning
             }
 
             SpawnedAmount++;
-            AliveAmount++;
-
             EntitySpawned?.Invoke(this, new(escapable, destroyable));
         }
 
@@ -173,6 +175,7 @@ namespace SpaceAce.Gameplay.Spawning
             if (GameServices.TryGetService(out GameModeLoader loader) == true)
             {
                 loader.LevelLoaded += LevelLoadedEventHandler;
+                loader.MainMenuLoaded += MainMenuLoadedEventHandler;
             }
             else
             {
@@ -194,6 +197,7 @@ namespace SpaceAce.Gameplay.Spawning
             if (GameServices.TryGetService(out GameModeLoader loader) == true)
             {
                 loader.LevelLoaded -= LevelLoadedEventHandler;
+                loader.MainMenuLoaded -= MainMenuLoadedEventHandler;
             }
             else
             {
@@ -219,20 +223,32 @@ namespace SpaceAce.Gameplay.Spawning
 
         #region event handlers
 
-        protected virtual void LevelLoadedEventHandler(object sender, LevelLoadedEventArgs e)
+        private void LevelLoadedEventHandler(object sender, LevelLoadedEventArgs e)
         {
+            OnConfigSetup(e.LevelConfig);
+
             SpawnedAmount = 0;
-            AliveAmount = 0;
+            AmountToSpawn = Config.AmountToSpawn.RandomValue;
 
             StartSpawn();
         }
 
-        protected virtual void LevelConcludedEventHandler(object sender, EventArgs e)
+        private void LevelConcludedEventHandler(object sender, EventArgs e)
         {
             StopSpawn();
 
             Config = null;
         }
+
+        private void MainMenuLoadedEventHandler(object sender, EventArgs e)
+        {
+            foreach (var (entity, anchorName) in _aliveEntities)
+            {
+                s_multiobjectPool.Access.ReleaseObject(anchorName, entity, () => true);
+            }
+        }
+
+        protected abstract void OnConfigSetup(LevelConfig config);
 
         #endregion
     }

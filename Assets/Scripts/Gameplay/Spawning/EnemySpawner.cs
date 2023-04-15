@@ -1,5 +1,5 @@
 using SpaceAce.Architecture;
-using SpaceAce.Main;
+using SpaceAce.Levels;
 using UnityEngine;
 
 namespace SpaceAce.Gameplay.Spawning
@@ -20,14 +20,10 @@ namespace SpaceAce.Gameplay.Spawning
             GameServices.Deregister(this);
         }
 
-        protected override void LevelLoadedEventHandler(object sender, LevelLoadedEventArgs e)
+        protected override void OnConfigSetup(LevelConfig levelConfig)
         {
-            Config = e.LevelConfig.EnemySpawnerConfig;
+            Config = levelConfig.EnemySpawnerConfig;
             Config.EnsureNecessaryObjectPoolsExistence();
-
-            AmountToSpawn = Config.AmountToSpawn.RandomValue;
-
-            base.LevelLoadedEventHandler(sender, e);
         }
     }
 }

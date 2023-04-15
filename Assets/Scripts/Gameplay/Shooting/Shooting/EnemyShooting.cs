@@ -8,6 +8,7 @@ namespace SpaceAce.Gameplay.Shooting
     public sealed class EnemyShooting : Shooting
     {
         private static readonly GameServiceFastAccess<MasterCameraHolder> s_masterCameraHolder = new();
+        private static readonly GameServiceFastAccess<GameModeLoader> s_gameModeLoader = new();
 
         [SerializeField] private ShootingConfig _config;
 
@@ -23,12 +24,16 @@ namespace SpaceAce.Gameplay.Shooting
             _firingRoutine = StartCoroutine(FireForever());
             _weaponsSwitchTimer = 0f;
             _nextWeaponsSwitchDelay = _config.FirstWeaponsSwitchDelay.RandomValue;
+
+            s_gameModeLoader.Access.MainMenuLoadingStarted += MainMenuLoadingStartedEventHandler;
         }
 
         private void OnDisable()
         {
             StopCoroutine(_firingRoutine);
             _firingRoutine = null;
+
+            s_gameModeLoader.Access.MainMenuLoadingStarted += MainMenuLoadingStartedEventHandler;
         }
 
         private void Update()
@@ -71,6 +76,11 @@ namespace SpaceAce.Gameplay.Shooting
 
                 yield return new WaitForSeconds(_config.NextFireDelay.RandomValue);
             }
+        }
+
+        private void MainMenuLoadingStartedEventHandler(object sender, LoadingStartedEventArgs e)
+        {
+            StopCoroutine(_firingRoutine);
         }
     }
 }
