@@ -6,8 +6,8 @@ namespace SpaceAce.Gameplay.Movement.EnemyMovement
     {
         public EvadeUpperBoundLeftOrRight(EnemyMovement owner) : base(owner) { }
 
-        protected override float GetNextHorizontalSpeed() => Owner.HorizontalSpeed * AuxMath.RandomSign;
+        protected override float GetNextHorizontalSpeed() => Owner.NextHorizontalSpeed * AuxMath.RandomSign;
 
-        protected override float GetNextVerticalSpeed() => -1f * Owner.VerticalSpeed;
+        protected override float GetNextVerticalSpeed() => -1f * Owner.NextVerticalSpeed;
     }
 }

@@ -113,8 +113,12 @@ namespace SpaceAce.Gameplay.Spawning
                 {
                     if (AuxMath.Random < spawnProbabilities[j])
                     {
-                        var entry = (entitiesToSpawnAnchorNames[j], i == 0 ? FirstSpawnDelay.RandomValue : SpawnDelay.RandomValue);
-                        proceduralWave.Add(entry);
+                        int randomAnchorNameIndex = UnityEngine.Random.Range(0, entitiesToSpawnAnchorNames.Count);
+
+                        string anchorName = entitiesToSpawnAnchorNames[randomAnchorNameIndex];
+                        float spawnDelay = i == 0 ? FirstSpawnDelay.RandomValue : SpawnDelay.RandomValue;
+
+                        proceduralWave.Add((anchorName, spawnDelay));
 
                         break;
                     }

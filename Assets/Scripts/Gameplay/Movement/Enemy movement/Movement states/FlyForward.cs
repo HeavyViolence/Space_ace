@@ -6,6 +6,6 @@ namespace SpaceAce.Gameplay.Movement.EnemyMovement
 
         protected override float GetNextHorizontalSpeed() => 0f;
 
-        protected override float GetNextVerticalSpeed() => -1f * Owner.VerticalSpeed;
+        protected override float GetNextVerticalSpeed() => -1f * Owner.NextVerticalSpeed;
     }
 }

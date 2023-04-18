@@ -1,4 +1,5 @@
 using SpaceAce.Auxiliary;
+using SpaceAce.Gameplay.Movement;
 using SpaceAce.Main.Audio;
 using SpaceAce.Main.ObjectPooling;
 using UnityEngine;
@@ -18,7 +19,7 @@ namespace SpaceAce.Gameplay.Shooting
         public const float MaxProjectileDamage = 1000f;
 
         public const int MinProjectilesPerShot = 1;
-        public const int MaxProjectilesPerShot = 10;
+        public const int MaxProjectilesPerShot = 20;
 
         public const float MinFireDuration = 1f;
         public const float MaxFireDuration = 10f;
@@ -42,6 +43,8 @@ namespace SpaceAce.Gameplay.Shooting
         [SerializeField] private ObjectPoolEntry _projectile;
         [SerializeField] private ObjectPoolEntry _projectileHitEffect;
 
+        [SerializeField] private ProjectileBehaviour _projectileMovement;
+
         [SerializeField] private float _projectileSpeed = MinProjectileSpeed;
         [SerializeField] private float _projectileSpeedRandomDeviation = 0f;
 
@@ -64,6 +67,7 @@ namespace SpaceAce.Gameplay.Shooting
         [SerializeField] private float _convergenceAngle = DefaultConvergenceAngle;
 
         [SerializeField] private AudioCollection _fireAudio;
+        [SerializeField] private AudioCollection _hitAudio;
 
         [SerializeField] private bool _cameraShakeOnShot = false;
 
@@ -71,6 +75,8 @@ namespace SpaceAce.Gameplay.Shooting
 
         public ObjectPoolEntry Projectile => _projectile;
         public ObjectPoolEntry ProjectileHitEffect => _projectileHitEffect;
+
+        public MovementBehaviour ProjectileBehaviour => _projectileMovement.Behaviour;
 
         public RangedFloat ProjectileSpeed { get; private set; }
         public RangedFloat ProjectileDamage { get; private set; }
@@ -81,6 +87,7 @@ namespace SpaceAce.Gameplay.Shooting
         public RangedFloat Dispersion { get; private set; }
 
         public AudioCollection FireAudio => _fireAudio;
+        public AudioCollection HitAudio => _hitAudio;
 
         public bool CameraShakeOnShotEnabled => _cameraShakeOnShot;
 

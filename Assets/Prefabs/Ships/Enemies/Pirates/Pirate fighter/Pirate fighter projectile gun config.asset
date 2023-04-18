@@ -15,6 +15,7 @@ MonoBehaviour:
   _gunGroupID: 0
   _projectile: {fileID: 11400000, guid: b62900aa7634cc8419c02f95dfcafcef, type: 2}
   _projectileHitEffect: {fileID: 11400000, guid: 2ca80ae96c742fc45a63478e688600f5, type: 2}
+  _projectileMovement: {fileID: 11400000, guid: 679ac0c5aeafaa145aaee938e27bc0ea, type: 2}
   _projectileSpeed: 70
   _projectileSpeedRandomDeviation: 5
   _projectileDamage: 50
@@ -30,4 +31,5 @@ MonoBehaviour:
   _dispersion: 0.05
   _convergenceAngle: 0.02
   _fireAudio: {fileID: 11400000, guid: 1e5020393c7e5384eb46a808303eec37, type: 2}
+  _hitAudio: {fileID: 0}
   _cameraShakeOnShot: 0

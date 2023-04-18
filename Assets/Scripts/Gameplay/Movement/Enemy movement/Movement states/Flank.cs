@@ -4,8 +4,6 @@ namespace SpaceAce.Gameplay.Movement.EnemyMovement
 {
     public sealed class Flank : EnemyMovementState
     {
-        private const float EntryVerticalSpeedFactor = 0.25f;
-
         public Flank(EnemyMovement owner) : base(owner) { }
 
         protected override float GetNextHorizontalSpeed()
@@ -14,16 +12,16 @@ namespace SpaceAce.Gameplay.Movement.EnemyMovement
             {
                 if (Owner.PreviousStateExitVelocity.x > 0f)
                 {
-                    return Owner.HorizontalSpeed;
+                    return Owner.NextHorizontalSpeed;
                 }
                 else
                 {
-                    return -1f * Owner.HorizontalSpeed;
+                    return -1f * Owner.NextHorizontalSpeed;
                 }
             }
             else
             {
-                return Owner.HorizontalSpeed * AuxMath.RandomSign;
+                return Owner.NextHorizontalSpeed * AuxMath.RandomSign;
             }
         }
 
@@ -31,23 +29,23 @@ namespace SpaceAce.Gameplay.Movement.EnemyMovement
         {
             if (Owner.PreviousStateType.Equals(typeof(FlyForward)))
             {
-                return Owner.VerticalSpeed * AuxMath.RandomSign * EntryVerticalSpeedFactor;
+                return Owner.NextVerticalSpeed * AuxMath.RandomSign * EntrySpeedFactor;
             }
 
             if (StateHasJustBegun)
             {
                 if (Owner.PreviousStateExitVelocity.y > 0f)
                 {
-                    return Owner.VerticalSpeed;
+                    return Owner.NextVerticalSpeed;
                 }
                 else
                 {
-                    return -1f * Owner.VerticalSpeed;
+                    return -1f * Owner.NextVerticalSpeed;
                 }
             }
             else
             {
-                return Owner.VerticalSpeed * AuxMath.RandomSign;
+                return Owner.NextVerticalSpeed * AuxMath.RandomSign;
             }
         }
     }

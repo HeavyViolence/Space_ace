@@ -28,17 +28,17 @@ namespace SpaceAce.Gameplay.Movement.EnemyMovement
         private float _speedTransitionDurationAmplifier = 1f;
         private float _collisionDmageAmplifier = 1f;
 
-        public float HorizontalSpeed => _config.HorizontalSpeed.RandomValue * _speedAmplifier;
-        public float HorizontalSpeedDuration => _config.HorizontalSpeedDuration.RandomValue * _speedDurationAmplifier;
-        public float HorizontalSpeedTransitionDuration => _config.HorizontalSpeedTransitionDuration.RandomValue * _speedTransitionDurationAmplifier;
-        public float VerticalSpeed => _config.VerticalSpeed.RandomValue * _speedAmplifier;
-        public float VerticalSpeedDuration => _config.VerticalSpeedDuration.RandomValue * _speedDurationAmplifier;
-        public float VerticalSpeedTransitionDuration => _config.VerticalSpeedTransitionDuration.RandomValue * _speedTransitionDurationAmplifier;
+        public float NextHorizontalSpeed => _config.HorizontalSpeed.RandomValue * _speedAmplifier;
+        public float NextHorizontalSpeedDuration => _config.HorizontalSpeedDuration.RandomValue * _speedDurationAmplifier;
+        public float NextHorizontalSpeedTransitionDuration => _config.HorizontalSpeedTransitionDuration.RandomValue * _speedTransitionDurationAmplifier;
+        public float NextVerticalSpeed => _config.VerticalSpeed.RandomValue * _speedAmplifier;
+        public float NextVerticalSpeedDuration => _config.VerticalSpeedDuration.RandomValue * _speedDurationAmplifier;
+        public float NextVerticalSpeedTransitionDuration => _config.VerticalSpeedTransitionDuration.RandomValue * _speedTransitionDurationAmplifier;
         public float LeftBound => _config.LeftBound;
         public float RightBound => _config.RightBound;
         public float UpperBound => _config.UpperBound;
         public float LowerBound => _config.LowerBound;
-        public float CollisionDamage => _config.CollisionDamageEnabled ? _config.CollisionDamage.RandomValue * _collisionDmageAmplifier : 0f;
+        public float NextCollisionDamage => _config.CollisionDamageEnabled ? _config.CollisionDamage.RandomValue * _collisionDmageAmplifier : 0f;
 
 
         public Vector2 PreviousStateExitVelocity { get; set; }
@@ -84,7 +84,7 @@ namespace SpaceAce.Gameplay.Movement.EnemyMovement
         {
             if (_config.CollisionDamageEnabled)
             {
-                e.DamageReceiver?.ApplyDamage(CollisionDamage);
+                e.DamageReceiver?.ApplyDamage(NextCollisionDamage);
                 _config.CollisionAudio.PlayRandomAudioClip(e.HitPosition);
 
                 if (_config.CameraShakeOnCollisionEnabled)

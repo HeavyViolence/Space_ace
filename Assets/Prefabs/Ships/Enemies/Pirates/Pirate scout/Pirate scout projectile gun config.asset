@@ -10,26 +10,26 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 25f5b6e5938357245853de1accb12539, type: 3}
-  m_Name: Player ship 1.1 projectile gun config
+  m_Name: Pirate scout projectile gun config
   m_EditorClassIdentifier: 
   _gunGroupID: 0
-  _projectile: {fileID: 11400000, guid: 2fc4a7373a046b04986e1a61e69a4749, type: 2}
-  _projectileHitEffect: {fileID: 11400000, guid: 8d5c5790c43124f4eaffd2a3fcc42fbb, type: 2}
+  _projectile: {fileID: 11400000, guid: b62900aa7634cc8419c02f95dfcafcef, type: 2}
+  _projectileHitEffect: {fileID: 11400000, guid: 2ca80ae96c742fc45a63478e688600f5, type: 2}
   _projectileMovement: {fileID: 11400000, guid: 679ac0c5aeafaa145aaee938e27bc0ea, type: 2}
-  _projectileSpeed: 80
+  _projectileSpeed: 70
   _projectileSpeedRandomDeviation: 5
-  _projectileDamage: 50
-  _projectileDamageRandomDeviation: 5
-  _projectilesPerShot: 1
-  _projectilesPerShotRandomDeviation: 0
+  _projectileDamage: 30
+  _projectileDamageRandomDeviation: 3
+  _projectilesPerShot: 8
+  _projectilesPerShotRandomDeviation: 1
   _fireDuration: 1
-  _fireDurationRandomDeviation: 0.1
-  _fireRate: 8
-  _fireRateRandomDeviation: 0.5
-  _cooldown: 3
+  _fireDurationRandomDeviation: 0
+  _fireRate: 1
+  _fireRateRandomDeviation: 0
+  _cooldown: 4
   _cooldownRandomDeviation: 0.5
-  _dispersion: 0.05
+  _dispersion: 0.1
   _convergenceAngle: 0.02
-  _fireAudio: {fileID: 11400000, guid: 6fd2b357ff7ce0948940e5a3df1dec46, type: 2}
+  _fireAudio: {fileID: 11400000, guid: f7a07d4c7c6b3614db2898e0cb86f977, type: 2}
   _hitAudio: {fileID: 0}
-  _cameraShakeOnShot: 1
+  _cameraShakeOnShot: 0

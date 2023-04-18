@@ -14,11 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spawnableEntities:
   - {fileID: 11400000, guid: 372d0ecf5c98c8148883e6c67b381fa4, type: 2}
+  - {fileID: 11400000, guid: ac33057e858bf7e4d85287bd6cd3346e, type: 2}
   _firstSpawnDelay: 5
   _firstSpawnDelayRandomDeviation: 0.5
   _spawnDelay: 1.5
   _spawnDelayRandomDeviation: 0.5
-  _uniqueEntitiesInWave: 1
+  _uniqueEntitiesInWave: 2
   _uniqueEntitiesInWaveRandomDeviation: 0
   _waveLength: 5
   _waveLengthRandomDeviation: 1

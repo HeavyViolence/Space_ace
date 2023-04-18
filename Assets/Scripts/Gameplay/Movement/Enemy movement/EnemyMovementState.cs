@@ -6,6 +6,8 @@ namespace SpaceAce.Gameplay.Movement.EnemyMovement
 {
     public abstract class EnemyMovementState : IState, IEquatable<IState>
     {
+        protected const float EntrySpeedFactor = 0.25f;
+
         private float _currentHorizontalSpeed;
         private float _previousHorizontalSpeed;
         private float _targetHorizontalSpeed;
@@ -92,8 +94,8 @@ namespace SpaceAce.Gameplay.Movement.EnemyMovement
             _horizontalSpeedTimer = 0f;
             _previousHorizontalSpeed = Owner.PreviousStateExitVelocity.x;
             _targetHorizontalSpeed = GetNextHorizontalSpeed();
-            _horizontalSpeedDuration = Owner.HorizontalSpeedDuration;
-            _horizontalSpeedTransitionDuration = Owner.HorizontalSpeedTransitionDuration;
+            _horizontalSpeedDuration = Owner.NextHorizontalSpeedDuration;
+            _horizontalSpeedTransitionDuration = Owner.NextHorizontalSpeedTransitionDuration;
         }
 
         private void InitializeVerticalSpeed()
@@ -101,8 +103,8 @@ namespace SpaceAce.Gameplay.Movement.EnemyMovement
             _verticalSpeedTimer = 0f;
             _previousVerticalSpeed = Owner.PreviousStateExitVelocity.y;
             _targetVerticalSpeed = GetNextVerticalSpeed();
-            _verticalSpeedDuration = Owner.VerticalSpeedDuration;
-            _verticalSpeedTransitionDuration = Owner.VerticalSpeedTransitionDuration;
+            _verticalSpeedDuration = Owner.NextVerticalSpeedDuration;
+            _verticalSpeedTransitionDuration = Owner.NextVerticalSpeedTransitionDuration;
         }
 
         private void UpdateHorizontalSpeed()
@@ -114,8 +116,8 @@ namespace SpaceAce.Gameplay.Movement.EnemyMovement
                 _horizontalSpeedTimer = 0f;
                 _previousHorizontalSpeed = _currentHorizontalSpeed;
                 _targetHorizontalSpeed = GetNextHorizontalSpeed();
-                _horizontalSpeedDuration = Owner.HorizontalSpeedDuration;
-                _horizontalSpeedTransitionDuration = Owner.HorizontalSpeedTransitionDuration;
+                _horizontalSpeedDuration = Owner.NextHorizontalSpeedDuration;
+                _horizontalSpeedTransitionDuration = Owner.NextHorizontalSpeedTransitionDuration;
             }
 
             _currentHorizontalSpeed = Mathf.Lerp(_previousHorizontalSpeed,
@@ -132,8 +134,8 @@ namespace SpaceAce.Gameplay.Movement.EnemyMovement
                 _verticalSpeedTimer = 0f;
                 _previousVerticalSpeed = _currentVerticalSpeed;
                 _targetVerticalSpeed = GetNextVerticalSpeed();
-                _verticalSpeedDuration = Owner.HorizontalSpeedDuration;
-                _verticalSpeedTransitionDuration = Owner.VerticalSpeedTransitionDuration;
+                _verticalSpeedDuration = Owner.NextHorizontalSpeedDuration;
+                _verticalSpeedTransitionDuration = Owner.NextVerticalSpeedTransitionDuration;
             }
 
             _currentVerticalSpeed = Mathf.Lerp(_previousVerticalSpeed,

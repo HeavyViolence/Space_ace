@@ -9,7 +9,7 @@ namespace SpaceAce.Gameplay.Shooting
 {
     public abstract class ProjectileGun : MonoBehaviour, IGun
     {
-        private const float HitEffectDuration = 2f;
+        private const float HitEffectDuration = 3f;
 
         private static readonly GameServiceFastAccess<MultiobjectPool> s_multiobjectPool = new();
         private static readonly GameServiceFastAccess<MasterCameraHolder> s_masterCameraHolder = new();
@@ -39,17 +39,13 @@ namespace SpaceAce.Gameplay.Shooting
         protected virtual float NextCooldown => _config.Cooldown.RandomValue;
         protected virtual float NextDispersion => _config.Dispersion.RandomValue;
         protected virtual float ConvergenceAngle => _config.GetConvergenceAngle(IsRightHandedGun);
-        protected MovementBehaviour ProjectileMovementBehaviour { get; set; }
+        protected MovementBehaviour ProjectileBehaviour { get; set; }
 
         private void Awake()
         {
             _config.EnsureNecessaryObjectPoolsExistence();
 
-            ProjectileMovementBehaviour = delegate (Rigidbody2D body, Vector2 direction, float speed)
-            {
-                Vector2 velocity = Time.fixedDeltaTime * speed * direction;
-                body.MovePosition(body.position + velocity);
-            };
+            ProjectileBehaviour = _config.ProjectileBehaviour;
         }
 
         private void Update()
@@ -123,7 +119,7 @@ namespace SpaceAce.Gameplay.Shooting
                                                    projectile,
                                                    () => s_masterCameraHolder.Access.InsideViewport(projectile.transform.position) == false);
 
-            SupplyProjectileMovementBehaviour(projectile, ProjectileMovementBehaviour, projectileDirection, NextProjectileSpeed);
+            SupplyProjectileBehaviour(projectile, ProjectileBehaviour, projectileDirection, NextProjectileSpeed);
             AwaitProjectileHit(projectile);
 
             if (_config.CameraShakeOnShotEnabled)
@@ -132,7 +128,7 @@ namespace SpaceAce.Gameplay.Shooting
             }
         }
 
-        private void SupplyProjectileMovementBehaviour(GameObject projectile, MovementBehaviour behaviour, Vector2 direction, float speed)
+        private void SupplyProjectileBehaviour(GameObject projectile, MovementBehaviour behaviour, Vector2 direction, float speed)
         {
             if (projectile.TryGetComponent(out IMovementBehaviourSupplier supplier) == true)
             {
@@ -158,6 +154,11 @@ namespace SpaceAce.Gameplay.Shooting
                     hitEffect.transform.position = e.HitPosition;
 
                     s_multiobjectPool.Access.ReleaseObject(_config.ProjectileHitEffect.AnchorName, hitEffect, () => true, HitEffectDuration);
+
+                    if (_config.HitAudio != null)
+                    {
+                        _config.HitAudio.PlayRandomAudioClip(e.HitPosition);
+                    }
                 };
             }
             else

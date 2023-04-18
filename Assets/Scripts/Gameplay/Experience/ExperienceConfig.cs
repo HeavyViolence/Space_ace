@@ -6,7 +6,7 @@ namespace SpaceAce.Gameplay.Experience
     public sealed class ExperienceConfig : ScriptableObject
     {
         public const float MinExperienceDepletionDuration = 10f;
-        public const float MaxExperienceDepletionDuration = 30f;
+        public const float MaxExperienceDepletionDuration = 60f;
 
         [SerializeField] private bool _experienceDepletionEnabled = false;
 

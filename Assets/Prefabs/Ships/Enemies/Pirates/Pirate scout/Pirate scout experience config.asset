@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 392299e44fbf01144ba9541c3260f0ee, type: 3}
-  m_Name: Pirate fighter experience config
+  m_Name: Pirate scout experience config
   m_EditorClassIdentifier: 
   _experienceDepletionEnabled: 1
   _experienceDepletionPeriod: 30

@@ -12,6 +12,8 @@ namespace SpaceAce.Editors
         private SerializedProperty _projectile;
         private SerializedProperty _projectileHitEffect;
 
+        private SerializedProperty _projectileMovement;
+
         private SerializedProperty _projectileSpeed;
         private SerializedProperty _projectileSpeedRandomDeviation;
 
@@ -34,6 +36,7 @@ namespace SpaceAce.Editors
         private SerializedProperty _convergenceAngle;
 
         private SerializedProperty _fireAudio;
+        private SerializedProperty _hitAudio;
 
         private SerializedProperty _cameraShakeOnShot;
 
@@ -43,6 +46,8 @@ namespace SpaceAce.Editors
 
             _projectile = serializedObject.FindProperty("_projectile");
             _projectileHitEffect = serializedObject.FindProperty("_projectileHitEffect");
+
+            _projectileMovement = serializedObject.FindProperty("_projectileMovement");
 
             _projectileSpeed = serializedObject.FindProperty("_projectileSpeed");
             _projectileSpeedRandomDeviation = serializedObject.FindProperty("_projectileSpeedRandomDeviation");
@@ -66,6 +71,7 @@ namespace SpaceAce.Editors
             _convergenceAngle = serializedObject.FindProperty("_convergenceAngle");
 
             _fireAudio = serializedObject.FindProperty("_fireAudio");
+            _hitAudio = serializedObject.FindProperty("_hitAudio");
 
             _cameraShakeOnShot = serializedObject.FindProperty("_cameraShakeOnShot");
         }
@@ -78,8 +84,10 @@ namespace SpaceAce.Editors
 
             EditorGUILayout.Separator();
             EditorGUILayout.PropertyField(_projectile, new GUIContent("Projectile"));
+            EditorGUILayout.PropertyField(_projectileMovement, new GUIContent("Projectile behaviour"));
             EditorGUILayout.PropertyField(_projectileHitEffect, new GUIContent("Projectile hit effect"));
             EditorGUILayout.PropertyField(_fireAudio, new GUIContent("Fire audio"));
+            EditorGUILayout.PropertyField(_hitAudio, new GUIContent("Hit audio"));
 
             EditorGUILayout.Separator();
             EditorGUILayout.Slider(_projectileSpeed, ProjectileGunConfig.MinProjectileSpeed, ProjectileGunConfig.MaxProjectileSpeed, "Projectile speed");

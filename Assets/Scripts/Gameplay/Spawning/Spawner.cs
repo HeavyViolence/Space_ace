@@ -246,6 +246,8 @@ namespace SpaceAce.Gameplay.Spawning
             {
                 s_multiobjectPool.Access.ReleaseObject(anchorName, entity, () => true);
             }
+
+            _aliveEntities.Clear();
         }
 
         protected abstract void OnConfigSetup(LevelConfig config);

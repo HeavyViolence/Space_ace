@@ -12,7 +12,7 @@ namespace SpaceAce.Gameplay.Damageables
         public float Value { get; protected set; }
         public float BlockedDamage { get; private set; }
 
-        protected void OnEnable()
+        protected virtual void OnEnable()
         {
             Value = _config.Armor.RandomValue;
             BlockedDamage = 0f;
