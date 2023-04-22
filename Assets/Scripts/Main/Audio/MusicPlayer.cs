@@ -72,13 +72,17 @@ namespace SpaceAce.Main.Audio
             }
         }
 
-        public void SetPlaybackInterval(float value)
+        public void SetPlaybackInterval(float value, bool save)
         {
             PlaybackInterval = Mathf.Clamp(value, MinPlaybackInterval, MaxPlaybackInterval);
-            SavingRequested?.Invoke(this, EventArgs.Empty);
+
+            if (save == true)
+            {
+                SavingRequested?.Invoke(this, EventArgs.Empty);
+            }
         }
 
-        public void SetDefaultPlaybackInterval() => SetPlaybackInterval(DefaultPlaybackInterval);
+        public void SetDefaultPlaybackInterval(bool save) => SetPlaybackInterval(DefaultPlaybackInterval, save);
 
         #region interfaces
 
@@ -121,23 +125,18 @@ namespace SpaceAce.Main.Audio
             Play();
         }
 
-        public object GetState() => PlaybackInterval;
-
-        public void SetState(object state)
+        public string GetState()
         {
-            if (state is null)
-            {
-                throw new EmptySavableStateEntryException(typeof(float));
-            }
+            MusicPlayerSettings settings = new(PlaybackInterval);
 
-            if (state is float value)
-            {
-                PlaybackInterval = value;
-            }
-            else
-            {
-                throw new LoadedSavableEntityStateTypeMismatchException(state.GetType(), typeof(float), GetType());
-            }
+            return JsonUtility.ToJson(settings);
+        }
+
+        public void SetState(string state)
+        {
+            var settings = JsonUtility.FromJson<MusicPlayerSettings>(state);
+
+            SetPlaybackInterval(settings.PlaybackInterval, false);
         }
 
         public override bool Equals(object obj) => Equals(obj as ISavable);

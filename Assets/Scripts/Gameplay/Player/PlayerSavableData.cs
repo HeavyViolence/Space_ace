@@ -1,13 +1,14 @@
 using System;
-using System.Runtime.Serialization;
+using UnityEngine;
 
 namespace SpaceAce.Gameplay.Players
 {
-    [DataContract]
+    [Serializable]
     public sealed class PlayerSavableData
     {
-        [DataMember]
-        public string SelectedShipAnchorName { get; private set; }
+        [SerializeField] private string _selectedShipAnchorName;
+
+        public string SelectedShipAnchorName => _selectedShipAnchorName;
 
         public PlayerSavableData(string selectedShipAnchorName)
         {
@@ -17,7 +18,7 @@ namespace SpaceAce.Gameplay.Players
                 throw new ArgumentNullException(nameof(selectedShipAnchorName), "Attepted to pass an empty selected ship anchor name!");
             }
 
-            SelectedShipAnchorName = selectedShipAnchorName;
+            _selectedShipAnchorName = selectedShipAnchorName;
         }
     }
 }

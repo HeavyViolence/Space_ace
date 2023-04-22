@@ -1,35 +1,30 @@
-using System.Runtime.Serialization;
+using System;
+using UnityEngine;
 
 namespace SpaceAce.Main.Audio
 {
-    [DataContract]
+    [Serializable]
     public sealed class AudioPlayerSettings
     {
         public static AudioPlayerSettings Default => new(0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f);
 
-        [DataMember]
-        public float MasterVolume { get; private set; }
+        [SerializeField] private float _masterVolume;
+        [SerializeField] private float _musicVolume;
+        [SerializeField] private float _shootingVolume;
+        [SerializeField] private float _explosionsVolume;
+        [SerializeField] private float _interfaceVolume;
+        [SerializeField] private float _backgroundVolume;
+        [SerializeField] private float _notificationsVolume;
+        [SerializeField] private float _interactionsVolume;
 
-        [DataMember]
-        public float MusicVolume { get; private set; }
-
-        [DataMember]
-        public float ShootingVolume { get; private set; }
-
-        [DataMember]
-        public float ExplosionsVolume { get; private set; }
-
-        [DataMember]
-        public float InterfaceVolume { get; private set; }
-
-        [DataMember]
-        public float BackgroundVolume { get; private set; }
-
-        [DataMember]
-        public float NotificationsVolume { get; private set; }
-
-        [DataMember]
-        public float InteractionsVolume { get; private set; }
+        public float MasterVolume => _masterVolume;
+        public float MusicVolume => _musicVolume;
+        public float ShootingVolume => _shootingVolume;
+        public float ExplosionsVolume => _explosionsVolume;
+        public float InterfaceVolume => _interfaceVolume;
+        public float BackgroundVolume => _backgroundVolume;
+        public float NotificationsVolume => _notificationsVolume;
+        public float InteractionsVolume => _interactionsVolume;
 
         public AudioPlayerSettings(float masterVolume,
                                    float musicVolume,
@@ -40,14 +35,14 @@ namespace SpaceAce.Main.Audio
                                    float notificationsVolume,
                                    float interactionsVolume)
         {
-            MasterVolume = masterVolume;
-            MusicVolume = musicVolume;
-            ShootingVolume = shootingVolume;
-            ExplosionsVolume = explosionsVolume;
-            InterfaceVolume = interfaceVolume;
-            BackgroundVolume = backgroundVolume;
-            NotificationsVolume = notificationsVolume;
-            InteractionsVolume = interactionsVolume;
+            _masterVolume = masterVolume;
+            _musicVolume = musicVolume;
+            _shootingVolume = shootingVolume;
+            _explosionsVolume = explosionsVolume;
+            _interfaceVolume = interfaceVolume;
+            _backgroundVolume = backgroundVolume;
+            _notificationsVolume = notificationsVolume;
+            _interactionsVolume = interactionsVolume;
         }
     }
 }

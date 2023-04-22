@@ -9,7 +9,7 @@ namespace SpaceAce.Main.Saving
         string ID { get; }
         string SaveName { get; }
 
-        object GetState();
-        void SetState(object state);
+        string GetState();
+        void SetState(string state);
     }
 }

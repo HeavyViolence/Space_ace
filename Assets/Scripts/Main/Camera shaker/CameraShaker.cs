@@ -150,27 +150,18 @@ namespace SpaceAce.Main
             GameServices.Deregister(this);
         }
 
-        public object GetState() => ShakingEnabled;
-
-        public void SetState(object state)
+        public string GetState()
         {
-            if (state is null)
-            {
-                throw new EmptySavableStateEntryException(typeof(bool));
-            }
+            CameraShakerSavableData data = new(ShakingEnabled);
 
-            if (state is bool value)
-            {
-                _suppressSaveRequest = true;
+            return JsonUtility.ToJson(data);
+        }
 
-                ShakingEnabled = value;
+        public void SetState(string state)
+        {
+            var data = JsonUtility.FromJson<CameraShakerSavableData>(state);
 
-                _suppressSaveRequest = false;
-            }
-            else
-            {
-                throw new LoadedSavableEntityStateTypeMismatchException(state.GetType(), typeof(bool), GetType());
-            }
+            _shakingEnabled = data.ShakingEnabled;
         }
 
         public override bool Equals(object obj) => Equals(obj as ISavable);

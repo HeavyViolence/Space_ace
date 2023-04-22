@@ -22,7 +22,6 @@ namespace SpaceAce.Main.Audio
         private readonly Stack<AudioSource> _availableAudioSources = new(MaxAudioSources);
         private readonly AudioMixer _audioMixer;
         private Transform _audioSourcePoolAnchor;
-        private bool _suppressSaveRequest = false;
 
         public string ID { get; }
         public string SaveName => "Audio player settings";
@@ -47,7 +46,7 @@ namespace SpaceAce.Main.Audio
             CreateAudioSourcePool();
         }
 
-        public void ApplySettings(AudioPlayerSettings settings)
+        public void ApplySettings(AudioPlayerSettings settings, bool save)
         {
             if (settings is null)
             {
@@ -65,7 +64,7 @@ namespace SpaceAce.Main.Audio
 
             Settings = settings;
 
-            if (_suppressSaveRequest == false)
+            if (save == true)
             {
                 SavingRequested?.Invoke(this, EventArgs.Empty);
             }
@@ -251,27 +250,13 @@ namespace SpaceAce.Main.Audio
             GameServices.Deregister(this);
         }
 
-        public object GetState() => Settings;
+        public string GetState() => JsonUtility.ToJson(Settings);
 
-        public void SetState(object state)
+        public void SetState(string state)
         {
-            if (state is null)
-            {
-                throw new EmptySavableStateEntryException(typeof(AudioPlayerSettings));
-            }
+            var settings = JsonUtility.FromJson<AudioPlayerSettings>(state);
 
-            if (state is AudioPlayerSettings value)
-            {
-                _suppressSaveRequest = true;
-
-                ApplySettings(value);
-
-                _suppressSaveRequest = false;
-            }
-            else
-            {
-                throw new LoadedSavableEntityStateTypeMismatchException(state.GetType(), typeof(AudioPlayerSettings), GetType());
-            }
+            ApplySettings(settings, false);
         }
 
         public override bool Equals(object obj) => Equals(obj as ISavable);

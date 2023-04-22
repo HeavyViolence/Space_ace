@@ -142,25 +142,20 @@ namespace SpaceAce.Gameplay.Players
             MoveShip();
         }
 
-        public object GetState() => new PlayerSavableData(SelectedShip.AnchorName);
-
-        public void SetState(object state)
+        public string GetState()
         {
-            if (state is null)
-            {
-                throw new EmptySavableStateEntryException(typeof(PlayerSavableData));
-            }
+            PlayerSavableData data = new(SelectedShip.AnchorName);
 
-            if (state is PlayerSavableData value)
+            return JsonUtility.ToJson(data);
+        }
+
+        public void SetState(string state)
+        {
+            var data = JsonUtility.FromJson<PlayerSavableData>(state);
+
+            if (_objectPoolEntryLookupTable.TryGetEntryByName(data.SelectedShipAnchorName, out var entry) == true)
             {
-                if (_objectPoolEntryLookupTable.TryGetEntryByName(value.SelectedShipAnchorName, out var entry) == true)
-                {
-                    SelectedShip = entry;
-                }
-            }
-            else
-            {
-                throw new LoadedSavableEntityStateTypeMismatchException(state.GetType(), typeof(PlayerSavableData), GetType());
+                SelectedShip = entry;
             }
         }
 

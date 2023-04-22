@@ -3,6 +3,7 @@ using SpaceAce.Auxiliary;
 using SpaceAce.Main.Saving;
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace SpaceAce.Levels
 {
@@ -85,32 +86,25 @@ namespace SpaceAce.Levels
             GameServices.Deregister(this);
         }
 
-        public object GetState() => new LevelUnlockerSavableData(_passedLevels, _unlockedLevels);
-
-        public void SetState(object state)
+        public string GetState()
         {
-            if (state is null)
+            LevelUnlockerSavableData state = new(_passedLevels, _unlockedLevels);
+
+            return JsonUtility.ToJson(state);
+        }
+
+        public void SetState(string state)
+        {
+            var data = JsonUtility.FromJson<LevelUnlockerSavableData>(state);
+
+            if (data.PassedLevels is not null)
             {
-                throw new EmptySavableStateEntryException(typeof(LevelUnlockerSavableData));
+                _passedLevels = new(data.PassedLevels);
             }
 
-            if (state is LevelUnlockerSavableData value)
+            if (data.UnlockedLevels is not null)
             {
-                if (value.PassedLevels is not null)
-                {
-                    _passedLevels = new(value.PassedLevels);
-                }
-                
-                if (value.UnlockedLevels is not null)
-                {
-                    _unlockedLevels = new(value.UnlockedLevels);
-                }
-            }
-            else
-            {
-                throw new LoadedSavableEntityStateTypeMismatchException(state.GetType(),
-                                                                        typeof(LevelUnlockerSavableData),
-                                                                        GetType());
+                _unlockedLevels = new(data.UnlockedLevels);
             }
         }
 

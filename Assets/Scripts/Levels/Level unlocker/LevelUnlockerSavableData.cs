@@ -1,17 +1,17 @@
 using System;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
+using UnityEngine;
 
 namespace SpaceAce.Levels
 {
-    [DataContract]
+    [Serializable]
     public sealed class LevelUnlockerSavableData
     {
-        [DataMember]
-        public IEnumerable<int> PassedLevels { get; private set; }
+        [SerializeField] private List<int> _passedLevels;
+        [SerializeField] private List<int> _unlockedLevels;
 
-        [DataMember]
-        public IEnumerable<int> UnlockedLevels { get; private set; }
+        public IEnumerable<int> PassedLevels => _passedLevels;
+        public IEnumerable<int> UnlockedLevels => _unlockedLevels;
 
         public LevelUnlockerSavableData(IEnumerable<int> passedLevels,
                                         IEnumerable<int> unlockedLevels)
@@ -22,13 +22,15 @@ namespace SpaceAce.Levels
                                                 "Attempted to pass an empty passed levels indices collection!");
             }
 
-            PassedLevels = passedLevels;
+            _passedLevels = new(passedLevels);
 
             if (unlockedLevels is null)
             {
                 throw new ArgumentNullException(nameof(unlockedLevels),
                                                 "Attempted to pass an empty unlocked levels indices collection!");
             }
+
+            _unlockedLevels = new(unlockedLevels);
         }
     }
 }

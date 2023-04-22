@@ -80,7 +80,7 @@ namespace SpaceAce.Levels
                     _value -= 1f;
                     Seconds++;
 
-                    if (Seconds == SecondsPerMinute)
+                    if (Seconds == SecondsPerMinute - 1)
                     {
                         Seconds = 0;
                         Minutes++;

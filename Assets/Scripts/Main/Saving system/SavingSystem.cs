@@ -3,24 +3,20 @@ using SpaceAce.Auxiliary;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Runtime.Serialization;
 using System.Security.Cryptography;
+using System.Text;
 
 namespace SpaceAce.Main.Saving
 {
     public sealed class SavingSystem : IInitializable
     {
         private const string SavesDirectory = "D:/Unity Projects/Space_ace/Saves";
-        private const string MetadataFileName = "Meta";
         private const string SavesExtension = ".save";
 
         private const int EncryptionKeyLength = 16;
 
-        private readonly HashSet<Type> _knownSavableDataTypes = new() { typeof(object[]) };
         private readonly HashSet<ISavable> _registeredEntities = new();
         private readonly string _id;
-
-        private string MetadataPath => Path.Combine(SavesDirectory, MetadataFileName + SavesExtension);
 
         public SavingSystem(string id)
         {
@@ -41,14 +37,7 @@ namespace SpaceAce.Main.Saving
 
             if (_registeredEntities.Add(entity) == true)
             {
-                Type stateType = entity.GetState().GetType();
-
-                if (_knownSavableDataTypes.Add(stateType) == true)
-                {
-                    SaveMetadata();
-                }
-
-                if (TryLoadEntityState(entity, out object state) == true)
+                if (TryLoadEntityState(entity, out string state) == true)
                 {
                     entity.SetState(state);
                 }
@@ -83,7 +72,8 @@ namespace SpaceAce.Main.Saving
         {
             using FileStream saveFileStream = new(GetSaveFilePath(entity), FileMode.Create, FileAccess.Write);
 
-            byte[] serializedState = Serialize(entity.GetState());
+            string state = entity.GetState();
+            byte[] serializedState = Encoding.UTF8.GetBytes(state);
             byte[] encryptionKey = GetRandomBytes(entity.GetHashCode(), EncryptionKeyLength);
             byte[] encryptedSerializedState = Encrypt(serializedState, encryptionKey);
 
@@ -91,7 +81,7 @@ namespace SpaceAce.Main.Saving
             saveFileStream.Close();
         }
 
-        private bool TryLoadEntityState(ISavable entity, out object state)
+        private bool TryLoadEntityState(ISavable entity, out string state)
         {
             string saveFilePath = GetSaveFilePath(entity);
 
@@ -104,7 +94,7 @@ namespace SpaceAce.Main.Saving
                 byte[] decryptionKey = GetRandomBytes(entity.GetHashCode(), EncryptionKeyLength);
                 byte[] decryptedSerializedState = Decrypt(encryptedSerializedState, decryptionKey);
 
-                state = Deserialize(decryptedSerializedState);
+                state = Encoding.UTF8.GetString(decryptedSerializedState);
 
                 saveFileReader.Close();
                 saveFileStream.Close();
@@ -120,89 +110,6 @@ namespace SpaceAce.Main.Saving
         }
 
         private string GetSaveFilePath(ISavable entity) => Path.Combine(SavesDirectory, entity.SaveName + SavesExtension);
-
-        private void SaveMetadata()
-        {
-            using FileStream metadataFileStream = new(MetadataPath, FileMode.Create, FileAccess.Write);
-            List<string> knownTypesNames = new(_knownSavableDataTypes.Count + 1);
-
-            _knownSavableDataTypes.Add(knownTypesNames.GetType());
-
-            foreach (var type in _knownSavableDataTypes)
-            {
-                knownTypesNames.Add(type.FullName);
-            }
-
-            byte[] key = GetRandomBytes(_id.GetHashCode(), EncryptionKeyLength);
-            byte[] metadata = Serialize(knownTypesNames);
-            byte[] encryptedMetadata = Encrypt(metadata, key);
-
-            metadataFileStream.Write(encryptedMetadata);
-            metadataFileStream.Close();
-        }
-
-        private bool TryLoadMetadata()
-        {
-            if (File.Exists(MetadataPath))
-            {
-                try
-                {
-                    using FileStream metadataFileStream = new(MetadataPath, FileMode.Open, FileAccess.Read);
-                    using BinaryReader metadataFileReader = new(metadataFileStream);
-
-                    byte[] key = GetRandomBytes(_id.GetHashCode(), EncryptionKeyLength);
-                    byte[] encryptedMetadata = metadataFileReader.ReadBytes((int)metadataFileStream.Length);
-                    byte[] metadata = Decrypt(encryptedMetadata, key);
-                    List<string> knownTypesNames = new();
-
-                    _knownSavableDataTypes.Add(knownTypesNames.GetType());
-
-                    knownTypesNames = (List<string>)Deserialize(metadata);
-                    List<Type> knownTypes = new(knownTypesNames.Count);
-
-                    foreach (var typeName in knownTypesNames)
-                    {
-                        knownTypes.Add(Type.GetType(typeName));
-                    }
-
-                    _knownSavableDataTypes.UnionWith(knownTypes);
-
-                    return true;
-                }
-                catch (Exception e)
-                {
-                    throw new Exception("Metadata loading failed!", e);
-                }
-            }
-
-            return false;
-        }
-
-        private byte[] Serialize(object input)
-        {
-            if (input is null)
-            {
-                throw new ArgumentNullException(nameof(input), "Cannot serialize an empty input!");
-            }
-
-            using MemoryStream memoryStream = new();
-            DataContractSerializer serializer = new(typeof(object), _knownSavableDataTypes);
-
-            serializer.WriteObject(memoryStream, input);
-
-            return memoryStream.ToArray();
-        }
-
-        private object Deserialize(byte[] input)
-        {
-            using MemoryStream memoryStream = new(input.Length);
-            DataContractSerializer deserializer = new(typeof(object), _knownSavableDataTypes);
-
-            memoryStream.Write(input);
-            memoryStream.Position = 0;
-
-            return deserializer.ReadObject(memoryStream);
-        }
 
         private byte[] Encrypt(byte[] input, byte[] key)
         {
@@ -249,7 +156,6 @@ namespace SpaceAce.Main.Saving
         public void OnInitialize()
         {
             GameServices.Register(this);
-            TryLoadMetadata();
         }
 
         public void OnSubscribe()

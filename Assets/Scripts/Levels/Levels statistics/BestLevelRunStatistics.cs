@@ -1,40 +1,34 @@
 using System;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
+using UnityEngine;
 
 namespace SpaceAce.Levels
 {
-    [DataContract]
+    [Serializable]
     public sealed class BestLevelRunStatistics : IEquatable<BestLevelRunStatistics>,
                                                  IComparable<BestLevelRunStatistics>,
                                                  IComparer<BestLevelRunStatistics>
     {
-        public static BestLevelRunStatistics Default => new BestLevelRunStatistics(0f, 0f, 0f, 0f, (0, 0), 0, 0, 0);
+        public static BestLevelRunStatistics Default => new(0f, 0f, 0f, 0f, (0, 0), 0, 0, 0);
 
-        [DataMember]
-        public float ShootingAccuracy { get; private set; }
+        [SerializeField] private float _shootingAccuracy;
+        [SerializeField] private float _playerDamagePercentage;
+        [SerializeField] private float _meteorsCrushedPercentage;
+        [SerializeField] private float _spaceDebrisCrushedPercentage;
+        [SerializeField] private int _minutes;
+        [SerializeField] private int _seconds;
+        [SerializeField] private int _crystalsEarned;
+        [SerializeField] private int _experienceEarned;
+        [SerializeField] private int _enemiesDefeated;
 
-        [DataMember]
-        public float PlayerDamagePercentage { get; private set; }
-
-        [DataMember]
-        public float MeteorsCrushedPercentage { get; private set; }
-
-        [DataMember]
-        public float SpaceDebrisCrushedPercentage { get; private set; }
-
-        [DataMember]
-        public (int minutes, int seconds) TimeSpent { get; private set; }
-
-        [DataMember]
-        public int CrystalsEarned { get; private set; }
-
-        [DataMember]
-        public int ExperienceEarned { get; private set; }
-
-        [DataMember]
-        public int EnemiesDefeated { get; private set; }
-
+        public float ShootingAccuracy => _shootingAccuracy;
+        public float PlayerDamagePercentage => +_playerDamagePercentage;
+        public float MeteorsCrushedPercentage => _meteorsCrushedPercentage;
+        public float SpaceDebrisCrushedPercentage => _spaceDebrisCrushedPercentage;
+        public (int minutes, int seconds) TimeSpent => (_minutes, _seconds);
+        public int CrystalsEarned => _crystalsEarned;
+        public int ExperienceEarned => _experienceEarned;
+        public int EnemiesDefeated => _enemiesDefeated;
         public float LevelMastery => ShootingAccuracy *
                                      MeteorsCrushedPercentage *
                                      SpaceDebrisCrushedPercentage /
@@ -49,14 +43,15 @@ namespace SpaceAce.Levels
                                       int experienceEarned,
                                       int enemiesDefeated)
         {
-            ShootingAccuracy = shootingAccuracy;
-            PlayerDamagePercentage = Math.Clamp(playerDamagePercentage, 0f, 1f);
-            MeteorsCrushedPercentage = meteorsCrushedPercentage;
-            SpaceDebrisCrushedPercentage = spacedebrisCrushedPercentage;
-            TimeSpent = timeSpent;
-            CrystalsEarned = crystalsEarned;
-            ExperienceEarned = experienceEarned;
-            EnemiesDefeated = enemiesDefeated;
+            _shootingAccuracy = shootingAccuracy;
+            _playerDamagePercentage = Math.Clamp(playerDamagePercentage, 0f, 1f);
+            _meteorsCrushedPercentage = meteorsCrushedPercentage;
+            _spaceDebrisCrushedPercentage = spacedebrisCrushedPercentage;
+            _minutes = timeSpent.minutes;
+            _seconds = timeSpent.seconds;
+            _crystalsEarned = crystalsEarned;
+            _experienceEarned = experienceEarned;
+            _enemiesDefeated = enemiesDefeated;
         }
 
         #region interfaces

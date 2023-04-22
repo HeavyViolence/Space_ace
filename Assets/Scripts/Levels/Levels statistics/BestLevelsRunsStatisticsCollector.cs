@@ -3,6 +3,7 @@ using SpaceAce.Auxiliary;
 using SpaceAce.Main.Saving;
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace SpaceAce.Levels
 {
@@ -23,11 +24,7 @@ namespace SpaceAce.Levels
             }
 
             ID = id;
-
-            for (int i = 1; i <= LevelConfig.MaxLevelIndex; i++)
-            {
-                _statistics.Add(i, BestLevelRunStatistics.Default);
-            }
+            _statistics.Add(1, BestLevelRunStatistics.Default);
         }
 
         public BestLevelRunStatistics GetStatistics(int levelIndex)
@@ -95,25 +92,18 @@ namespace SpaceAce.Levels
             GameServices.Deregister(this);
         }
 
-        public object GetState() => _statistics;
-
-        public void SetState(object state)
+        public string GetState()
         {
-            if (state is null)
-            {
-                throw new EmptySavableStateEntryException(typeof(IEnumerable<KeyValuePair<int, BestLevelRunStatistics>>));
-            }
+            BestLevelsRunsStatisticsCollectorSavableData data = new(_statistics.Keys, _statistics.Values);
 
-            if (state is IEnumerable<KeyValuePair<int, BestLevelRunStatistics>> value)
-            {
-                _statistics = new(value);
-            }
-            else
-            {
-                throw new LoadedSavableEntityStateTypeMismatchException(state.GetType(),
-                                                                        typeof(IEnumerable<KeyValuePair<int, BestLevelRunStatistics>>),
-                                                                        GetType());
-            }
+            return JsonUtility.ToJson(data);
+        }
+
+        public void SetState(string state)
+        {
+            var data = JsonUtility.FromJson<BestLevelsRunsStatisticsCollectorSavableData>(state);
+
+            _statistics = new(data.Contents);
         }
 
         public override bool Equals(object obj) => Equals(obj as ISavable);
