@@ -9,7 +9,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2304447952384985033, guid: 54f0da71b2206ab4b93ab98be1ec4b05, type: 3}
       propertyPath: m_Name
-      value: Explosion 2
+      value: Explosion big 2
       objectReference: {fileID: 0}
     - target: {fileID: 2304447952384985034, guid: 54f0da71b2206ab4b93ab98be1ec4b05, type: 3}
       propertyPath: m_RootOrder
@@ -54,6 +54,10 @@ PrefabInstance:
     - target: {fileID: 2304447952384985034, guid: 54f0da71b2206ab4b93ab98be1ec4b05, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2304447953866643452, guid: 54f0da71b2206ab4b93ab98be1ec4b05, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2304447953866643452, guid: 54f0da71b2206ab4b93ab98be1ec4b05, type: 3}
       propertyPath: m_Materials.Array.data[0]

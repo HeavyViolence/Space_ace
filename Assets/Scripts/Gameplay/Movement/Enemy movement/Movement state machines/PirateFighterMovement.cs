@@ -43,7 +43,7 @@ namespace SpaceAce.Gameplay.Movement.EnemyMovement
             AddTransition(_evadeUpperBoundLeftOrRight, _evadeLeftBoundDown, () => Body.position.x < LeftBound);
             AddTransition(_evadeUpperBoundLeftOrRight, _evadeRightBoundDown, () => Body.position.x > RightBound);
 
-            AddTransition(_evadeLowerBoundLeftOrRight, _flank, () => Body.position.y > LowerBound); ;
+            AddTransition(_evadeLowerBoundLeftOrRight, _flank, () => Body.position.y > LowerBound);
             AddTransition(_evadeLowerBoundLeftOrRight, _evadeLeftBoundDown, () => Body.position.x < LeftBound);
             AddTransition(_evadeLowerBoundLeftOrRight, _evadeRightBoundDown, () => Body.position.x > RightBound);
 

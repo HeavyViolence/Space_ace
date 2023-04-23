@@ -10,15 +10,17 @@ namespace SpaceAce.Editors
         private SerializedProperty _gunGroupID;
 
         private SerializedProperty _projectile;
-        private SerializedProperty _projectileHitEffect;
+        private SerializedProperty _hitEffect;
 
-        private SerializedProperty _projectileMovement;
+        private SerializedProperty _behaviour;
 
-        private SerializedProperty _projectileSpeed;
-        private SerializedProperty _projectileSpeedRandomDeviation;
+        private SerializedProperty _speed;
+        private SerializedProperty _speedRandomDeviation;
 
-        private SerializedProperty _projectileDamage;
-        private SerializedProperty _projectileDamageRandomDeviation;
+        private SerializedProperty _rotationConfig;
+
+        private SerializedProperty _damage;
+        private SerializedProperty _damageRandomDeviation;
 
         private SerializedProperty _projectilesPerShot;
         private SerializedProperty _projectilesPerShotRandomDeviation;
@@ -45,15 +47,17 @@ namespace SpaceAce.Editors
             _gunGroupID = serializedObject.FindProperty("_gunGroupID");
 
             _projectile = serializedObject.FindProperty("_projectile");
-            _projectileHitEffect = serializedObject.FindProperty("_projectileHitEffect");
+            _hitEffect = serializedObject.FindProperty("_hitEffect");
 
-            _projectileMovement = serializedObject.FindProperty("_projectileMovement");
+            _behaviour = serializedObject.FindProperty("_behaviour");
 
-            _projectileSpeed = serializedObject.FindProperty("_projectileSpeed");
-            _projectileSpeedRandomDeviation = serializedObject.FindProperty("_projectileSpeedRandomDeviation");
+            _speed = serializedObject.FindProperty("_speed");
+            _speedRandomDeviation = serializedObject.FindProperty("_speedRandomDeviation");
 
-            _projectileDamage = serializedObject.FindProperty("_projectileDamage");
-            _projectileDamageRandomDeviation = serializedObject.FindProperty("_projectileDamageRandomDeviation");
+            _rotationConfig = serializedObject.FindProperty("_rotationConfig");
+
+            _damage = serializedObject.FindProperty("_damage");
+            _damageRandomDeviation = serializedObject.FindProperty("_damageRandomDeviation");
 
             _projectilesPerShot = serializedObject.FindProperty("_projectilesPerShot");
             _projectilesPerShotRandomDeviation = serializedObject.FindProperty("_projectilesPerShotRandomDeviation");
@@ -84,22 +88,25 @@ namespace SpaceAce.Editors
 
             EditorGUILayout.Separator();
             EditorGUILayout.PropertyField(_projectile, new GUIContent("Projectile"));
-            EditorGUILayout.PropertyField(_projectileMovement, new GUIContent("Projectile behaviour"));
-            EditorGUILayout.PropertyField(_projectileHitEffect, new GUIContent("Projectile hit effect"));
+            EditorGUILayout.PropertyField(_behaviour, new GUIContent("Movement behaviour"));
+            EditorGUILayout.PropertyField(_hitEffect, new GUIContent("Hit effect"));
             EditorGUILayout.PropertyField(_fireAudio, new GUIContent("Fire audio"));
             EditorGUILayout.PropertyField(_hitAudio, new GUIContent("Hit audio"));
 
             EditorGUILayout.Separator();
-            EditorGUILayout.Slider(_projectileSpeed, ProjectileGunConfig.MinProjectileSpeed, ProjectileGunConfig.MaxProjectileSpeed, "Projectile speed");
-            EditorGUILayout.Slider(_projectileSpeedRandomDeviation, 0f, _projectileSpeed.floatValue, "Max random deviation");
+            EditorGUILayout.Slider(_speed, ProjectileGunConfig.MinSpeed, ProjectileGunConfig.MaxSpeed, "Speed");
+            EditorGUILayout.Slider(_speedRandomDeviation, 0f, _speed.floatValue, "Max random deviation");
 
-            _projectileSpeedRandomDeviation.floatValue = Mathf.Clamp(_projectileSpeedRandomDeviation.floatValue, 0f, _projectileSpeed.floatValue);
+            _speedRandomDeviation.floatValue = Mathf.Clamp(_speedRandomDeviation.floatValue, 0f, _speed.floatValue);
 
             EditorGUILayout.Separator();
-            EditorGUILayout.Slider(_projectileDamage, ProjectileGunConfig.MinProjectileDamage, ProjectileGunConfig.MaxProjectileDamage, "Projectile damage");
-            EditorGUILayout.Slider(_projectileDamageRandomDeviation, 0f, _projectileDamage.floatValue, "Max random deviation");
+            EditorGUILayout.PropertyField(_rotationConfig, new GUIContent("Rotation config"));
 
-            _projectileDamageRandomDeviation.floatValue = Mathf.Clamp(_projectileDamageRandomDeviation.floatValue, 0f, _projectileDamage.floatValue);
+            EditorGUILayout.Separator();
+            EditorGUILayout.Slider(_damage, ProjectileGunConfig.MinDamage, ProjectileGunConfig.MaxDamage, "Damage");
+            EditorGUILayout.Slider(_damageRandomDeviation, 0f, _damage.floatValue, "Max random deviation");
+
+            _damageRandomDeviation.floatValue = Mathf.Clamp(_damageRandomDeviation.floatValue, 0f, _damage.floatValue);
 
             EditorGUILayout.Separator();
             EditorGUILayout.IntSlider(_projectilesPerShot, ProjectileGunConfig.MinProjectilesPerShot, ProjectileGunConfig.MaxProjectilesPerShot, "Projectiles per shot");

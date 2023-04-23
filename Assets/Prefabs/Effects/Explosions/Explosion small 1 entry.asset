@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ba49e7649797e2b46a4f61e12fa4e2f9, type: 3}
-  m_Name: Explosion 2 entry
+  m_Name: Explosion small 1 entry
   m_EditorClassIdentifier: 
-  _prefab: {fileID: 8372153070486645961, guid: 96ce089f7a3700f48955fcdbb6665c45, type: 3}
-  _anchorName: explosion 2
+  _prefab: {fileID: 4573939834817472700, guid: 5c65b0eec07b1814f96d9b4318d66221, type: 3}
+  _anchorName: explosion small 1

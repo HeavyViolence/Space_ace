@@ -21,7 +21,7 @@ namespace SpaceAce.Gameplay.Shooting
         private float _currentCooldown = 0f;
         private Coroutine _firingRoutine;
 
-        public virtual float MaxDamagePerSecond => _config.ProjectileDamage.MaxValue *
+        public virtual float MaxDamagePerSecond => _config.Damage.MaxValue *
                                            _config.ProjectilesPerShot.MaxValue *
                                            _config.FireRate.MaxValue *
                                            _config.FireDuration.MaxValue * 2f /
@@ -31,8 +31,10 @@ namespace SpaceAce.Gameplay.Shooting
         public bool IsFiring => _firingRoutine != null;
         public int GunGroupID => _config.GunGroupID;
         protected bool IsRightHandedGun => transform.localPosition.x > 0f;
-        protected virtual float NextProjectileSpeed => _config.ProjectileSpeed.RandomValue;
-        protected virtual float NextProjectileDamage => _config.ProjectileDamage.RandomValue;
+        protected virtual float NextProjectileSpeed => _config.Speed.RandomValue;
+        protected virtual float NextProjectileRevolutionsPerMinute => _config.RotationConfig.RevolutionsPerMinute.RandomValue;
+        protected virtual float NextProjectileTurningRadius => _config.RotationConfig.TurningRadius.RandomValue;
+        protected virtual float NextProjectileDamage => _config.Damage.RandomValue;
         protected virtual int NextProjectilesPerShot => _config.ProjectilesPerShot.RandomValue;
         protected virtual float NextFireDuration => _config.FireDuration.RandomValue;
         protected virtual float NextFireRate => _config.FireRate.RandomValue;
@@ -45,7 +47,7 @@ namespace SpaceAce.Gameplay.Shooting
         {
             _config.EnsureNecessaryObjectPoolsExistence();
 
-            ProjectileBehaviour = _config.ProjectileBehaviour;
+            ProjectileBehaviour = _config.MovementBehaviour;
         }
 
         private void Update()
@@ -119,7 +121,13 @@ namespace SpaceAce.Gameplay.Shooting
                                                    projectile,
                                                    () => s_masterCameraHolder.Access.InsideViewport(projectile.transform.position) == false);
 
-            SupplyProjectileBehaviour(projectile, ProjectileBehaviour, projectileDirection, NextProjectileSpeed);
+            MovementBehaviourSettings settings = new(projectileDirection,
+                                                     NextProjectileSpeed,
+                                                     NextProjectileRevolutionsPerMinute,
+                                                     NextProjectileTurningRadius);
+
+            SupplyProjectileBehaviour(projectile, ProjectileBehaviour, settings);
+
             AwaitProjectileHit(projectile);
 
             if (_config.CameraShakeOnShotEnabled)
@@ -128,11 +136,11 @@ namespace SpaceAce.Gameplay.Shooting
             }
         }
 
-        private void SupplyProjectileBehaviour(GameObject projectile, MovementBehaviour behaviour, Vector2 direction, float speed)
+        private void SupplyProjectileBehaviour(GameObject projectile, MovementBehaviour behaviour, MovementBehaviourSettings settings)
         {
             if (projectile.TryGetComponent(out IMovementBehaviourSupplier supplier) == true)
             {
-                supplier.SupplyMovementBehaviour(behaviour, direction, speed);
+                supplier.SupplyMovementBehaviour(behaviour, settings);
             }
             else
             {
@@ -150,10 +158,10 @@ namespace SpaceAce.Gameplay.Shooting
 
                     s_multiobjectPool.Access.ReleaseObject(_config.Projectile.AnchorName, projectile, () => true);
 
-                    var hitEffect = s_multiobjectPool.Access.GetObject(_config.ProjectileHitEffect.AnchorName);
+                    var hitEffect = s_multiobjectPool.Access.GetObject(_config.HitEffect.AnchorName);
                     hitEffect.transform.position = e.HitPosition;
 
-                    s_multiobjectPool.Access.ReleaseObject(_config.ProjectileHitEffect.AnchorName, hitEffect, () => true, HitEffectDuration);
+                    s_multiobjectPool.Access.ReleaseObject(_config.HitEffect.AnchorName, hitEffect, () => true, HitEffectDuration);
 
                     if (_config.HitAudio != null)
                     {

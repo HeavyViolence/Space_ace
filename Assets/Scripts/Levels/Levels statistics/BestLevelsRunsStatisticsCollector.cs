@@ -24,7 +24,6 @@ namespace SpaceAce.Levels
             }
 
             ID = id;
-            _statistics.Add(1, BestLevelRunStatistics.Default);
         }
 
         public BestLevelRunStatistics GetStatistics(int levelIndex)
@@ -35,7 +34,12 @@ namespace SpaceAce.Levels
                                                       $"Passed level index must be within the following range: [1, {LevelConfig.MaxLevelIndex}]!");
             }
 
-            return _statistics.GetValueOrDefault(levelIndex);
+            if (_statistics.TryGetValue(levelIndex, out var statistics) == true)
+            {
+                return statistics;
+            }
+
+            return BestLevelRunStatistics.Default;
         }
 
         #region interfaces

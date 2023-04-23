@@ -12,11 +12,11 @@ namespace SpaceAce.Gameplay.Shooting
         public const int MinGunGroupID = 0;
         public const int MaxGunGroupID = 9;
 
-        public const float MinProjectileSpeed = 10f;
-        public const float MaxProjectileSpeed = 100f;
+        public const float MinSpeed = 10f;
+        public const float MaxSpeed = 100f;
 
-        public const float MinProjectileDamage = 10f;
-        public const float MaxProjectileDamage = 1000f;
+        public const float MinDamage = 10f;
+        public const float MaxDamage = 1000f;
 
         public const int MinProjectilesPerShot = 1;
         public const int MaxProjectilesPerShot = 20;
@@ -41,15 +41,17 @@ namespace SpaceAce.Gameplay.Shooting
         [SerializeField] private int _gunGroupID = MinGunGroupID;
 
         [SerializeField] private ObjectPoolEntry _projectile;
-        [SerializeField] private ObjectPoolEntry _projectileHitEffect;
+        [SerializeField] private ObjectPoolEntry _hitEffect;
 
-        [SerializeField] private ProjectileBehaviour _projectileMovement;
+        [SerializeField] private ProjectileBehaviour _behaviour;
 
-        [SerializeField] private float _projectileSpeed = MinProjectileSpeed;
-        [SerializeField] private float _projectileSpeedRandomDeviation = 0f;
+        [SerializeField] private float _speed = MinSpeed;
+        [SerializeField] private float _speedRandomDeviation = 0f;
 
-        [SerializeField] private float _projectileDamage = MinProjectileDamage;
-        [SerializeField] private float _projectileDamageRandomDeviation = 0f;
+        [SerializeField] private RotationConfig _rotationConfig;
+
+        [SerializeField] private float _damage = MinDamage;
+        [SerializeField] private float _damageRandomDeviation = 0f;
 
         [SerializeField] private int _projectilesPerShot = MinProjectilesPerShot;
         [SerializeField] private int _projectilesPerShotRandomDeviation = 0;
@@ -74,12 +76,13 @@ namespace SpaceAce.Gameplay.Shooting
         public int GunGroupID => _gunGroupID;
 
         public ObjectPoolEntry Projectile => _projectile;
-        public ObjectPoolEntry ProjectileHitEffect => _projectileHitEffect;
+        public ObjectPoolEntry HitEffect => _hitEffect;
 
-        public MovementBehaviour ProjectileBehaviour => _projectileMovement.Behaviour;
+        public MovementBehaviour MovementBehaviour => _behaviour.Behaviour;
+        public RotationConfig RotationConfig => _rotationConfig;
 
-        public RangedFloat ProjectileSpeed { get; private set; }
-        public RangedFloat ProjectileDamage { get; private set; }
+        public RangedFloat Speed { get; private set; }
+        public RangedFloat Damage { get; private set; }
         public RangedInt ProjectilesPerShot { get; private set; }
         public RangedFloat FireDuration { get; private set; }
         public RangedFloat FireRate { get; private set; }
@@ -101,13 +104,13 @@ namespace SpaceAce.Gameplay.Shooting
         public void EnsureNecessaryObjectPoolsExistence()
         {
             _projectile.EnsureObjectPoolExistence();
-            _projectileHitEffect.EnsureObjectPoolExistence();
+            _hitEffect.EnsureObjectPoolExistence();
         }
 
         public void ApplySettings()
         {
-            ProjectileSpeed = new(_projectileSpeed, _projectileSpeedRandomDeviation);
-            ProjectileDamage = new(_projectileDamage, _projectileDamageRandomDeviation);
+            Speed = new(_speed, _speedRandomDeviation);
+            Damage = new(_damage, _damageRandomDeviation);
             ProjectilesPerShot = new(_projectilesPerShot, _projectilesPerShotRandomDeviation, MinProjectilesPerShot, MaxProjectilesPerShot * 2);
             FireDuration = new(_fireDuration, _fireDurationRandomDeviation);
             FireRate = new(_fireRate, _fireRateRandomDeviation);

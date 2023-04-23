@@ -1,32 +1,37 @@
 using SpaceAce.Auxiliary;
+using UnityEngine;
 
 namespace SpaceAce.Gameplay.Movement.EnemyMovement
 {
-    public sealed class ZigZag : EnemyMovementState
+    public sealed class ZigZagAndSeekPlayer : EnemyMovementState
     {
-        public ZigZag(EnemyMovement owner) : base(owner) { }
+        public ZigZagAndSeekPlayer(EnemyMovement owner) : base(owner) { }
 
         protected override float GetNextHorizontalSpeed()
         {
-            if (StateHasJustBegun)
+            if (Owner.PreviousStateType.Equals(typeof(FlyForward)))
             {
-                if (Owner.PreviousStateExitVelocity.x > 0f)
-                {
-                    return Owner.NextHorizontalSpeed;
-                }
-                else
+                return Owner.NextHorizontalSpeed * AuxMath.RandomSign;
+            }
+
+            var hit = Physics2D.CircleCast(Owner.Body.position,
+                                           Mathf.Infinity,
+                                           Vector2.down,
+                                           Mathf.Infinity,
+                                           LayerMask.GetMask("Player"));
+
+            if (hit.collider != null)
+            {
+                if (Owner.Body.position.x > hit.collider.transform.position.x)
                 {
                     return -1f * Owner.NextHorizontalSpeed;
                 }
-            }
 
-            if (Owner.Body.velocity.x > 0f)
-            {
-                return -1f * Owner.NextHorizontalSpeed;
+                return Owner.NextHorizontalSpeed;
             }
             else
             {
-                return Owner.NextHorizontalSpeed;
+                return Owner.NextHorizontalSpeed * AuxMath.RandomSign;
             }
         }
 

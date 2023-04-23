@@ -15,12 +15,19 @@ namespace SpaceAce.Gameplay.Movement
         public const float MaxRPM = 60f;
         public const float DefaultRPM = 15f;
 
+        public const float MinTurningRadius = 10f;
+        public const float MaxTurningRadius = 100f;
+
         [SerializeField] private RotationDirection _rotationDirection = RotationDirection.Left;
 
         [SerializeField] private float _rpm = DefaultRPM;
         [SerializeField] private float _rpmRandomDeviation = 0f;
 
-        public RangedFloat RotationsPerMinute { get; private set; }
+        [SerializeField] private float _turningRadius = MinTurningRadius;
+        [SerializeField] private float _turningRadiusRandomDeviation = 0f;
+
+        public RangedFloat RevolutionsPerMinute { get; private set; }
+        public RangedFloat TurningRadius { get; private set; }
 
         private void OnEnable()
         {
@@ -33,23 +40,25 @@ namespace SpaceAce.Gameplay.Movement
             {
                 case RotationDirection.Left:
                     {
-                        RotationsPerMinute = new(-1f * _rpm, _rpmRandomDeviation);
+                        RevolutionsPerMinute = new(-1f * _rpm, _rpmRandomDeviation);
 
                         break;
                     }
                 case RotationDirection.Right:
                     {
-                        RotationsPerMinute = new(_rpm, _rpmRandomDeviation);
+                        RevolutionsPerMinute = new(_rpm, _rpmRandomDeviation);
 
                         break;
                     }
                 case RotationDirection.Random:
                     {
-                        RotationsPerMinute = new(_rpm * AuxMath.RandomNormal, _rpmRandomDeviation);
+                        RevolutionsPerMinute = new(_rpm * AuxMath.RandomNormal, _rpmRandomDeviation);
 
                         break;
                     }
             }
+
+            TurningRadius = new(_turningRadius, _turningRadiusRandomDeviation);
         }
     }
 }

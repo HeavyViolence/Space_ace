@@ -14,12 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _gunGroupID: 0
   _projectile: {fileID: 11400000, guid: b62900aa7634cc8419c02f95dfcafcef, type: 2}
-  _projectileHitEffect: {fileID: 11400000, guid: 2ca80ae96c742fc45a63478e688600f5, type: 2}
-  _projectileMovement: {fileID: 11400000, guid: 679ac0c5aeafaa145aaee938e27bc0ea, type: 2}
-  _projectileSpeed: 70
-  _projectileSpeedRandomDeviation: 5
-  _projectileDamage: 30
-  _projectileDamageRandomDeviation: 3
+  _hitEffect: {fileID: 11400000, guid: 2ca80ae96c742fc45a63478e688600f5, type: 2}
+  _behaviour: {fileID: 11400000, guid: 679ac0c5aeafaa145aaee938e27bc0ea, type: 2}
+  _speed: 70
+  _speedRandomDeviation: 5
+  _rotationConfig: {fileID: 11400000, guid: 4ba53b53dcd36d24b888c5afddfd46fd, type: 2}
+  _damage: 30
+  _damageRandomDeviation: 5
   _projectilesPerShot: 8
   _projectilesPerShotRandomDeviation: 1
   _fireDuration: 1

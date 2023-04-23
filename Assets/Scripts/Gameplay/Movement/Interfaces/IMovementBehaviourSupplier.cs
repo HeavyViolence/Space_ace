@@ -2,10 +2,10 @@ using UnityEngine;
 
 namespace SpaceAce.Gameplay.Movement
 {
-    public delegate void MovementBehaviour(Rigidbody2D body, Vector2 direction, float speed);
+    public delegate void MovementBehaviour(Rigidbody2D body, MovementBehaviourSettings settings);
 
     public interface IMovementBehaviourSupplier
     {
-        void SupplyMovementBehaviour(MovementBehaviour behaviour, Vector2 direction, float speed);
+        void SupplyMovementBehaviour(MovementBehaviour behaviour, MovementBehaviourSettings settings);
     }
 }

@@ -3,12 +3,13 @@ using UnityEngine;
 
 namespace SpaceAce.Gameplay.Shooting
 {
-    [CreateAssetMenu(fileName = "Forward propagation", menuName = "Space ace/Configs/Shooting/Projectles movement behaviour/Forward propagation")]
+    [CreateAssetMenu(fileName = "Forward propagation", menuName = "Space ace/Configs/Shooting/Projectiles movement behaviour/Forward propagation")]
     public sealed class ForwardPropagation : ProjectileBehaviour
     {
-        public override MovementBehaviour Behaviour => delegate (Rigidbody2D body, Vector2 direction, float speed)
+        public override MovementBehaviour Behaviour => delegate (Rigidbody2D body, MovementBehaviourSettings settings)
         {
-            Vector2 velocity = Time.fixedDeltaTime * speed * direction;
+            Vector2 velocity = Time.fixedDeltaTime * settings.Speed * settings.Direction;
+
             body.MovePosition(body.position + velocity);
         };
 }

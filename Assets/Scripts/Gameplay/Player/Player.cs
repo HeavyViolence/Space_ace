@@ -78,6 +78,7 @@ namespace SpaceAce.Gameplay.Players
             if (GameServices.TryGetService(out GameModeLoader loader) == true)
             {
                 loader.LevelLoaded += LevelLoadedEventHandler;
+                loader.MainMenuLoadingStarted += MainMenuLoadingStartedEventHandler;
                 loader.MainMenuLoaded += MainMenuLoadedEventHandler;
             }
             else
@@ -111,6 +112,7 @@ namespace SpaceAce.Gameplay.Players
             if (GameServices.TryGetService(out GameModeLoader loader) == true)
             {
                 loader.LevelLoaded -= LevelLoadedEventHandler;
+                loader.MainMenuLoadingStarted -= MainMenuLoadingStartedEventHandler;
                 loader.MainMenuLoaded -= MainMenuLoadedEventHandler;
             }
             else
@@ -231,6 +233,11 @@ namespace SpaceAce.Gameplay.Players
             _gameControls.Gameplay.Enable();
         }
 
+        private void MainMenuLoadingStartedEventHandler(object sender, LoadingStartedEventArgs e)
+        {
+            _gameControls.Gameplay.Movement.Disable();
+        }
+
         private void MainMenuLoadedEventHandler(object sender, EventArgs e)
         {
             if (_activeShip != null)
@@ -244,7 +251,7 @@ namespace SpaceAce.Gameplay.Players
 
         private void LevelConcludedEventHandler(object sender, EventArgs e)
         {
-            _gameControls.Gameplay.Disable();
+            _gameControls.Gameplay.Shooting.Disable();
             _shipShootingController.StopShooting();
         }
 

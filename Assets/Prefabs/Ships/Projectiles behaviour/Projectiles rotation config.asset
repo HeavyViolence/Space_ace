@@ -9,8 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba49e7649797e2b46a4f61e12fa4e2f9, type: 3}
-  m_Name: Explosion 1 entry
+  m_Script: {fileID: 11500000, guid: 8212205f37f711c4098b1b831ee3b314, type: 3}
+  m_Name: Projectiles rotation config
   m_EditorClassIdentifier: 
-  _prefab: {fileID: 2304447952384985033, guid: 54f0da71b2206ab4b93ab98be1ec4b05, type: 3}
-  _anchorName: explosion 1
+  _rotationDirection: 2
+  _rpm: 30
+  _rpmRandomDeviation: 3
+  _turningRadius: 10
+  _turningRadiusRandomDeviation: 0
