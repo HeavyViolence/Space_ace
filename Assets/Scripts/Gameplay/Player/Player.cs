@@ -18,6 +18,9 @@ namespace SpaceAce.Gameplay.Players
         public event EventHandler<PlayerShipSpawnedEventArgs> ShipSpawned;
 
         private ObjectPoolEntryLookupTable _objectPoolEntryLookupTable;
+        private ObjectPoolEntry _defaultShip;
+        private ObjectPoolEntry _selectedShip;
+
         private GameControls _gameControls;
         private GameObject _activeShip;
 
@@ -26,7 +29,7 @@ namespace SpaceAce.Gameplay.Players
 
         public string ID { get; }
         public string SaveName => "Player";
-        public ObjectPoolEntry SelectedShip { get; private set; }
+        public ObjectPoolEntry SelectedShip => _selectedShip != null ? _selectedShip : _defaultShip;
 
         public Player(string id, ObjectPoolEntry defaultPlayerShip, ObjectPoolEntryLookupTable table)
         {
@@ -42,7 +45,7 @@ namespace SpaceAce.Gameplay.Players
                 throw new ArgumentNullException(nameof(defaultPlayerShip), "Attempted to pass an empty default player ship!");
             }
 
-            SelectedShip = defaultPlayerShip;
+            _defaultShip = defaultPlayerShip;
 
             if (table == null)
             {
@@ -157,7 +160,7 @@ namespace SpaceAce.Gameplay.Players
 
             if (_objectPoolEntryLookupTable.TryGetEntryByName(data.SelectedShipAnchorName, out var entry) == true)
             {
-                SelectedShip = entry;
+                _selectedShip = entry;
             }
         }
 
@@ -264,7 +267,7 @@ namespace SpaceAce.Gameplay.Players
                 throw new ArgumentNullException(nameof(entry), "Attempted to pass an empty selected ship!");
             }
 
-            SelectedShip = entry;
+            _selectedShip = entry;
             SavingRequested?.Invoke(this, EventArgs.Empty);
         }
     }

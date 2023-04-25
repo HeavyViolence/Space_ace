@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e306b4f91fb5134299a8e77f710254e, type: 3}
+  m_Name: Player ship 1.5 fire audio
+  m_EditorClassIdentifier: 
+  _audioClips:
+  - {fileID: 8300000, guid: e21f0eadb2b7649a2bfe83f6c65bdeae, type: 3}
+  - {fileID: 8300000, guid: e266b24fed0ef44f7ad043a9142391ab, type: 3}
+  - {fileID: 8300000, guid: 7b73808a7b50548769322aec4dce5746, type: 3}
+  - {fileID: 8300000, guid: 8aecdf8e10690438f87bbe2c2c7a6c55, type: 3}
+  - {fileID: 8300000, guid: bbc3d6e3c8e964746b66a9cc5619a22c, type: 3}
+  - {fileID: 8300000, guid: ba8649c81276a4cae8e41d5ac51a94a2, type: 3}
+  - {fileID: 8300000, guid: 0c091b7caa2f34a3b89bcf1734768cc7, type: 3}
+  - {fileID: 8300000, guid: c6d7b30e9060945ca9c862bbe5dd61cb, type: 3}
+  _outputAudioGroup: {fileID: -557927281123615115, guid: fcf8532f154bbae47942ff673836eca5, type: 2}
+  _volume: 1
+  _volumeRandomDeviation: 0.1
+  _priority: 0
+  _spatialBlend: 0.5
+  _spatialBlendRandomDeviation: 0
+  _pitch: 1
+  _pitchRandomDeviation: 0.05

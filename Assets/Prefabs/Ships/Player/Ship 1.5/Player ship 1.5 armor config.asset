@@ -9,11 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8212205f37f711c4098b1b831ee3b314, type: 3}
-  m_Name: Projectiles rotation config
+  m_Script: {fileID: 11500000, guid: 5c7dfd7732058e24dab1d7a179dd0f99, type: 3}
+  m_Name: Player ship 1.5 armor config
   m_EditorClassIdentifier: 
-  _rotationDirection: 2
-  _rpm: 10
-  _rpmRandomDeviation: 1
-  _turningRadius: 10
-  _turningRadiusRandomDeviation: 0
+  _armorEnabled: 1
+  _armor: 200
+  _armorRandomDeviation: 0

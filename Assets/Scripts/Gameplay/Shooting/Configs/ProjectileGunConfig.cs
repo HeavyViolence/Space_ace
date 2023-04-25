@@ -12,8 +12,8 @@ namespace SpaceAce.Gameplay.Shooting
         public const int MinGunGroupID = 0;
         public const int MaxGunGroupID = 9;
 
-        public const float MinSpeed = 10f;
-        public const float MaxSpeed = 100f;
+        public const float MinSpeed = 20f;
+        public const float MaxSpeed = 200f;
 
         public const float MinDamage = 10f;
         public const float MaxDamage = 1000f;
@@ -21,7 +21,7 @@ namespace SpaceAce.Gameplay.Shooting
         public const int MinProjectilesPerShot = 1;
         public const int MaxProjectilesPerShot = 20;
 
-        public const float MinFireDuration = 1f;
+        public const float MinFireDuration = 0.1f;
         public const float MaxFireDuration = 10f;
 
         public const float MinFireRate = 1f;

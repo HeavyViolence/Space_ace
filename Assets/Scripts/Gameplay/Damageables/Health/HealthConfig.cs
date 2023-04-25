@@ -18,7 +18,7 @@ namespace SpaceAce.Gameplay.Damageables
         [SerializeField] private float _maxHealthRandomDeviation = 0f;
 
         [SerializeField] private bool _regenerationEnabled = false;
-        [SerializeField] private float _regeneartionPerSecond = MinHealthRegenerationPerSecond;
+        [SerializeField] private float _regenerationPerSecond = MinHealthRegenerationPerSecond;
         [SerializeField] private float _regenerationPerSecondRandomDeviation = 0f;
 
         [SerializeField] private ObjectPoolEntry _deathEffect = null;
@@ -47,7 +47,7 @@ namespace SpaceAce.Gameplay.Damageables
         public void ApplySettings()
         {
             HealthCeiling = new(_maxHealth, _maxHealthRandomDeviation);
-            Regeneration = RegenerationEnabled ? new(_regeneartionPerSecond, _regenerationPerSecondRandomDeviation) : RangedFloat.Zero;
+            Regeneration = RegenerationEnabled ? new(_regenerationPerSecond, _regenerationPerSecondRandomDeviation) : RangedFloat.Zero;
         }
     }
 }

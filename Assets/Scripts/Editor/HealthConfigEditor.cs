@@ -48,8 +48,15 @@ namespace SpaceAce.Editors
 
             if (_regenerationEnabled.boolValue == true)
             {
-                EditorGUILayout.Slider(_regenerationPerSecond, HealthConfig.MinHealthRegenerationPerSecond, HealthConfig.MaxHealthRegenerationPerSecond, "Regeneration per second");
-                EditorGUILayout.Slider(_regenerationPerSecondRandomDeviation, 0f, _regenerationPerSecond.floatValue, "Max random deviation");
+                EditorGUILayout.Slider(_regenerationPerSecond,
+                                       HealthConfig.MinHealthRegenerationPerSecond,
+                                       HealthConfig.MaxHealthRegenerationPerSecond,
+                                       "Regeneration per second");
+
+                EditorGUILayout.Slider(_regenerationPerSecondRandomDeviation,
+                                       0f,
+                                       _regenerationPerSecond.floatValue,
+                                       "Max random deviation");
 
                 _regenerationPerSecondRandomDeviation.floatValue = Mathf.Clamp(_regenerationPerSecondRandomDeviation.floatValue, 0f, _regenerationPerSecond.floatValue);
             }

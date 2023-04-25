@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25f5b6e5938357245853de1accb12539, type: 3}
+  m_Name: Player ship 1.4 projectile gun config
+  m_EditorClassIdentifier: 
+  _gunGroupID: 0
+  _projectile: {fileID: 11400000, guid: debc3379533f50049ba9fb4eacd856ec, type: 2}
+  _hitEffect: {fileID: 11400000, guid: bca3946f934937740a33ea16704e9023, type: 2}
+  _behaviour: {fileID: 11400000, guid: 53905d2d8e031b5448e27ac87b916872, type: 2}
+  _speed: 110
+  _speedRandomDeviation: 5
+  _rotationConfig: {fileID: 11400000, guid: 4ba53b53dcd36d24b888c5afddfd46fd, type: 2}
+  _damage: 300
+  _damageRandomDeviation: 15
+  _projectilesPerShot: 1
+  _projectilesPerShotRandomDeviation: 0
+  _fireDuration: 0.3
+  _fireDurationRandomDeviation: 0.05
+  _fireRate: 6.5
+  _fireRateRandomDeviation: 0.5
+  _cooldown: 4
+  _cooldownRandomDeviation: 0.5
+  _dispersion: 0.02
+  _convergenceAngle: 0.02
+  _fireAudio: {fileID: 11400000, guid: 7eb25f15c8546a743a963dfd180c6340, type: 2}
+  _hitAudio: {fileID: 11400000, guid: eec6bc178558484448b75082316c4986, type: 2}
+  _cameraShakeOnShot: 1
