@@ -13,7 +13,7 @@ using UnityEngine;
 
 namespace SpaceAce.Gameplay.Spawning
 {
-    public abstract class Spawner: IInitializable
+    public abstract class Spawner : IGameService
     {
         private const float SpawnPositionWidthIndentFactor = 0.75f;
         private const float SpawnPositionHeightIndentFactor = 1.25f;

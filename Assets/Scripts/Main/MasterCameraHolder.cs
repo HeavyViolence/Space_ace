@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace SpaceAce.Main
 {
-    public sealed class MasterCameraHolder : IInitializable
+    public sealed class MasterCameraHolder : IGameService
     {
         public const float MinCameraSize = 8f;
         public const float MaxCameraSize = 64f;

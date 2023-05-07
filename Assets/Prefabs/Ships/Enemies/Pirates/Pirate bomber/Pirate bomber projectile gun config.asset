@@ -16,6 +16,7 @@ MonoBehaviour:
   _projectile: {fileID: 11400000, guid: 512d7009c00abc34595be293855fd99f, type: 2}
   _hitEffect: {fileID: 11400000, guid: 9ed99a429ce909343ba011691bf32d81, type: 2}
   _behaviour: {fileID: 11400000, guid: 679ac0c5aeafaa145aaee938e27bc0ea, type: 2}
+  _targetSupplier: {fileID: 11400000, guid: 73c56d0ba8cf74e4bb6b680d6318127b, type: 2}
   _speed: 50
   _speedRandomDeviation: 5
   _rotationConfig: {fileID: 11400000, guid: 4ba53b53dcd36d24b888c5afddfd46fd, type: 2}

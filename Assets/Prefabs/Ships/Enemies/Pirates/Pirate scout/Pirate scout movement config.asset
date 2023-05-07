@@ -19,7 +19,7 @@ MonoBehaviour:
   _customBoundsEnabled: 1
   _upperBoundDisplacement: 0.7
   _lowerBoundDisplacement: 0
-  _sideBoundsDisplacement: 0.9
+  _sideBoundsDisplacement: 0.875
   _collisionDamageEnabled: 1
   _collisionDamage: 1000
   _collisionDamageRandomDeviation: 100

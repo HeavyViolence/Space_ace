@@ -15,5 +15,5 @@ MonoBehaviour:
   _amplifiedEntitySpawnAudio: {fileID: 11400000, guid: c7e9c4dc73b64054884efdac70c2cf13, type: 2}
   _amplificationFactor: 1.6
   _amplificationFactorRandomDeviation: 0.1
-  _amplificationProbability: 0.04
+  _amplificationProbability: 0.03
   _amplificationProbabilityRandomDeviation: 0.01

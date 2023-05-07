@@ -9,7 +9,7 @@ using UnityEngine.Audio;
 
 namespace SpaceAce.Main.Audio
 {
-    public sealed class AudioPlayer : IInitializable, ISavable
+    public sealed class AudioPlayer : IGameService, ISavable
     {
         private const int MaxAudioSources = 32;
 

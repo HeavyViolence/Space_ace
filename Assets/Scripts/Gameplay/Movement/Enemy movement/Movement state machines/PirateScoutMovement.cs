@@ -35,9 +35,11 @@ namespace SpaceAce.Gameplay.Movement.EnemyMovement
 
             AddTransition(_evadeLeftBoundUpOrDown, _zigZag, () => Body.position.x > LeftBound);
             AddTransition(_evadeLeftBoundUpOrDown, _evadeLowerBoundLeftOrRight, () => Body.position.y < LowerBound);
+            AddTransition(_evadeLeftBoundUpOrDown, _evadeUpperBoundLeftOrRight, () => Body.position.y > UpperBound);
 
             AddTransition(_evadeRightBoundUpOrDown, _zigZag, () => Body.position.x < RightBound);
             AddTransition(_evadeRightBoundUpOrDown, _evadeLowerBoundLeftOrRight, () => Body.position.y < LowerBound);
+            AddTransition(_evadeRightBoundUpOrDown, _evadeUpperBoundLeftOrRight, () => Body.position.y > UpperBound);
 
             AddTransition(_evadeUpperBoundLeftOrRight, _zigZag, () => Body.position.y < UpperBound);
             AddTransition(_evadeUpperBoundLeftOrRight, _evadeLeftBoundUpOrDown, () => Body.position.x < LeftBound);

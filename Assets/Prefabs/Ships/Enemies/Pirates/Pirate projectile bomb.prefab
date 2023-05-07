@@ -55,6 +55,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 624b321df4045384988ed90bfdc2f141, type: 3}
+    - target: {fileID: 5796639463016869793, guid: b95ffd8070e6b55418a039897d5ce640, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5796639463016869804, guid: b95ffd8070e6b55418a039897d5ce640, type: 3}
       propertyPath: m_Name
       value: Pirate projectile bomb

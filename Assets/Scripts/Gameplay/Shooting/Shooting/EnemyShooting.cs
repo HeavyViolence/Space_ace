@@ -65,14 +65,14 @@ namespace SpaceAce.Gameplay.Shooting
 
             while (true)
             {
-                var gunToFire = NextActiveGun;
+                var gun = NextActiveGun;
 
-                while (gunToFire.ReadyToFire == false)
+                while (gun.ReadyToFire == false)
                 {
                     yield return null;
                 }
 
-                gunToFire.Fire();
+                gun.Fire();
 
                 yield return new WaitForSeconds(_config.NextFireDelay.RandomValue);
             }

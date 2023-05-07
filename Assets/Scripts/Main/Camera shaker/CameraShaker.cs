@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace SpaceAce.Main
 {
-    public sealed class CameraShaker : IInitializable, ISavable
+    public sealed class CameraShaker : IGameService, ISavable
     {
         private const float MaxAmplitude = 1f;
         private const float MaxAttenuation = 2f;

@@ -125,7 +125,7 @@ namespace SpaceAce.Architecture
         {
             foreach (var service in _gameServices)
             {
-                if (service is IInitializable value)
+                if (service is IGameService value)
                 {
                     value.OnInitialize();
                 }
@@ -136,7 +136,7 @@ namespace SpaceAce.Architecture
         {
             foreach (var service in _gameServices)
             {
-                if (service is IInitializable value)
+                if (service is IGameService value)
                 {
                     value.OnSubscribe();
                 }
@@ -147,7 +147,7 @@ namespace SpaceAce.Architecture
         {
             foreach (var service in _gameServices)
             {
-                if (service is IInitializable value)
+                if (service is IGameService value)
                 {
                     value.OnUnsubscribe();
                 }
@@ -158,7 +158,7 @@ namespace SpaceAce.Architecture
         {
             foreach (var service in _gameServices)
             {
-                if (service is IInitializable value)
+                if (service is IGameService value)
                 {
                     value.OnClear();
                 }

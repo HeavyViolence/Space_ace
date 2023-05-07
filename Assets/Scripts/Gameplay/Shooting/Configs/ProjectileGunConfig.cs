@@ -44,6 +44,7 @@ namespace SpaceAce.Gameplay.Shooting
         [SerializeField] private ObjectPoolEntry _hitEffect;
 
         [SerializeField] private ProjectileBehaviour _behaviour;
+        [SerializeField] private TargetSupplier _targetSupplier;
 
         [SerializeField] private float _speed = MinSpeed;
         [SerializeField] private float _speedRandomDeviation = 0f;
@@ -79,6 +80,7 @@ namespace SpaceAce.Gameplay.Shooting
         public ObjectPoolEntry HitEffect => _hitEffect;
 
         public MovementBehaviour MovementBehaviour => _behaviour.Behaviour;
+        public TargetSupplier TargetSupplier => _targetSupplier;
         public RotationConfig RotationConfig => _rotationConfig;
 
         public RangedFloat Speed { get; private set; }

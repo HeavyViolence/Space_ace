@@ -5,7 +5,7 @@ using System;
 
 namespace SpaceAce.Levels
 {
-    public sealed class LevelTimer : IInitializable, IUpdatable
+    public sealed class LevelTimer : IGameService, IUpdatable
     {
         private const int SecondsPerMinute = 60;
 

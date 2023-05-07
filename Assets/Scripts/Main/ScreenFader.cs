@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace SpaceAce.Main
 {
-    public sealed class ScreenFader : IInitializable
+    public sealed class ScreenFader : IGameService
     {
         public const float MinFadeDuration = 0.5f;
         public const float MaxFadeDuration = 5f;

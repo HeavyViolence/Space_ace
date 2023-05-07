@@ -13,6 +13,7 @@ namespace SpaceAce.Editors
         private SerializedProperty _hitEffect;
 
         private SerializedProperty _behaviour;
+        private SerializedProperty _targetSupplier;
 
         private SerializedProperty _speed;
         private SerializedProperty _speedRandomDeviation;
@@ -50,6 +51,7 @@ namespace SpaceAce.Editors
             _hitEffect = serializedObject.FindProperty("_hitEffect");
 
             _behaviour = serializedObject.FindProperty("_behaviour");
+            _targetSupplier = serializedObject.FindProperty("_targetSupplier");
 
             _speed = serializedObject.FindProperty("_speed");
             _speedRandomDeviation = serializedObject.FindProperty("_speedRandomDeviation");
@@ -89,6 +91,7 @@ namespace SpaceAce.Editors
             EditorGUILayout.Separator();
             EditorGUILayout.PropertyField(_projectile, new GUIContent("Projectile"));
             EditorGUILayout.PropertyField(_behaviour, new GUIContent("Movement behaviour"));
+            EditorGUILayout.PropertyField(_targetSupplier, new GUIContent("Target supplier"));
             EditorGUILayout.PropertyField(_hitEffect, new GUIContent("Hit effect"));
             EditorGUILayout.PropertyField(_fireAudio, new GUIContent("Fire audio"));
             EditorGUILayout.PropertyField(_hitAudio, new GUIContent("Hit audio"));

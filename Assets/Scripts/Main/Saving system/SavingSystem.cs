@@ -8,7 +8,7 @@ using System.Text;
 
 namespace SpaceAce.Main.Saving
 {
-    public sealed class SavingSystem : IInitializable
+    public sealed class SavingSystem : IGameService
     {
         private const string SavesDirectory = "D:/Unity Projects/Space_ace/Saves";
         private const string SavesExtension = ".save";

@@ -78,11 +78,19 @@ namespace SpaceAce.Editors
 
             _spawnDelayRandomDeviation.floatValue = Mathf.Clamp(_spawnDelayRandomDeviation.floatValue, 0f, _spawnDelay.floatValue);
 
-            EditorGUILayout.Separator();
-            EditorGUILayout.IntSlider(_uniqueEntitiesInWave, SpawnerConfig.MinUniqueEntitiesInWawe, _target.UniqueEntitiesAmount, "Unique entities in wave");
-            EditorGUILayout.IntSlider(_uniqueEntitiesInWaveRandomDeviation, 0, _uniqueEntitiesInWave.intValue, "Max random deviation");
+            if (_target.UniqueEntitiesAmount > 1)
+            {
+                EditorGUILayout.Separator();
+                EditorGUILayout.IntSlider(_uniqueEntitiesInWave, SpawnerConfig.MinUniqueEntitiesInWawe, _target.UniqueEntitiesAmount, "Unique entities in wave");
+                EditorGUILayout.IntSlider(_uniqueEntitiesInWaveRandomDeviation, 0, _uniqueEntitiesInWave.intValue, "Max random deviation");
 
-            _uniqueEntitiesInWaveRandomDeviation.intValue = Mathf.Clamp(_uniqueEntitiesInWaveRandomDeviation.intValue, 0, _uniqueEntitiesInWave.intValue);
+                _uniqueEntitiesInWaveRandomDeviation.intValue = Mathf.Clamp(_uniqueEntitiesInWaveRandomDeviation.intValue, 0, _uniqueEntitiesInWave.intValue);
+            }
+            else
+            {
+                _uniqueEntitiesInWave.intValue = 1;
+                _uniqueEntitiesInWaveRandomDeviation.intValue = 0;
+            }
 
             EditorGUILayout.Separator();
             EditorGUILayout.IntSlider(_waveLength, SpawnerConfig.MinWaveLength, SpawnerConfig.MaxWaveLength, "Wave length");

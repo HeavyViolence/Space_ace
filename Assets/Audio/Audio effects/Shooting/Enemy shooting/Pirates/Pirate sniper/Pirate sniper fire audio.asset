@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e306b4f91fb5134299a8e77f710254e, type: 3}
+  m_Name: Pirate sniper fire audio
+  m_EditorClassIdentifier: 
+  _audioClips:
+  - {fileID: 8300000, guid: 8a8507dc818db4500a239ea0e89bee0d, type: 3}
+  - {fileID: 8300000, guid: 9ad462fa76efd48a1b45e3b149849e5b, type: 3}
+  - {fileID: 8300000, guid: 23ff155f8fd344e3e96170077d8b04ec, type: 3}
+  - {fileID: 8300000, guid: 2cd225efbaa594d31985570738f6349a, type: 3}
+  - {fileID: 8300000, guid: 1e8a313f0c28b4be3b29988d02ca4f9b, type: 3}
+  - {fileID: 8300000, guid: c0a9dfc5790d44a248a609562cf167d4, type: 3}
+  _outputAudioGroup: {fileID: -557927281123615115, guid: fcf8532f154bbae47942ff673836eca5, type: 2}
+  _volume: 1
+  _volumeRandomDeviation: 0.1
+  _priority: 1
+  _spatialBlend: 0.5
+  _spatialBlendRandomDeviation: 0
+  _pitch: 1.5
+  _pitchRandomDeviation: 0.1

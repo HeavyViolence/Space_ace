@@ -7,7 +7,7 @@ using UnityEngine.Pool;
 
 namespace SpaceAce.Main.ObjectPooling
 {
-    public sealed class MultiobjectPool : IInitializable
+    public sealed class MultiobjectPool : IGameService
     {
         private readonly Dictionary<string, ObjectPool<GameObject>> _multiobjectPool = new();
         private readonly Dictionary<string, GameObject> _poolAnchors = new();

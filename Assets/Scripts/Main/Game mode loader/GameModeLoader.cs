@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace SpaceAce.Main
 {
-    public sealed class GameModeLoader : IInitializable, IRunnable
+    public sealed class GameModeLoader : IGameService, IRunnable
     {
         private const float GameModeLoadingDelay = 1f;
 

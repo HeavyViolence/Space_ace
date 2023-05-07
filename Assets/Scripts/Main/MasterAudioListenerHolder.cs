@@ -6,7 +6,7 @@ namespace SpaceAce
 {
     namespace Main
     {
-        public sealed class MasterAudioListenerHolder: IInitializable
+        public sealed class MasterAudioListenerHolder: IGameService
         {
             public AudioListener MasterAudioListener { get; }
 

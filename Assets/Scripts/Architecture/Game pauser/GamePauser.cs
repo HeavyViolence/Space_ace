@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace SpaceAce.Architecture
 {
-    public sealed class GamePauser : IInitializable
+    public sealed class GamePauser : IGameService
     {
         public event EventHandler GamePaused, GameResumed;
 

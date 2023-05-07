@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace SpaceAce.Levels
 {
-    public sealed class LevelUnlocker: IInitializable, ISavable
+    public sealed class LevelUnlocker: IGameService, ISavable
     {
         public event EventHandler SavingRequested;
 

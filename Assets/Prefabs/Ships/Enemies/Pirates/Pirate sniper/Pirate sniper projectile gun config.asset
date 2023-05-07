@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25f5b6e5938357245853de1accb12539, type: 3}
+  m_Name: Pirate sniper projectile gun config
+  m_EditorClassIdentifier: 
+  _gunGroupID: 0
+  _projectile: {fileID: 11400000, guid: 212bd541d3f5cdb4cb57f96cac1dd401, type: 2}
+  _hitEffect: {fileID: 11400000, guid: 2ca80ae96c742fc45a63478e688600f5, type: 2}
+  _behaviour: {fileID: 11400000, guid: 679ac0c5aeafaa145aaee938e27bc0ea, type: 2}
+  _targetSupplier: {fileID: 11400000, guid: 73c56d0ba8cf74e4bb6b680d6318127b, type: 2}
+  _speed: 90
+  _speedRandomDeviation: 5
+  _rotationConfig: {fileID: 11400000, guid: 4ba53b53dcd36d24b888c5afddfd46fd, type: 2}
+  _damage: 350
+  _damageRandomDeviation: 25
+  _projectilesPerShot: 1
+  _projectilesPerShotRandomDeviation: 0
+  _fireDuration: 1
+  _fireDurationRandomDeviation: 0
+  _fireRate: 1
+  _fireRateRandomDeviation: 0
+  _cooldown: 5
+  _cooldownRandomDeviation: 1
+  _dispersion: 0.02
+  _convergenceAngle: 0.02
+  _fireAudio: {fileID: 11400000, guid: c4d149b1af87f0245b0c45a7007aebcc, type: 2}
+  _hitAudio: {fileID: 0}
+  _cameraShakeOnShot: 0

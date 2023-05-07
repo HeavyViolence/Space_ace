@@ -5,9 +5,9 @@ namespace SpaceAce.Auxiliary
 {
     public sealed class RangedFloat : IEquatable<RangedFloat>, IComparable<RangedFloat>, IComparer<RangedFloat>
     {
-        public static RangedFloat Zero => new(0f, 0f, 0f, 0f, 0);
-        public static RangedFloat Min => new(float.MinValue, 0f, float.MinValue, float.MinValue, 0);
-        public static RangedFloat Max => new(float.MaxValue, 0f, float.MaxValue, float.MaxValue, 0);
+        public static RangedFloat Zero => new(0f, 0f);
+        public static RangedFloat Min => new(float.MinValue, 0f);
+        public static RangedFloat Max => new(float.MaxValue, 0f);
 
         private readonly Random _random;
 

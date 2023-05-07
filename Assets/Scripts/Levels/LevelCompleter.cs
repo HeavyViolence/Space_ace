@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace SpaceAce.Levels
 {
-    public sealed class LevelCompleter : IInitializable
+    public sealed class LevelCompleter : IGameService
     {
         public event EventHandler<LevelDataEventArgs> LevelPassed, LevelFailed, LevelConcluded;
 

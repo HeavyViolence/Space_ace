@@ -1,6 +1,6 @@
 namespace SpaceAce.Architecture
 {
-    public interface IInitializable
+    public interface IGameService
     {
         void OnInitialize();
         void OnSubscribe();

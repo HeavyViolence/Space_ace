@@ -6,7 +6,7 @@ using SpaceAce.Auxiliary;
 
 namespace SpaceAce.Main
 {
-    public sealed class SpaceBackground : IInitializable, IUpdatable
+    public sealed class SpaceBackground : IGameService, IUpdatable
     {
         public const float MinScrollSpeed = 0.001f;
         public const float MaxScrollSpeed = 0.01f;

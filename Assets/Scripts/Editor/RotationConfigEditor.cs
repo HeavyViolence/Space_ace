@@ -12,8 +12,8 @@ namespace SpaceAce.Editors
         private SerializedProperty _rpm;
         private SerializedProperty _rpmRandomDeviation;
 
-        private SerializedProperty _turningRadius;
-        private SerializedProperty _turningRadiusRandomDeviation;
+        private SerializedProperty _turningSpeed;
+        private SerializedProperty _turningSpeedRandomDeviation;
 
         private void OnEnable()
         {
@@ -22,8 +22,8 @@ namespace SpaceAce.Editors
             _rpm = serializedObject.FindProperty("_rpm");
             _rpmRandomDeviation = serializedObject.FindProperty("_rpmRandomDeviation");
 
-            _turningRadius = serializedObject.FindProperty("_turningRadius");
-            _turningRadiusRandomDeviation = serializedObject.FindProperty("_turningRadiusRandomDeviation");
+            _turningSpeed = serializedObject.FindProperty("_turningSpeed");
+            _turningSpeedRandomDeviation = serializedObject.FindProperty("_turningSpeedRandomDeviation");
         }
 
         public override void OnInspectorGUI()
@@ -39,10 +39,10 @@ namespace SpaceAce.Editors
             _rpmRandomDeviation.floatValue = Mathf.Clamp(_rpmRandomDeviation.floatValue, 0f, _rpm.floatValue);
 
             EditorGUILayout.Separator();
-            EditorGUILayout.Slider(_turningRadius, RotationConfig.MinTurningRadius, RotationConfig.MaxTurningRadius, "Turning radius");
-            EditorGUILayout.Slider(_turningRadiusRandomDeviation, 0f, _turningRadius.floatValue, "Max random deviation");
+            EditorGUILayout.Slider(_turningSpeed, RotationConfig.MinTurningSpeed, RotationConfig.MaxTurningSpeed, "Turning speed");
+            EditorGUILayout.Slider(_turningSpeedRandomDeviation, 0f, _turningSpeed.floatValue, "Max random deviation");
 
-            _turningRadiusRandomDeviation.floatValue = Mathf.Clamp(_turningRadiusRandomDeviation.floatValue, 0f, _turningRadius.floatValue);
+            _turningSpeedRandomDeviation.floatValue = Mathf.Clamp(_turningSpeedRandomDeviation.floatValue, 0f, _turningSpeed.floatValue);
 
             EditorGUILayout.Separator();
 

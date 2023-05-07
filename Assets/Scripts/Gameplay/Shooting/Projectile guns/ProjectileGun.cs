@@ -33,7 +33,7 @@ namespace SpaceAce.Gameplay.Shooting
         protected bool IsRightHandedGun => transform.localPosition.x > 0f;
         protected virtual float NextProjectileSpeed => _config.Speed.RandomValue;
         protected virtual float NextProjectileRevolutionsPerMinute => _config.RotationConfig.RevolutionsPerMinute.RandomValue;
-        protected virtual float NextProjectileTurningRadius => _config.RotationConfig.TurningRadius.RandomValue;
+        protected virtual float NextProjectileTurningRadius => _config.RotationConfig.TurningSpeed.RandomValue;
         protected virtual float NextProjectileDamage => _config.Damage.RandomValue;
         protected virtual int NextProjectilesPerShot => _config.ProjectilesPerShot.RandomValue;
         protected virtual float NextFireDuration => _config.FireDuration.RandomValue;
@@ -42,12 +42,14 @@ namespace SpaceAce.Gameplay.Shooting
         protected virtual float NextDispersion => _config.Dispersion.RandomValue;
         protected virtual float ConvergenceAngle => _config.GetConvergenceAngle(IsRightHandedGun);
         protected MovementBehaviour ProjectileBehaviour { get; set; }
+        protected TargetSupplier TargetSupplier { get; set; }
 
         private void Awake()
         {
             _config.EnsureNecessaryObjectPoolsExistence();
 
             ProjectileBehaviour = _config.MovementBehaviour;
+            TargetSupplier = _config.TargetSupplier;
         }
 
         private void Update()
@@ -90,10 +92,11 @@ namespace SpaceAce.Gameplay.Shooting
             for (int i = 0; i < shotsToFire; i++)
             {
                 int projectilesPerShot = NextProjectilesPerShot;
+                Transform projectileTarget = TargetSupplier.GetTarget(transform.position);
 
                 for (int y = 0; y < projectilesPerShot; y++)
                 {
-                    PerformShot();
+                    PerformShot(projectileTarget);
                 }
 
                 _config.FireAudio.PlayRandomAudioClip(transform.position);
@@ -107,7 +110,7 @@ namespace SpaceAce.Gameplay.Shooting
             _firingRoutine = null;
         }
 
-        private void PerformShot()
+        private void PerformShot(Transform projectileTarget)
         {
             var projectile = s_multiobjectPool.Access.GetObject(_config.Projectile.AnchorName);
 
@@ -124,10 +127,10 @@ namespace SpaceAce.Gameplay.Shooting
             MovementBehaviourSettings settings = new(projectileDirection,
                                                      NextProjectileSpeed,
                                                      NextProjectileRevolutionsPerMinute,
-                                                     NextProjectileTurningRadius);
+                                                     NextProjectileTurningRadius,
+                                                     projectileTarget);
 
             SupplyProjectileBehaviour(projectile, ProjectileBehaviour, settings);
-
             AwaitProjectileHit(projectile);
 
             if (_config.CameraShakeOnShotEnabled)

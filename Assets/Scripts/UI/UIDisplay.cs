@@ -7,7 +7,7 @@ using UnityEngine.UIElements;
 
 namespace SpaceAce.UI
 {
-    public sealed class UIDisplay : IInitializable
+    public sealed class UIDisplay : IGameService
     {
         private UIAssets _uiAssets;
         private UIDocument _activeUI;

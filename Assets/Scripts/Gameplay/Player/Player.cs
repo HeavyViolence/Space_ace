@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace SpaceAce.Gameplay.Players
 {
-    public sealed class Player : IInitializable, ISavable, IFixedUpdatable, IUpdatable
+    public sealed class Player : IGameService, ISavable, IFixedUpdatable, IUpdatable
     {
         private static readonly GameServiceFastAccess<MultiobjectPool> s_multiobjectPool = new();
 
@@ -227,6 +227,12 @@ namespace SpaceAce.Gameplay.Players
             if (_activeShip.TryGetComponent(out IDestroyable destroyable) == true)
             {
                 ShipSpawned?.Invoke(this, new PlayerShipSpawnedEventArgs(destroyable));
+
+                destroyable.Destroyed += (s, e) =>
+                {
+                    s_multiobjectPool.Access.ReleaseObject(SelectedShip.AnchorName, _activeShip, () => true);
+                    _gameControls.Gameplay.Disable();
+                };
             }
             else
             {

@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace SpaceAce.Main.Audio
 {
-    public sealed class MusicPlayer : IInitializable, ISavable, IRunnable
+    public sealed class MusicPlayer : IGameService, ISavable, IRunnable
     {
         public const float MinPlaybackInterval = 5f;
         public const float MaxPlaybackInterval = 300f;

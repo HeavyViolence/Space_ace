@@ -15,5 +15,5 @@ MonoBehaviour:
   _rotationDirection: 2
   _rpm: 10
   _rpmRandomDeviation: 1
-  _turningRadius: 10
-  _turningRadiusRandomDeviation: 0
+  _turningSpeed: 1080
+  _turningSpeedRandomDeviation: 60

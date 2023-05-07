@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace SpaceAce.Levels
 {
-    public sealed class BestLevelsRunsStatisticsCollector : IInitializable, ISavable
+    public sealed class BestLevelsRunsStatisticsCollector : IGameService, ISavable
     {
         public event EventHandler SavingRequested;
 
