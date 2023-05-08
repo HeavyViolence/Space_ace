@@ -8,9 +8,14 @@ namespace SpaceAce.Gameplay.Shooting
     {
         private const float DegreesPerRevolution = 360f;
 
-        public override MovementBehaviour Behaviour => delegate (Rigidbody2D body, MovementBehaviourSettings settings)
+        public override MovementBehaviour Behaviour => delegate (Rigidbody2D body, MovementBehaviourSettings settings, ref float timer)
         {
-            Vector2 velocity = Time.fixedDeltaTime * settings.Speed * settings.Direction;
+            timer += Time.fixedDeltaTime;
+
+            float speedFactor = Mathf.Clamp01(timer / settings.TopSpeedGainDuration);
+            float speed = settings.TopSpeed * speedFactor;
+            Vector2 velocity = Time.fixedDeltaTime * speed * settings.Direction;
+
             float angularSpeed = Time.fixedDeltaTime * settings.RevolutionsPerMinute * DegreesPerRevolution;
 
             body.MovePosition(body.position + velocity);

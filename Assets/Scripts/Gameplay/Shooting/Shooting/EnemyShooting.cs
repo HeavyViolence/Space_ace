@@ -1,4 +1,5 @@
 using SpaceAce.Architecture;
+using SpaceAce.Levels;
 using SpaceAce.Main;
 using System.Collections;
 using UnityEngine;
@@ -9,6 +10,7 @@ namespace SpaceAce.Gameplay.Shooting
     {
         private static readonly GameServiceFastAccess<MasterCameraHolder> s_masterCameraHolder = new();
         private static readonly GameServiceFastAccess<GameModeLoader> s_gameModeLoader = new();
+        private static readonly GameServiceFastAccess<LevelCompleter> s_levelCompleter = new();
 
         [SerializeField] private ShootingConfig _config;
 
@@ -21,19 +23,18 @@ namespace SpaceAce.Gameplay.Shooting
         {
             base.OnEnable();
 
-            _firingRoutine = StartCoroutine(FireForever());
-            _weaponsSwitchTimer = 0f;
-            _nextWeaponsSwitchDelay = _config.FirstWeaponsSwitchDelay.RandomValue;
+            StartShooting();
 
-            s_gameModeLoader.Access.MainMenuLoadingStarted += MainMenuLoadingStartedEventHandler;
+            s_gameModeLoader.Access.MainMenuLoadingStarted += (s, e) => StopShooting();
+            s_levelCompleter.Access.LevelConcluded += (s, e) => StopShooting();
         }
 
         private void OnDisable()
         {
-            StopCoroutine(_firingRoutine);
-            _firingRoutine = null;
+            StopShooting();
 
-            s_gameModeLoader.Access.MainMenuLoadingStarted += MainMenuLoadingStartedEventHandler;
+            s_gameModeLoader.Access.MainMenuLoadingStarted -= (s, e) => StopShooting();
+            s_levelCompleter.Access.LevelConcluded -= (s, e) => StopShooting();
         }
 
         private void Update()
@@ -51,6 +52,16 @@ namespace SpaceAce.Gameplay.Shooting
 
                     ActivateNextWeaponGroup(true);
                 }
+            }
+        }
+
+        private void StartShooting()
+        {
+            if (_firingRoutine == null)
+            {
+                _firingRoutine = StartCoroutine(FireForever());
+                _weaponsSwitchTimer = 0f;
+                _nextWeaponsSwitchDelay = _config.FirstWeaponsSwitchDelay.RandomValue;
             }
         }
 
@@ -78,9 +89,13 @@ namespace SpaceAce.Gameplay.Shooting
             }
         }
 
-        private void MainMenuLoadingStartedEventHandler(object sender, LoadingStartedEventArgs e)
+        private void StopShooting()
         {
-            StopCoroutine(_firingRoutine);
+            if (_firingRoutine != null)
+            {
+                StopCoroutine(_firingRoutine);
+                _firingRoutine = null;
+            }
         }
     }
 }

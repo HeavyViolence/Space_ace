@@ -31,9 +31,10 @@ namespace SpaceAce.Gameplay.Shooting
         public bool IsFiring => _firingRoutine != null;
         public int GunGroupID => _config.GunGroupID;
         protected bool IsRightHandedGun => transform.localPosition.x > 0f;
-        protected virtual float NextProjectileSpeed => _config.Speed.RandomValue;
+        protected virtual float NextProjectileTopSpeed => _config.TopSpeed.RandomValue;
+        protected virtual float NextProjectileTopSpeedGainDuration => _config.TopSpeedGainDuration.RandomValue;
         protected virtual float NextProjectileRevolutionsPerMinute => _config.RotationConfig.RevolutionsPerMinute.RandomValue;
-        protected virtual float NextProjectileTurningRadius => _config.RotationConfig.TurningSpeed.RandomValue;
+        protected virtual float NextProjectileTargetSeekingSpeed => _config.RotationConfig.TargetSeekingSpeed.RandomValue;
         protected virtual float NextProjectileDamage => _config.Damage.RandomValue;
         protected virtual int NextProjectilesPerShot => _config.ProjectilesPerShot.RandomValue;
         protected virtual float NextFireDuration => _config.FireDuration.RandomValue;
@@ -125,10 +126,11 @@ namespace SpaceAce.Gameplay.Shooting
                                                    () => s_masterCameraHolder.Access.InsideViewport(projectile.transform.position) == false);
 
             MovementBehaviourSettings settings = new(projectileDirection,
-                                                     NextProjectileSpeed,
+                                                     NextProjectileTopSpeed,
+                                                     NextProjectileTopSpeedGainDuration,
                                                      NextProjectileRevolutionsPerMinute,
-                                                     NextProjectileTurningRadius,
-                                                     projectileTarget);
+                                                     projectileTarget,
+                                                     NextProjectileTargetSeekingSpeed);
 
             SupplyProjectileBehaviour(projectile, ProjectileBehaviour, settings);
             AwaitProjectileHit(projectile);

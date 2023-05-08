@@ -14,6 +14,8 @@ namespace SpaceAce.Gameplay.Movement
 
         public event EventHandler Escaped;
 
+        private float _timer;
+
         protected Rigidbody2D Body { get; private set; }
         protected MovementBehaviour MovementBehaviour { get; set; }
         protected MovementBehaviourSettings MovementBehaviourSettings { get; set; }
@@ -24,8 +26,14 @@ namespace SpaceAce.Gameplay.Movement
             SetupRigidbody(Body);
         }
 
+        protected virtual void OnEnable()
+        {
+            _timer = 0f;
+        }
+
         protected virtual void OnDisable()
         {
+            _timer = 0f;
             MovementBehaviour = null;
             Escaped = null;
         }
@@ -37,7 +45,7 @@ namespace SpaceAce.Gameplay.Movement
                 return;
             }
 
-            MovementBehaviour(Body, MovementBehaviourSettings);
+            MovementBehaviour(Body, MovementBehaviourSettings, ref _timer);
         }
 
         protected virtual void SetupRigidbody(Rigidbody2D body)

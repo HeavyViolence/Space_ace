@@ -19,8 +19,10 @@ namespace SpaceAce.Gameplay.Movement
             _collisionDamageDealer = gameObject.GetComponent<DamageDealer>();
         }
 
-        protected virtual void OnEnable()
+        protected override void OnEnable()
         {
+            base.OnEnable();
+
             if (Config.CollisionDamageEnabled)
             {
                 _collisionDamageDealer.Hit += CollisionHitEventHandler;

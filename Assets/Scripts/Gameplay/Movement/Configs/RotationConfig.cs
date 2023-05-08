@@ -23,11 +23,11 @@ namespace SpaceAce.Gameplay.Movement
         [SerializeField] private float _rpm = DefaultRPM;
         [SerializeField] private float _rpmRandomDeviation = 0f;
 
-        [SerializeField] private float _turningSpeed = MinTurningSpeed;
-        [SerializeField] private float _turningSpeedRandomDeviation = 0f;
+        [SerializeField] private float _targetSeekingSpeed = MinTurningSpeed;
+        [SerializeField] private float _targetSeekingSpeedRandomDeviation = 0f;
 
         public RangedFloat RevolutionsPerMinute { get; private set; }
-        public RangedFloat TurningSpeed { get; private set; }
+        public RangedFloat TargetSeekingSpeed { get; private set; }
 
         private void OnEnable()
         {
@@ -58,7 +58,7 @@ namespace SpaceAce.Gameplay.Movement
                     }
             }
 
-            TurningSpeed = new(_turningSpeed, _turningSpeedRandomDeviation);
+            TargetSeekingSpeed = new(_targetSeekingSpeed, _targetSeekingSpeedRandomDeviation);
         }
     }
 }

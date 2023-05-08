@@ -12,11 +12,15 @@ namespace SpaceAce.Gameplay.Spawning
 
         public override void OnInitialize()
         {
+            base.OnInitialize();
+
             GameServices.Register(this);
         }
 
         public override void OnClear()
         {
+            base.OnClear();
+
             GameServices.Deregister(this);
         }
 

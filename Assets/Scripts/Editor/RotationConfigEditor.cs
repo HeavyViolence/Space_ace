@@ -12,8 +12,8 @@ namespace SpaceAce.Editors
         private SerializedProperty _rpm;
         private SerializedProperty _rpmRandomDeviation;
 
-        private SerializedProperty _turningSpeed;
-        private SerializedProperty _turningSpeedRandomDeviation;
+        private SerializedProperty _targetSeekingSpeed;
+        private SerializedProperty _targetSeekingSpeedRandomDeviation;
 
         private void OnEnable()
         {
@@ -22,8 +22,8 @@ namespace SpaceAce.Editors
             _rpm = serializedObject.FindProperty("_rpm");
             _rpmRandomDeviation = serializedObject.FindProperty("_rpmRandomDeviation");
 
-            _turningSpeed = serializedObject.FindProperty("_turningSpeed");
-            _turningSpeedRandomDeviation = serializedObject.FindProperty("_turningSpeedRandomDeviation");
+            _targetSeekingSpeed = serializedObject.FindProperty("_targetSeekingSpeed");
+            _targetSeekingSpeedRandomDeviation = serializedObject.FindProperty("_targetSeekingSpeedRandomDeviation");
         }
 
         public override void OnInspectorGUI()
@@ -39,10 +39,10 @@ namespace SpaceAce.Editors
             _rpmRandomDeviation.floatValue = Mathf.Clamp(_rpmRandomDeviation.floatValue, 0f, _rpm.floatValue);
 
             EditorGUILayout.Separator();
-            EditorGUILayout.Slider(_turningSpeed, RotationConfig.MinTurningSpeed, RotationConfig.MaxTurningSpeed, "Turning speed");
-            EditorGUILayout.Slider(_turningSpeedRandomDeviation, 0f, _turningSpeed.floatValue, "Max random deviation");
+            EditorGUILayout.Slider(_targetSeekingSpeed, RotationConfig.MinTurningSpeed, RotationConfig.MaxTurningSpeed, "Target seeking speed");
+            EditorGUILayout.Slider(_targetSeekingSpeedRandomDeviation, 0f, _targetSeekingSpeed.floatValue, "Max random deviation");
 
-            _turningSpeedRandomDeviation.floatValue = Mathf.Clamp(_turningSpeedRandomDeviation.floatValue, 0f, _turningSpeed.floatValue);
+            _targetSeekingSpeedRandomDeviation.floatValue = Mathf.Clamp(_targetSeekingSpeedRandomDeviation.floatValue, 0f, _targetSeekingSpeed.floatValue);
 
             EditorGUILayout.Separator();
 

@@ -12,8 +12,11 @@ namespace SpaceAce.Gameplay.Shooting
         public const int MinGunGroupID = 0;
         public const int MaxGunGroupID = 9;
 
-        public const float MinSpeed = 20f;
-        public const float MaxSpeed = 200f;
+        public const float MinTopSpeed = 20f;
+        public const float MaxTopSpeed = 200f;
+
+        public const float MinTopSpeedGainDuration = 0.01f;
+        public const float MaxTopSpeedGainDuration = 10f;
 
         public const float MinDamage = 10f;
         public const float MaxDamage = 1000f;
@@ -46,8 +49,11 @@ namespace SpaceAce.Gameplay.Shooting
         [SerializeField] private ProjectileBehaviour _behaviour;
         [SerializeField] private TargetSupplier _targetSupplier;
 
-        [SerializeField] private float _speed = MinSpeed;
-        [SerializeField] private float _speedRandomDeviation = 0f;
+        [SerializeField] private float _topSpeed = MinTopSpeed;
+        [SerializeField] private float _topSpeedRandomDeviation = 0f;
+
+        [SerializeField] private float _topSpeedGainDuration = MinTopSpeedGainDuration;
+        [SerializeField] private float _topSpeedGainDurationRandomDeviation = 0f;
 
         [SerializeField] private RotationConfig _rotationConfig;
 
@@ -83,7 +89,8 @@ namespace SpaceAce.Gameplay.Shooting
         public TargetSupplier TargetSupplier => _targetSupplier;
         public RotationConfig RotationConfig => _rotationConfig;
 
-        public RangedFloat Speed { get; private set; }
+        public RangedFloat TopSpeed { get; private set; }
+        public RangedFloat TopSpeedGainDuration { get; private set; }
         public RangedFloat Damage { get; private set; }
         public RangedInt ProjectilesPerShot { get; private set; }
         public RangedFloat FireDuration { get; private set; }
@@ -111,7 +118,8 @@ namespace SpaceAce.Gameplay.Shooting
 
         public void ApplySettings()
         {
-            Speed = new(_speed, _speedRandomDeviation);
+            TopSpeed = new(_topSpeed, _topSpeedRandomDeviation);
+            TopSpeedGainDuration = new(_topSpeedGainDuration, _topSpeedGainDurationRandomDeviation);
             Damage = new(_damage, _damageRandomDeviation);
             ProjectilesPerShot = new(_projectilesPerShot, _projectilesPerShotRandomDeviation, MinProjectilesPerShot, MaxProjectilesPerShot * 2);
             FireDuration = new(_fireDuration, _fireDurationRandomDeviation);

@@ -15,8 +15,11 @@ namespace SpaceAce.Editors
         private SerializedProperty _behaviour;
         private SerializedProperty _targetSupplier;
 
-        private SerializedProperty _speed;
-        private SerializedProperty _speedRandomDeviation;
+        private SerializedProperty _topSpeed;
+        private SerializedProperty _topSpeedRandomDeviation;
+
+        private SerializedProperty _topSpeedGainDuration;
+        private SerializedProperty _topSpeedGainDurationRandomDeviation;
 
         private SerializedProperty _rotationConfig;
 
@@ -53,8 +56,11 @@ namespace SpaceAce.Editors
             _behaviour = serializedObject.FindProperty("_behaviour");
             _targetSupplier = serializedObject.FindProperty("_targetSupplier");
 
-            _speed = serializedObject.FindProperty("_speed");
-            _speedRandomDeviation = serializedObject.FindProperty("_speedRandomDeviation");
+            _topSpeed = serializedObject.FindProperty("_topSpeed");
+            _topSpeedRandomDeviation = serializedObject.FindProperty("_topSpeedRandomDeviation");
+
+            _topSpeedGainDuration = serializedObject.FindProperty("_topSpeedGainDuration");
+            _topSpeedGainDurationRandomDeviation = serializedObject.FindProperty("_topSpeedGainDurationRandomDeviation");
 
             _rotationConfig = serializedObject.FindProperty("_rotationConfig");
 
@@ -97,10 +103,16 @@ namespace SpaceAce.Editors
             EditorGUILayout.PropertyField(_hitAudio, new GUIContent("Hit audio"));
 
             EditorGUILayout.Separator();
-            EditorGUILayout.Slider(_speed, ProjectileGunConfig.MinSpeed, ProjectileGunConfig.MaxSpeed, "Speed");
-            EditorGUILayout.Slider(_speedRandomDeviation, 0f, _speed.floatValue, "Max random deviation");
+            EditorGUILayout.Slider(_topSpeed, ProjectileGunConfig.MinTopSpeed, ProjectileGunConfig.MaxTopSpeed, "Top speed");
+            EditorGUILayout.Slider(_topSpeedRandomDeviation, 0f, _topSpeed.floatValue, "Max random deviation");
 
-            _speedRandomDeviation.floatValue = Mathf.Clamp(_speedRandomDeviation.floatValue, 0f, _speed.floatValue);
+            _topSpeedRandomDeviation.floatValue = Mathf.Clamp(_topSpeedRandomDeviation.floatValue, 0f, _topSpeed.floatValue);
+
+            EditorGUILayout.Separator();
+            EditorGUILayout.Slider(_topSpeedGainDuration, ProjectileGunConfig.MinTopSpeedGainDuration, ProjectileGunConfig.MaxTopSpeedGainDuration, "Top speed gain duration");
+            EditorGUILayout.Slider(_topSpeedGainDurationRandomDeviation, 0f, _topSpeedGainDuration.floatValue, "Max random deviation");
+
+            _topSpeedGainDurationRandomDeviation.floatValue = Mathf.Clamp(_topSpeedGainDurationRandomDeviation.floatValue, 0f, _topSpeedGainDuration.floatValue);
 
             EditorGUILayout.Separator();
             EditorGUILayout.PropertyField(_rotationConfig, new GUIContent("Rotation config"));

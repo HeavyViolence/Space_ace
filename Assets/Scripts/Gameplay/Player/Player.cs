@@ -81,6 +81,7 @@ namespace SpaceAce.Gameplay.Players
             if (GameServices.TryGetService(out GameModeLoader loader) == true)
             {
                 loader.LevelLoaded += LevelLoadedEventHandler;
+
                 loader.MainMenuLoadingStarted += MainMenuLoadingStartedEventHandler;
                 loader.MainMenuLoaded += MainMenuLoadedEventHandler;
             }
@@ -115,6 +116,7 @@ namespace SpaceAce.Gameplay.Players
             if (GameServices.TryGetService(out GameModeLoader loader) == true)
             {
                 loader.LevelLoaded -= LevelLoadedEventHandler;
+
                 loader.MainMenuLoadingStarted -= MainMenuLoadingStartedEventHandler;
                 loader.MainMenuLoaded -= MainMenuLoadedEventHandler;
             }

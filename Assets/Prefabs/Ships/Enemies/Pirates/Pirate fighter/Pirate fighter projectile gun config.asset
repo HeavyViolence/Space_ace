@@ -17,8 +17,10 @@ MonoBehaviour:
   _hitEffect: {fileID: 11400000, guid: 2ca80ae96c742fc45a63478e688600f5, type: 2}
   _behaviour: {fileID: 11400000, guid: 679ac0c5aeafaa145aaee938e27bc0ea, type: 2}
   _targetSupplier: {fileID: 11400000, guid: 73c56d0ba8cf74e4bb6b680d6318127b, type: 2}
-  _speed: 70
-  _speedRandomDeviation: 5
+  _topSpeed: 70
+  _topSpeedRandomDeviation: 5
+  _topSpeedGainDuration: 0.01
+  _topSpeedGainDurationRandomDeviation: 0
   _rotationConfig: {fileID: 11400000, guid: 4ba53b53dcd36d24b888c5afddfd46fd, type: 2}
   _damage: 50
   _damageRandomDeviation: 5

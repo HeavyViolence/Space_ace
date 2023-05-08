@@ -73,7 +73,7 @@ namespace SpaceAce.Levels
             if (GameServices.TryGetService(out EnemySpawner spawner) == true)
             {
                 spawner.SpawnEnded += EnemySpawnEndedEventHandler;
-                spawner.EntitySpawned += EnemySpawnerEventHandler;
+                spawner.EntitySpawned += EnemySpawnedEventHandler;
             }
             else
             {
@@ -103,7 +103,7 @@ namespace SpaceAce.Levels
             if (GameServices.TryGetService(out EnemySpawner spawner) == true)
             {
                 spawner.SpawnEnded -= EnemySpawnEndedEventHandler;
-                spawner.EntitySpawned -= EnemySpawnerEventHandler;
+                spawner.EntitySpawned -= EnemySpawnedEventHandler;
             }
             else
             {
@@ -136,7 +136,7 @@ namespace SpaceAce.Levels
             }
         }
 
-        private void EnemySpawnerEventHandler(object sender, EntitySpawnedEventArgs e)
+        private void EnemySpawnedEventHandler(object sender, EntitySpawnedEventArgs e)
         {
             e.Escapable.Escaped += (s, e) => LevelFailed?.Invoke(this, new LevelDataEventArgs(_loadedLevelIndex));
         }
