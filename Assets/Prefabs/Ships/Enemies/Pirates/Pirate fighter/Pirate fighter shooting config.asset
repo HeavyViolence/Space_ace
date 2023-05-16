@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af0192d5da50ba1418833218b2d30f29, type: 3}
   m_Name: Pirate fighter shooting config
   m_EditorClassIdentifier: 
-  _firstFireDelay: 3
+  _firstFireDelay: 4
   _firstFireDelayRandomDeviation: 1
   _nextFireDelay: 4
   _nextFireDelayRandomDeviation: 1

@@ -41,6 +41,7 @@ namespace SpaceAce.Architecture
 
         [SerializeField] private AudioMixer _audioMixer;
         [SerializeField] private AudioCollection _music;
+        [SerializeField] private AudioCollection _bossSpawnAlarm;
 
         [SerializeField] private UIAssets _uiContainer;
 
@@ -111,6 +112,7 @@ namespace SpaceAce.Architecture
             _gameServices.Add(new GamePauser());
             _gameServices.Add(new UIDisplay(_uiContainer));
             _gameServices.Add(new EnemySpawner());
+            _gameServices.Add(new BossSpawner(_bossSpawnAlarm));
 
             _gameServices.Add(new SavingSystem(_idGenerator.Next()));
             _gameServices.Add(new CameraShaker(_idGenerator.Next(), cameraHolder.MasterCameraAnchor));

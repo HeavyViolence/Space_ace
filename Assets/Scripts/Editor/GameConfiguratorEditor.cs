@@ -28,6 +28,7 @@ namespace SpaceAce.Editors
         private bool _showAudioSettings = false;
         private SerializedProperty _audioMixer;
         private SerializedProperty _music;
+        private SerializedProperty _bossSpawnAlarm;
 
         private bool _showUISettings = false;
         private SerializedProperty _uiContainer;
@@ -54,6 +55,7 @@ namespace SpaceAce.Editors
 
             _audioMixer = serializedObject.FindProperty("_audioMixer");
             _music = serializedObject.FindProperty("_music");
+            _bossSpawnAlarm = serializedObject.FindProperty("_bossSpawnAlarm");
 
             _uiContainer = serializedObject.FindProperty("_uiContainer");
 
@@ -110,6 +112,7 @@ namespace SpaceAce.Editors
             {
                 EditorGUILayout.PropertyField(_audioMixer, new GUIContent("Audio mixer"));
                 EditorGUILayout.PropertyField(_music, new GUIContent("Music"));
+                EditorGUILayout.PropertyField(_bossSpawnAlarm, new GUIContent("Boss spawn alarm"));
             }
 
             EditorGUILayout.Separator();

@@ -39,7 +39,7 @@ namespace SpaceAce.Gameplay.Movement.EnemyMovement
         {
             if (Owner.PreviousStateType.Equals(typeof(FlyForward)))
             {
-                return Owner.NextVerticalSpeed * AuxMath.RandomSign * EntrySpeedFactor;
+                return Owner.NextVerticalSpeed * AuxMath.RandomSign;
             }
 
             if (StateHasJustBegun)

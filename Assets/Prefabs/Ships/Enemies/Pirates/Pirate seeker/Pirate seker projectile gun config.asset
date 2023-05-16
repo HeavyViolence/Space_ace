@@ -15,13 +15,13 @@ MonoBehaviour:
   _gunGroupID: 0
   _projectile: {fileID: 11400000, guid: 212bd541d3f5cdb4cb57f96cac1dd401, type: 2}
   _hitEffect: {fileID: 11400000, guid: 2ca80ae96c742fc45a63478e688600f5, type: 2}
-  _behaviour: {fileID: 11400000, guid: 71e97d912de6c134d9cf9006a9104f0c, type: 2}
+  _behaviour: {fileID: 11400000, guid: 7eb5a5fe615941a47a89583bbfe24e6c, type: 2}
   _targetSupplier: {fileID: 11400000, guid: 1145f0375b2ecdb43a4bc8bcb5f17a2b, type: 2}
   _topSpeed: 80
   _topSpeedRandomDeviation: 5
   _topSpeedGainDuration: 0.01
   _topSpeedGainDurationRandomDeviation: 0
-  _rotationConfig: {fileID: 11400000, guid: 4ba53b53dcd36d24b888c5afddfd46fd, type: 2}
+  _rotationConfig: {fileID: 11400000, guid: a3ac42563667a8a4198a9dcce9372981, type: 2}
   _damage: 80
   _damageRandomDeviation: 5
   _projectilesPerShot: 8

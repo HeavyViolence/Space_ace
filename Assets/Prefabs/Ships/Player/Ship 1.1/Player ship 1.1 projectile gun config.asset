@@ -21,15 +21,15 @@ MonoBehaviour:
   _topSpeedRandomDeviation: 5
   _topSpeedGainDuration: 0.01
   _topSpeedGainDurationRandomDeviation: 0
-  _rotationConfig: {fileID: 11400000, guid: 4ba53b53dcd36d24b888c5afddfd46fd, type: 2}
+  _rotationConfig: {fileID: 11400000, guid: a3ac42563667a8a4198a9dcce9372981, type: 2}
   _damage: 50
   _damageRandomDeviation: 5
   _projectilesPerShot: 1
   _projectilesPerShotRandomDeviation: 0
-  _fireDuration: 1
-  _fireDurationRandomDeviation: 0.1
-  _fireRate: 8
-  _fireRateRandomDeviation: 0.5
+  _fireDuration: 0.75
+  _fireDurationRandomDeviation: 0.075
+  _fireRate: 10
+  _fireRateRandomDeviation: 1
   _cooldown: 3
   _cooldownRandomDeviation: 0.5
   _dispersion: 0.05

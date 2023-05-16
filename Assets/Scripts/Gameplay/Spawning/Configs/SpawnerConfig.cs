@@ -23,7 +23,7 @@ namespace SpaceAce.Gameplay.Spawning
         public const int MinWaveLength = 1;
         public const int MaxWaveLength = 10;
 
-        public const int MinAmountToSpawn = 10;
+        public const int MinAmountToSpawn = 1;
         public const int MaxAmountToSpawn = 200;
 
         [SerializeField] private List<ObjectPoolEntry> _spawnableEntities = new();

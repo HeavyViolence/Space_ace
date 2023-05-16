@@ -15,5 +15,5 @@ MonoBehaviour:
   _rotationDirection: 2
   _rpm: 10
   _rpmRandomDeviation: 1
-  _targetSeekingSpeed: 1080
-  _targetSeekingSpeedRandomDeviation: 60
+  _targetSeekingSpeed: 60
+  _targetSeekingSpeedRandomDeviation: 5

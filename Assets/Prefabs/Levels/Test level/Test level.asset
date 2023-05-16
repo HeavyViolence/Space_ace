@@ -16,5 +16,5 @@ MonoBehaviour:
   _crystalsReward: 100
   _experienceReward: 3000
   _bossEnabled: 0
-  _boss: {fileID: 0}
+  _boss: {fileID: 11400000, guid: 3ea97bcc578c1c54c9ed578790aec946, type: 2}
   _enemySpawnerConfig: {fileID: 11400000, guid: 1ff54423751f61645b0c1cc68aa26349, type: 2}

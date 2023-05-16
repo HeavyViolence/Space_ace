@@ -7,7 +7,7 @@ namespace SpaceAce.Gameplay.Damageables
     public sealed class ArmorConfig : ScriptableObject
     {
         public const float MinArmor = 0f;
-        public const float MaxArmor = 1000f;
+        public const float MaxArmor = 10000f;
 
         [SerializeField] private bool _armorEnabled = false;
 

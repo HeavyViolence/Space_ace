@@ -13,17 +13,17 @@ MonoBehaviour:
   m_Name: Test level enemy spawner config
   m_EditorClassIdentifier: 
   _spawnableEntities:
-  - {fileID: 11400000, guid: ec3ae1404296d8c4ba8ba004410b045c, type: 2}
+  - {fileID: 11400000, guid: a55ec1f1a61cdf94fb4a74e410974b11, type: 2}
   _firstSpawnDelay: 3
   _firstSpawnDelayRandomDeviation: 0
-  _spawnDelay: 1
-  _spawnDelayRandomDeviation: 0
+  _spawnDelay: 1.5
+  _spawnDelayRandomDeviation: 0.5
   _uniqueEntitiesInWave: 1
   _uniqueEntitiesInWaveRandomDeviation: 0
-  _waveLength: 1
-  _waveLengthRandomDeviation: 0
+  _waveLength: 6
+  _waveLengthRandomDeviation: 1
   _spawnForever: 1
-  _amountToSpawn: 10
+  _amountToSpawn: 1
   _amountToSpawnRandomDeviation: 0
   _haltUntilClear: 1
   _amplificationConfig: {fileID: 11400000, guid: 91d388c5a2a334249b8345e5371b094b, type: 2}

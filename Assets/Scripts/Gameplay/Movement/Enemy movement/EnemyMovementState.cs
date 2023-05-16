@@ -6,8 +6,6 @@ namespace SpaceAce.Gameplay.Movement.EnemyMovement
 {
     public abstract class EnemyMovementState : IState, IEquatable<IState>
     {
-        protected const float EntrySpeedFactor = 0.4f;
-
         private float _currentHorizontalSpeed;
         private float _previousHorizontalSpeed;
         private float _targetHorizontalSpeed;

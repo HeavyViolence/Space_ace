@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af0192d5da50ba1418833218b2d30f29, type: 3}
+  m_Name: Pirate boss shooting config
+  m_EditorClassIdentifier: 
+  _firstFireDelay: 5
+  _firstFireDelayRandomDeviation: 1
+  _nextFireDelay: 5
+  _nextFireDelayRandomDeviation: 1
+  _enableWeaponsSwitch: 1
+  _firstWeaponsSwitchDelay: 15
+  _firstWeaponsSwitchDelayRandomDeviation: 5
+  _nextWeaponsSwitchDelay: 15
+  _nextWeaponsSwitchDelayRandomDeviation: 5

@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25f5b6e5938357245853de1accb12539, type: 3}
+  m_Name: Pirate boss wave launcher config
+  m_EditorClassIdentifier: 
+  _gunGroupID: 1
+  _projectile: {fileID: 11400000, guid: a9fa48a2b7f32b246ab8a44ad4fbd270, type: 2}
+  _hitEffect: {fileID: 11400000, guid: bca3946f934937740a33ea16704e9023, type: 2}
+  _behaviour: {fileID: 11400000, guid: 679ac0c5aeafaa145aaee938e27bc0ea, type: 2}
+  _targetSupplier: {fileID: 11400000, guid: 73c56d0ba8cf74e4bb6b680d6318127b, type: 2}
+  _topSpeed: 120
+  _topSpeedRandomDeviation: 10
+  _topSpeedGainDuration: 0.01
+  _topSpeedGainDurationRandomDeviation: 0
+  _rotationConfig: {fileID: 11400000, guid: a3ac42563667a8a4198a9dcce9372981, type: 2}
+  _damage: 200
+  _damageRandomDeviation: 20
+  _projectilesPerShot: 1
+  _projectilesPerShotRandomDeviation: 0
+  _fireDuration: 2
+  _fireDurationRandomDeviation: 0.25
+  _fireRate: 5
+  _fireRateRandomDeviation: 0.5
+  _cooldown: 5
+  _cooldownRandomDeviation: 1
+  _dispersion: 0.05
+  _convergenceAngle: 0
+  _fireAudio: {fileID: 11400000, guid: 9d1c010f2a2f3df45866ea5e23dcfdf4, type: 2}
+  _hitAudio: {fileID: 11400000, guid: 86f29f129a5b2cf41aef9cadd74096f7, type: 2}
+  _cameraShakeOnShot: 0

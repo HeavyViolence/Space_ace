@@ -14,10 +14,8 @@ namespace SpaceAce.Gameplay.Shooting
 
         [SerializeField] private ShootingConfig _config;
 
-        private float _weaponsSwitchTimer;
-        private float _nextWeaponsSwitchDelay;
-
         Coroutine _firingRoutine;
+        Coroutine _weaponsSwitchRoutine;
 
         protected sealed override void OnEnable()
         {
@@ -37,31 +35,31 @@ namespace SpaceAce.Gameplay.Shooting
             s_levelCompleter.Access.LevelConcluded -= (s, e) => StopShooting();
         }
 
-        private void Update()
-        {
-            if (s_masterCameraHolder.Access.InsideViewport(transform.position) == true)
-            {
-                if (_weaponsSwitchTimer < _nextWeaponsSwitchDelay)
-                {
-                    _weaponsSwitchTimer += Time.deltaTime;
-                }
-                else
-                {
-                    _weaponsSwitchTimer = 0f;
-                    _nextWeaponsSwitchDelay = _config.NextWeaponsSwitchDealy.RandomValue;
-
-                    ActivateNextWeaponGroup(true);
-                }
-            }
-        }
-
         private void StartShooting()
         {
             if (_firingRoutine == null)
             {
                 _firingRoutine = StartCoroutine(FireForever());
-                _weaponsSwitchTimer = 0f;
-                _nextWeaponsSwitchDelay = _config.FirstWeaponsSwitchDelay.RandomValue;
+
+                if (WeaponGroupsAmount > 1)
+                {
+                    _weaponsSwitchRoutine = StartCoroutine(SwitchWeapons());
+                }
+            }
+        }
+
+        private void StopShooting()
+        {
+            if (_firingRoutine != null)
+            {
+                StopCoroutine(_firingRoutine);
+                _firingRoutine = null;
+
+                if (WeaponGroupsAmount > 1)
+                {
+                    StopCoroutine(_weaponsSwitchRoutine);
+                    _weaponsSwitchRoutine = null;
+                }
             }
         }
 
@@ -89,12 +87,22 @@ namespace SpaceAce.Gameplay.Shooting
             }
         }
 
-        private void StopShooting()
+        private IEnumerator SwitchWeapons()
         {
-            if (_firingRoutine != null)
+            while (s_masterCameraHolder.Access.InsideViewport(transform.position) == false)
             {
-                StopCoroutine(_firingRoutine);
-                _firingRoutine = null;
+                yield return null;
+            }
+
+            yield return new WaitForSeconds(_config.FirstWeaponsSwitchDelay.RandomValue);
+
+            ActivateNextWeaponGroup(true);
+
+            while (true)
+            {
+                yield return new WaitForSeconds(_config.NextWeaponsSwitchDealy.RandomValue);
+
+                ActivateNextWeaponGroup(true);
             }
         }
     }

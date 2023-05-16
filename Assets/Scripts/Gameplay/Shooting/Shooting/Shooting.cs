@@ -9,18 +9,14 @@ namespace SpaceAce.Gameplay.Shooting
     {
         [SerializeField] private AudioCollection _weaponsSwitchAudio;
 
-        private Dictionary<int, List<IGun>> _weaponGroups = new();
+        private Dictionary<int, List<IGun>> _availableWeaponGroups = new();
         private List<IGun> _activeWeaponGroup = null;
 
         private int _activeWeaponGroupIndex = -1;
-        private int NextWeaponGroupIndex => ++_activeWeaponGroupIndex > WeaponGroupsAmount - 1 ? WeaponGroupsAmount - 1 : _activeWeaponGroupIndex;
-        private int PreviousWeaponGroupIndex => --_activeWeaponGroupIndex < 0 ? 0 : _activeWeaponGroupIndex;
-
         private int _activeGunIndex = -1;
-        private int NextGunIndex => ++_activeGunIndex % ActiveGunsAmount;
 
-        protected IGun NextActiveGun => _activeWeaponGroup[NextGunIndex];
-        protected int WeaponGroupsAmount => _weaponGroups.Count;
+        protected IGun NextActiveGun => _activeWeaponGroup[++_activeGunIndex % ActiveGunsAmount];
+        protected int WeaponGroupsAmount => _availableWeaponGroups.Count;
         protected int ActiveGunsAmount => _activeWeaponGroup.Count;
 
         private void Awake()
@@ -37,13 +33,13 @@ namespace SpaceAce.Gameplay.Shooting
         {
             foreach (var gun in gameObject.transform.root.GetComponentsInChildren<IGun>())
             {
-                if (_weaponGroups.TryGetValue(gun.GunGroupID, out var guns))
+                if (_availableWeaponGroups.TryGetValue(gun.GroupID, out var guns))
                 {
                     guns.Add(gun);
                 }
                 else
                 {
-                    _weaponGroups.Add(gun.GunGroupID, new List<IGun>() { gun });
+                    _availableWeaponGroups.Add(gun.GroupID, new List<IGun>() { gun });
                 }
             }
         }
@@ -57,8 +53,7 @@ namespace SpaceAce.Gameplay.Shooting
                 return false;
             }
 
-            _activeWeaponGroup = _weaponGroups[index];
-            _activeWeaponGroupIndex = index;
+            _activeWeaponGroup = _availableWeaponGroups[index];
             _activeGunIndex = -1;
 
             if (playAudioEffect)
@@ -69,10 +64,38 @@ namespace SpaceAce.Gameplay.Shooting
             return true;
         }
 
-        protected bool ActivateFirstWeaponGroup(bool playAudioEffect) => ActivateWeaponGroup(0, playAudioEffect);
-        protected bool ActivateLastWeaponGroup(bool playAudioEffect) => ActivateWeaponGroup(WeaponGroupsAmount - 1, playAudioEffect);
-        protected bool ActivateNextWeaponGroup(bool playAudioEffect) => ActivateWeaponGroup(NextWeaponGroupIndex, playAudioEffect);
-        protected bool ActivatePreviousWeaponGroup(bool playAudioEffect) => ActivateWeaponGroup(PreviousWeaponGroupIndex, playAudioEffect);
+        protected bool ActivateFirstWeaponGroup(bool playAudioEffect)
+        {
+            if (ActivateWeaponGroup(0, playAudioEffect) == true)
+            {
+                _activeWeaponGroupIndex = 0;
+
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        protected bool ActivateLastWeaponGroup(bool playAudioEffect)
+        {
+            if (ActivateWeaponGroup(WeaponGroupsAmount - 1, playAudioEffect) == true)
+            {
+                _activeWeaponGroupIndex = WeaponGroupsAmount - 1;
+
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        protected bool ActivateNextWeaponGroup(bool playAudioEffect) => ActivateWeaponGroup(++_activeWeaponGroupIndex % WeaponGroupsAmount, playAudioEffect);
+        protected bool ActivatePreviousWeaponGroup(bool playAudioEffect) => ActivateWeaponGroup(--_activeWeaponGroupIndex < 0 ? WeaponGroupsAmount - 1
+                                                                                                                              : _activeWeaponGroupIndex,
+                                                                                                playAudioEffect);
 
         protected void StopActiveWeaponGroupShooting()
         {

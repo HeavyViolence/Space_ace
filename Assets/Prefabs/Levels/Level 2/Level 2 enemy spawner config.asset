@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30aad3f40d7c46d4ca74adfc46978cf0, type: 3}
+  m_Name: Level 2 enemy spawner config
+  m_EditorClassIdentifier: 
+  _spawnableEntities:
+  - {fileID: 11400000, guid: 372d0ecf5c98c8148883e6c67b381fa4, type: 2}
+  - {fileID: 11400000, guid: ac33057e858bf7e4d85287bd6cd3346e, type: 2}
+  - {fileID: 11400000, guid: a55ec1f1a61cdf94fb4a74e410974b11, type: 2}
+  - {fileID: 11400000, guid: 7d956620967ea67429196b678593a894, type: 2}
+  _firstSpawnDelay: 5
+  _firstSpawnDelayRandomDeviation: 0.5
+  _spawnDelay: 1.5
+  _spawnDelayRandomDeviation: 0.5
+  _uniqueEntitiesInWave: 3
+  _uniqueEntitiesInWaveRandomDeviation: 1
+  _waveLength: 6
+  _waveLengthRandomDeviation: 1
+  _spawnForever: 0
+  _amountToSpawn: 45
+  _amountToSpawnRandomDeviation: 5
+  _haltUntilClear: 1
+  _amplificationConfig: {fileID: 11400000, guid: e72fc99bd915db143866ad82d17d963f, type: 2}

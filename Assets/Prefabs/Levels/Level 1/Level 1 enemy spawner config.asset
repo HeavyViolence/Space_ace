@@ -25,7 +25,7 @@ MonoBehaviour:
   _waveLength: 5
   _waveLengthRandomDeviation: 1
   _spawnForever: 0
-  _amountToSpawn: 36
+  _amountToSpawn: 40
   _amountToSpawnRandomDeviation: 4
   _haltUntilClear: 1
   _amplificationConfig: {fileID: 11400000, guid: e72fc99bd915db143866ad82d17d963f, type: 2}

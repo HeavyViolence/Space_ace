@@ -15,8 +15,8 @@ namespace SpaceAce.Gameplay.Movement
         public const float MaxRPM = 60f;
         public const float DefaultRPM = 15f;
 
-        public const float MinTurningSpeed = 60f;
-        public const float MaxTurningSpeed = 1800f;
+        public const float MinTurningSpeed = 10f;
+        public const float MaxTurningSpeed = 360f;
 
         [SerializeField] private RotationDirection _rotationDirection = RotationDirection.Left;
 

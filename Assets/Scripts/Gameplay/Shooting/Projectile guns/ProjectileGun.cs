@@ -22,14 +22,14 @@ namespace SpaceAce.Gameplay.Shooting
         private Coroutine _firingRoutine;
 
         public virtual float MaxDamagePerSecond => _config.Damage.MaxValue *
-                                           _config.ProjectilesPerShot.MaxValue *
-                                           _config.FireRate.MaxValue *
-                                           _config.FireDuration.MaxValue * 2f /
-                                           (_config.FireDuration.MaxValue + _config.Cooldown.MinValue);
+                                                   _config.ProjectilesPerShot.MaxValue *
+                                                   _config.FireRate.MaxValue *
+                                                   _config.FireDuration.MaxValue * 2f /
+                                                   (_config.FireDuration.MaxValue + _config.Cooldown.MinValue);
         public bool ReadyToFire => _firingRoutine == null && _cooldownTimer > _currentCooldown;
         public bool CoolingDown => _firingRoutine == null && _cooldownTimer < _currentCooldown;
         public bool IsFiring => _firingRoutine != null;
-        public int GunGroupID => _config.GunGroupID;
+        public int GroupID => _config.GunGroupID;
         protected bool IsRightHandedGun => transform.localPosition.x > 0f;
         protected virtual float NextProjectileTopSpeed => _config.TopSpeed.RandomValue;
         protected virtual float NextProjectileTopSpeedGainDuration => _config.TopSpeedGainDuration.RandomValue;
@@ -42,8 +42,8 @@ namespace SpaceAce.Gameplay.Shooting
         protected virtual float NextCooldown => _config.Cooldown.RandomValue;
         protected virtual float NextDispersion => _config.Dispersion.RandomValue;
         protected virtual float ConvergenceAngle => _config.GetConvergenceAngle(IsRightHandedGun);
-        protected MovementBehaviour ProjectileBehaviour { get; set; }
-        protected TargetSupplier TargetSupplier { get; set; }
+        protected virtual MovementBehaviour ProjectileBehaviour { get; set; }
+        protected virtual TargetSupplier TargetSupplier { get; set; }
 
         private void Awake()
         {
@@ -89,15 +89,15 @@ namespace SpaceAce.Gameplay.Shooting
         private IEnumerator FiringRoutine()
         {
             int shotsToFire = Mathf.RoundToInt(NextFireRate * NextFireDuration);
+            Transform target = TargetSupplier.GetTarget(transform.position);
 
             for (int i = 0; i < shotsToFire; i++)
             {
                 int projectilesPerShot = NextProjectilesPerShot;
-                Transform projectileTarget = TargetSupplier.GetTarget(transform.position);
 
                 for (int y = 0; y < projectilesPerShot; y++)
                 {
-                    PerformShot(projectileTarget);
+                    PerformShot(target);
                 }
 
                 _config.FireAudio.PlayRandomAudioClip(transform.position);
@@ -107,19 +107,18 @@ namespace SpaceAce.Gameplay.Shooting
 
             _cooldownTimer = 0f;
             _currentCooldown = NextCooldown;
-
             _firingRoutine = null;
         }
 
-        private void PerformShot(Transform projectileTarget)
+        private void PerformShot(Transform target)
         {
             var projectile = s_multiobjectPool.Access.GetObject(_config.Projectile.AnchorName);
-
             float dispersion = NextDispersion;
-            Vector2 projectileDirection = new(ConvergenceAngle + dispersion, transform.up.y);
 
-            projectile.transform.position = transform.position;
-            projectile.transform.rotation = transform.rotation * Quaternion.Euler(0f, 0f, dispersion);
+            Vector2 projectileDirection = new(ConvergenceAngle + dispersion, transform.up.y);
+            Quaternion projectileRotation = transform.rotation * Quaternion.Euler(0f, 0f, dispersion);
+
+            projectile.transform.SetPositionAndRotation(transform.position, projectileRotation);
 
             s_multiobjectPool.Access.ReleaseObject(_config.Projectile.AnchorName,
                                                    projectile,
@@ -129,7 +128,7 @@ namespace SpaceAce.Gameplay.Shooting
                                                      NextProjectileTopSpeed,
                                                      NextProjectileTopSpeedGainDuration,
                                                      NextProjectileRevolutionsPerMinute,
-                                                     projectileTarget,
+                                                     target,
                                                      NextProjectileTargetSeekingSpeed);
 
             SupplyProjectileBehaviour(projectile, ProjectileBehaviour, settings);

@@ -9,7 +9,7 @@ namespace SpaceAce.Gameplay.Damageables
     public sealed class HealthConfig : ScriptableObject
     {
         public const float MinHealth = 100f;
-        public const float MaxHealth = 10000f;
+        public const float MaxHealth = 100000f;
 
         public const float MinHealthRegenerationPerSecond = 10f;
         public const float MaxHealthRegenerationPerSecond = 1000f;

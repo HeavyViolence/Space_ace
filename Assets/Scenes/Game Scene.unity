@@ -182,7 +182,11 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 5fda5fc7762a4494e85c2d17ecdcc5bf, type: 2}
   _dustfieldPrefab: {fileID: 2687368098952566325, guid: 3493f522ece17874fbb849951da65594, type: 3}
   _levelConfigs:
-  - {fileID: 11400000, guid: fb8cfb7cc00c1c944ba919ff7c4d368c, type: 2}
+  - {fileID: 11400000, guid: d1f0432dc14482145ad53480a940f144, type: 2}
+  - {fileID: 11400000, guid: cfe5d1c310b8dfa43ae0366b1e189082, type: 2}
+  - {fileID: 11400000, guid: 2c0037404bd48124c913fe78216b0d36, type: 2}
+  - {fileID: 11400000, guid: c3582f01812d7ac41a9fe925ee959dfa, type: 2}
+  - {fileID: 11400000, guid: 8c666e607c726e549abdfcd28915d172, type: 2}
   _fadingCurve:
     serializedVersion: 2
     m_Curve:
@@ -230,6 +234,7 @@ MonoBehaviour:
     rgba: 4280819744
   _audioMixer: {fileID: 24100000, guid: fcf8532f154bbae47942ff673836eca5, type: 2}
   _music: {fileID: 11400000, guid: 0132c4cce5cdb7e46887618a1a6b41f4, type: 2}
+  _bossSpawnAlarm: {fileID: 11400000, guid: c7e9c4dc73b64054884efdac70c2cf13, type: 2}
   _uiContainer: {fileID: 11400000, guid: fcce1a269e242564fad797ae34df88b7, type: 2}
   _defaultPlayerShip: {fileID: 11400000, guid: 035af79805827fd47863f5c8d7872468, type: 2}
   _objectPoolEntryLookupTable: {fileID: 11400000, guid: ba50557859f6c904b983b4f1b42114b4, type: 2}

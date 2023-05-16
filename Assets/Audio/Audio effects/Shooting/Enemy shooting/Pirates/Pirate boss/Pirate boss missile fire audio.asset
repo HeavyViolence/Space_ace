@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e306b4f91fb5134299a8e77f710254e, type: 3}
+  m_Name: Pirate boss missile fire audio
+  m_EditorClassIdentifier: 
+  _audioClips:
+  - {fileID: 8300000, guid: d2327c641fc514234862e5a247702acf, type: 3}
+  - {fileID: 8300000, guid: a61eb46cbb4054f8583af381130ab971, type: 3}
+  - {fileID: 8300000, guid: 1f21ef5357c8f4d098bfc6ef96992514, type: 3}
+  - {fileID: 8300000, guid: 5bef01a34d4024eb5af0aff80aaf6715, type: 3}
+  - {fileID: 8300000, guid: ea143a0c15b004ed7bf134529303370f, type: 3}
+  - {fileID: 8300000, guid: aba29a0fe9c4247de9d14a48703a2a00, type: 3}
+  _outputAudioGroup: {fileID: -557927281123615115, guid: fcf8532f154bbae47942ff673836eca5, type: 2}
+  _volume: 1
+  _volumeRandomDeviation: 0.1
+  _priority: 1
+  _spatialBlend: 0.5
+  _spatialBlendRandomDeviation: 0
+  _pitch: 0.75
+  _pitchRandomDeviation: 0.1

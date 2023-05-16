@@ -14,8 +14,10 @@ namespace SpaceAce.Gameplay.Movement.EnemyMovement
     [RequireComponent(typeof(Rigidbody2D))]
     public abstract class EnemyMovement : MonoBehaviourStateMachine, IEscapable, IExperienceSource, IAmplifiable
     {
+        private const float BoundsNarrowingFactor = 0.85f;
+
         private static readonly GameServiceFastAccess<CameraShaker> s_cameraShaker = new();
-        protected static readonly GameServiceFastAccess<MasterCameraHolder> s_masterCameraHolder = new();
+        private static readonly GameServiceFastAccess<MasterCameraHolder> s_masterCameraHolder = new();
 
         public event EventHandler Escaped;
 
@@ -26,7 +28,7 @@ namespace SpaceAce.Gameplay.Movement.EnemyMovement
         private float _speedAmplifier = 1f;
         private float _speedDurationAmplifier = 1f;
         private float _speedTransitionDurationAmplifier = 1f;
-        private float _collisionDmageAmplifier = 1f;
+        private float _collisionDamageAmplifier = 1f;
 
         public float NextHorizontalSpeed => _config.HorizontalSpeed.RandomValue * _speedAmplifier;
         public float NextHorizontalSpeedDuration => _config.HorizontalSpeedDuration.RandomValue * _speedDurationAmplifier;
@@ -34,11 +36,11 @@ namespace SpaceAce.Gameplay.Movement.EnemyMovement
         public float NextVerticalSpeed => _config.VerticalSpeed.RandomValue * _speedAmplifier;
         public float NextVerticalSpeedDuration => _config.VerticalSpeedDuration.RandomValue * _speedDurationAmplifier;
         public float NextVerticalSpeedTransitionDuration => _config.VerticalSpeedTransitionDuration.RandomValue * _speedTransitionDurationAmplifier;
-        public float LeftBound => _config.LeftBound;
-        public float RightBound => _config.RightBound;
-        public float UpperBound => _config.UpperBound;
+        public float LeftBound => _speedAmplifier == 1f ? _config.LeftBound : _config.LeftBound * BoundsNarrowingFactor;
+        public float RightBound => _speedAmplifier == 1f ? _config.RightBound : _config.RightBound * BoundsNarrowingFactor;
+        public float UpperBound => _speedAmplifier == 1f ? _config.UpperBound : _config.UpperBound * BoundsNarrowingFactor;
         public float LowerBound => _config.LowerBound;
-        public float NextCollisionDamage => _config.CollisionDamageEnabled ? _config.CollisionDamage.RandomValue * _collisionDmageAmplifier : 0f;
+        public float NextCollisionDamage => _config.CollisionDamageEnabled ? _config.CollisionDamage.RandomValue * _collisionDamageAmplifier : 0f;
 
 
         public Vector2 PreviousStateExitVelocity { get; set; }
@@ -57,7 +59,7 @@ namespace SpaceAce.Gameplay.Movement.EnemyMovement
             _speedAmplifier = 1f;
             _speedDurationAmplifier = 1f;
             _speedTransitionDurationAmplifier = 1f;
-            _collisionDmageAmplifier = 1f;
+            _collisionDamageAmplifier = 1f;
         }
 
         private void OnDisable()
@@ -138,7 +140,7 @@ namespace SpaceAce.Gameplay.Movement.EnemyMovement
             _speedAmplifier *= factor;
             _speedDurationAmplifier /= factor;
             _speedTransitionDurationAmplifier /= factor;
-            _collisionDmageAmplifier *= factor;
+            _collisionDamageAmplifier *= factor;
         }
     }
 }
