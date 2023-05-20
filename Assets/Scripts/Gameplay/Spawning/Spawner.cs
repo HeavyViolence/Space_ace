@@ -18,8 +18,6 @@ namespace SpaceAce.Gameplay.Spawning
         private const float SpawnPositionWidthIndentFactor = 0.75f;
         private const float SpawnPositionHeightIndentFactor = 1.25f;
 
-        private const float EntityEscapeDelta = 2f;
-
         private static readonly GameServiceFastAccess<MultiobjectPool> s_multiobjectPool = new();
         private static readonly GameServiceFastAccess<MasterCameraHolder> s_masterCameraHolder = new();
 
@@ -122,7 +120,7 @@ namespace SpaceAce.Gameplay.Spawning
             {
                 escapable = e;
 
-                e.BeginWatchForEscape(() => s_masterCameraHolder.Access.InsideViewport(entity.transform.position, EntityEscapeDelta) == false);
+                e.BeginWatchForEscape(() => s_masterCameraHolder.Access.InsideViewport(entity.transform.position, Config.Escapedelta) == false);
 
                 e.Escaped += (s, e) =>
                 {
@@ -135,7 +133,7 @@ namespace SpaceAce.Gameplay.Spawning
                 throw new MissingComponentException($"Spawned entity is missing a mandatory component of type {typeof(IEscapable)}!");
             }
 
-            if (AuxMath.Random < Config.AmplificationConfig.AmplificationProbability.RandomValue)
+            if (Config.AmplificationEnabled && AuxMath.Random < Config.AmplificationConfig.AmplificationProbability.RandomValue)
             {
                 if (entity.TryGetComponent(out Amplifier amplifier) == true)
                 {

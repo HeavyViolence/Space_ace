@@ -18,3 +18,4 @@ MonoBehaviour:
   _bossEnabled: 0
   _boss: {fileID: 0}
   _enemySpawnerConfig: {fileID: 11400000, guid: 7d3a3ec2af5b2934f850325db2521052, type: 2}
+  _meteorSpawnerConfig: {fileID: 11400000, guid: 317d3f795a4827641aafc1bde6ec8619, type: 2}

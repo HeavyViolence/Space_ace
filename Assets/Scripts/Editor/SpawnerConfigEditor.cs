@@ -28,7 +28,10 @@ namespace SpaceAce.Editors
 
         private SerializedProperty _haltUntilClear;
 
+        private SerializedProperty _enableAmplification;
         private SerializedProperty _amplificationConfig;
+
+        private SerializedProperty _escapeDelta;
 
         private SpawnerConfig _target;
 
@@ -55,7 +58,10 @@ namespace SpaceAce.Editors
 
             _haltUntilClear = serializedObject.FindProperty("_haltUntilClear");
 
+            _enableAmplification = serializedObject.FindProperty("_enableAmplification");
             _amplificationConfig = serializedObject.FindProperty("_amplificationConfig");
+
+            _escapeDelta = serializedObject.FindProperty("_escapeDelta");
 
             _target = (SpawnerConfig)target;
         }
@@ -115,7 +121,15 @@ namespace SpaceAce.Editors
             EditorGUILayout.PropertyField(_haltUntilClear, new GUIContent("Halt until clear"));
 
             EditorGUILayout.Separator();
-            EditorGUILayout.PropertyField(_amplificationConfig, new GUIContent("Amplification config"));
+            EditorGUILayout.PropertyField(_enableAmplification, new GUIContent("Enable amplification"));
+
+            if (_enableAmplification.boolValue == true)
+            {
+                EditorGUILayout.PropertyField(_amplificationConfig, new GUIContent("Amplification config"));
+            }
+
+            EditorGUILayout.Separator();
+            EditorGUILayout.Slider(_escapeDelta, 0f, SpawnerConfig.MaxEscapeDelta, "Viewport escape delta");
 
             EditorGUILayout.Separator();
 

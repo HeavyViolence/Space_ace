@@ -26,6 +26,7 @@ namespace SpaceAce.Levels
         [SerializeField] ObjectPoolEntry _boss;
 
         [SerializeField] private SpawnerConfig _enemySpawnerConfig;
+        [SerializeField] private SpawnerConfig _meteorSpawnerConfig;
 
         public int LevelIndex => _levelIndex;
 
@@ -36,6 +37,7 @@ namespace SpaceAce.Levels
         public ObjectPoolEntry Boss => _boss;
 
         public SpawnerConfig EnemySpawnerConfig => _enemySpawnerConfig;
+        public SpawnerConfig MeteorSpawnerConfig => _meteorSpawnerConfig;
 
         #region IEquatable
 

@@ -26,6 +26,8 @@ namespace SpaceAce.Gameplay.Spawning
         public const int MinAmountToSpawn = 1;
         public const int MaxAmountToSpawn = 200;
 
+        public const float MaxEscapeDelta = 10f;
+
         [SerializeField] private List<ObjectPoolEntry> _spawnableEntities = new();
 
         [SerializeField] private float _firstSpawnDelay = DefaultFirstSpawnDelay;
@@ -47,7 +49,10 @@ namespace SpaceAce.Gameplay.Spawning
 
         [SerializeField] private bool _haltUntilClear = false;
 
+        [SerializeField] private bool _enableAmplification = false;
         [SerializeField] private AmplificationConfig _amplificationConfig;
+
+        [SerializeField] private float _escapeDelta = 0f;
 
         public RangedFloat FirstSpawnDelay { get; private set; }
 
@@ -65,7 +70,10 @@ namespace SpaceAce.Gameplay.Spawning
 
         public int UniqueEntitiesAmount => _spawnableEntities.Count;
 
-        public AmplificationConfig AmplificationConfig => _amplificationConfig;
+        public bool AmplificationEnabled => _enableAmplification;
+        public AmplificationConfig AmplificationConfig => AmplificationEnabled ? _amplificationConfig : null;
+
+        public float Escapedelta => _escapeDelta;
 
         private void OnEnable()
         {

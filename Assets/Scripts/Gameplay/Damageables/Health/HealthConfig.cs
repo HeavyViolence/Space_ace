@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace SpaceAce.Gameplay.Damageables
 {
-    [CreateAssetMenu(fileName = "Health Config", menuName = "Space ace/Configs/Damageables/Health config")]
+    [CreateAssetMenu(fileName = "Health config", menuName = "Space ace/Configs/Damageables/Health config")]
     public sealed class HealthConfig : ScriptableObject
     {
         public const float MinHealth = 100f;

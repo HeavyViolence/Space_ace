@@ -21,11 +21,11 @@ namespace SpaceAce.Gameplay.Shooting
         private float _currentCooldown = 0f;
         private Coroutine _firingRoutine;
 
-        public virtual float MaxDamagePerSecond => _config.Damage.MaxValue *
-                                                   _config.ProjectilesPerShot.MaxValue *
-                                                   _config.FireRate.MaxValue *
-                                                   _config.FireDuration.MaxValue * 2f /
-                                                   (_config.FireDuration.MaxValue + _config.Cooldown.MinValue);
+        public float MaxDamagePerSecond => NextProjectileDamage *
+                                           NextProjectilesPerShot *
+                                           NextFireRate *
+                                           NextFireDuration * 2f /
+                                           (NextFireDuration + NextCooldown);
         public bool ReadyToFire => _firingRoutine == null && _cooldownTimer > _currentCooldown;
         public bool CoolingDown => _firingRoutine == null && _cooldownTimer < _currentCooldown;
         public bool IsFiring => _firingRoutine != null;

@@ -113,6 +113,7 @@ namespace SpaceAce.Architecture
             _gameServices.Add(new UIDisplay(_uiContainer));
             _gameServices.Add(new EnemySpawner());
             _gameServices.Add(new BossSpawner(_bossSpawnAlarm));
+            _gameServices.Add(new MeteorSpawner());
 
             _gameServices.Add(new SavingSystem(_idGenerator.Next()));
             _gameServices.Add(new CameraShaker(_idGenerator.Next(), cameraHolder.MasterCameraAnchor));

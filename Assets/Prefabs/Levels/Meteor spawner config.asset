@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30aad3f40d7c46d4ca74adfc46978cf0, type: 3}
+  m_Name: Meteor spawner config
+  m_EditorClassIdentifier: 
+  _spawnableEntities:
+  - {fileID: 11400000, guid: 63de9ed522ec6af47971cbcddfacd438, type: 2}
+  - {fileID: 11400000, guid: 5ad317e778fcf2047978f8bdfae47f3f, type: 2}
+  - {fileID: 11400000, guid: 972df54fcf9221b45b6130c5924ad1de, type: 2}
+  - {fileID: 11400000, guid: 8e4be98ae2d77a0479aa74880495fafb, type: 2}
+  - {fileID: 11400000, guid: f8fce62c14ac4d34ab5a197729b01fb8, type: 2}
+  - {fileID: 11400000, guid: b20dd8dcfbc3c344bbf9d37009837664, type: 2}
+  - {fileID: 11400000, guid: 6769fa9e90592bf4dabd1da49634d623, type: 2}
+  - {fileID: 11400000, guid: 331c9f7185af05743ac6e143899ff93c, type: 2}
+  - {fileID: 11400000, guid: 2c2353467c77ccb40ade15e87ad2a8e9, type: 2}
+  - {fileID: 11400000, guid: b9752be3d62f651439940595c9aeabdd, type: 2}
+  _firstSpawnDelay: 15
+  _firstSpawnDelayRandomDeviation: 5
+  _spawnDelay: 15
+  _spawnDelayRandomDeviation: 5
+  _uniqueEntitiesInWave: 7
+  _uniqueEntitiesInWaveRandomDeviation: 3
+  _waveLength: 4
+  _waveLengthRandomDeviation: 1
+  _spawnForever: 1
+  _amountToSpawn: 1
+  _amountToSpawnRandomDeviation: 0
+  _haltUntilClear: 0
+  _enableAmplification: 0
+  _amplificationConfig: {fileID: 0}
+  _escapeDelta: 10

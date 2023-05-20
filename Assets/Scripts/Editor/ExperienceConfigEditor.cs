@@ -24,7 +24,7 @@ namespace SpaceAce.Editors
         {
             serializedObject.Update();
 
-            EditorGUILayout.PropertyField(_experienceDepletionEnabled, new GUIContent("Enable experienced epletion"));
+            EditorGUILayout.PropertyField(_experienceDepletionEnabled, new GUIContent("Enable experienced depletion"));
 
             if (_experienceDepletionEnabled.boolValue == true)
             {

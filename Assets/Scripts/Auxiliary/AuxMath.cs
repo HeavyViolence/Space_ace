@@ -6,15 +6,15 @@ namespace SpaceAce.Auxiliary
 {
     public static class AuxMath
     {
-        private const float DegreesPerSecondPerRotationPerMinute = 6f;
+        public const float SecondsPerMinute = 60f;
+        public const float MinutesPerHour = 60f;
+
+        public const float DegreesPerRevolution = 360f;
 
         public static float Random => UnityEngine.Random.Range(0f, 1f);
         public static float RandomNormal => UnityEngine.Random.Range(-1f, 1f);
         public static float RandomSign => RandomNormal > 0f ? 1f : -1f;
         public static bool RandomBoolean => RandomSign > 0f;
-
-        public static float RotationsPerMinuteToDegreesPerSecond(float value) => value * DegreesPerSecondPerRotationPerMinute;
-        public static float DegreesPerSecondToRotationsPerMinute(float value) => value / DegreesPerSecondPerRotationPerMinute;
 
         public static IEnumerable<int> GetRandomNumbersWithoutRepetition(int min, int max, int amount)
         {

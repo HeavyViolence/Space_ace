@@ -2,13 +2,12 @@ using SpaceAce.Architecture;
 using SpaceAce.Main;
 using UnityEngine;
 using System;
+using SpaceAce.Auxiliary;
 
 namespace SpaceAce.Levels
 {
     public sealed class LevelTimer : IGameService, IUpdatable
     {
-        private const int SecondsPerMinute = 60;
-
         private bool _gameLevelInProgress = false;
         private float _value = 0f;
 
@@ -80,7 +79,7 @@ namespace SpaceAce.Levels
                     _value -= 1f;
                     Seconds++;
 
-                    if (Seconds == SecondsPerMinute - 1)
+                    if (Seconds == AuxMath.SecondsPerMinute - 1)
                     {
                         Seconds = 0;
                         Minutes++;

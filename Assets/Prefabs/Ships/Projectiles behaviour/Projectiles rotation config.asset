@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Projectiles rotation config
   m_EditorClassIdentifier: 
   _rotationDirection: 2
-  _rpm: 10
-  _rpmRandomDeviation: 1
+  _rpm: 30
+  _rpmRandomDeviation: 3
   _targetSeekingSpeed: 60
   _targetSeekingSpeedRandomDeviation: 5

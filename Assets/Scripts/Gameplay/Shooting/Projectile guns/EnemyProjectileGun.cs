@@ -4,19 +4,21 @@ namespace SpaceAce.Gameplay.Shooting
 {
     public sealed class EnemyProjectileGun : ProjectileGun, IAmplifiable
     {
-        private float _damageAmplifier = 1f;
+        private float _amplificationFactor = 1f;
 
-        public override float MaxDamagePerSecond => base.MaxDamagePerSecond * _damageAmplifier;
-        protected override float NextProjectileDamage => base.NextProjectileDamage * _damageAmplifier;
+        protected override float NextProjectileDamage => base.NextProjectileDamage * _amplificationFactor;
+        protected override float NextCooldown => base.NextCooldown / _amplificationFactor;
+        protected override float NextFireDuration => base.NextFireDuration * _amplificationFactor;
+        protected override float NextFireRate => base.NextFireRate * _amplificationFactor;
 
         private void OnEnable()
         {
-            _damageAmplifier = 1f;
+            _amplificationFactor = 1f;
         }
 
         public void Amplify(float factor)
         {
-            _damageAmplifier *= factor;
+            _amplificationFactor = factor;
         }
     }
 }

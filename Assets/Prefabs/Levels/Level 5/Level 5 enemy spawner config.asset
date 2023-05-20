@@ -31,4 +31,6 @@ MonoBehaviour:
   _amountToSpawn: 70
   _amountToSpawnRandomDeviation: 5
   _haltUntilClear: 1
+  _enableAmplification: 1
   _amplificationConfig: {fileID: 11400000, guid: c707a6d47a2385e4ab5d315b1b629604, type: 2}
+  _escapeDelta: 5

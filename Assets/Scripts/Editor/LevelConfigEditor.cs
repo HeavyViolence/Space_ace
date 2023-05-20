@@ -16,6 +16,7 @@ namespace SpaceAce.Editors
         private SerializedProperty _boss;
 
         private SerializedProperty _enemySpawnerConfig;
+        private SerializedProperty _meteorSpawnerConfig;
 
         private void OnEnable()
         {
@@ -28,6 +29,7 @@ namespace SpaceAce.Editors
             _boss = serializedObject.FindProperty("_boss");
 
             _enemySpawnerConfig = serializedObject.FindProperty("_enemySpawnerConfig");
+            _meteorSpawnerConfig = serializedObject.FindProperty("_meteorSpawnerConfig");
         }
 
         public override void OnInspectorGUI()
@@ -50,6 +52,7 @@ namespace SpaceAce.Editors
 
             EditorGUILayout.Separator();
             EditorGUILayout.PropertyField(_enemySpawnerConfig, new GUIContent("Enemy spawner config"));
+            EditorGUILayout.PropertyField(_meteorSpawnerConfig, new GUIContent("Meteor spawner config"));
 
             serializedObject.ApplyModifiedProperties();
         }

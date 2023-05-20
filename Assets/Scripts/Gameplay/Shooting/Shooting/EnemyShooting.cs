@@ -1,4 +1,5 @@
 using SpaceAce.Architecture;
+using SpaceAce.Gameplay.Amplifications;
 using SpaceAce.Levels;
 using SpaceAce.Main;
 using System.Collections;
@@ -6,7 +7,7 @@ using UnityEngine;
 
 namespace SpaceAce.Gameplay.Shooting
 {
-    public sealed class EnemyShooting : Shooting
+    public sealed class EnemyShooting : Shooting, IAmplifiable
     {
         private static readonly GameServiceFastAccess<MasterCameraHolder> s_masterCameraHolder = new();
         private static readonly GameServiceFastAccess<GameModeLoader> s_gameModeLoader = new();
@@ -14,12 +15,21 @@ namespace SpaceAce.Gameplay.Shooting
 
         [SerializeField] private ShootingConfig _config;
 
-        Coroutine _firingRoutine;
-        Coroutine _weaponsSwitchRoutine;
+        private float FirstFireDelay => _config.FirstFireDelay.RandomValue / _amplificationFactor;
+        private float NextFireDelay => _config.NextFireDelay.RandomValue / _amplificationFactor;
+        private float FirstWeaponsSwitchDelay => _config.FirstWeaponsSwitchDelay.RandomValue / _amplificationFactor;
+        private float NextWeaponsSwitchDelay => _config.NextWeaponsSwitchDealy.RandomValue / _amplificationFactor;
+
+        private Coroutine _firingRoutine;
+        private Coroutine _weaponsSwitchRoutine;
+
+        private float _amplificationFactor = 1f;
 
         protected sealed override void OnEnable()
         {
             base.OnEnable();
+
+            _amplificationFactor = 1f;
 
             StartShooting();
 
@@ -70,7 +80,7 @@ namespace SpaceAce.Gameplay.Shooting
                 yield return null;
             }
 
-            yield return new WaitForSeconds(_config.FirstFireDelay.RandomValue);
+            yield return new WaitForSeconds(FirstFireDelay);
 
             while (true)
             {
@@ -83,7 +93,7 @@ namespace SpaceAce.Gameplay.Shooting
 
                 gun.Fire();
 
-                yield return new WaitForSeconds(_config.NextFireDelay.RandomValue);
+                yield return new WaitForSeconds(NextFireDelay);
             }
         }
 
@@ -94,16 +104,21 @@ namespace SpaceAce.Gameplay.Shooting
                 yield return null;
             }
 
-            yield return new WaitForSeconds(_config.FirstWeaponsSwitchDelay.RandomValue);
+            yield return new WaitForSeconds(FirstWeaponsSwitchDelay);
 
             ActivateNextWeaponGroup(true);
 
             while (true)
             {
-                yield return new WaitForSeconds(_config.NextWeaponsSwitchDealy.RandomValue);
+                yield return new WaitForSeconds(NextWeaponsSwitchDelay);
 
                 ActivateNextWeaponGroup(true);
             }
+        }
+
+        public void Amplify(float factor)
+        {
+            _amplificationFactor = factor;
         }
     }
 }
