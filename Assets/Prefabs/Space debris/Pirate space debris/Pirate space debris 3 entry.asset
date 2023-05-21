@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba49e7649797e2b46a4f61e12fa4e2f9, type: 3}
+  m_Name: Pirate space debris 3 entry
+  m_EditorClassIdentifier: 
+  _prefab: {fileID: 5413061625248901381, guid: 935ae0ec8a2da994a90deea5fb11f59b, type: 3}
+  _anchorName: pirate space debris 3

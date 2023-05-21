@@ -27,6 +27,7 @@ namespace SpaceAce.Levels
 
         [SerializeField] private SpawnerConfig _enemySpawnerConfig;
         [SerializeField] private SpawnerConfig _meteorSpawnerConfig;
+        [SerializeField] private SpawnerConfig _spaceDebrisSpawnerConfig;
 
         public int LevelIndex => _levelIndex;
 
@@ -38,6 +39,7 @@ namespace SpaceAce.Levels
 
         public SpawnerConfig EnemySpawnerConfig => _enemySpawnerConfig;
         public SpawnerConfig MeteorSpawnerConfig => _meteorSpawnerConfig;
+        public SpawnerConfig SpaceDebrisSpawnerConfig => _spaceDebrisSpawnerConfig;
 
         #region IEquatable
 

@@ -183,7 +183,7 @@ namespace SpaceAce.Gameplay.Spawning
             if (_spawnedBoss.TryGetComponent(out IEscapable e) == true)
             {
                 _bossEscapable = e;
-                _bossEscapable.BeginWatchForEscape(() => s_masterCameraHolder.Access.InsideViewport(_spawnedBoss.transform.position, BossEscapeDelta) == false);
+                _bossEscapable.StartWatchingForEscape(() => s_masterCameraHolder.Access.InsideViewport(_spawnedBoss.transform.position, BossEscapeDelta) == false);
 
                 _bossEscapable.Escaped += (s, e) =>
                 {

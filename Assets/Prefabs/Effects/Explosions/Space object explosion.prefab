@@ -9701,7 +9701,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7104745887128250977}
   m_Layer: 0
-  m_Name: Meteor explosion
+  m_Name: Space object explosion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

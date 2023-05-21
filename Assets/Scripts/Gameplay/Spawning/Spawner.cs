@@ -120,7 +120,7 @@ namespace SpaceAce.Gameplay.Spawning
             {
                 escapable = e;
 
-                e.BeginWatchForEscape(() => s_masterCameraHolder.Access.InsideViewport(entity.transform.position, Config.Escapedelta) == false);
+                e.StartWatchingForEscape(() => s_masterCameraHolder.Access.InsideViewport(entity.transform.position, Config.Escapedelta) == false);
 
                 e.Escaped += (s, e) =>
                 {

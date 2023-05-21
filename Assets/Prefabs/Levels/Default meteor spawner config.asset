@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 30aad3f40d7c46d4ca74adfc46978cf0, type: 3}
-  m_Name: Meteor spawner config
+  m_Name: Default meteor spawner config
   m_EditorClassIdentifier: 
   _spawnableEntities:
   - {fileID: 11400000, guid: 63de9ed522ec6af47971cbcddfacd438, type: 2}
@@ -23,10 +23,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 331c9f7185af05743ac6e143899ff93c, type: 2}
   - {fileID: 11400000, guid: 2c2353467c77ccb40ade15e87ad2a8e9, type: 2}
   - {fileID: 11400000, guid: b9752be3d62f651439940595c9aeabdd, type: 2}
-  _firstSpawnDelay: 15
-  _firstSpawnDelayRandomDeviation: 5
-  _spawnDelay: 15
-  _spawnDelayRandomDeviation: 5
+  _firstSpawnDelay: 20
+  _firstSpawnDelayRandomDeviation: 10
+  _spawnDelay: 20
+  _spawnDelayRandomDeviation: 10
   _uniqueEntitiesInWave: 7
   _uniqueEntitiesInWaveRandomDeviation: 3
   _waveLength: 4

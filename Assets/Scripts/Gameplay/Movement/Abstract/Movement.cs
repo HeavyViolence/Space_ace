@@ -14,6 +14,8 @@ namespace SpaceAce.Gameplay.Movement
 
         public event EventHandler Escaped;
 
+        private Coroutine _escapeAwaitingRoutine;
+
         private MovementAuxiliaryData _movementAuxData = new();
 
         protected Rigidbody2D Body { get; private set; }
@@ -34,7 +36,9 @@ namespace SpaceAce.Gameplay.Movement
         protected virtual void OnDisable()
         {
             MovementBehaviour = null;
+
             Escaped = null;
+            StopWatchingForEscape();
         }
 
         protected virtual void FixedUpdate()
@@ -57,9 +61,9 @@ namespace SpaceAce.Gameplay.Movement
             body.interpolation = RigidbodyInterpolation2D.Interpolate;
         }
 
-        public void BeginWatchForEscape(Func<bool> escapeCondition)
+        public void StartWatchingForEscape(Func<bool> escapeCondition)
         {
-            StartCoroutine(AwaitEscape(escapeCondition));
+            _escapeAwaitingRoutine = StartCoroutine(AwaitEscape(escapeCondition));
 
             IEnumerator AwaitEscape(Func<bool> escapeCondition)
             {
@@ -82,7 +86,17 @@ namespace SpaceAce.Gameplay.Movement
 
                 yield return null;
 
+                _escapeAwaitingRoutine = null;
                 Escaped?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
+        public void StopWatchingForEscape()
+        {
+            if (_escapeAwaitingRoutine != null)
+            {
+                StopCoroutine(_escapeAwaitingRoutine);
+                _escapeAwaitingRoutine = null;
             }
         }
 

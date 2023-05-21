@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5dc774dd82b97fb4696f3600bcd6028e, type: 3}
+  m_Name: Pirate space debris health config
+  m_EditorClassIdentifier: 
+  _maxHealth: 500
+  _maxHealthRandomDeviation: 50
+  _regenerationEnabled: 0
+  _regenerationPerSecond: 10
+  _regenerationPerSecondRandomDeviation: 0
+  _deathEffect: {fileID: 11400000, guid: d27de4008da1c6c41a52a85b31ea9d14, type: 2}
+  _deathAudio: {fileID: 11400000, guid: 86f29f129a5b2cf41aef9cadd74096f7, type: 2}
+  _cameraShakeOnDamaged: 0

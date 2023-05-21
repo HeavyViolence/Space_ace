@@ -21,6 +21,8 @@ namespace SpaceAce.Gameplay.Movement.EnemyMovement
 
         public event EventHandler Escaped;
 
+        private Coroutine _escapeAwaitingRoutine;
+
         [SerializeField] private ShipMovementConfig _config;
 
         private DamageDealer _collisionDamageDealer;
@@ -65,7 +67,9 @@ namespace SpaceAce.Gameplay.Movement.EnemyMovement
         private void OnDisable()
         {
             _collisionDamageDealer.Hit -= CollisionHitEventHandler;
+
             Escaped = null;
+            StopWatchingForEscape();
         }
 
         private Rigidbody2D SetupRigidbody2D()
@@ -96,9 +100,9 @@ namespace SpaceAce.Gameplay.Movement.EnemyMovement
             }
         }
 
-        public void BeginWatchForEscape(Func<bool> escapeCondition)
+        public void StartWatchingForEscape(Func<bool> escapeCondition)
         {
-            StartCoroutine(AwaitEscape(escapeCondition));
+            _escapeAwaitingRoutine = StartCoroutine(AwaitEscape(escapeCondition));
 
             IEnumerator AwaitEscape(Func<bool> escapeCondition)
             {
@@ -121,7 +125,17 @@ namespace SpaceAce.Gameplay.Movement.EnemyMovement
                     yield return null;
                 }
 
+                _escapeAwaitingRoutine = null;
                 Escaped?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
+        public void StopWatchingForEscape()
+        {
+            if (_escapeAwaitingRoutine != null)
+            {
+                StopCoroutine(_escapeAwaitingRoutine);
+                _escapeAwaitingRoutine = null;
             }
         }
 

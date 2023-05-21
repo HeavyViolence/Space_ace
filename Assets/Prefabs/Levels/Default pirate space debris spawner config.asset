@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30aad3f40d7c46d4ca74adfc46978cf0, type: 3}
+  m_Name: Default pirate space debris spawner config
+  m_EditorClassIdentifier: 
+  _spawnableEntities:
+  - {fileID: 11400000, guid: 5d1a7369f937f8141a200d059a9efa23, type: 2}
+  - {fileID: 11400000, guid: 5f51de73f2303cc4eaa7645736d37522, type: 2}
+  - {fileID: 11400000, guid: 4d540fba8ae798f438377c6db3d602e0, type: 2}
+  - {fileID: 11400000, guid: 6e20e4d87382ab64b8bbd95d13e1a279, type: 2}
+  _firstSpawnDelay: 20
+  _firstSpawnDelayRandomDeviation: 10
+  _spawnDelay: 20
+  _spawnDelayRandomDeviation: 10
+  _uniqueEntitiesInWave: 3
+  _uniqueEntitiesInWaveRandomDeviation: 1
+  _waveLength: 4
+  _waveLengthRandomDeviation: 1
+  _spawnForever: 1
+  _amountToSpawn: 1
+  _amountToSpawnRandomDeviation: 0
+  _haltUntilClear: 0
+  _enableAmplification: 0
+  _amplificationConfig: {fileID: 0}
+  _escapeDelta: 10
