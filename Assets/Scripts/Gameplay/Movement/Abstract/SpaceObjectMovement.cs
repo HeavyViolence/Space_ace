@@ -40,11 +40,12 @@ namespace SpaceAce.Gameplay.Movement
             MovementBehaviour = SpaceObjectFlyby;
         }
 
-        private Vector3 GetMovementDirection()
+        protected virtual Vector3 GetMovementDirection()
         {
             float targetPositionX = Random.Range(MasterCameraHolder.Access.ViewportLeftBound,
                                                  MasterCameraHolder.Access.ViewportRightBound);
             float targetPositionY = MasterCameraHolder.Access.ViewportLowerBound;
+
             Vector3 targetPosition = new(targetPositionX, targetPositionY, 0f);
 
             return (targetPosition - transform.position).normalized;

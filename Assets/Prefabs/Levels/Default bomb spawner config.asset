@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30aad3f40d7c46d4ca74adfc46978cf0, type: 3}
+  m_Name: Default bomb spawner config
+  m_EditorClassIdentifier: 
+  _spawnableEntities:
+  - {fileID: 11400000, guid: bcd6df6c6b27c284aae440daad716a61, type: 2}
+  - {fileID: 11400000, guid: 9bfd31293660e504286e8a8b941f8b3d, type: 2}
+  - {fileID: 11400000, guid: 77b499a0c1fd12e44b72027116983c58, type: 2}
+  _firstSpawnDelay: 20
+  _firstSpawnDelayRandomDeviation: 10
+  _spawnDelay: 20
+  _spawnDelayRandomDeviation: 10
+  _uniqueEntitiesInWave: 2
+  _uniqueEntitiesInWaveRandomDeviation: 1
+  _waveLength: 4
+  _waveLengthRandomDeviation: 1
+  _spawnForever: 1
+  _amountToSpawn: 1
+  _amountToSpawnRandomDeviation: 0
+  _haltUntilClear: 0
+  _enableAmplification: 0
+  _amplificationConfig: {fileID: 0}
+  _escapeDelta: 3

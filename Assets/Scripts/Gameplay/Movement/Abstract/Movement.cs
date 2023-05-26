@@ -43,10 +43,7 @@ namespace SpaceAce.Gameplay.Movement
 
         protected virtual void FixedUpdate()
         {
-            if (MovementBehaviour is null || MovementBehaviourSettings is null)
-            {
-                return;
-            }
+            if (MovementBehaviour is null || MovementBehaviourSettings is null) return;
 
             MovementBehaviour(Body, MovementBehaviourSettings, ref _movementAuxData);
         }

@@ -18,6 +18,7 @@ namespace SpaceAce.Editors
         private SerializedProperty _enemySpawnerConfig;
         private SerializedProperty _meteorSpawnerConfig;
         private SerializedProperty _spaceDebrisSpawnerConfig;
+        private SerializedProperty _bombSpawnerConfig;
 
         private void OnEnable()
         {
@@ -32,6 +33,7 @@ namespace SpaceAce.Editors
             _enemySpawnerConfig = serializedObject.FindProperty("_enemySpawnerConfig");
             _meteorSpawnerConfig = serializedObject.FindProperty("_meteorSpawnerConfig");
             _spaceDebrisSpawnerConfig = serializedObject.FindProperty("_spaceDebrisSpawnerConfig");
+            _bombSpawnerConfig = serializedObject.FindProperty("_bombSpawnerConfig");
         }
 
         public override void OnInspectorGUI()
@@ -56,6 +58,7 @@ namespace SpaceAce.Editors
             EditorGUILayout.PropertyField(_enemySpawnerConfig, new GUIContent("Enemy spawner config"));
             EditorGUILayout.PropertyField(_meteorSpawnerConfig, new GUIContent("Meteor spawner config"));
             EditorGUILayout.PropertyField(_spaceDebrisSpawnerConfig, new GUIContent("Space debris spawner config"));
+            EditorGUILayout.PropertyField(_bombSpawnerConfig, new GUIContent("Bomb spawner config"));
 
             serializedObject.ApplyModifiedProperties();
         }

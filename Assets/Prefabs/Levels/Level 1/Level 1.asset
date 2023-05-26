@@ -20,3 +20,4 @@ MonoBehaviour:
   _enemySpawnerConfig: {fileID: 11400000, guid: 2fa8226a5aeef584fa2ff3d662a7a2ad, type: 2}
   _meteorSpawnerConfig: {fileID: 11400000, guid: 317d3f795a4827641aafc1bde6ec8619, type: 2}
   _spaceDebrisSpawnerConfig: {fileID: 11400000, guid: f0bb23b468cfc0f4a93784477a4d8e48, type: 2}
+  _bombSpawnerConfig: {fileID: 11400000, guid: 20646c13bd431114394cd014659da181, type: 2}

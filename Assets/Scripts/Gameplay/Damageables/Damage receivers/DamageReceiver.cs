@@ -3,6 +3,7 @@ using SpaceAce.Auxiliary;
 using SpaceAce.Gameplay.Experience;
 using SpaceAce.Main;
 using System;
+using System.Collections;
 using UnityEngine;
 
 namespace SpaceAce.Gameplay.Damageables
@@ -11,9 +12,10 @@ namespace SpaceAce.Gameplay.Damageables
     public abstract class DamageReceiver : MonoBehaviour, IDamageable, IDestroyable
     {
         public event EventHandler<DamageReceivedEventArgs> DamageReceived;
+        public event EventHandler BeforeDestroyed;
         public event EventHandler<DestroyedEventArgs> Destroyed;
-
-        private static readonly GameServiceFastAccess<MasterCameraHolder> s_masterCameraHolder = new();
+        
+        protected static readonly GameServiceFastAccess<MasterCameraHolder> MasterCameraHolder = new();
 
         private Health _health;
         private Armor _armor;
@@ -22,31 +24,32 @@ namespace SpaceAce.Gameplay.Damageables
 
         public string ID { get; private set; }
 
-        private void Awake()
+        protected virtual void Awake()
         {
             ID = StringID.NextCryptosafe();
 
             CacheRequiredComponents();
         }
 
-        private void OnEnable()
+        protected virtual void OnEnable()
         {
-            _health.Depleted += HealthDepletedEventHandler;
+            _health.Depleted += (s, e) => StartCoroutine(DestructionRoutine());
 
             _lifetime = 0f;
         }
 
-        private void OnDisable()
+        protected virtual void OnDisable()
         {
-            _health.Depleted -= HealthDepletedEventHandler;
+            _health.Depleted -= (s, e) => StartCoroutine(DestructionRoutine());
 
             DamageReceived = null;
+            BeforeDestroyed = null;
             Destroyed = null;
         }
 
-        private void Update()
+        protected virtual void Update()
         {
-            if (s_masterCameraHolder.Access.InsideViewport(transform.position) == true)
+            if (MasterCameraHolder.Access.InsideViewport(transform.position) == true)
             {
                 _lifetime += Time.deltaTime;
             }
@@ -75,14 +78,17 @@ namespace SpaceAce.Gameplay.Damageables
             _experience = GetComponent<ExperienceHolder>();
         }
 
-        private void HealthDepletedEventHandler(object sender, EventArgs e)
+        private IEnumerator DestructionRoutine()
         {
-            (float earned, float lost, float total) = _experience.GetValues();
+            BeforeDestroyed?.Invoke(this, EventArgs.Empty);
 
+            yield return null;
+
+            (float earned, float lost, float total) = _experience.GetValues();
             Destroyed?.Invoke(this, new DestroyedEventArgs(transform.position, _lifetime, earned, lost, total));
         }
 
-        public void ApplyDamage(float damage)
+        public virtual void ApplyDamage(float damage)
         {
             float damageToBeDealt = _armor.Enabled ? _armor.GetDamageToBeDealt(damage) : damage;
 

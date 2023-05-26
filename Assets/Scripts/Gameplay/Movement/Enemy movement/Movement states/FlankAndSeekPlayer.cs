@@ -22,7 +22,7 @@ namespace SpaceAce.Gameplay.Movement.EnemyMovement
 
             if (hit.collider != null)
             {
-                if (Owner.Body.position.x > hit.collider.transform.position.x)
+                if (Owner.Body.position.x > hit.transform.position.x)
                 {
                     return -1f * Owner.NextHorizontalSpeed;
                 }

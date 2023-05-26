@@ -8,7 +8,7 @@ namespace SpaceAce.Gameplay.Damageables
     [CreateAssetMenu(fileName = "Health config", menuName = "Space ace/Configs/Damageables/Health config")]
     public sealed class HealthConfig : ScriptableObject
     {
-        public const float MinHealth = 100f;
+        public const float MinHealth = 10f;
         public const float MaxHealth = 100000f;
 
         public const float MinHealthRegenerationPerSecond = 10f;

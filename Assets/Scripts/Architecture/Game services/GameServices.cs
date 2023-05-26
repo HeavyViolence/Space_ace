@@ -14,7 +14,7 @@ namespace SpaceAce.Architecture
                 throw new EmptyGameServiceRegistrationAttemptException();
             }
 
-            if (s_services.ContainsKey(service.GetType()))
+            if (s_services.ContainsKey(service.GetType()) == true)
             {
                 throw new DuplicateGameServiceRegistrationAttemptException(service);
             }
