@@ -37,6 +37,10 @@ namespace SpaceAce.Editors
         private SerializedProperty _defaultPlayerShip;
         private SerializedProperty _objectPoolEntryLookupTable;
 
+        private bool _showEntityVisualizationSettings = false;
+        private SerializedProperty _itemIconsConfig;
+        private SerializedProperty _itemRarityColorsConfig;
+
         private void OnEnable()
         {
             _idGeneratorSeed = serializedObject.FindProperty("_idGeneratorSeed");
@@ -61,6 +65,9 @@ namespace SpaceAce.Editors
 
             _defaultPlayerShip = serializedObject.FindProperty("_defaultPlayerShip");
             _objectPoolEntryLookupTable = serializedObject.FindProperty("_objectPoolEntryLookupTable");
+
+            _itemIconsConfig = serializedObject.FindProperty("_itemIconsConfig");
+            _itemRarityColorsConfig = serializedObject.FindProperty("_itemRarityColorsConfig");
         }
 
         public override void OnInspectorGUI()
@@ -75,7 +82,7 @@ namespace SpaceAce.Editors
             }
 
             EditorGUILayout.Separator();
-            _showCameraSettings = EditorGUILayout.Foldout(_showCameraSettings, "Camera settings");
+            _showCameraSettings = EditorGUILayout.Foldout(_showCameraSettings, "Camera");
 
             if (_showCameraSettings == true)
             {
@@ -83,7 +90,7 @@ namespace SpaceAce.Editors
             }
 
             EditorGUILayout.Separator();
-            _showSpaceBackgroundSettings = EditorGUILayout.Foldout(_showSpaceBackgroundSettings, "Space background settings");
+            _showSpaceBackgroundSettings = EditorGUILayout.Foldout(_showSpaceBackgroundSettings, "Space background");
 
             if (_showSpaceBackgroundSettings == true)
             {
@@ -97,7 +104,7 @@ namespace SpaceAce.Editors
             EditorGUILayout.PropertyField(_levelConfigs, new GUIContent("Level configs"));
 
             EditorGUILayout.Separator();
-            _showScreenFaderSettings = EditorGUILayout.Foldout(_showScreenFaderSettings, "Screen fader settings");
+            _showScreenFaderSettings = EditorGUILayout.Foldout(_showScreenFaderSettings, "Screen fader");
 
             if (_showScreenFaderSettings == true)
             {
@@ -106,7 +113,7 @@ namespace SpaceAce.Editors
             }
 
             EditorGUILayout.Separator();
-            _showAudioSettings = EditorGUILayout.Foldout(_showAudioSettings, "Audio settings");
+            _showAudioSettings = EditorGUILayout.Foldout(_showAudioSettings, "Audio");
 
             if (_showAudioSettings == true)
             {
@@ -124,12 +131,21 @@ namespace SpaceAce.Editors
             }
 
             EditorGUILayout.Separator();
-            _showPlayerSettings = EditorGUILayout.Foldout(_showPlayerSettings, "Player settings");
+            _showPlayerSettings = EditorGUILayout.Foldout(_showPlayerSettings, "Player");
 
             if (_showPlayerSettings == true)
             {
                 EditorGUILayout.PropertyField(_defaultPlayerShip, new GUIContent("Default player ship"));
                 EditorGUILayout.PropertyField(_objectPoolEntryLookupTable, new GUIContent("Object pool entry lookup table"));
+            }
+
+            EditorGUILayout.Separator();
+            _showEntityVisualizationSettings = EditorGUILayout.Foldout(_showEntityVisualizationSettings, "Entity visualization");
+
+            if (_showEntityVisualizationSettings == true)
+            {
+                EditorGUILayout.PropertyField(_itemIconsConfig, new GUIContent("Item icons"));
+                EditorGUILayout.PropertyField(_itemRarityColorsConfig, new GUIContent("Item rarity colors"));
             }
 
             serializedObject.ApplyModifiedProperties();

@@ -7,6 +7,7 @@ using SpaceAce.Main.Audio;
 using SpaceAce.Main.ObjectPooling;
 using SpaceAce.Main.Saving;
 using SpaceAce.UI;
+using SpaceAce.Visualization;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
@@ -47,6 +48,9 @@ namespace SpaceAce.Architecture
 
         [SerializeField] private ObjectPoolEntry _defaultPlayerShip;
         [SerializeField] private ObjectPoolEntryLookupTable _objectPoolEntryLookupTable;
+
+        [SerializeField] private InventoryItemIconsConfig _itemIconsConfig;
+        [SerializeField] private InventoryItemRarityColorConfig _itemRarityColorsConfig;
 
         #endregion
 
@@ -116,6 +120,7 @@ namespace SpaceAce.Architecture
             _gameServices.Add(new MeteorSpawner());
             _gameServices.Add(new SpaceDebrisSpawner());
             _gameServices.Add(new BombSpawner());
+            _gameServices.Add(new EntityVisualizer(_itemIconsConfig, _itemRarityColorsConfig));
 
             _gameServices.Add(new SavingSystem(_idGenerator.Next()));
             _gameServices.Add(new CameraShaker(_idGenerator.Next(), cameraHolder.MasterCameraAnchor));

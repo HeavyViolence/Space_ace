@@ -238,3 +238,5 @@ MonoBehaviour:
   _uiContainer: {fileID: 11400000, guid: fcce1a269e242564fad797ae34df88b7, type: 2}
   _defaultPlayerShip: {fileID: 11400000, guid: 035af79805827fd47863f5c8d7872468, type: 2}
   _objectPoolEntryLookupTable: {fileID: 11400000, guid: ba50557859f6c904b983b4f1b42114b4, type: 2}
+  _itemIconsConfig: {fileID: 11400000, guid: 30dd9ec56026d97439ff6b0175e18f85, type: 2}
+  _itemRarityColorsConfig: {fileID: 11400000, guid: 2d4da6e81206b5943bbe95359bd461b9, type: 2}
