@@ -240,3 +240,4 @@ MonoBehaviour:
   _objectPoolEntryLookupTable: {fileID: 11400000, guid: ba50557859f6c904b983b4f1b42114b4, type: 2}
   _itemIconsConfig: {fileID: 11400000, guid: 30dd9ec56026d97439ff6b0175e18f85, type: 2}
   _itemRarityColorsConfig: {fileID: 11400000, guid: 2d4da6e81206b5943bbe95359bd461b9, type: 2}
+  _lootItemBox: {fileID: 11400000, guid: 8c3fbfd06a586c04cbe73824cc2be4ce, type: 2}

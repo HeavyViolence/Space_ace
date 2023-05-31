@@ -5,7 +5,7 @@ namespace SpaceAce.Visualization
 {
     [CreateAssetMenu(fileName = "Inventory item rarity color config",
                      menuName = "Space ace/Configs/Inventory/Item rarity color config")]
-    public sealed class InventoryItemRarityColorConfig : ScriptableObject
+    public sealed class InventoryItemRarityColorsConfig : ScriptableObject
     {
         [SerializeField] private Color32 _commonColor;
         [SerializeField] private Color32 _uncommonColor;
@@ -26,7 +26,7 @@ namespace SpaceAce.Visualization
                 ItemRarity.Exotic => _exoticColor,
                 ItemRarity.Epic => _epicColor,
                 ItemRarity.Legendary => _legendaryColor,
-                _ => new (0, 0, 0, 0)
+                _ => new(0, 0, 0, 0)
             };
         }
     }

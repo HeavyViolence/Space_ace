@@ -8,10 +8,10 @@ namespace SpaceAce.Visualization
     public sealed class EntityVisualizer : IGameService
     {
         private InventoryItemIconsConfig _inventoryItemIconsConfig;
-        private InventoryItemRarityColorConfig _inventoryItemRarityColorsConfig;
+        private InventoryItemRarityColorsConfig _inventoryItemRarityColorsConfig;
 
         public EntityVisualizer(InventoryItemIconsConfig iconsConfig,
-                                InventoryItemRarityColorConfig rarityColorsConfig)
+                                InventoryItemRarityColorsConfig rarityColorsConfig)
         {
             if (iconsConfig == null) throw new ArgumentNullException(nameof(iconsConfig));
             if (rarityColorsConfig == null) throw new ArgumentNullException(nameof(rarityColorsConfig));
@@ -20,7 +20,7 @@ namespace SpaceAce.Visualization
             _inventoryItemRarityColorsConfig = rarityColorsConfig;
         }
 
-        public Sprite GetInventoryItemIcon(string itemType) => _inventoryItemIconsConfig.GetIcon(itemType);
+        public Sprite GetInventoryItemIcon(Type type) => _inventoryItemIconsConfig.GetIcon(type);
 
         public Color32 GetInventoryItemRarityColor(ItemRarity rarity) => _inventoryItemRarityColorsConfig.GetRarityColor(rarity);
 

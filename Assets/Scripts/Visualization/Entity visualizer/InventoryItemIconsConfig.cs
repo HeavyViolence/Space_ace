@@ -1,3 +1,5 @@
+using SpaceAce.Gameplay.Inventory;
+using System;
 using UnityEngine;
 
 namespace SpaceAce.Visualization
@@ -7,18 +9,15 @@ namespace SpaceAce.Visualization
     public sealed class InventoryItemIconsConfig : ScriptableObject
     {
         [SerializeField] private Sprite _plasmaShieldIcon;
-        [SerializeField] private Sprite _matterDegausserIcon;
         [SerializeField] private Sprite _atomizerIcon;
+        [SerializeField] private Sprite _massNegatorIcon;
+        [SerializeField] private Sprite _matterDegausserIcon;
 
-        public Sprite GetIcon(string itemType)
+        public Sprite GetIcon(Type type)
         {
-            return itemType switch
-            {
-                "Plasma shield" => _plasmaShieldIcon,
-                "Matter degausser" => _matterDegausserIcon,
-                "Atomizer" => _atomizerIcon,
-                _ => null,
-            };
+            if (type.Equals(typeof(PlasmaShield))) return _plasmaShieldIcon;
+
+            return null;
         }
     }
 }

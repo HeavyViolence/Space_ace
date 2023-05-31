@@ -9,12 +9,18 @@ namespace SpaceAce.Editors
     {
         private SerializedProperty _rarity;
 
+        private SerializedProperty _scrapValue;
+        private SerializedProperty _scrapValueRandomDeviation;
+
         private SerializedProperty _duration;
         private SerializedProperty _durationRandomDeviation;
 
         protected virtual void OnEnable()
         {
             _rarity = serializedObject.FindProperty("_rarity");
+
+            _scrapValue = serializedObject.FindProperty("_scrapValue");
+            _scrapValueRandomDeviation = serializedObject.FindProperty("_scrapValueRandomDeviation");
 
             _duration = serializedObject.FindProperty("_duration");
             _durationRandomDeviation = serializedObject.FindProperty("_durationRandomDeviation");
@@ -25,6 +31,12 @@ namespace SpaceAce.Editors
             serializedObject.Update();
 
             EditorGUILayout.PropertyField(_rarity, new GUIContent("Rarity"));
+
+            EditorGUILayout.Separator();
+            EditorGUILayout.IntSlider(_scrapValue, InventoryItemConfig.MinScrapValue, InventoryItemConfig.MaxScrapValue, "Scrap value");
+            EditorGUILayout.IntSlider(_scrapValueRandomDeviation, 0, _scrapValue.intValue, "Max random deviation");
+
+            _scrapValueRandomDeviation.intValue = Mathf.Clamp(_scrapValueRandomDeviation.intValue, 0, _scrapValue.intValue);
 
             EditorGUILayout.Separator();
             EditorGUILayout.Slider(_duration, InventoryItemConfig.MinDuration, InventoryItemConfig.MaxDuration, "Duration");

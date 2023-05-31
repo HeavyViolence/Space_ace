@@ -11,8 +11,8 @@ namespace SpaceAce.Editors
         private const float ViewSelectedTableButtonWidth = 150f;
         private const float RemoveButtonWidth = 80f;
 
-        private const float EntryNumberFieldWidth = 40f;
-        private const float EntryIDFieldWidth = 300f;
+        private const float EntryNumberFieldWidth = 42f;
+        private const float EntryIDFieldWidth = 200f;
         private const float SearchEntryByNameOutputFieldWidth = 360f;
 
         private const string SearchEntryByNameDefaultInput = "Enter entry anchor name to search here (case insensitive)";
@@ -74,12 +74,10 @@ namespace SpaceAce.Editors
 
         private void AssignSelectedTable()
         {
-            var selectedObject = Selection.activeObject;
-
-            if (selectedObject is ObjectPoolEntryLookupTable value)
+            if (Selection.activeObject is ObjectPoolEntryLookupTable value)
             {
                 _selectedTable = value;
-                _selectedTableName = selectedObject.name;
+                _selectedTableName = Selection.activeObject.name;
                 _selectedTableContents = value.GetContents();
             }
         }

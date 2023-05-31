@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e306b4f91fb5134299a8e77f710254e, type: 3}
+  m_Name: Loot item collected
+  m_EditorClassIdentifier: 
+  _audioClips:
+  - {fileID: 8300000, guid: f5ccff4ef2931b64fb102d4b32d7ae36, type: 3}
+  - {fileID: 8300000, guid: 3f50c5c7966bf54438e1567ce859949f, type: 3}
+  - {fileID: 8300000, guid: 1be47c5edd08d7d4b90268ae15fb3bb9, type: 3}
+  - {fileID: 8300000, guid: 1b5df06e90279fc478dbde6fe972168d, type: 3}
+  - {fileID: 8300000, guid: 78981e928da1e71438098a9aff22bc7b, type: 3}
+  - {fileID: 8300000, guid: c6320cde063ac4240a022a143e94f827, type: 3}
+  - {fileID: 8300000, guid: c49e693187b66a94fa15cc4f99b93fdb, type: 3}
+  - {fileID: 8300000, guid: 1b8a5cb9d5445f04198b66f25d1bcea1, type: 3}
+  - {fileID: 8300000, guid: 7813e49817034a643ab3d440da4c3c3a, type: 3}
+  - {fileID: 8300000, guid: 8ceec224718da8b4992674e3a22df9bb, type: 3}
+  - {fileID: 8300000, guid: dd575bfe336a14240a7aa2ffae24fb26, type: 3}
+  - {fileID: 8300000, guid: 2ff29f9078ff5bb489fac1b7233c76aa, type: 3}
+  - {fileID: 8300000, guid: a7fa15c8c3a8679449cadf91dfdabd76, type: 3}
+  - {fileID: 8300000, guid: cae3abe49934cc945812b00835c4ba3a, type: 3}
+  - {fileID: 8300000, guid: 23cf039f17f8f3a4eb81176ae9774928, type: 3}
+  - {fileID: 8300000, guid: 099102992b8f74d49876a61546da0942, type: 3}
+  - {fileID: 8300000, guid: b7d67c5f404661e4d852421358117d6f, type: 3}
+  - {fileID: 8300000, guid: c926582e11bad464e887ea5fb6136dc3, type: 3}
+  - {fileID: 8300000, guid: 3813e9a6baf92f746aac58235a3887cf, type: 3}
+  _outputAudioGroup: {fileID: 8520962540133778969, guid: fcf8532f154bbae47942ff673836eca5, type: 2}
+  _volume: 1
+  _volumeRandomDeviation: 0
+  _priority: 0
+  _spatialBlend: 0
+  _spatialBlendRandomDeviation: 0
+  _pitch: 1
+  _pitchRandomDeviation: 0.25

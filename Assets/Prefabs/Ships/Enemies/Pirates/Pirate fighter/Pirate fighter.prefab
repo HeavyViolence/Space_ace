@@ -52,6 +52,7 @@ GameObject:
   - component: {fileID: 5432048469450908694}
   - component: {fileID: 6244290535508205606}
   - component: {fileID: -6018448770865221636}
+  - component: {fileID: 1198184925496264146}
   m_Layer: 8
   m_Name: Pirate fighter
   m_TagString: Untagged
@@ -215,6 +216,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04837dcec8e4c07459f2a1a5403c4a18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1198184925496264146
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4560740076638076997}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc78f0ad3acc95a4e86f2e5a69b11fa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _lootConfig: {fileID: 11400000, guid: 74e4547e9e27e9646b5fa0c9a09443a3, type: 2}
+  _enableAmplifiedLoot: 1
+  _amplifiedLootConfig: {fileID: 11400000, guid: 86dd9d49721fc4b4eb7f02fdb34d6d71, type: 2}
 --- !u!1 &4560740076788680733
 GameObject:
   m_ObjectHideFlags: 0
@@ -378,7 +394,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 440621235
-  m_SortingLayer: 3
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: db779122e3e1779428bddde74cab6e06, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

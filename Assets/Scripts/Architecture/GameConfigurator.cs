@@ -50,7 +50,8 @@ namespace SpaceAce.Architecture
         [SerializeField] private ObjectPoolEntryLookupTable _objectPoolEntryLookupTable;
 
         [SerializeField] private InventoryItemIconsConfig _itemIconsConfig;
-        [SerializeField] private InventoryItemRarityColorConfig _itemRarityColorsConfig;
+        [SerializeField] private InventoryItemRarityColorsConfig _itemRarityColorsConfig;
+        [SerializeField] private ObjectPoolEntry _lootItemBox;
 
         #endregion
 
@@ -121,6 +122,7 @@ namespace SpaceAce.Architecture
             _gameServices.Add(new SpaceDebrisSpawner());
             _gameServices.Add(new BombSpawner());
             _gameServices.Add(new EntityVisualizer(_itemIconsConfig, _itemRarityColorsConfig));
+            _gameServices.Add(new LootSpawner(_lootItemBox));
 
             _gameServices.Add(new SavingSystem(_idGenerator.Next()));
             _gameServices.Add(new CameraShaker(_idGenerator.Next(), cameraHolder.MasterCameraAnchor));

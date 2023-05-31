@@ -7,11 +7,10 @@ namespace SpaceAce.Gameplay.Amplifications
 {
     public sealed class Amplifier : MonoBehaviour
     {
-        private const string AnimatorAmplifiedStateTrigger = "Amplified";
-        private const string AnimatorDeamplifiedStateTrigger = "Deamplified";
-
         private IEnumerable<IAmplifiable> _amplifiables;
         private Animator _animator;
+
+        public bool Active { get; private set; } = false;
 
         private void Awake()
         {
@@ -32,7 +31,8 @@ namespace SpaceAce.Gameplay.Amplifications
 
         private void OnDisable()
         {
-            _animator.SetTrigger(AnimatorDeamplifiedStateTrigger);
+            _animator.SetTrigger("Deamplified");
+            Active = false;
         }
 
         public void Amplify(RangedFloat factor)
@@ -42,7 +42,8 @@ namespace SpaceAce.Gameplay.Amplifications
                 amplifiable.Amplify(factor.RandomValue);
             }
 
-            _animator.SetTrigger(AnimatorAmplifiedStateTrigger);
+            _animator.SetTrigger("Amplified");
+            Active = true;
         }
     }
 }

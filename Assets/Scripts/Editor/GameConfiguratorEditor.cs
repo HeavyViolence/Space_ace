@@ -40,6 +40,7 @@ namespace SpaceAce.Editors
         private bool _showEntityVisualizationSettings = false;
         private SerializedProperty _itemIconsConfig;
         private SerializedProperty _itemRarityColorsConfig;
+        private SerializedProperty _lootItemBox;
 
         private void OnEnable()
         {
@@ -68,6 +69,7 @@ namespace SpaceAce.Editors
 
             _itemIconsConfig = serializedObject.FindProperty("_itemIconsConfig");
             _itemRarityColorsConfig = serializedObject.FindProperty("_itemRarityColorsConfig");
+            _lootItemBox = serializedObject.FindProperty("_lootItemBox");
         }
 
         public override void OnInspectorGUI()
@@ -146,6 +148,7 @@ namespace SpaceAce.Editors
             {
                 EditorGUILayout.PropertyField(_itemIconsConfig, new GUIContent("Item icons"));
                 EditorGUILayout.PropertyField(_itemRarityColorsConfig, new GUIContent("Item rarity colors"));
+                EditorGUILayout.PropertyField(_lootItemBox, new GUIContent("Loot item box"));
             }
 
             serializedObject.ApplyModifiedProperties();

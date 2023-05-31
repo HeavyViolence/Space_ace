@@ -1,33 +1,28 @@
 using SpaceAce.Auxiliary;
-using System;
 using UnityEngine;
 
 namespace SpaceAce.Gameplay.Inventory
 {
-    public enum ItemRarity
-    {
-        Common,
-        Uncommon,
-        Rare,
-        Exceptional,
-        Exotic,
-        Epic,
-        Legendary
-    }
-
     public abstract class InventoryItemConfig : ScriptableObject
     {
-        private const float LegendaryItemHighestSpawnProbability = 0.01f;
+        public const int MinScrapValue = 10;
+        public const int MaxScrapValue = 10000;
 
         public const float MinDuration = 1f;
-        public const float MaxDuration = 30f;
+        public const float MaxDuration = 60f;
         public const float DefaultDuration = 5f;
 
         [SerializeField] private ItemRarity _rarity;
 
+        [SerializeField] private int _scrapValue = MinScrapValue;
+        [SerializeField] private int _scrapValueRandomDeviation = 0;
+
         [SerializeField] private float _duration = DefaultDuration;
         [SerializeField] private float _durationRandomDeviation = 0f;
 
+        public ItemRarity Rarity => _rarity;
+        public float SpawnProbability => InventoryItem.GetHighestSpawnProbabilityFromRarity(Rarity);
+        protected RangedInt ScrapValue { get; private set; }
         protected RangedFloat Duration { get; private set; }
 
         private void OnEnable()
@@ -37,19 +32,10 @@ namespace SpaceAce.Gameplay.Inventory
 
         public virtual void ApplySettings()
         {
+            ScrapValue = new(_scrapValue, _scrapValueRandomDeviation);
             Duration = new(_duration, _durationRandomDeviation);
         }
 
-        public float GetSpawnProbability()
-        {
-            int rarityValuesAmount = Enum.GetValues(typeof(ItemRarity)).Length;
-            float legendaryRarity = 1f - (float)ItemRarity.Legendary / rarityValuesAmount;
-            float rarity = 1f - (float)_rarity / rarityValuesAmount;
-            float remappingPower = Mathf.Log(LegendaryItemHighestSpawnProbability, legendaryRarity);
-
-            return Mathf.Pow(rarity, remappingPower);
-        }
-
-        public abstract IInventoryItem GetItem();
+        public abstract InventoryItem GetItem();
     }
 }

@@ -105,7 +105,7 @@ namespace SpaceAce.Gameplay.Spawning
             {
                 destroyable = d;
 
-                d.Destroyed += (s, e) =>
+                destroyable.Destroyed += (s, e) =>
                 {
                     s_multiobjectPool.Access.ReleaseObject(anchorName, entity, () => true);
                     _aliveEntities.Remove((entity, anchorName));
@@ -119,10 +119,9 @@ namespace SpaceAce.Gameplay.Spawning
             if (entity.TryGetComponent(out IEscapable e) == true)
             {
                 escapable = e;
+                escapable.StartWatchingForEscape(() => s_masterCameraHolder.Access.InsideViewport(entity.transform.position, Config.Escapedelta) == false);
 
-                e.StartWatchingForEscape(() => s_masterCameraHolder.Access.InsideViewport(entity.transform.position, Config.Escapedelta) == false);
-
-                e.Escaped += (s, e) =>
+                escapable.Escaped += (s, e) =>
                 {
                     s_multiobjectPool.Access.ReleaseObject(anchorName, entity, () => true);
                     _aliveEntities.Remove((entity, anchorName));

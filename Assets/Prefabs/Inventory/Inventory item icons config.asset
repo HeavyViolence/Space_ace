@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: Inventory item icons config
   m_EditorClassIdentifier: 
   _plasmaShieldIcon: {fileID: 21300000, guid: 22b53fd205c514c46a981d7a41430012, type: 3}
-  _matterDegausserIcon: {fileID: 21300000, guid: b9029aca882b209449cadec05ed165b5, type: 3}
   _atomizerIcon: {fileID: 21300000, guid: 6e76b8d15318f85448a6ccf44b347338, type: 3}
+  _massNegatorIcon: {fileID: 21300000, guid: 3c4b5ba8e8509404d86a867a56abf618, type: 3}
+  _matterDegausserIcon: {fileID: 21300000, guid: b9029aca882b209449cadec05ed165b5, type: 3}

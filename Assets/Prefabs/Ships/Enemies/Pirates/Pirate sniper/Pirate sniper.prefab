@@ -73,7 +73,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 440621235
-  m_SortingLayer: 3
+  m_SortingLayer: 2
   m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: 23c38759d490b3249a865c2de4382c66, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -126,6 +126,7 @@ GameObject:
   - component: {fileID: 5640788989309713554}
   - component: {fileID: 5276054906954220333}
   - component: {fileID: 9146119332202750384}
+  - component: {fileID: 6184103255177572962}
   m_Layer: 8
   m_Name: Pirate sniper
   m_TagString: Untagged
@@ -289,6 +290,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _config: {fileID: 11400000, guid: e288ef33a71e916478f6485555105543, type: 2}
+--- !u!114 &6184103255177572962
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5030308264750687169}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc78f0ad3acc95a4e86f2e5a69b11fa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _lootConfig: {fileID: 11400000, guid: 39a7970bc9fe1914699c3da58def8789, type: 2}
+  _enableAmplifiedLoot: 1
+  _amplifiedLootConfig: {fileID: 11400000, guid: 86dd9d49721fc4b4eb7f02fdb34d6d71, type: 2}
 --- !u!1 &5030308265648707055
 GameObject:
   m_ObjectHideFlags: 0

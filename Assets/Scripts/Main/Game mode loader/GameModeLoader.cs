@@ -7,6 +7,15 @@ using UnityEngine;
 
 namespace SpaceAce.Main
 {
+    public enum GameState
+    {
+        Booting,
+        MainMenu,
+        MainMenuLoading,
+        Level,
+        LevelLoading
+    }
+
     public sealed class GameModeLoader : IGameService, IRunnable
     {
         private const float GameModeLoadingDelay = 1f;
@@ -18,6 +27,8 @@ namespace SpaceAce.Main
         public event EventHandler<LevelLoadedEventArgs> LevelLoaded;
 
         private readonly HashSet<LevelConfig> _levelConfigs;
+
+        public GameState GameState { get; private set; } = GameState.Booting;
 
         public GameModeLoader(IEnumerable<LevelConfig> levelConfigs)
         {
@@ -36,10 +47,12 @@ namespace SpaceAce.Main
             IEnumerator MainMenuLoader()
             {
                 MainMenuLoadingStarted?.Invoke(this, new LoadingStartedEventArgs(GameModeLoadingDelay));
+                GameState = GameState.MainMenuLoading;
 
                 yield return new WaitForSeconds(GameModeLoadingDelay);
 
                 MainMenuLoaded?.Invoke(this, EventArgs.Empty);
+                GameState = GameState.MainMenu;
             }
         }
 
@@ -55,6 +68,7 @@ namespace SpaceAce.Main
             IEnumerator GameLevelLoader()
             {
                 LevelLoadingStarted?.Invoke(this, new LoadingStartedEventArgs(GameModeLoadingDelay));
+                GameState = GameState.LevelLoading;
 
                 yield return new WaitForSeconds(GameModeLoadingDelay);
 
@@ -66,6 +80,7 @@ namespace SpaceAce.Main
                     {
                         necessaryLevelConfigFound = true;
                         LevelLoaded?.Invoke(this, new LevelLoadedEventArgs(config));
+                        GameState = GameState.Level;
 
                         break;
                     }
@@ -122,6 +137,7 @@ namespace SpaceAce.Main
         public void OnRun()
         {
             MainMenuLoaded(this, EventArgs.Empty);
+            GameState = GameState.MainMenu;
         }
 
         #endregion
