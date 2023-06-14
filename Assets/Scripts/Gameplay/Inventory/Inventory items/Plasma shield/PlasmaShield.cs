@@ -2,7 +2,7 @@ using SpaceAce.Main;
 using System;
 using UnityEngine;
 
-namespace SpaceAce.Gameplay.Inventory
+namespace SpaceAce.Gameplay.Inventories
 {
     [Serializable]
     public sealed class PlasmaShield : InventoryItem, IEquatable<PlasmaShield>
@@ -11,6 +11,7 @@ namespace SpaceAce.Gameplay.Inventory
 
         public float ArmorBoost => _armorBoost;
         public override string Stats => throw new NotImplementedException();
+        public override bool UsableOutsideOfLevel => false;
 
         public PlasmaShield(ItemRarity rarity,
                             float duration,
@@ -22,7 +23,7 @@ namespace SpaceAce.Gameplay.Inventory
 
         public override bool Use()
         {
-            if (GameModeLoader.Access.GameState == GameState.Level &&
+            if (s_gameModeLoader.Access.GameState == GameState.Level &&
                 SpecialEffectsMediator.TryGetFirstEffectReceiver(out IPlasmaShieldUser user) == true)
             {
                 return user.Use(this);
@@ -31,18 +32,17 @@ namespace SpaceAce.Gameplay.Inventory
             return false;
         }
 
-        public override bool Fuse(InventoryItem pair, out InventoryItem result)
+        public override bool Fuse(InventoryItem item1, InventoryItem item2, out InventoryItem result)
         {
-            if (pair is not null &&
-                pair is PlasmaShield other &&
-                pair.Rarity.Equals(Rarity))
+            if (item1 is not null && item2 is not null &&
+                item1 is PlasmaShield other1 && item2 is PlasmaShield other2 &&
+                item1.Rarity.Equals(Rarity) && item2.Rarity.Equals(Rarity))
             {
-                var newRarity = (ItemRarity)Mathf.Clamp((int)Rarity + 1, 0, (int)ItemRarity.Legendary);
-                float newDuration = (Duration + other.Duration) * FusedItemPropertyFactor;
-                int newScrapValue = (int)((ScrapValue + other.ScrapValue) * FusedItemPropertyFactor);
-                float newArmorBoost = (ArmorBoost + other.ArmorBoost) * FusedItemPropertyFactor;
+                float newDuration = (Duration + other1.Duration) * FusedItemPropertyFactor;
+                int newScrapValue = (int)((ScrapValue + other1.ScrapValue + other2.ScrapValue) * FusedItemPropertyFactor);
+                float newArmorBoost = (ArmorBoost + other1.ArmorBoost + other2.ArmorBoost) * FusedItemPropertyFactor;
 
-                result = new PlasmaShield(newRarity, newDuration, newScrapValue, newArmorBoost);
+                result = new PlasmaShield(GetNextRarity(Rarity), newDuration, newScrapValue, newArmorBoost);
                 return true;
             }
             else

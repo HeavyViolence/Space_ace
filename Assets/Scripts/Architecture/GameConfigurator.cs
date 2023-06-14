@@ -44,7 +44,7 @@ namespace SpaceAce.Architecture
         [SerializeField] private AudioCollection _music;
         [SerializeField] private AudioCollection _bossSpawnAlarm;
 
-        [SerializeField] private UIAssets _uiContainer;
+        [SerializeField] private UIAssets _uiAssets;
 
         [SerializeField] private ObjectPoolEntry _defaultPlayerShip;
         [SerializeField] private ObjectPoolEntryLookupTable _objectPoolEntryLookupTable;
@@ -110,12 +110,12 @@ namespace SpaceAce.Architecture
             _gameServices.Add(cameraHolder);
             _gameServices.Add(audioListenerHolder);
             _gameServices.Add(background);
+
             _gameServices.Add(new GameModeLoader(_levelConfigs));
             _gameServices.Add(new ScreenFader(_fadingCurve, _fadingColor));
             _gameServices.Add(new MultiobjectPool());
             _gameServices.Add(new LevelCompleter());
             _gameServices.Add(new GamePauser());
-            _gameServices.Add(new UIDisplay(_uiContainer));
             _gameServices.Add(new EnemySpawner());
             _gameServices.Add(new BossSpawner(_bossSpawnAlarm));
             _gameServices.Add(new MeteorSpawner());
@@ -131,6 +131,11 @@ namespace SpaceAce.Architecture
             _gameServices.Add(new LevelUnlocker(_idGenerator.Next()));
             _gameServices.Add(new BestLevelsRunsStatisticsCollector(_idGenerator.Next()));
             _gameServices.Add(new Player(_idGenerator.Next(), _defaultPlayerShip, _objectPoolEntryLookupTable));
+
+            _gameServices.Add(new MainMenuDisplay(_uiAssets));
+            _gameServices.Add(new LevelSelectionDisplay(_uiAssets));
+            _gameServices.Add(new InventoryDisplay(_uiAssets));
+            _gameServices.Add(new HUDDisplay(_uiAssets));
         }
 
         private void InitializeGameServices()

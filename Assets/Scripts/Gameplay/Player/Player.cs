@@ -1,6 +1,7 @@
 using SpaceAce.Architecture;
 using SpaceAce.Auxiliary;
 using SpaceAce.Gameplay.Damageables;
+using SpaceAce.Gameplay.Inventories;
 using SpaceAce.Levels;
 using SpaceAce.Main;
 using SpaceAce.Main.ObjectPooling;
@@ -17,11 +18,11 @@ namespace SpaceAce.Gameplay.Players
         public event EventHandler SavingRequested;
         public event EventHandler<PlayerShipSpawnedEventArgs> ShipSpawned;
 
-        private ObjectPoolEntryLookupTable _objectPoolEntryLookupTable;
-        private ObjectPoolEntry _defaultShip;
+        private readonly ObjectPoolEntryLookupTable _objectPoolEntryLookupTable;
+        private readonly ObjectPoolEntry _defaultShip;
         private ObjectPoolEntry _selectedShip;
 
-        private GameControls _gameControls;
+        private readonly GameControls _gameControls;
         private GameObject _activeShip;
 
         private IMovementController _shipMovementController;
@@ -30,6 +31,7 @@ namespace SpaceAce.Gameplay.Players
         public string ID { get; }
         public string SaveName => "Player";
         public ObjectPoolEntry SelectedShip => _selectedShip != null ? _selectedShip : _defaultShip;
+        public Inventory Inventory { get; private set; }
 
         public Player(string id, ObjectPoolEntry defaultPlayerShip, ObjectPoolEntryLookupTable table)
         {
@@ -56,6 +58,8 @@ namespace SpaceAce.Gameplay.Players
 
             _gameControls = new();
             _gameControls.Gameplay.Disable();
+
+            Inventory = new();
         }
 
         #region interfaces
@@ -98,6 +102,8 @@ namespace SpaceAce.Gameplay.Players
             {
                 throw new UnregisteredGameServiceAccessAttemptException(typeof(LevelCompleter));
             }
+
+            Inventory.ContentChanged += (s, e) => SavingRequested?.Invoke(this, EventArgs.Empty);
         }
 
         public void OnUnsubscribe()
@@ -133,7 +139,10 @@ namespace SpaceAce.Gameplay.Players
             {
                 throw new UnregisteredGameServiceAccessAttemptException(typeof(LevelCompleter));
             }
+
+            Inventory.ContentChanged -= (s, e) => SavingRequested?.Invoke(this, EventArgs.Empty);
         }
+
         public void OnClear()
         {
             GameServices.Deregister(this);
@@ -151,7 +160,7 @@ namespace SpaceAce.Gameplay.Players
 
         public string GetState()
         {
-            PlayerSavableData data = new(SelectedShip.AnchorName);
+            PlayerSavableData data = new(SelectedShip.AnchorName, Inventory.GetContent());
 
             return JsonUtility.ToJson(data);
         }
@@ -160,10 +169,8 @@ namespace SpaceAce.Gameplay.Players
         {
             var data = JsonUtility.FromJson<PlayerSavableData>(state);
 
-            if (_objectPoolEntryLookupTable.TryGetEntryByName(data.SelectedShipAnchorName, out var entry) == true)
-            {
-                _selectedShip = entry;
-            }
+            if (_objectPoolEntryLookupTable.TryGetEntryByName(data.SelectedShipAnchorName, out var entry) == true) _selectedShip = entry;
+            if (data.InventoryContent is not null) Inventory.AddItems(data.InventoryContent);
         }
 
         public override bool Equals(object obj) => Equals(obj as ISavable);
@@ -189,15 +196,8 @@ namespace SpaceAce.Gameplay.Players
             {
                 float value = _gameControls.Gameplay.WeaponsSwitch.ReadValue<float>();
 
-                if (value > 0f)
-                {
-                    _shipShootingController.SwitchToNextWeapons();
-                }
-
-                if (value < 0f)
-                {
-                    _shipShootingController.SwitchToPreviousWeapons();
-                }
+                if (value > 0f) _shipShootingController.SwitchToNextWeapons();
+                if (value < 0f) _shipShootingController.SwitchToPreviousWeapons();
             }
         }
 
@@ -247,6 +247,7 @@ namespace SpaceAce.Gameplay.Players
         private void MainMenuLoadingStartedEventHandler(object sender, LoadingStartedEventArgs e)
         {
             _gameControls.Gameplay.Movement.Disable();
+            SavingRequested?.Invoke(this, EventArgs.Empty);
         }
 
         private void MainMenuLoadedEventHandler(object sender, EventArgs e)

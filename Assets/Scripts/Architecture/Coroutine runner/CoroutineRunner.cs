@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -23,22 +24,30 @@ namespace SpaceAce
                 }
             }
 
+            private static IEnumerator SubroutineRunner(Action routine, Func<bool> runCondition)
+            {
+                while (runCondition() == false) yield return null;
+
+                routine();
+            }
+
             public static Coroutine RunRoutine(IEnumerator routine)
             {
-                if (routine is null)
-                {
-                    throw new EmptyRoutineRunAttemptException();
-                }
+                if (routine is null) throw new EmptyRoutineRunAttemptException();
 
                 return Instance.StartCoroutine(routine);
             }
 
+            public static Coroutine RunRoutine(Action routine, Func<bool> runCondition)
+            {
+                if (routine is null || runCondition is null) throw new EmptyRoutineRunAttemptException();
+
+                return Instance.StartCoroutine(SubroutineRunner(routine, runCondition));
+            }
+
             public static void StopRoutine(Coroutine routine)
             {
-                if (routine is null)
-                {
-                    throw new EmptyRoutineStopAttemptException();
-                }
+                if (routine is null) throw new EmptyRoutineStopAttemptException();
 
                 Instance.StopCoroutine(routine);
             }

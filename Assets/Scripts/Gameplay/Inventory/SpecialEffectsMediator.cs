@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace SpaceAce.Gameplay.Inventory
+namespace SpaceAce.Gameplay.Inventories
 {
     public static class SpecialEffectsMediator
     {

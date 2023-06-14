@@ -1,5 +1,5 @@
 using SpaceAce.Auxiliary;
-using SpaceAce.Gameplay.Inventory;
+using SpaceAce.Gameplay.Inventories;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -36,9 +36,9 @@ namespace SpaceAce.Gameplay.Loot
 
                 foreach (var itemConfig in _loot)
                 {
-                    if (_sortedLootGroups.TryGetValue(itemConfig.Rarity, out var lootGroupByRarity) == true)
+                    if (_sortedLootGroups.TryGetValue(itemConfig.Rarity, out var lootGroupOfTheSameRarity) == true)
                     {
-                        lootGroupByRarity.Add(itemConfig);
+                        lootGroupOfTheSameRarity.Add(itemConfig);
                     }
                     else
                     {

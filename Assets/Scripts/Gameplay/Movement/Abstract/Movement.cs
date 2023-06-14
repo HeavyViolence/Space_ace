@@ -76,6 +76,8 @@ namespace SpaceAce.Gameplay.Movement
                     yield return null;
                 }
 
+                yield return null;
+
                 while (escapeCondition() == false)
                 {
                     yield return null;

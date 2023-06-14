@@ -20,6 +20,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 139d048f096c5e748b6585e3126aa082, type: 2}
   - {fileID: 11400000, guid: 4cc4dbfa907b18e46a92868386b4c789, type: 2}
   - {fileID: 11400000, guid: 36aa60ea1506c9749a751801a4e140b9, type: 2}
-  _lootAmount: 1
-  _lootAmountRandomDeviation: 0
+  _lootAmount: 3
+  _lootAmountRandomDeviation: 1
   _spawnProbability: 0.15

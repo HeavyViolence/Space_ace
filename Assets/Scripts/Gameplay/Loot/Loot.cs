@@ -1,7 +1,7 @@
 using SpaceAce.Architecture;
 using SpaceAce.Gameplay.Amplifications;
 using SpaceAce.Gameplay.Damageables;
-using SpaceAce.Gameplay.Inventory;
+using SpaceAce.Gameplay.Inventories;
 using SpaceAce.Gameplay.Spawning;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,7 +10,7 @@ namespace SpaceAce.Gameplay.Loot
 {
     public sealed class Loot : MonoBehaviour
     {
-        private static readonly GameServiceFastAccess<LootSpawner> _lootSpawner = new();
+        private static readonly GameServiceFastAccess<LootSpawner> s_lootSpawner = new();
 
         [SerializeField] private LootConfig _lootConfig;
 
@@ -53,11 +53,11 @@ namespace SpaceAce.Gameplay.Loot
                 _amplifier.Active &&
                 _amplifiedLootConfig.GetLootIfProbable(out IEnumerable<InventoryItem> amplifiedLoot) == true)
             {
-                _lootSpawner.Access.SpawnLoot(amplifiedLoot, e.DeathPosition);
+                s_lootSpawner.Access.SpawnLoot(amplifiedLoot, e.DeathPosition);
             }
             else if (_lootConfig.GetLootIfProbable(out IEnumerable<InventoryItem> loot) == true)
             {
-                _lootSpawner.Access.SpawnLoot(loot, e.DeathPosition);
+                s_lootSpawner.Access.SpawnLoot(loot, e.DeathPosition);
             }
         }
     }

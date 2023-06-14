@@ -1,4 +1,4 @@
-using SpaceAce.Gameplay.Inventory;
+using SpaceAce.Gameplay.Inventories;
 using System;
 using UnityEngine;
 
@@ -13,9 +13,11 @@ namespace SpaceAce.Visualization
         [SerializeField] private Sprite _massNegatorIcon;
         [SerializeField] private Sprite _matterDegausserIcon;
 
-        public Sprite GetIcon(Type type)
+        public Sprite GetIcon(Type itemType)
         {
-            if (type.Equals(typeof(PlasmaShield))) return _plasmaShieldIcon;
+            if (itemType is null) throw new ArgumentNullException(nameof(itemType), "Attempted to pass an empty inventory item type!");
+
+            if (itemType == typeof(PlasmaShield)) return _plasmaShieldIcon;
 
             return null;
         }

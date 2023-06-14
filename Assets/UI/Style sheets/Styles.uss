@@ -83,7 +83,7 @@
     -unity-font-definition: none;
     width: 96px;
     height: 96px;
-    color: rgba(156, 156, 255, 255);
+    color: rgb(156, 156, 255);
     font-size: 48px;
     background-color: rgba(71, 69, 85, 0.75);
     border-left-color: rgb(156, 156, 255);
@@ -119,12 +119,12 @@
     margin-right: 8px;
     margin-top: 8px;
     margin-bottom: 8px;
-    color: rgba(255, 171, 144, 255);
+    color: rgb(255, 171, 144);
     background-color: rgba(92, 64, 62, 0.75);
-    border-left-color: rgba(255, 171, 144, 255);
-    border-right-color: rgba(255, 171, 144, 255);
-    border-top-color: rgba(255, 171, 144, 255);
-    border-bottom-color: rgba(255, 171, 144, 255);
+    border-left-color: rgb(255, 171, 144);
+    border-right-color: rgb(255, 171, 144);
+    border-top-color: rgb(255, 171, 144);
+    border-bottom-color: rgb(255, 171, 144);
     border-top-left-radius: 16px;
     border-bottom-left-radius: 16px;
     border-top-right-radius: 16px;
@@ -141,12 +141,12 @@
     margin-right: 8px;
     margin-top: 8px;
     margin-bottom: 8px;
-    color: rgba(255, 209, 110, 255);
+    color: rgb(255, 209, 110);
     background-color: rgba(78, 70, 55, 0.75);
-    border-left-color: rgba(255, 209, 110, 255);
-    border-right-color: rgba(255, 209, 110, 255);
-    border-top-color: rgba(255, 209, 110, 255);
-    border-bottom-color: rgba(255, 209, 110, 255);
+    border-left-color: rgb(255, 209, 110);
+    border-right-color: rgb(255, 209, 110);
+    border-top-color: rgb(255, 209, 110);
+    border-bottom-color: rgb(255, 209, 110);
     border-top-left-radius: 16px;
     border-bottom-left-radius: 16px;
     border-top-right-radius: 16px;
@@ -154,19 +154,21 @@
     border-bottom-width: 8px;
     rotate: -1deg;
     transition-duration: 0.1s;
+    -unity-font: url('project://database/Assets/UI/Fonts/Space%20age.ttf?fileID=12800000&guid=2be26e11a65883646be6d1062c254750&type=3#Space age');
+    -unity-font-definition: initial;
 }
 
 .level-button:focus {
-    border-left-color: rgba(255, 209, 110, 255);
-    border-right-color: rgba(255, 209, 110, 255);
-    border-top-color: rgba(255, 209, 110, 255);
-    border-bottom-color: rgba(255, 209, 110, 255);
+    border-left-color: rgb(255, 209, 110);
+    border-right-color: rgb(255, 209, 110);
+    border-top-color: rgb(255, 209, 110);
+    border-bottom-color: rgb(255, 209, 110);
     background-color: rgba(78, 70, 55, 0.75);
     -unity-font: url('project://database/Assets/UI/Fonts/Space%20age.ttf?fileID=12800000&guid=2be26e11a65883646be6d1062c254750&type=3#Space age');
     -unity-font-definition: none;
     font-size: 48px;
     -unity-text-align: middle-center;
-    color: rgba(255, 209, 110, 255);
+    color: rgb(255, 209, 110);
     transition-duration: 0.2s;
     border-top-left-radius: 16px;
     border-bottom-left-radius: 16px;

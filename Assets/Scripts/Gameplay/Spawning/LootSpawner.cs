@@ -1,6 +1,6 @@
 using SpaceAce.Architecture;
 using SpaceAce.Auxiliary;
-using SpaceAce.Gameplay.Inventory;
+using SpaceAce.Gameplay.Inventories;
 using SpaceAce.Gameplay.Loot;
 using SpaceAce.Gameplay.Movement;
 using SpaceAce.Main;
@@ -47,7 +47,7 @@ namespace SpaceAce.Gameplay.Spawning
 
                 if (lootItemBox.TryGetComponent(out IEscapable escapable) == true)
                 {
-                    escapable.StartWatchingForEscape(() => _masterCameraHolder.Access.InsideViewport(lootItemBox.transform.position, EscapePositionDelta));
+                    escapable.StartWatchingForEscape(() => _masterCameraHolder.Access.InsideViewport(lootItemBox.transform.position, EscapePositionDelta) == false);
                     escapable.Escaped += (s, e) => _multiobjectPool.Access.ReleaseObject(_lootItemBox.AnchorName, lootItemBox, () => true);
                 }
                 else

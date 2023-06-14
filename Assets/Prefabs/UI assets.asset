@@ -15,4 +15,12 @@ MonoBehaviour:
   _settings: {fileID: 11400000, guid: a4ca0a2c11eaafd4392fff70961494df, type: 2}
   _buttonClickAudio: {fileID: 11400000, guid: f63e3fbc21968924aa8af6edaf45d1ac, type: 2}
   _mainMenu: {fileID: 9197481963319205126, guid: 84cb6008774612543a3d8d8491e4213e, type: 3}
-  _playMenu: {fileID: 9197481963319205126, guid: d6e3873d64361ae4e88230195a7901d0, type: 3}
+  _levelSelectionMenu: {fileID: 9197481963319205126, guid: d6e3873d64361ae4e88230195a7901d0, type: 3}
+  _inventoryMenu: {fileID: 9197481963319205126, guid: 56b940e0604945041b1b0e0f590db70d, type: 3}
+  _inventorySlot: {fileID: 9197481963319205126, guid: 7c2bc023278ed6b4a8244338efdc8f4a, type: 3}
+  _HUDDisplay: {fileID: 9197481963319205126, guid: bd08565bbdbdd1549b5ecd734e48ce66, type: 3}
+  _pauseMenu: {fileID: 9197481963319205126, guid: 3f5f6d039ad1861498b373a5b28c70ff, type: 3}
+  _settingsMenu: {fileID: 9197481963319205126, guid: f365d360865447e40a6ff8d9ee9ddbaf, type: 3}
+  _creditsMenu: {fileID: 9197481963319205126, guid: 1dacf428b483f49479681be6980f2202, type: 3}
+  _armoryMenu: {fileID: 9197481963319205126, guid: 7a9756bb674704249b5e2b46757e198d, type: 3}
+  _overdriveMenu: {fileID: 9197481963319205126, guid: 313a7fe99b440704d955480aaa0513cb, type: 3}

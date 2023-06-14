@@ -31,7 +31,7 @@ namespace SpaceAce.Editors
         private SerializedProperty _bossSpawnAlarm;
 
         private bool _showUISettings = false;
-        private SerializedProperty _uiContainer;
+        private SerializedProperty _uiAssets;
 
         private bool _showPlayerSettings = false;
         private SerializedProperty _defaultPlayerShip;
@@ -62,7 +62,7 @@ namespace SpaceAce.Editors
             _music = serializedObject.FindProperty("_music");
             _bossSpawnAlarm = serializedObject.FindProperty("_bossSpawnAlarm");
 
-            _uiContainer = serializedObject.FindProperty("_uiContainer");
+            _uiAssets = serializedObject.FindProperty("_uiAssets");
 
             _defaultPlayerShip = serializedObject.FindProperty("_defaultPlayerShip");
             _objectPoolEntryLookupTable = serializedObject.FindProperty("_objectPoolEntryLookupTable");
@@ -129,7 +129,7 @@ namespace SpaceAce.Editors
 
             if (_showUISettings == true)
             {
-                EditorGUILayout.PropertyField(_uiContainer, new GUIContent("UI container"));
+                EditorGUILayout.PropertyField(_uiAssets, new GUIContent("UI assets"));
             }
 
             EditorGUILayout.Separator();

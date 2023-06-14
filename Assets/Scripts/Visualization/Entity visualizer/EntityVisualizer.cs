@@ -1,5 +1,5 @@
 using SpaceAce.Architecture;
-using SpaceAce.Gameplay.Inventory;
+using SpaceAce.Gameplay.Inventories;
 using System;
 using UnityEngine;
 

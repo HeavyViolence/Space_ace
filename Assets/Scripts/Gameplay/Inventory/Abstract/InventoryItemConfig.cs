@@ -1,7 +1,7 @@
 using SpaceAce.Auxiliary;
 using UnityEngine;
 
-namespace SpaceAce.Gameplay.Inventory
+namespace SpaceAce.Gameplay.Inventories
 {
     public abstract class InventoryItemConfig : ScriptableObject
     {

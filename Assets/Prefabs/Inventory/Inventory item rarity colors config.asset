@@ -10,26 +10,26 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4cc833bc003a812409599376b255bcdc, type: 3}
-  m_Name: Inventory item rarity color config
+  m_Name: Inventory item rarity colors config
   m_EditorClassIdentifier: 
   _commonColor:
     serializedVersion: 2
-    rgba: 16777215
+    rgba: 3238002687
   _uncommonColor:
     serializedVersion: 2
-    rgba: 16776960
+    rgba: 3238002432
   _rareColor:
     serializedVersion: 2
-    rgba: 65280
+    rgba: 3221290752
   _exceptionalColor:
     serializedVersion: 2
-    rgba: 65535
+    rgba: 3221291007
   _exoticColor:
     serializedVersion: 2
-    rgba: 32767
+    rgba: 3221258239
   _epicColor:
     serializedVersion: 2
-    rgba: 255
+    rgba: 3221225727
   _legendaryColor:
     serializedVersion: 2
-    rgba: 16711806
+    rgba: 3237937280

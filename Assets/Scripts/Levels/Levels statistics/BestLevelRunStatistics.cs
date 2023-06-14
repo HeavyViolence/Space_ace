@@ -17,7 +17,7 @@ namespace SpaceAce.Levels
         [SerializeField] private float _spaceDebrisCrushedPercentage;
         [SerializeField] private int _minutes;
         [SerializeField] private int _seconds;
-        [SerializeField] private int _crystalsEarned;
+        [SerializeField] private int _credistEarned;
         [SerializeField] private int _experienceEarned;
         [SerializeField] private int _enemiesDefeated;
 
@@ -26,7 +26,7 @@ namespace SpaceAce.Levels
         public float MeteorsCrushedPercentage => _meteorsCrushedPercentage;
         public float SpaceDebrisCrushedPercentage => _spaceDebrisCrushedPercentage;
         public (int minutes, int seconds) TimeSpent => (_minutes, _seconds);
-        public int CrystalsEarned => _crystalsEarned;
+        public int CreditsEarned => _credistEarned;
         public int ExperienceEarned => _experienceEarned;
         public int EnemiesDefeated => _enemiesDefeated;
         public float LevelMastery => ShootingAccuracy *
@@ -39,7 +39,7 @@ namespace SpaceAce.Levels
                                       float meteorsCrushedPercentage,
                                       float spacedebrisCrushedPercentage,
                                       (int minutes, int seconds) timeSpent,
-                                      int crystalsEarned,
+                                      int creditsEarned,
                                       int experienceEarned,
                                       int enemiesDefeated)
         {
@@ -49,7 +49,7 @@ namespace SpaceAce.Levels
             _spaceDebrisCrushedPercentage = spacedebrisCrushedPercentage;
             _minutes = timeSpent.minutes;
             _seconds = timeSpent.seconds;
-            _crystalsEarned = crystalsEarned;
+            _credistEarned = creditsEarned;
             _experienceEarned = experienceEarned;
             _enemiesDefeated = enemiesDefeated;
         }

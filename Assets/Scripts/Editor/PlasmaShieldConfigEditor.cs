@@ -1,4 +1,4 @@
-using SpaceAce.Gameplay.Inventory;
+using SpaceAce.Gameplay.Inventories;
 using UnityEditor;
 using UnityEngine;
 

@@ -1,4 +1,4 @@
-namespace SpaceAce.Gameplay.Inventory
+namespace SpaceAce.Gameplay.Inventories
 {
     public interface IPlasmaShieldUser
     {

@@ -1,0 +1,74 @@
+.inventory-slot-button {
+    width: 24px;
+    height: 24px;
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    border-top-left-radius: 32px;
+    border-bottom-left-radius: 32px;
+    border-top-right-radius: 32px;
+    border-bottom-right-radius: 32px;
+    background-image: url('project://database/Assets/Sprites/Icons/Interface/Use%20item.png?fileID=2800000&guid=467da6bc1d8f42e488a8b92f3aef40bb&type=3#Use item');
+    transition-duration: 0.2s;
+}
+
+.inventory-slot-button:hover {
+    width: 24px;
+    height: 24px;
+    rotate: 15deg;
+    transition-duration: 0.2s;
+    -unity-background-image-tint-color: rgb(255, 255, 255);
+}
+
+.inventory-slot-button:active {
+    transition-duration: 0.1s;
+    width: 24px;
+    height: 24px;
+    rotate: 0;
+    -unity-background-image-tint-color: rgb(255, 255, 255);
+}
+
+.inventory-slot {
+    width: 96px;
+    height: 128px;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-left: 8px;
+    margin-right: 8px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    background-color: rgba(71, 69, 85, 0.5);
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    transition-duration: 0.2s;
+    border-top-left-radius: 16px;
+    border-bottom-left-radius: 16px;
+    border-top-right-radius: 16px;
+    border-bottom-right-radius: 16px;
+    border-left-color: rgba(149, 149, 149, 0);
+    border-right-color: rgba(149, 149, 149, 0);
+    border-top-color: rgba(149, 149, 149, 0);
+    border-bottom-color: rgba(149, 149, 149, 0);
+}
+
+.inventory-slot:hover {
+    transition-duration: 0.2s;
+    rotate: 1deg;
+    background-color: rgba(157, 157, 255, 0.5);
+}
+
+.inventory-slot:active {
+    background-color: rgba(232, 213, 181, 0.5);
+    transition-duration: 0.1s;
+    rotate: -1deg;
+}
+
+.inventory-slot:focus {
+    background-color: rgba(232, 213, 181, 0.5);
+    transition-duration: 0.1s;
+}

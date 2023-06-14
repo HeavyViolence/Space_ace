@@ -1,5 +1,7 @@
-using SpaceAce.Gameplay.Inventory;
+using SpaceAce.Architecture;
+using SpaceAce.Gameplay.Inventories;
 using SpaceAce.Gameplay.Movement;
+using SpaceAce.Gameplay.Players;
 using SpaceAce.Main.Audio;
 using System;
 using UnityEngine;
@@ -10,17 +12,19 @@ namespace SpaceAce.Gameplay.Loot
     [RequireComponent(typeof(LootItemMovement))]
     public sealed class LootItem : MonoBehaviour
     {
-        [SerializeField] private AudioCollection _lootCollectionAudio;
+        private static readonly GameServiceFastAccess<Player> s_player = new();
 
         public event EventHandler Collected;
 
-        private InventoryItem _lootItem;
-        private SpriteRenderer _lootIconRenderer;
+        [SerializeField] private AudioCollection _lootCollectionAudio;
+
+        private InventoryItem _content;
+        private SpriteRenderer _contentIconRenderer;
         private Animator _lootItemAnimator;
 
         private void Awake()
         {
-            _lootIconRenderer = transform.GetComponent<SpriteRenderer>();
+            _contentIconRenderer = transform.GetComponent<SpriteRenderer>();
 
             if (transform.TryGetComponent(out Animator animator) == true)
             {
@@ -34,16 +38,15 @@ namespace SpaceAce.Gameplay.Loot
 
         private void OnDisable()
         {
-            _lootItem = null;
-            _lootIconRenderer = null;
+            _content = null;
             Collected = null;
         }
 
         private void OnTriggerEnter2D(Collider2D collider)
         {
-            // Implement player inventory to proceed here on loot pickup
-
+            s_player.Access.Inventory.AddItem(_content);
             _lootCollectionAudio.PlayRandomAudioClip(Vector2.zero);
+
             Collected?.Invoke(this, EventArgs.Empty);
         }
 
@@ -51,8 +54,8 @@ namespace SpaceAce.Gameplay.Loot
         {
             if (item is null) throw new ArgumentNullException(nameof(item), $"Attempted to pass an empty inventory item as a loot item!");
 
-            _lootItem = item;
-            _lootIconRenderer.sprite = item.Icon;
+            _content = item;
+            _contentIconRenderer.sprite = item.Icon;
 
             switch (item.Rarity)
             {
@@ -93,7 +96,5 @@ namespace SpaceAce.Gameplay.Loot
                     }
             }
         }
-
-        public InventoryItem GetContent() => _lootItem;
     }
 }

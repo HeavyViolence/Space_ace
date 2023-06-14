@@ -1,7 +1,7 @@
 using SpaceAce.Auxiliary;
 using UnityEngine;
 
-namespace SpaceAce.Gameplay.Inventory
+namespace SpaceAce.Gameplay.Inventories
 {
     [CreateAssetMenu(fileName = "Plasma shield", menuName = "Space ace/Configs/Loot/Plasma shield")]
     public sealed class PlasmaShieldConfig : InventoryItemConfig
