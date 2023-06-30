@@ -149,7 +149,7 @@ namespace SpaceAce.Levels
 
         IEnumerator AwaitEnemiesDefeatThenConcludeLevel(EnemySpawner enemySpawner)
         {
-            while (enemySpawner.AliveAmount > 0)
+            while (enemySpawner.ALiveCount > 0)
             {
                 yield return null;
             }

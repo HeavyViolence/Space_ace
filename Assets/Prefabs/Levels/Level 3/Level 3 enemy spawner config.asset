@@ -24,7 +24,7 @@ MonoBehaviour:
   _spawnDelayRandomDeviation: 0.5
   _uniqueEntitiesInWave: 3
   _uniqueEntitiesInWaveRandomDeviation: 2
-  _waveLength: 7
+  _waveLength: 5
   _waveLengthRandomDeviation: 1
   _spawnForever: 0
   _amountToSpawn: 50

@@ -6,6 +6,7 @@ using SpaceAce.Levels;
 using SpaceAce.Main;
 using SpaceAce.Main.ObjectPooling;
 using SpaceAce.Main.Saving;
+using SpaceAce.UI;
 using System;
 using UnityEngine;
 
@@ -14,6 +15,7 @@ namespace SpaceAce.Gameplay.Players
     public sealed class Player : IGameService, ISavable, IFixedUpdatable, IUpdatable
     {
         private static readonly GameServiceFastAccess<MultiobjectPool> s_multiobjectPool = new();
+        private static readonly GameServiceFastAccess<GameModeLoader> s_gameModeLoader = new();
 
         public event EventHandler SavingRequested;
         public event EventHandler<PlayerShipSpawnedEventArgs> ShipSpawned;
@@ -31,7 +33,9 @@ namespace SpaceAce.Gameplay.Players
         public string ID { get; }
         public string SaveName => "Player";
         public ObjectPoolEntry SelectedShip => _selectedShip != null ? _selectedShip : _defaultShip;
-        public Inventory Inventory { get; private set; }
+        public Inventory Inventory { get; }
+        public Wallet Wallet { get; }
+        public Experience Experience { get; }
 
         public Player(string id, ObjectPoolEntry defaultPlayerShip, ObjectPoolEntryLookupTable table)
         {
@@ -60,6 +64,8 @@ namespace SpaceAce.Gameplay.Players
             _gameControls.Gameplay.Disable();
 
             Inventory = new();
+            Wallet = new();
+            Experience = new();
         }
 
         #region interfaces
@@ -103,7 +109,24 @@ namespace SpaceAce.Gameplay.Players
                 throw new UnregisteredGameServiceAccessAttemptException(typeof(LevelCompleter));
             }
 
-            Inventory.ContentChanged += (s, e) => SavingRequested?.Invoke(this, EventArgs.Empty);
+            if (GameServices.TryGetService(out LevelRewardCollector collector) == true)
+            {
+                collector.RewardDispensed += LevelRewardCollectedEventHandler;
+            }
+            else
+            {
+                throw new UnregisteredGameServiceAccessAttemptException(typeof(LevelRewardCollector));
+            }
+
+            if (GameServices.TryGetService(out HUDDisplay hudDisplay) == true)
+            {
+                hudDisplay.Enabled += HUDDisplayEnabledEventHandler;
+                hudDisplay.Disabled += HUDDisplayDisabledEventHandler;
+            }
+            else
+            {
+                throw new UnregisteredGameServiceAccessAttemptException(typeof(HUDDisplay));
+            }
         }
 
         public void OnUnsubscribe()
@@ -140,7 +163,24 @@ namespace SpaceAce.Gameplay.Players
                 throw new UnregisteredGameServiceAccessAttemptException(typeof(LevelCompleter));
             }
 
-            Inventory.ContentChanged -= (s, e) => SavingRequested?.Invoke(this, EventArgs.Empty);
+            if (GameServices.TryGetService(out LevelRewardCollector collector) == true)
+            {
+                collector.RewardDispensed -= LevelRewardCollectedEventHandler;
+            }
+            else
+            {
+                throw new UnregisteredGameServiceAccessAttemptException(typeof(LevelRewardCollector));
+            }
+
+            if (GameServices.TryGetService(out HUDDisplay hudDisplay) == true)
+            {
+                hudDisplay.Enabled -= HUDDisplayEnabledEventHandler;
+                hudDisplay.Disabled -= HUDDisplayDisabledEventHandler;
+            }
+            else
+            {
+                throw new UnregisteredGameServiceAccessAttemptException(typeof(HUDDisplay));
+            }
         }
 
         public void OnClear()
@@ -160,7 +200,10 @@ namespace SpaceAce.Gameplay.Players
 
         public string GetState()
         {
-            PlayerSavableData data = new(SelectedShip.AnchorName, Inventory.GetContent());
+            PlayerSavableData data = new(SelectedShip.AnchorName,
+                                         Inventory.GetContent(),
+                                         Wallet.Credits,
+                                         Experience.Value);
 
             return JsonUtility.ToJson(data);
         }
@@ -171,6 +214,8 @@ namespace SpaceAce.Gameplay.Players
 
             if (_objectPoolEntryLookupTable.TryGetEntryByName(data.SelectedShipAnchorName, out var entry) == true) _selectedShip = entry;
             if (data.InventoryContent is not null) Inventory.AddItems(data.InventoryContent);
+            if (data.Credits > 0) Wallet.AddCredits(data.Credits);
+            if (data.Experience > 0f) Experience.Add(data.Experience);
         }
 
         public override bool Equals(object obj) => Equals(obj as ISavable);
@@ -205,6 +250,15 @@ namespace SpaceAce.Gameplay.Players
 
         private void LevelLoadedEventHandler(object sender, LevelLoadedEventArgs e)
         {
+            if (_activeShip != null)
+            {
+                s_multiobjectPool.Access.ReleaseObject(SelectedShip.AnchorName, _activeShip, () => true);
+
+                _activeShip = null;
+                _shipMovementController = null;
+                _shipShootingController = null;
+            }
+
             SelectedShip.EnsureObjectPoolExistence();
             _activeShip = s_multiobjectPool.Access.GetObject(SelectedShip.AnchorName);
 
@@ -258,6 +312,7 @@ namespace SpaceAce.Gameplay.Players
 
                 _activeShip = null;
                 _shipMovementController = null;
+                _shipShootingController = null;
             }
         }
 
@@ -267,14 +322,35 @@ namespace SpaceAce.Gameplay.Players
             _shipShootingController.StopShooting();
         }
 
+        private void LevelRewardCollectedEventHandler(object sender, LevelRewardDispensedEventArgs e)
+        {
+            Wallet.AddCredits(e.Credits);
+            Experience.Add(e.Experience);
+            SavingRequested?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void HUDDisplayEnabledEventHandler(object sender, EventArgs e)
+        {
+            if (s_gameModeLoader.Access.GameState == GameState.Level) _gameControls.Gameplay.Enable();
+
+            if (s_gameModeLoader.Access.GameState == GameState.LevelPassed ||
+                s_gameModeLoader.Access.GameState == GameState.LevelFailed)
+            {
+                _gameControls.Gameplay.Movement.Enable();
+            }
+        }
+
+        private void HUDDisplayDisabledEventHandler(object sender, EventArgs e)
+        {
+            _gameControls.Gameplay.Disable();
+            _shipShootingController.StopShooting();
+        }
+
         #endregion
 
         public void SetSelectedPlayerShip(ObjectPoolEntry entry)
         {
-            if (entry == null)
-            {
-                throw new ArgumentNullException(nameof(entry), "Attempted to pass an empty selected ship!");
-            }
+            if (entry == null) throw new ArgumentNullException(nameof(entry), "Attempted to pass an empty selected ship!");
 
             _selectedShip = entry;
             SavingRequested?.Invoke(this, EventArgs.Empty);

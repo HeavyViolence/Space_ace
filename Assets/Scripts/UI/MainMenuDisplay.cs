@@ -59,14 +59,8 @@ namespace SpaceAce.UI
             Disable();
             ButtonClickAudio.PlayRandomAudioClip(Vector2.zero);
 
-            if (GameServices.TryGetService<LevelSelectionDisplay>(out var display) == true)
-            {
-                display.Enable();
-            }
-            else
-            {
-                throw new UnregisteredGameServiceAccessAttemptException(typeof(LevelSelectionDisplay));
-            }
+            if (GameServices.TryGetService<LevelSelectionDisplay>(out var display) == true) display.Enable();
+            else throw new UnregisteredGameServiceAccessAttemptException(typeof(LevelSelectionDisplay));
         }
 
         private void InventoryButtonClickedEventHandler()
@@ -74,14 +68,8 @@ namespace SpaceAce.UI
             Disable();
             ButtonClickAudio.PlayRandomAudioClip(Vector2.zero);
 
-            if (GameServices.TryGetService<InventoryDisplay>(out var display) == true)
-            {
-                display.Enable();
-            }
-            else
-            {
-                throw new UnregisteredGameServiceAccessAttemptException(typeof(InventoryDisplay));
-            }
+            if (GameServices.TryGetService<InventoryDisplay>(out var display) == true) display.Enable();
+            else throw new UnregisteredGameServiceAccessAttemptException(typeof(InventoryDisplay));
         }
 
         #endregion

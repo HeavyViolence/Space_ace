@@ -1,4 +1,5 @@
 using SpaceAce.Gameplay.Inventories;
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -28,6 +29,8 @@ namespace SpaceAce.Gameplay.Damageables
 
         public bool Use(PlasmaShield shield)
         {
+            if (shield is null) throw new ArgumentNullException(nameof(shield), "Attempted to pass an empty plasma shield!");
+
             if (_armorBoostingRoutine == null)
             {
                 _armorBoostingRoutine = StartCoroutine(BoostArmor(shield.ArmorBoost, shield.Duration));

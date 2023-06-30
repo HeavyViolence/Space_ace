@@ -15,8 +15,8 @@ namespace SpaceAce.Gameplay.Inventories
 
         public PlasmaShield(ItemRarity rarity,
                             float duration,
-                            int scrapValue,
-                            float armorBoost) : base(rarity, duration, scrapValue)
+                            int worth,
+                            float armorBoost) : base(rarity, duration, worth)
         {
             _armorBoost = armorBoost;
         }
@@ -39,7 +39,7 @@ namespace SpaceAce.Gameplay.Inventories
                 item1.Rarity.Equals(Rarity) && item2.Rarity.Equals(Rarity))
             {
                 float newDuration = (Duration + other1.Duration) * FusedItemPropertyFactor;
-                int newScrapValue = (int)((ScrapValue + other1.ScrapValue + other2.ScrapValue) * FusedItemPropertyFactor);
+                int newScrapValue = (int)((Worth + other1.Worth + other2.Worth) * FusedItemPropertyFactor);
                 float newArmorBoost = (ArmorBoost + other1.ArmorBoost + other2.ArmorBoost) * FusedItemPropertyFactor;
 
                 result = new PlasmaShield(GetNextRarity(Rarity), newDuration, newScrapValue, newArmorBoost);
@@ -52,19 +52,17 @@ namespace SpaceAce.Gameplay.Inventories
             }
         }
 
-        public override int Scrap() => ScrapValue;
-
         public override bool Equals(object obj) => Equals(obj as PlasmaShield);
 
         public bool Equals(PlasmaShield other) => other is not null &&
                                                   other.Rarity.Equals(Rarity) &&
                                                   other.ArmorBoost.Equals(ArmorBoost) &&
                                                   other.Duration.Equals(Duration) &&
-                                                  other.ScrapValue.Equals(ScrapValue);
+                                                  other.Worth.Equals(Worth);
 
         public override int GetHashCode() => Rarity.GetHashCode() ^
                                              ArmorBoost.GetHashCode() ^
                                              Duration.GetHashCode() ^
-                                             ScrapValue.GetHashCode();
+                                             Worth.GetHashCode();
     }
 }

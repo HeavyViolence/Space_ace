@@ -113,25 +113,13 @@ namespace SpaceAce.UI
 
             if (s_gameModeLoader.Access.GameState == GameState.Level)
             {
-                if (GameServices.TryGetService<HUDDisplay>(out var display) == true)
-                {
-                    display.Enable();
-                }
-                else
-                {
-                    throw new UnregisteredGameServiceAccessAttemptException(typeof(HUDDisplay));
-                }
+                if (GameServices.TryGetService<HUDDisplay>(out var display) == true) display.Enable();
+                else throw new UnregisteredGameServiceAccessAttemptException(typeof(HUDDisplay));
             }
             else
             {
-                if (GameServices.TryGetService<MainMenuDisplay>(out var display) == true)
-                {
-                    display.Enable();
-                }
-                else
-                {
-                    throw new UnregisteredGameServiceAccessAttemptException(typeof(MainMenuDisplay));
-                }
+                if (GameServices.TryGetService<MainMenuDisplay>(out var display) == true) display.Enable();
+                else throw new UnregisteredGameServiceAccessAttemptException(typeof(MainMenuDisplay));
             }
         }
 

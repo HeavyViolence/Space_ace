@@ -1,4 +1,5 @@
 using SpaceAce.Architecture;
+using SpaceAce.Gameplay.Players;
 using SpaceAce.Main;
 using SpaceAce.Visualization;
 using System;
@@ -25,10 +26,11 @@ namespace SpaceAce.Gameplay.Inventories
 
         protected static readonly GameServiceFastAccess<EntityVisualizer> s_entityVisualizer = new();
         protected static readonly GameServiceFastAccess<GameModeLoader> s_gameModeLoader = new();
+        protected static readonly GameServiceFastAccess<Player> s_player = new();
 
         [SerializeField] private ItemRarity _rarity;
         [SerializeField] private float _duration;
-        [SerializeField] private int _scrapValue;
+        [SerializeField] private int _worth;
 
         public ItemRarity Rarity => _rarity;
         public Color32 RarityColor => s_entityVisualizer.Access.GetInventoryItemRarityColor(Rarity);
@@ -37,7 +39,7 @@ namespace SpaceAce.Gameplay.Inventories
         public string Description => throw new NotImplementedException();
         public abstract string Stats { get; }
         public float Duration => _duration;
-        public int ScrapValue => _scrapValue;
+        public int Worth => _worth;
         public abstract bool UsableOutsideOfLevel { get; }
 
         public static float GetHighestSpawnProbabilityFromRarity(ItemRarity rarity)
@@ -56,15 +58,16 @@ namespace SpaceAce.Gameplay.Inventories
 
         public InventoryItem(ItemRarity rarity,
                              float duration,
-                             int scrapValue)
+                             int worth)
         {
             _rarity = rarity;
             _duration = duration;
-            _scrapValue = scrapValue;
+            _worth = worth;
         }
+
+        public void Sell() => s_player.Access.Wallet.AddCredits(Worth);
 
         public abstract bool Use();
         public abstract bool Fuse(InventoryItem item1, InventoryItem item2, out InventoryItem result);
-        public abstract int Scrap();
     }
 }

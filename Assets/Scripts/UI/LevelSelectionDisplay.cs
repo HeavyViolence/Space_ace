@@ -115,10 +115,7 @@ namespace SpaceAce.UI
         {
             _selectedLevelIndex = Convert.ToInt32(levelButton.text);
 
-            if (playButton.enabledInHierarchy == false)
-            {
-                playButton.SetEnabled(true);
-            }
+            if (playButton.enabledInHierarchy == false) playButton.SetEnabled(true);
 
             var selectedLevelStatistics = s_bestLevelsRunsStatisticsCollector.Access.GetStatistics(_selectedLevelIndex);
             UpdateBestLevelRunDisplay(selectedLevelStatistics);
@@ -131,22 +128,13 @@ namespace SpaceAce.UI
             Disable();
             ButtonClickAudio.PlayRandomAudioClip(Vector2.zero);
 
-            if (GameServices.TryGetService<MainMenuDisplay>(out var display) == true)
-            {
-                display.Enable();
-            }
-            else
-            {
-                throw new UnregisteredGameServiceAccessAttemptException(typeof(MainMenuDisplay));
-            }
+            if (GameServices.TryGetService<MainMenuDisplay>(out var display) == true) display.Enable();
+            else throw new UnregisteredGameServiceAccessAttemptException(typeof(MainMenuDisplay));
         }
 
         private void UpdateBestLevelRunDisplay(BestLevelRunStatistics statistics)
         {
-            if (statistics is null)
-            {
-                throw new ArgumentNullException(nameof(statistics), $"Attempted to pass an empty {nameof(BestLevelRunStatistics)}!");
-            }
+            if (statistics is null) throw new ArgumentNullException(nameof(statistics), $"Attempted to pass an empty {nameof(BestLevelRunStatistics)}!");
 
             var timeSpentLabel = DisplayDocument.rootVisualElement.Q<Label>("time-spent-label");
             var crystalsEarnedLabel = DisplayDocument.rootVisualElement.Q<Label>("credits-earned-label");

@@ -153,7 +153,7 @@ namespace SpaceAce.Gameplay.Spawning
 
         private IEnumerator AwaitEnemiesDefeatThenSpawnBoss(EnemySpawner spawner)
         {
-            while (spawner.AliveAmount > 0)
+            while (spawner.ALiveCount > 0)
             {
                 yield return null;
             }

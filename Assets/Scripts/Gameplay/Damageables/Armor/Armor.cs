@@ -1,15 +1,33 @@
+using SpaceAce.Auxiliary;
 using SpaceAce.Gameplay.Experience;
+using SpaceAce.UI;
 using System;
 using UnityEngine;
 
 namespace SpaceAce.Gameplay.Damageables
 {
-    public abstract class Armor : MonoBehaviour, IExperienceSource
+    public abstract class Armor : MonoBehaviour, IExperienceSource, IArmorView
     {
+        public event EventHandler<FloatValueChangedEventArgs> ValueChanged;
+
         [SerializeField] private ArmorConfig _config;
 
+        private float _value;
+
+        public float Value
+        {
+            get => _value;
+
+            protected set
+            {
+                float oldValue = _value;
+
+                _value = Mathf.Clamp(value, 0f, float.MaxValue);
+                ValueChanged?.Invoke(this, new(oldValue, _value));
+            }
+        }
+
         public bool Enabled => _config.ArmorEnabled;
-        public float Value { get; protected set; }
         public float BlockedDamage { get; private set; }
 
         protected virtual void OnEnable()
@@ -20,27 +38,10 @@ namespace SpaceAce.Gameplay.Damageables
 
         public float GetDamageToBeDealt(float receivedDamage)
         {
-            if (receivedDamage < 0f)
-            {
-                throw new ArgumentOutOfRangeException(nameof(receivedDamage), receivedDamage, $"Incoming damage must be positive!");
-            }
+            if (receivedDamage < 0f) throw new ArgumentOutOfRangeException(nameof(receivedDamage), receivedDamage, $"Incoming damage must be positive!");
+            if (Enabled == false) return receivedDamage;
 
-            if (Enabled == false)
-            {
-                return receivedDamage;
-            }
-
-            float damageToBeDealt;
-
-            if (receivedDamage < Value)
-            {
-                damageToBeDealt = receivedDamage * receivedDamage / Value;
-            }
-            else
-            {
-                damageToBeDealt = receivedDamage;
-            }
-
+            float damageToBeDealt = receivedDamage < Value ? receivedDamage * receivedDamage / Value : receivedDamage;
             BlockedDamage += receivedDamage - damageToBeDealt;
 
             return damageToBeDealt;

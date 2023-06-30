@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 392299e44fbf01144ba9541c3260f0ee, type: 3}
   m_Name: Pirate boss experience config
   m_EditorClassIdentifier: 
-  _experienceDepletionEnabled: 1
+  _experienceDepletionEnabled: 0
   _experienceDepletionPeriod: 300
   _experienceDepletionCurve:
     serializedVersion: 2

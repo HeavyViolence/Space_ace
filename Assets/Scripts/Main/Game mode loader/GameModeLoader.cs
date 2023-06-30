@@ -13,7 +13,9 @@ namespace SpaceAce.Main
         MainMenu,
         MainMenuLoading,
         Level,
-        LevelLoading
+        LevelLoading,
+        LevelPassed,
+        LevelFailed
     }
 
     public sealed class GameModeLoader : IGameService, IRunnable
@@ -79,6 +81,7 @@ namespace SpaceAce.Main
                     if (config.LevelIndex == levelIndex)
                     {
                         necessaryLevelConfigFound = true;
+
                         LevelLoaded?.Invoke(this, new LevelLoadedEventArgs(config));
                         GameState = GameState.Level;
 
@@ -115,12 +118,28 @@ namespace SpaceAce.Main
 
         public void OnSubscribe()
         {
-
+            if (GameServices.TryGetService(out LevelCompleter completer) == true)
+            {
+                completer.LevelPassed += (s, e) => GameState = GameState.LevelPassed;
+                completer.LevelFailed += (s, e) => GameState = GameState.LevelFailed;
+            }
+            else
+            {
+                throw new UnregisteredGameServiceAccessAttemptException(typeof(LevelCompleter));
+            }
         }
 
         public void OnUnsubscribe()
         {
-
+            if (GameServices.TryGetService(out LevelCompleter completer) == true)
+            {
+                completer.LevelPassed -= (s, e) => GameState = GameState.LevelPassed;
+                completer.LevelFailed -= (s, e) => GameState = GameState.LevelFailed;
+            }
+            else
+            {
+                throw new UnregisteredGameServiceAccessAttemptException(typeof(LevelCompleter));
+            }
         }
 
         public void OnClear()

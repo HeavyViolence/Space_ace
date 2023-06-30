@@ -10,12 +10,18 @@ namespace SpaceAce.Gameplay.Players
     {
         [SerializeField] private string _selectedShipAnchorName;
         [SerializeField] private List<InventoryItem> _inventoryContent;
+        [SerializeField] private int _credits;
+        [SerializeField] private float _experience;
 
         public string SelectedShipAnchorName => _selectedShipAnchorName;
         public IEnumerable<InventoryItem> InventoryContent => _inventoryContent;
+        public int Credits => _credits;
+        public float Experience => _experience;
 
         public PlayerSavableData(string selectedShipAnchorName,
-                                 IEnumerable<InventoryItem> inventoryItems)
+                                 IEnumerable<InventoryItem> inventoryItems,
+                                 int credits,
+                                 float experience)
         {
             if (string.IsNullOrEmpty(selectedShipAnchorName) ||
                 string.IsNullOrWhiteSpace(selectedShipAnchorName))
@@ -29,6 +35,8 @@ namespace SpaceAce.Gameplay.Players
             }
 
             _selectedShipAnchorName = selectedShipAnchorName;
+            _credits = credits;
+            _experience = experience;
         }
     }
 }

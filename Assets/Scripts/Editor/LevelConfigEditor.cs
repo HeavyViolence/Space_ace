@@ -9,7 +9,7 @@ namespace SpaceAce.Editors
     {
         private SerializedProperty _levelIndex;
 
-        private SerializedProperty _crystalsReward;
+        private SerializedProperty _creditReward;
         private SerializedProperty _experienceReward;
 
         private SerializedProperty _bossEnabled;
@@ -24,7 +24,7 @@ namespace SpaceAce.Editors
         {
             _levelIndex = serializedObject.FindProperty("_levelIndex");
 
-            _crystalsReward = serializedObject.FindProperty("_crystalsReward");
+            _creditReward = serializedObject.FindProperty("_creditReward");
             _experienceReward = serializedObject.FindProperty("_experienceReward");
 
             _bossEnabled = serializedObject.FindProperty("_bossEnabled");
@@ -43,7 +43,7 @@ namespace SpaceAce.Editors
             EditorGUILayout.IntSlider(_levelIndex, LevelConfig.MinLevelIndex, LevelConfig.MaxLevelIndex, "Level index");
 
             EditorGUILayout.Separator();
-            EditorGUILayout.IntSlider(_crystalsReward, LevelConfig.MinCrystalsReward, LevelConfig.MaxCrystalsReward, "Crystals reward");
+            EditorGUILayout.IntSlider(_creditReward, LevelConfig.MinCreditReward, LevelConfig.MaxCreditReward, "Credit reward");
             EditorGUILayout.IntSlider(_experienceReward, LevelConfig.MinExperienceReward, LevelConfig.MaxExperienceReward, "Experience reward");
 
             EditorGUILayout.Separator();

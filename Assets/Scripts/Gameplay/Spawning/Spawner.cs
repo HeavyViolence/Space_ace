@@ -32,9 +32,10 @@ namespace SpaceAce.Gameplay.Spawning
         private float VerticalSpawnPosition => s_masterCameraHolder.Access.ViewportUpperBound * SpawnPositionHeightIndentFactor;
 
         public SpawnerConfig Config { get; protected set; }
-        public int SpawnedAmount { get; protected set; }
-        public int AliveAmount => _aliveEntities.Count;
-        public int AmountToSpawn { get; protected set; }
+        public int SpawnedCount { get; protected set; }
+        public int ALiveCount => _aliveEntities.Count;
+        public int ToSpawnCount { get; protected set; }
+        public int DestroyedCount { get; private set; }
         public bool SpawnIsActive => _spawningRoutine != null;
 
         private void StartSpawn()
@@ -58,7 +59,7 @@ namespace SpaceAce.Gameplay.Spawning
         {
             SpawnStarted?.Invoke(this, EventArgs.Empty);
 
-            while (SpawnedAmount < AmountToSpawn)
+            while (SpawnedCount < ToSpawnCount)
             {
                 foreach (var (anchorName, spawnDelay) in Config.GetProceduralWave())
                 {
@@ -66,20 +67,14 @@ namespace SpaceAce.Gameplay.Spawning
 
                     SpawnEntity(anchorName);
 
-                    if (SpawnedAmount == AmountToSpawn)
-                    {
-                        break;
-                    }
+                    if (SpawnedCount == ToSpawnCount) break;
                 }
 
                 if (Config.HaltUntilClear)
                 {
                     SpawnPaused?.Invoke(this, EventArgs.Empty);
 
-                    while (AliveAmount > 0)
-                    {
-                        yield return null;
-                    }
+                    while (ALiveCount > 0) yield return null;
 
                     SpawnResumed?.Invoke(this, EventArgs.Empty);
                 }
@@ -109,6 +104,7 @@ namespace SpaceAce.Gameplay.Spawning
                 {
                     s_multiobjectPool.Access.ReleaseObject(anchorName, entity, () => true);
                     _aliveEntities.Remove((entity, anchorName));
+                    DestroyedCount++;
                 };
             }
             else
@@ -145,7 +141,7 @@ namespace SpaceAce.Gameplay.Spawning
                 }
             }
 
-            SpawnedAmount++;
+            SpawnedCount++;
             EntitySpawned?.Invoke(this, new(escapable, destroyable));
         }
 
@@ -224,8 +220,9 @@ namespace SpaceAce.Gameplay.Spawning
         {
             OnConfigSetup(e.LevelConfig);
 
-            SpawnedAmount = 0;
-            AmountToSpawn = Config.AmountToSpawn.RandomValue;
+            SpawnedCount = 0;
+            ToSpawnCount = Config.AmountToSpawn.RandomValue;
+            DestroyedCount = 0;
 
             StartSpawn();
         }

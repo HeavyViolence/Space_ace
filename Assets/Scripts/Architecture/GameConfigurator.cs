@@ -53,6 +53,10 @@ namespace SpaceAce.Architecture
         [SerializeField] private InventoryItemRarityColorsConfig _itemRarityColorsConfig;
         [SerializeField] private ObjectPoolEntry _lootItemBox;
 
+        [SerializeField] private AnimationCurve _easingCurveIn;
+        [SerializeField] private AnimationCurve _easingCurveOut;
+        [SerializeField] private AnimationCurve _easingCurveInOut;
+
         #endregion
 
         #region private fields
@@ -69,6 +73,10 @@ namespace SpaceAce.Architecture
             CreateGameServices();
             InitializeGameServices();
             PerformEventsSubscriptionForGameServices();
+
+            AuxMath.EasingCurveIn = _easingCurveIn;
+            AuxMath.EasingCurveOut = _easingCurveOut;
+            AuxMath.EasingCurveInOut = _easingCurveInOut;
         }
 
         private void Start()
@@ -115,6 +123,8 @@ namespace SpaceAce.Architecture
             _gameServices.Add(new ScreenFader(_fadingCurve, _fadingColor));
             _gameServices.Add(new MultiobjectPool());
             _gameServices.Add(new LevelCompleter());
+            _gameServices.Add(new LevelRewardCollector());
+            _gameServices.Add(new LevelTimer());
             _gameServices.Add(new GamePauser());
             _gameServices.Add(new EnemySpawner());
             _gameServices.Add(new BossSpawner(_bossSpawnAlarm));
@@ -136,6 +146,7 @@ namespace SpaceAce.Architecture
             _gameServices.Add(new LevelSelectionDisplay(_uiAssets));
             _gameServices.Add(new InventoryDisplay(_uiAssets));
             _gameServices.Add(new HUDDisplay(_uiAssets));
+            _gameServices.Add(new PauseDisplay(_uiAssets));
         }
 
         private void InitializeGameServices()

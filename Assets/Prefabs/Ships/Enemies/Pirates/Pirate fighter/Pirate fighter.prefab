@@ -53,6 +53,7 @@ GameObject:
   - component: {fileID: 6244290535508205606}
   - component: {fileID: -6018448770865221636}
   - component: {fileID: 1198184925496264146}
+  - component: {fileID: -9145582377835167376}
   m_Layer: 8
   m_Name: Pirate fighter
   m_TagString: Untagged
@@ -93,6 +94,12 @@ Rigidbody2D:
   m_AngularDrag: 0.05
   m_GravityScale: 1
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -107,6 +114,25 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -231,6 +257,19 @@ MonoBehaviour:
   _lootConfig: {fileID: 11400000, guid: 74e4547e9e27e9646b5fa0c9a09443a3, type: 2}
   _enableAmplifiedLoot: 1
   _amplifiedLootConfig: {fileID: 11400000, guid: 86dd9d49721fc4b4eb7f02fdb34d6d71, type: 2}
+--- !u!114 &-9145582377835167376
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4560740076638076997}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd0df5fb3ab830b44b7466a1b16177be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _config: {fileID: 11400000, guid: 07592957d9c9de44eac1d6e0b1e4495c, type: 2}
 --- !u!1 &4560740076788680733
 GameObject:
   m_ObjectHideFlags: 0

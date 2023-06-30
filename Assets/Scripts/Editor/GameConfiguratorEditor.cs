@@ -42,6 +42,11 @@ namespace SpaceAce.Editors
         private SerializedProperty _itemRarityColorsConfig;
         private SerializedProperty _lootItemBox;
 
+        private bool _showOtherSettings = false;
+        private SerializedProperty _easingCurveIn;
+        private SerializedProperty _easingCurveOut;
+        private SerializedProperty _easingCurveInOut;
+
         private void OnEnable()
         {
             _idGeneratorSeed = serializedObject.FindProperty("_idGeneratorSeed");
@@ -70,6 +75,10 @@ namespace SpaceAce.Editors
             _itemIconsConfig = serializedObject.FindProperty("_itemIconsConfig");
             _itemRarityColorsConfig = serializedObject.FindProperty("_itemRarityColorsConfig");
             _lootItemBox = serializedObject.FindProperty("_lootItemBox");
+
+            _easingCurveIn = serializedObject.FindProperty("_easingCurveIn");
+            _easingCurveOut = serializedObject.FindProperty("_easingCurveOut");
+            _easingCurveInOut = serializedObject.FindProperty("_easingCurveInOut");
         }
 
         public override void OnInspectorGUI()
@@ -149,6 +158,16 @@ namespace SpaceAce.Editors
                 EditorGUILayout.PropertyField(_itemIconsConfig, new GUIContent("Item icons"));
                 EditorGUILayout.PropertyField(_itemRarityColorsConfig, new GUIContent("Item rarity colors"));
                 EditorGUILayout.PropertyField(_lootItemBox, new GUIContent("Loot item box"));
+            }
+
+            EditorGUILayout.Separator();
+            _showOtherSettings = EditorGUILayout.Foldout(_showOtherSettings, "Other");
+
+            if (_showOtherSettings  == true)
+            {
+                EditorGUILayout.PropertyField(_easingCurveIn, new GUIContent("Easing curve in"));
+                EditorGUILayout.PropertyField(_easingCurveOut, new GUIContent("Easing curve out"));
+                EditorGUILayout.PropertyField(_easingCurveInOut, new GUIContent("Easing curve in and out"));
             }
 
             serializedObject.ApplyModifiedProperties();

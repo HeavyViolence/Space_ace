@@ -65,7 +65,7 @@ namespace SpaceAce.Levels
 
         public void OnClear()
         {
-            GameServices.Register(this);
+            GameServices.Deregister(this);
         }
 
         public void OnUpdate()

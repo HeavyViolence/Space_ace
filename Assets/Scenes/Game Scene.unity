@@ -241,3 +241,84 @@ MonoBehaviour:
   _itemIconsConfig: {fileID: 11400000, guid: 30dd9ec56026d97439ff6b0175e18f85, type: 2}
   _itemRarityColorsConfig: {fileID: 11400000, guid: 2d4da6e81206b5943bbe95359bd461b9, type: 2}
   _lootItemBox: {fileID: 11400000, guid: 8c3fbfd06a586c04cbe73824cc2be4ce, type: 2}
+  _easingCurveIn:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2.9146283
+      outSlope: 2.9146283
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.12752722
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _easingCurveOut:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 2.9047759
+      outSlope: 2.9047759
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.031104207
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _easingCurveInOut:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0.0041131726
+      outSlope: 0.0041131726
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 1
+    - serializedVersion: 3
+      time: 0.5
+      value: 0.5
+      inSlope: 2.681004
+      outSlope: 2.681004
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.051321924
+      outWeight: 0.06687403
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4

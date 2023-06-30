@@ -49,31 +49,16 @@ namespace SpaceAce.Gameplay.Damageables
 
         protected virtual void Update()
         {
-            if (MasterCameraHolder.Access.InsideViewport(transform.position) == true)
-            {
-                _lifetime += Time.deltaTime;
-            }
+            if (MasterCameraHolder.Access.InsideViewport(transform.position) == true) _lifetime += Time.deltaTime;
         }
 
         private void CacheRequiredComponents()
         {
-            if (TryGetComponent(out Health health))
-            {
-                _health = health;
-            }
-            else
-            {
-                throw new MissingComponentException($"{name} is missing a mandatory component of type {typeof(Health)}!");
-            }
+            if (TryGetComponent(out Health health)) _health = health;
+            else throw new MissingComponentException($"{name} is missing a mandatory component of type {typeof(Health)}!");
 
-            if (TryGetComponent(out Armor armor))
-            {
-                _armor = armor;
-            }
-            else
-            {
-                throw new MissingComponentException($"{name} is missing a mandatory component of type {typeof(Armor)}!");
-            }
+            if (TryGetComponent(out Armor armor)) _armor = armor;
+            else throw new MissingComponentException($"{name} is missing a mandatory component of type {typeof(Armor)}!");
 
             _experience = GetComponent<ExperienceHolder>();
         }

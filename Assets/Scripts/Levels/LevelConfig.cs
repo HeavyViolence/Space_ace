@@ -11,15 +11,15 @@ namespace SpaceAce.Levels
         public const int MinLevelIndex = 1;
         public const int MaxLevelIndex = 15;
 
-        public const int MinCrystalsReward = 100;
-        public const int MaxCrystalsReward = 10_000;
+        public const int MinCreditReward = 100;
+        public const int MaxCreditReward = 10_000;
 
         public const int MinExperienceReward = 1_000;
         public const int MaxExperienceReward = 1_000_000;
 
         [SerializeField] private int _levelIndex = MinLevelIndex;
 
-        [SerializeField] private int _crystalsReward = MinCrystalsReward;
+        [SerializeField] private int _creditReward = MinCreditReward;
         [SerializeField] private int _experienceReward = MinExperienceReward;
 
         [SerializeField] private bool _bossEnabled = false;
@@ -32,7 +32,7 @@ namespace SpaceAce.Levels
 
         public int LevelIndex => _levelIndex;
 
-        public int CrystalsReward => _crystalsReward;
+        public int CreditReward => _creditReward;
         public int ExperienceReward => _experienceReward;
 
         public bool BossEnabled => _bossEnabled;

@@ -14,14 +14,14 @@ namespace SpaceAce.Main
 
         public event EventHandler FadingStarted, FadedOut, FadingCompleted;
 
-        private Image _faderImage;
+        private readonly Image _faderImage;
 
         private readonly Color32 _inactiveFadeColor;
         private readonly Color32 _activeFadeColor;
 
         private readonly AnimationCurve _fadingCurve;
 
-        public bool FadeIsActive { get; private set; } = false;
+        public bool Active { get; private set; } = false;
 
         public ScreenFader(AnimationCurve fadingCurve, Color32 fadingColor)
         {
@@ -56,14 +56,14 @@ namespace SpaceAce.Main
 
         public void PerformScreenFading(float duration = DefaultFadeDuration)
         {
-            if (FadeIsActive == false)
+            if (Active == false)
             {
                 float clampedDuration = Mathf.Clamp(duration, MinFadeDuration, MaxFadeDuration);
                 CoroutineRunner.RunRoutine(Fader(clampedDuration));
 
                 IEnumerator Fader(float duration)
                 {
-                    FadeIsActive = true;
+                    Active = true;
                     FadingStarted?.Invoke(this, EventArgs.Empty);
 
                     float timer = 0f;
@@ -88,7 +88,7 @@ namespace SpaceAce.Main
                     }
 
                     FadingCompleted?.Invoke(this, EventArgs.Empty);
-                    FadeIsActive = false;
+                    Active = false;
                 }
             }
         }

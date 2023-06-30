@@ -1,13 +1,15 @@
 using SpaceAce.Architecture;
+using SpaceAce.Auxiliary;
 using SpaceAce.Gameplay.Experience;
 using SpaceAce.Main;
 using SpaceAce.Main.ObjectPooling;
+using SpaceAce.UI;
 using System;
 using UnityEngine;
 
 namespace SpaceAce.Gameplay.Damageables
 {
-    public abstract class Health : MonoBehaviour, IExperienceSource
+    public abstract class Health : MonoBehaviour, IExperienceSource, IHealthView
     {
         private const float DeathEffectLifetime = 3f;
 
@@ -15,22 +17,63 @@ namespace SpaceAce.Gameplay.Damageables
         private static readonly GameServiceFastAccess<MultiobjectPool> s_multiobjectPool = new();
 
         public event EventHandler Depleted, Restored;
+        public event EventHandler<FloatValueChangedEventArgs> ValueChanged, MaxValueChanged, RegenerationPerSecondValueChanged;
 
         [SerializeField] private HealthConfig _config = null;
 
         private bool _restoredEventToBeCalled = false;
+        private float _value;
+        private float _maxValue;
+        private float _regenPerSecond;
 
-        public float Value { get; private set; }
-        public float MaxValue { get; protected set; }
-        public float ValuePercentage => Value / MaxValue;
-        public float RegenPerSecond { get; protected set; }
-        public bool ValueIsFull => Value > MaxValue;
+        public float ValuePercentage => Value / MaxValue * 100f;
+        public bool Full => Value > MaxValue;
         public float RegainedValue { get; private set; }
+
+        public float Value
+        {
+            get => _value;
+
+            protected set
+            {
+                float oldValue = _value;
+
+                _value = Mathf.Clamp(value, 0f, MaxValue);
+                ValueChanged?.Invoke(this, new(oldValue, _value));
+            }
+        }
+
+        public float MaxValue
+        {
+            get => _maxValue;
+
+            protected set
+            {
+                float oldValue = _maxValue;
+
+                _maxValue = Mathf.Clamp(value, 0f, float.MaxValue);
+                MaxValueChanged?.Invoke(this, new(oldValue, _maxValue));
+            }
+        }
+
+        public float RegenPerSecond
+        {
+            get => _regenPerSecond;
+
+            protected set
+            {
+                float oldValue = _regenPerSecond;
+
+                _regenPerSecond = Mathf.Clamp(value, 0f, float.MaxValue);
+                RegenerationPerSecondValueChanged?.Invoke(this, new(oldValue, _regenPerSecond));
+            }
+        }
 
         protected virtual void OnEnable()
         {
             MaxValue = _config.HealthCeiling.RandomValue;
             Value = MaxValue;
+
             RegenPerSecond = GetRegenPerSecond();
             RegainedValue = 0f;
         }
@@ -48,21 +91,21 @@ namespace SpaceAce.Gameplay.Damageables
 
         protected virtual void Update()
         {
-            RestoreHealthIfRegenIsEnabled();
+            RestoreHealthIfRegenerationIsEnabled();
         }
 
         protected virtual float GetRegenPerSecond() => _config.Regeneration.RandomValue;
 
-        private void RestoreHealthIfRegenIsEnabled()
+        private void RestoreHealthIfRegenerationIsEnabled()
         {
-            if (_config.RegenerationEnabled && ValueIsFull == false)
+            if (_config.RegenerationEnabled && Full == false)
             {
                 float regainedValue = RegenPerSecond * Time.deltaTime;
 
                 Value += regainedValue;
                 RegainedValue += regainedValue;
 
-                if (ValueIsFull && _restoredEventToBeCalled)
+                if (Full && _restoredEventToBeCalled)
                 {
                     Restored?.Invoke(this, EventArgs.Empty);
 
@@ -74,23 +117,11 @@ namespace SpaceAce.Gameplay.Damageables
 
         public void DealDamage(float damage)
         {
-            if (damage <= 0f)
-            {
-                throw new ArgumentOutOfRangeException(nameof(damage), damage, $"Damage value must be positive!");
-            }
-
             Value -= damage;
             _restoredEventToBeCalled = true;
 
-            if (_config.CameraShakeOnDamagedEnabled)
-            {
-                s_cameraShaker.Access.ShakeOnHit();
-            }
-
-            if (Value < 0f)
-            {
-                Die();
-            }
+            if (_config.CameraShakeOnDamagedEnabled) s_cameraShaker.Access.ShakeOnHit();
+            if (Value == 0f) Die();
         }
 
         protected virtual void Die()

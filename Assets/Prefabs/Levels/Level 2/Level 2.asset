@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Level 2
   m_EditorClassIdentifier: 
   _levelIndex: 2
-  _crystalsReward: 750
-  _experienceReward: 5000
+  _creditReward: 750
+  _experienceReward: 40000
   _bossEnabled: 0
   _boss: {fileID: 0}
   _enemySpawnerConfig: {fileID: 11400000, guid: fac726e3131094646aee287bb742cb04, type: 2}

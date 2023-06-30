@@ -5,11 +5,16 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -4169461857220953130, guid: f381cba2344c08946be56810300503ef, type: 3}
+      propertyPath: _config
+      value: 
+      objectReference: {fileID: 11400000, guid: fa36515cfa8e5674a9e3780bc9bb27da, type: 2}
     - target: {fileID: 7820209024046506368, guid: f381cba2344c08946be56810300503ef, type: 3}
       propertyPath: m_Name
-      value: Meteor very poor 1
+      value: Meteor rich 1
       objectReference: {fileID: 0}
     - target: {fileID: 7820209024046506371, guid: f381cba2344c08946be56810300503ef, type: 3}
       propertyPath: _config
@@ -76,6 +81,12 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7820209024046506368, guid: f381cba2344c08946be56810300503ef, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 779279235772956952}
   m_SourcePrefab: {fileID: 100100000, guid: f381cba2344c08946be56810300503ef, type: 3}
 --- !u!1 &8283685325084362359 stripped
 GameObject:
@@ -92,6 +103,25 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0

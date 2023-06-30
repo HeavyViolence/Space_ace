@@ -160,6 +160,7 @@ GameObject:
   - component: {fileID: 1188530917719322759}
   - component: {fileID: 1188530917719322758}
   - component: {fileID: 776134742791499926}
+  - component: {fileID: 2902183330523086700}
   m_Layer: 10
   m_Name: Pirate boss
   m_TagString: Untagged
@@ -200,6 +201,12 @@ Rigidbody2D:
   m_AngularDrag: 0.05
   m_GravityScale: 1
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -214,6 +221,25 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -334,6 +360,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lootConfig: {fileID: 11400000, guid: 49a4d8a46ea97bc44a08d4ddddd43ec7, type: 2}
+  _enableAmplifiedLoot: 0
+  _amplifiedLootConfig: {fileID: 0}
+--- !u!114 &2902183330523086700
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1188530917719322764}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd0df5fb3ab830b44b7466a1b16177be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _config: {fileID: 11400000, guid: 4cc6769a3c17be848a2eeb3113c2526e, type: 2}
 --- !u!1 &1188530918464576436
 GameObject:
   m_ObjectHideFlags: 0

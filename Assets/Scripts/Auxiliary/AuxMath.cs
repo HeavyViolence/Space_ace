@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace SpaceAce.Auxiliary
 {
@@ -16,6 +17,10 @@ namespace SpaceAce.Auxiliary
         public static float RandomSign => RandomNormal > 0f ? 1f : -1f;
         public static bool RandomBoolean => RandomSign > 0f;
 
+        public static AnimationCurve EasingCurveIn { get; set; }
+        public static AnimationCurve EasingCurveOut { get; set; }
+        public static AnimationCurve EasingCurveInOut { get; set; }
+
         public static IEnumerable<int> GetRandomNumbersWithoutRepetition(int min, int max, int amount)
         {
             if (min >= max)
@@ -28,7 +33,7 @@ namespace SpaceAce.Auxiliary
                 throw new ArgumentOutOfRangeException(nameof(amount), amount, "Amount cannot be greater than total integers within range!");
             }
 
-            Random random = new();
+            System.Random random = new();
             List<int> availableNumbers = Enumerable.Range(min, max - min).ToList();
             List<int> generatedNumbers = new(amount);
 
@@ -50,7 +55,7 @@ namespace SpaceAce.Auxiliary
                 throw new ArgumentOutOfRangeException(nameof(amount), $"Amount of random numbers to generate must not surpass the available numbers count!");
             }
 
-            Random random = new();
+            System.Random random = new();
             HashSet<int> numbersToUse = new(availableNumbers);
             List<int> generatedNumbers = new(amount);
 
