@@ -203,6 +203,7 @@ GameObject:
   - component: {fileID: 790491314155069185}
   - component: {fileID: 4592139864627298151}
   - component: {fileID: 5914116611426064447}
+  - component: {fileID: 7139248828368520008}
   m_Layer: 6
   m_Name: Player ship 1.5
   m_TagString: Untagged
@@ -391,3 +392,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _config: {fileID: 11400000, guid: 5f47fd82f5ab0c44ab7804f93a093978, type: 2}
+--- !u!114 &7139248828368520008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7974589715784257024}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39914f330372bc54dba192d6268336cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -12,6 +12,7 @@ namespace SpaceAce.Gameplay.Shooting
         private static readonly GameServiceFastAccess<MasterCameraHolder> s_masterCameraHolder = new();
         private static readonly GameServiceFastAccess<GameModeLoader> s_gameModeLoader = new();
         private static readonly GameServiceFastAccess<LevelCompleter> s_levelCompleter = new();
+        private static readonly GameServiceFastAccess<GamePauser> s_gamePauser = new();
 
         [SerializeField] private ShootingConfig _config;
 
@@ -51,10 +52,7 @@ namespace SpaceAce.Gameplay.Shooting
             {
                 _firingRoutine = StartCoroutine(FireForever());
 
-                if (WeaponGroupsAmount > 1)
-                {
-                    _weaponsSwitchRoutine = StartCoroutine(SwitchWeapons());
-                }
+                if (WeaponGroupsAmount > 1) _weaponsSwitchRoutine = StartCoroutine(SwitchWeapons());
             }
         }
 
@@ -75,41 +73,36 @@ namespace SpaceAce.Gameplay.Shooting
 
         private IEnumerator FireForever()
         {
-            while (s_masterCameraHolder.Access.InsideViewport(transform.position) == false)
-            {
-                yield return null;
-            }
+            while (s_masterCameraHolder.Access.InsideViewport(transform.position) == false) yield return null;
 
+            while (s_gamePauser.Access.Paused == true) yield return null;
             yield return new WaitForSeconds(FirstFireDelay);
 
             while (true)
             {
                 var gun = NextActiveGun;
 
-                while (gun.ReadyToFire == false)
-                {
-                    yield return null;
-                }
+                while (gun.ReadyToFire == false) yield return null;
 
                 gun.Fire();
 
+                while (s_gamePauser.Access.Paused == true) yield return null;
                 yield return new WaitForSeconds(NextFireDelay);
             }
         }
 
         private IEnumerator SwitchWeapons()
         {
-            while (s_masterCameraHolder.Access.InsideViewport(transform.position) == false)
-            {
-                yield return null;
-            }
+            while (s_masterCameraHolder.Access.InsideViewport(transform.position) == false) yield return null;
 
+            while (s_gamePauser.Access.Paused == true) yield return null;
             yield return new WaitForSeconds(FirstWeaponsSwitchDelay);
 
             ActivateNextWeaponGroup(true);
 
             while (true)
             {
+                while (s_gamePauser.Access.Paused == true) yield return null;
                 yield return new WaitForSeconds(NextWeaponsSwitchDelay);
 
                 ActivateNextWeaponGroup(true);

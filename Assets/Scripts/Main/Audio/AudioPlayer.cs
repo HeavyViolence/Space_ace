@@ -29,29 +29,19 @@ namespace SpaceAce.Main.Audio
 
         public AudioPlayer(string id, AudioMixer audioMixer)
         {
-            if (StringID.IsValid(id) == false)
-            {
-                throw new InvalidStringIDException();
-            }
-
+            if (StringID.IsValid(id) == false) throw new InvalidStringIDException();
             ID = id;
 
-            if (audioMixer == null)
-            {
-                throw new ArgumentNullException(nameof(audioMixer), $"Attempted to set an empty {nameof(AudioMixer)}!");
-            }
-
+            if (audioMixer == null) throw new ArgumentNullException(nameof(audioMixer), $"Attempted to set an empty {nameof(AudioMixer)}!");
             _audioMixer = audioMixer;
+
             Settings = AudioPlayerSettings.Default;
             CreateAudioSourcePool();
         }
 
         public void ApplySettings(AudioPlayerSettings settings, bool save)
         {
-            if (settings is null)
-            {
-                throw new ArgumentNullException(nameof(settings), $"Attempted to apply an empty {nameof(AudioPlayerSettings)}!");
-            }
+            if (settings is null) throw new ArgumentNullException(nameof(settings), $"Attempted to apply an empty {nameof(AudioPlayerSettings)}!");
 
             SetVolume("Master volume", settings.MasterVolume);
             SetVolume("Shooting volume", settings.ShootingVolume);
@@ -64,10 +54,7 @@ namespace SpaceAce.Main.Audio
 
             Settings = settings;
 
-            if (save == true)
-            {
-                SavingRequested?.Invoke(this, EventArgs.Empty);
-            }
+            if (save == true) SavingRequested?.Invoke(this, EventArgs.Empty);
         }
 
         private void SetVolume(string name, float volume)
@@ -184,10 +171,7 @@ namespace SpaceAce.Main.Audio
 
         private AudioSource FindAvailableAudioSource()
         {
-            if (_availableAudioSources.Count > 0)
-            {
-                return _availableAudioSources.Pop();
-            }
+            if (_availableAudioSources.Count > 0) return _availableAudioSources.Pop();
 
             byte priority = 0;
             string id = string.Empty;
@@ -195,10 +179,7 @@ namespace SpaceAce.Main.Audio
 
             foreach (var source in _activeAudioSources)
             {
-                if (source.Value.loop == true)
-                {
-                    continue;
-                }
+                if (source.Value.loop == true) continue;
 
                 if (source.Value.priority > priority)
                 {
@@ -223,26 +204,14 @@ namespace SpaceAce.Main.Audio
 
         public void OnSubscribe()
         {
-            if (GameServices.TryGetService(out SavingSystem system) == true)
-            {
-                system.Register(this);
-            }
-            else
-            {
-                throw new UnregisteredGameServiceAccessAttemptException(typeof(SavingSystem));
-            }
+            if (GameServices.TryGetService(out SavingSystem system) == true) system.Register(this);
+            else throw new UnregisteredGameServiceAccessAttemptException(typeof(SavingSystem));
         }
 
         public void OnUnsubscribe()
         {
-            if (GameServices.TryGetService(out SavingSystem system) == true)
-            {
-                system.Deregister(this);
-            }
-            else
-            {
-                throw new UnregisteredGameServiceAccessAttemptException(typeof(SavingSystem));
-            }
+            if (GameServices.TryGetService(out SavingSystem system) == true) system.Deregister(this);
+            else throw new UnregisteredGameServiceAccessAttemptException(typeof(SavingSystem));
         }
 
         public void OnClear()

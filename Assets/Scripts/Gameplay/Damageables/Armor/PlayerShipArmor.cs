@@ -43,8 +43,15 @@ namespace SpaceAce.Gameplay.Damageables
         private IEnumerator BoostArmor(float boostValue, float duration)
         {
             Value += boostValue;
+            float timer = 0f;
 
-            yield return new WaitForSeconds(duration);
+            while (timer < duration)
+            {
+                timer += Time.deltaTime;
+
+                yield return null;
+                while (GamePauser.Access.Paused == true) yield return null;
+            }
 
             Value -= boostValue;
             _armorBoostingRoutine = null;

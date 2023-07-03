@@ -23,20 +23,14 @@ namespace SpaceAce.Gameplay.Movement
         {
             base.OnEnable();
 
-            if (Config.CollisionDamageEnabled)
-            {
-                _collisionDamageDealer.Hit += CollisionHitEventHandler;
-            }
+            if (Config.CollisionDamageEnabled) _collisionDamageDealer.Hit += CollisionHitEventHandler;
         }
 
         protected override void OnDisable()
         {
             base.OnDisable();
 
-            if (Config.CollisionDamageEnabled)
-            {
-                _collisionDamageDealer.Hit -= CollisionHitEventHandler;
-            }
+            if (Config.CollisionDamageEnabled) _collisionDamageDealer.Hit -= CollisionHitEventHandler;
         }
 
         protected virtual void CollisionHitEventHandler(object sender, HitEventArgs e)
@@ -44,10 +38,7 @@ namespace SpaceAce.Gameplay.Movement
             e.DamageReceiver.ApplyDamage(Config.CollisionDamage.RandomValue);
             Config.CollisionAudio.PlayRandomAudioClip(e.HitPosition);
 
-            if (Config.CameraShakeOnCollisionEnabled)
-            {
-                CameraShaker.Access.ShakeOnCollision();
-            }
+            if (Config.CameraShakeOnCollisionEnabled) CameraShaker.Access.ShakeOnCollision();
         }
     }
 }

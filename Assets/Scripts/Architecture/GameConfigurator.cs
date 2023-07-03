@@ -151,81 +151,39 @@ namespace SpaceAce.Architecture
 
         private void InitializeGameServices()
         {
-            foreach (var service in _gameServices)
-            {
-                if (service is IGameService value)
-                {
-                    value.OnInitialize();
-                }
-            }
+            foreach (var service in _gameServices) if (service is IGameService value) value.OnInitialize();
         }
 
         private void PerformEventsSubscriptionForGameServices()
         {
-            foreach (var service in _gameServices)
-            {
-                if (service is IGameService value)
-                {
-                    value.OnSubscribe();
-                }
-            }
+            foreach (var service in _gameServices) if (service is IGameService value) value.OnSubscribe();
         }
 
         private void PerformEventsUnsubscriptionForGameServices()
         {
-            foreach (var service in _gameServices)
-            {
-                if (service is IGameService value)
-                {
-                    value.OnUnsubscribe();
-                }
-            }
+            foreach (var service in _gameServices) if (service is IGameService value) value.OnUnsubscribe();
         }
 
         private void ClearGameServices()
         {
-            foreach (var service in _gameServices)
-            {
-                if (service is IGameService value)
-                {
-                    value.OnClear();
-                }
-            }
+            foreach (var service in _gameServices) if (service is IGameService value) value.OnClear();
 
             _gameServices.Clear();
         }
 
         private void UpdateGameServices()
         {
-            foreach (var service in _gameServices)
-            {
-                if (service is IUpdatable value)
-                {
-                    value.OnUpdate();
-                }
-            }
+            foreach (var service in _gameServices) if (service is IUpdatable value) value.OnUpdate();
         }
 
         private void FixedUpdateGameServices()
         {
-            foreach (var service in _gameServices)
-            {
-                if (service is IFixedUpdatable value)
-                {
-                    value.OnFixedUpdate();
-                }
-            }
+            foreach (var service in _gameServices) if (service is IFixedUpdatable value) value.OnFixedUpdate();
         }
 
         private void RunGameServices()
         {
-            foreach (var service in _gameServices)
-            {
-                if (service is IRunnable value)
-                {
-                    value.OnRun();
-                }
-            }
+            foreach (var service in _gameServices) if (service is IRunnable value) value.OnRun();
         }
 
         #endregion

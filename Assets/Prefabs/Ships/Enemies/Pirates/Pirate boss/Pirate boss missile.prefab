@@ -5,6 +5,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 5796639463016869792, guid: b95ffd8070e6b55418a039897d5ce640, type: 3}
@@ -92,6 +93,15 @@ PrefabInstance:
       value: Pirate boss missile
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5796639463016869804, guid: b95ffd8070e6b55418a039897d5ce640, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 535152795}
+    - targetCorrespondingSourceObject: {fileID: 5796639463016869804, guid: b95ffd8070e6b55418a039897d5ce640, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7749088779635104889}
   m_SourcePrefab: {fileID: 100100000, guid: b95ffd8070e6b55418a039897d5ce640, type: 3}
 --- !u!1 &6586820093913583381 stripped
 GameObject:
@@ -119,3 +129,15 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &7749088779635104889
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6586820093913583381}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39914f330372bc54dba192d6268336cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -18,6 +18,7 @@ namespace SpaceAce.Gameplay.Movement.EnemyMovement
 
         private static readonly GameServiceFastAccess<CameraShaker> s_cameraShaker = new();
         private static readonly GameServiceFastAccess<MasterCameraHolder> s_masterCameraHolder = new();
+        private static readonly GameServiceFastAccess<GamePauser> s_gamePauser = new();
 
         public event EventHandler Escaped;
 
@@ -44,7 +45,6 @@ namespace SpaceAce.Gameplay.Movement.EnemyMovement
         public float LowerBound => _config.LowerBound;
         public float NextCollisionDamage => _config.CollisionDamageEnabled ? _config.CollisionDamage.RandomValue * _collisionDamageAmplifier : 0f;
 
-
         public Vector2 PreviousStateExitVelocity { get; set; }
         public Rigidbody2D Body { get; private set; }
 
@@ -64,12 +64,26 @@ namespace SpaceAce.Gameplay.Movement.EnemyMovement
             _collisionDamageAmplifier = 1f;
         }
 
-        private void OnDisable()
+        protected override void OnDeinitialize()
         {
             _collisionDamageDealer.Hit -= CollisionHitEventHandler;
 
             Escaped = null;
             StopWatchingForEscape();
+        }
+
+        protected override void OnUpdate()
+        {
+            if (s_gamePauser.Access.Paused == true) return;
+
+            base.OnUpdate();
+        }
+
+        protected override void OnFixedUpdate()
+        {
+            if (s_gamePauser.Access.Paused == true) return;
+
+            base.OnFixedUpdate();
         }
 
         private Rigidbody2D SetupRigidbody2D()
@@ -93,10 +107,7 @@ namespace SpaceAce.Gameplay.Movement.EnemyMovement
                 e.DamageReceiver?.ApplyDamage(NextCollisionDamage);
                 _config.CollisionAudio.PlayRandomAudioClip(e.HitPosition);
 
-                if (_config.CameraShakeOnCollisionEnabled)
-                {
-                    s_cameraShaker.Access.ShakeOnCollision();
-                }
+                if (_config.CameraShakeOnCollisionEnabled) s_cameraShaker.Access.ShakeOnCollision();
             }
         }
 
@@ -106,24 +117,15 @@ namespace SpaceAce.Gameplay.Movement.EnemyMovement
 
             IEnumerator AwaitEscape(Func<bool> escapeCondition)
             {
-                while (s_masterCameraHolder.Access.InsideViewport(transform.position) == false)
-                {
-                    yield return null;
-                }
+                while (s_masterCameraHolder.Access.InsideViewport(transform.position) == false) yield return null;
 
                 yield return null;
 
-                while (s_masterCameraHolder.Access.InsideViewport(transform.position) == true)
-                {
-                    yield return null;
-                }
+                while (s_masterCameraHolder.Access.InsideViewport(transform.position) == true) yield return null;
 
                 yield return null;
 
-                while (escapeCondition() == false)
-                {
-                    yield return null;
-                }
+                while (escapeCondition() == false) yield return null;
 
                 _escapeAwaitingRoutine = null;
                 Escaped?.Invoke(this, EventArgs.Empty);

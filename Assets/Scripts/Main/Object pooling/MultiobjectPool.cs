@@ -9,6 +9,8 @@ namespace SpaceAce.Main.ObjectPooling
 {
     public sealed class MultiobjectPool : IGameService
     {
+        private static readonly GameServiceFastAccess<GamePauser> s_gamePauser = new();
+
         private readonly Dictionary<string, ObjectPool<GameObject>> _multiobjectPool = new();
         private readonly Dictionary<string, GameObject> _poolAnchors = new();
 
@@ -22,14 +24,9 @@ namespace SpaceAce.Main.ObjectPooling
         public void EnsureObjectPoolExistence(string anchorName, GameObject sample)
         {
             if (string.IsNullOrEmpty(anchorName) || string.IsNullOrWhiteSpace(anchorName))
-            {
                 throw new ArgumentNullException(nameof(anchorName), $"Attempted to assign an invalid anchor name to a new object pool anchor!");
-            }
 
-            if (sample == null)
-            {
-                throw new ArgumentNullException(nameof(sample), $"Attempted to pass an empty sample object!");
-            }
+            if (sample == null) throw new ArgumentNullException(nameof(sample), $"Attempted to pass an empty sample object!");
 
             if (_multiobjectPool.ContainsKey(anchorName) == false)
             {
@@ -83,42 +80,32 @@ namespace SpaceAce.Main.ObjectPooling
 
         public void ReleaseObject(string anchorName, GameObject member, Func<bool> condition, float delay = 0f)
         {
-            if (member == null)
-            {
-                throw new ArgumentNullException(nameof(member), "Attempted to release an empty object to an object pool!");
-            }
+            if (member == null) throw new ArgumentNullException(nameof(member), "Attempted to release an empty object to an object pool!");
 
-            if (member.activeInHierarchy == false)
-            {
-                return;
-            }
+            if (member.activeInHierarchy == false) return;
 
             CoroutineRunner.RunRoutine(ReleaseObjectConditionally());
 
             IEnumerator ReleaseObjectConditionally()
             {
-                while (condition() == false)
-                {
-                    yield return null;
-                }
+                while (condition() == false || s_gamePauser.Access.Paused == true) yield return null;
 
-                if (delay > 0f)
+                float timer = 0f;
+
+                while (timer < delay)
                 {
-                    yield return new WaitForSeconds(delay);
+                    timer += Time.deltaTime;
+
+                    yield return null;
+                    while (s_gamePauser.Access.Paused == true) yield return null;
                 }
 
                 yield return null;
 
                 if (member.activeInHierarchy == true)
                 {
-                    if (_multiobjectPool.TryGetValue(anchorName, out var pool) == true)
-                    {
-                        pool.Release(member);
-                    }
-                    else
-                    {
-                        throw new MissingObjectPoolException(anchorName);
-                    }
+                    if (_multiobjectPool.TryGetValue(anchorName, out var pool) == true) pool.Release(member);
+                    else throw new MissingObjectPoolException(anchorName);
                 }
             }
         }
@@ -144,18 +131,10 @@ namespace SpaceAce.Main.ObjectPooling
         {
             GameServices.Deregister(this);
 
-            foreach (var element in _multiobjectPool)
-            {
-                element.Value.Dispose();
-            }
-
+            foreach (var element in _multiobjectPool) element.Value.Dispose();
             _multiobjectPool.Clear();
 
-            foreach (var element in _poolAnchors)
-            {
-                UnityEngine.Object.Destroy(element.Value);
-            }
-
+            foreach (var element in _poolAnchors) UnityEngine.Object.Destroy(element.Value);
             _poolAnchors.Clear();
         }
 

@@ -39,25 +39,13 @@ namespace SpaceAce.Gameplay.Players
 
         public Player(string id, ObjectPoolEntry defaultPlayerShip, ObjectPoolEntryLookupTable table)
         {
-            if (StringID.IsValid(id) == false)
-            {
-                throw new InvalidStringIDException();
-            }
-
+            if (StringID.IsValid(id) == false) throw new InvalidStringIDException();
             ID = id;
 
-            if (defaultPlayerShip == null)
-            {
-                throw new ArgumentNullException(nameof(defaultPlayerShip), "Attempted to pass an empty default player ship!");
-            }
-
+            if (defaultPlayerShip == null) throw new ArgumentNullException(nameof(defaultPlayerShip), "Attempted to pass an empty default player ship!");
             _defaultShip = defaultPlayerShip;
 
-            if (table == null)
-            {
-                throw new ArgumentNullException(nameof(table), $"Attempted to pass an empty {nameof(ObjectPoolEntryLookupTable)}!");
-            }
-
+            if (table == null) throw new ArgumentNullException(nameof(table), $"Attempted to pass an empty {nameof(ObjectPoolEntryLookupTable)}!");
             _objectPoolEntryLookupTable = table;
 
             _gameControls = new();
@@ -79,14 +67,8 @@ namespace SpaceAce.Gameplay.Players
         {
             _gameControls.Gameplay.Shooting.performed += (c) => _shipShootingController.Shoot();
 
-            if (GameServices.TryGetService(out SavingSystem system) == true)
-            {
-                system.Register(this);
-            }
-            else
-            {
-                throw new UnregisteredGameServiceAccessAttemptException(typeof(SavingSystem));
-            }
+            if (GameServices.TryGetService(out SavingSystem system) == true) system.Register(this);
+            else throw new UnregisteredGameServiceAccessAttemptException(typeof(SavingSystem));
 
             if (GameServices.TryGetService(out GameModeLoader loader) == true)
             {
@@ -100,23 +82,11 @@ namespace SpaceAce.Gameplay.Players
                 throw new UnregisteredGameServiceAccessAttemptException(typeof(GameModeLoader));
             }
 
-            if (GameServices.TryGetService(out LevelCompleter completer) == true)
-            {
-                completer.LevelConcluded += LevelConcludedEventHandler;
-            }
-            else
-            {
-                throw new UnregisteredGameServiceAccessAttemptException(typeof(LevelCompleter));
-            }
+            if (GameServices.TryGetService(out LevelCompleter completer) == true) completer.LevelConcluded += LevelConcludedEventHandler;
+            else throw new UnregisteredGameServiceAccessAttemptException(typeof(LevelCompleter));
 
-            if (GameServices.TryGetService(out LevelRewardCollector collector) == true)
-            {
-                collector.RewardDispensed += LevelRewardCollectedEventHandler;
-            }
-            else
-            {
-                throw new UnregisteredGameServiceAccessAttemptException(typeof(LevelRewardCollector));
-            }
+            if (GameServices.TryGetService(out LevelRewardCollector collector) == true) collector.RewardDispensed += LevelRewardCollectedEventHandler;
+            else throw new UnregisteredGameServiceAccessAttemptException(typeof(LevelRewardCollector));
 
             if (GameServices.TryGetService(out HUDDisplay hudDisplay) == true)
             {
@@ -133,14 +103,8 @@ namespace SpaceAce.Gameplay.Players
         {
             _gameControls.Gameplay.Shooting.performed -= (c) => _shipShootingController.Shoot();
 
-            if (GameServices.TryGetService(out SavingSystem system) == true)
-            {
-                system.Deregister(this);
-            }
-            else
-            {
-                throw new UnregisteredGameServiceAccessAttemptException(typeof(SavingSystem));
-            }
+            if (GameServices.TryGetService(out SavingSystem system) == true) system.Deregister(this);
+            else throw new UnregisteredGameServiceAccessAttemptException(typeof(SavingSystem));
 
             if (GameServices.TryGetService(out GameModeLoader loader) == true)
             {
@@ -154,23 +118,11 @@ namespace SpaceAce.Gameplay.Players
                 throw new UnregisteredGameServiceAccessAttemptException(typeof(GameModeLoader));
             }
 
-            if (GameServices.TryGetService(out LevelCompleter completer) == true)
-            {
-                completer.LevelConcluded -= LevelConcludedEventHandler;
-            }
-            else
-            {
-                throw new UnregisteredGameServiceAccessAttemptException(typeof(LevelCompleter));
-            }
+            if (GameServices.TryGetService(out LevelCompleter completer) == true) completer.LevelConcluded -= LevelConcludedEventHandler;
+            else throw new UnregisteredGameServiceAccessAttemptException(typeof(LevelCompleter));
 
-            if (GameServices.TryGetService(out LevelRewardCollector collector) == true)
-            {
-                collector.RewardDispensed -= LevelRewardCollectedEventHandler;
-            }
-            else
-            {
-                throw new UnregisteredGameServiceAccessAttemptException(typeof(LevelRewardCollector));
-            }
+            if (GameServices.TryGetService(out LevelRewardCollector collector) == true) collector.RewardDispensed -= LevelRewardCollectedEventHandler;
+            else throw new UnregisteredGameServiceAccessAttemptException(typeof(LevelRewardCollector));
 
             if (GameServices.TryGetService(out HUDDisplay hudDisplay) == true)
             {
@@ -262,23 +214,11 @@ namespace SpaceAce.Gameplay.Players
             SelectedShip.EnsureObjectPoolExistence();
             _activeShip = s_multiobjectPool.Access.GetObject(SelectedShip.AnchorName);
 
-            if (_activeShip.TryGetComponent(out IMovementController movementController) == true)
-            {
-                _shipMovementController = movementController;
-            }
-            else
-            {
-                throw new MissingComponentException($"Player ship is missing a mandatory component of type {typeof(IMovementController)}!");
-            }
+            if (_activeShip.TryGetComponent(out IMovementController movementController) == true) _shipMovementController = movementController;
+            else throw new MissingComponentException($"Player ship is missing a mandatory component of type {typeof(IMovementController)}!");
 
-            if (_activeShip.TryGetComponent(out IShootingController shootingController) == true)
-            {
-                _shipShootingController = shootingController;
-            }
-            else
-            {
-                throw new MissingComponentException($"Player ship is missing a mandatory component of type {typeof(IShootingController)}!");
-            }
+            if (_activeShip.TryGetComponent(out IShootingController shootingController) == true) _shipShootingController = shootingController;
+            else throw new MissingComponentException($"Player ship is missing a mandatory component of type {typeof(IShootingController)}!");
 
             if (_activeShip.TryGetComponent(out IDestroyable destroyable) == true)
             {

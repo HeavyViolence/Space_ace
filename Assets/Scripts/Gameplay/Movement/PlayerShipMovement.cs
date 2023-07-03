@@ -30,25 +30,10 @@ namespace SpaceAce.Gameplay.Movement
             float x = rawMovementDirection.x;
             float y = rawMovementDirection.y;
 
-            if (Body.position.x < Config.LeftBound)
-            {
-                x = Mathf.Clamp(x, 0f, 1f);
-            }
-
-            if (Body.position.x > Config.RightBound)
-            {
-                x = Mathf.Clamp(x, -1f, 0f);
-            }
-
-            if (Body.position.y < Config.LowerBound)
-            {
-                y = Mathf.Clamp(y, 0f, 1f);
-            }
-
-            if (Body.position.y > Config.UpperBound)
-            {
-                y = Mathf.Clamp(y, -1f, 0f);
-            }
+            if (Body.position.x < Config.LeftBound) x = Mathf.Clamp(x, 0f, 1f);
+            if (Body.position.x > Config.RightBound) x = Mathf.Clamp(x, -1f, 0f);
+            if (Body.position.y < Config.LowerBound) y = Mathf.Clamp(y, 0f, 1f);
+            if (Body.position.y > Config.UpperBound) y = Mathf.Clamp(y, -1f, 0f);
 
             return new Vector2(x, y);
         }

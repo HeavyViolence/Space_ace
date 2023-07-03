@@ -11,6 +11,7 @@ namespace SpaceAce.Gameplay.Movement
     {
         protected static readonly GameServiceFastAccess<MasterCameraHolder> MasterCameraHolder = new();
         protected static readonly GameServiceFastAccess<CameraShaker> CameraShaker = new();
+        protected static readonly GameServiceFastAccess<GamePauser> GamePauser = new();
 
         public event EventHandler Escaped;
 
@@ -36,14 +37,15 @@ namespace SpaceAce.Gameplay.Movement
         protected virtual void OnDisable()
         {
             MovementBehaviour = null;
-
             Escaped = null;
             StopWatchingForEscape();
         }
 
         protected virtual void FixedUpdate()
         {
-            if (MovementBehaviour is null || MovementBehaviourSettings is null) return;
+            if (MovementBehaviour is null ||
+                MovementBehaviourSettings is null ||
+                GamePauser.Access.Paused == true) return;
 
             MovementBehaviour(Body, MovementBehaviourSettings, ref _movementAuxData);
         }
@@ -64,24 +66,15 @@ namespace SpaceAce.Gameplay.Movement
 
             IEnumerator AwaitEscape(Func<bool> escapeCondition)
             {
-                while (MasterCameraHolder.Access.InsideViewport(transform.position) == false)
-                {
-                    yield return null;
-                }
+                while (MasterCameraHolder.Access.InsideViewport(transform.position) == false) yield return null;
 
                 yield return null;
 
-                while (MasterCameraHolder.Access.InsideViewport(transform.position) == true)
-                {
-                    yield return null;
-                }
+                while (MasterCameraHolder.Access.InsideViewport(transform.position) == true) yield return null;
 
                 yield return null;
 
-                while (escapeCondition() == false)
-                {
-                    yield return null;
-                }
+                while (escapeCondition() == false) yield return null;
 
                 yield return null;
 

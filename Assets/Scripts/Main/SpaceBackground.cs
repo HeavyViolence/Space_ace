@@ -12,6 +12,8 @@ namespace SpaceAce.Main
         public const float MaxScrollSpeed = 0.01f;
         public const float DefaultScrollSpeed = 0.002f;
 
+        private static readonly GameServiceFastAccess<GamePauser> s_gamePauser = new();
+
         private readonly Material _mainMenuSpaceBackground;
         private readonly List<Material> _spaceBackgrounds;
         private readonly MeshRenderer _spaceBackgroundMeshRenderer;
@@ -30,19 +32,13 @@ namespace SpaceAce.Main
                                IEnumerable<Material> spaceBackgrounds,
                                GameObject dustfieldPrefab)
         {
-            if (mainMenuSpaceBackground == null)
-            {
-                throw new ArgumentNullException(nameof(mainMenuSpaceBackground),
-                                                "An empty main menu space background material has been passed!");
-            }
+            if (mainMenuSpaceBackground == null) throw new ArgumentNullException(nameof(mainMenuSpaceBackground),
+                                                                                 "An empty main menu space background material has been passed!");
 
             _mainMenuSpaceBackground = mainMenuSpaceBackground;
 
-            if (spaceBackgrounds is null)
-            {
-                throw new ArgumentNullException(nameof(spaceBackgrounds),
-                                                "An empty collection of space background materials has been passed!");
-            }
+            if (spaceBackgrounds is null) throw new ArgumentNullException(nameof(spaceBackgrounds),
+                                                                          "An empty collection of space background materials has been passed!");
 
             _spaceBackgrounds = new(spaceBackgrounds);
 
@@ -54,22 +50,13 @@ namespace SpaceAce.Main
             _spaceBackgroundMeshRenderer.sharedMaterial = mainMenuSpaceBackground;
             _spaceBackgroundMeshRenderer.sharedMaterial.mainTextureOffset = new Vector2(0f, AuxMath.RandomNormal);
 
-            if (dustfieldPrefab == null)
-            {
-                throw new ArgumentNullException(nameof(dustfieldPrefab), $"Attempted to pass an empty dustfield {nameof(ParticleSystem)} prefab!");
-            }
+            if (dustfieldPrefab == null) throw new ArgumentNullException(nameof(dustfieldPrefab), "Attempted to pass an empty dustfield prefab!");
 
             var dustfieldAhchor = UnityEngine.Object.Instantiate(dustfieldPrefab, Vector3.zero, Quaternion.identity);
             dustfieldAhchor.transform.parent = SpaceBackgroundAnchor.transform;
 
-            if (dustfieldAhchor.TryGetComponent(out ParticleSystem system))
-            {
-                _dustfield = system;
-            }
-            else
-            {
-                throw new MissingComponentException($"Passed dustfield prefab doesn't contain a {nameof(ParticleSystem)} component!");
-            }
+            if (dustfieldAhchor.TryGetComponent(out ParticleSystem system)) _dustfield = system;
+            else throw new MissingComponentException($"Passed dustfield prefab doesn't contain a mandatory {nameof(ParticleSystem)} component!");
         }
 
         private (GameObject anchor, MeshRenderer renderer) ConstructSpaceBackground(Vector2 viewportLowerLeftPoint,
@@ -132,6 +119,9 @@ namespace SpaceAce.Main
             {
                 throw new UnregisteredGameServiceAccessAttemptException(typeof(GameModeLoader));
             }
+
+            s_gamePauser.Access.GamePaused += GamePausedEventHandler;
+            s_gamePauser.Access.GameResumed += GameResumedEventHandler;
         }
 
         public void OnUnsubscribe()
@@ -145,6 +135,9 @@ namespace SpaceAce.Main
             {
                 throw new UnregisteredGameServiceAccessAttemptException(typeof(GameModeLoader));
             }
+
+            s_gamePauser.Access.GamePaused -= GamePausedEventHandler;
+            s_gamePauser.Access.GameResumed -= GameResumedEventHandler;
         }
 
         public void OnClear()
@@ -161,6 +154,8 @@ namespace SpaceAce.Main
 
         private void ScrollSpaceBackground()
         {
+            if (s_gamePauser.Access.Paused == true) return;
+
             _spaceBackgroundMeshRenderer.sharedMaterial.mainTextureOffset += new Vector2(0f, ScrollSpeed * Time.deltaTime);
         }
 
@@ -180,6 +175,16 @@ namespace SpaceAce.Main
             ScrollSpeed = MinScrollSpeed;
             _dustfield.Stop();
             _spaceBackgroundMeshRenderer.sharedMaterial = _mainMenuSpaceBackground;
+        }
+
+        private void GamePausedEventHandler(object sender, EventArgs e)
+        {
+            _dustfield.Pause();
+        }
+
+        private void GameResumedEventHandler(object sender, EventArgs e)
+        {
+            _dustfield.Play();
         }
 
         #endregion

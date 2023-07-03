@@ -10,6 +10,7 @@ namespace SpaceAce.UI
     {
         private static readonly GameServiceFastAccess<GameModeLoader> s_gameModeLoader = new();
         private static readonly GameServiceFastAccess<Player> s_player = new();
+        private static readonly GameServiceFastAccess<GamePauser> s_gamePauser = new();
 
         private readonly VisualTreeAsset _inventorySlot;
         private readonly GameControls _gameControls;
@@ -45,6 +46,8 @@ namespace SpaceAce.UI
         public override void Enable()
         {
             base.Enable();
+
+            if (s_gameModeLoader.Access.GameState == GameState.Level) s_gamePauser.Access.Pause();
 
             DisplayDocument.visualTreeAsset = Display;
 
@@ -93,6 +96,8 @@ namespace SpaceAce.UI
         protected override void Disable()
         {
             base.Disable();
+
+            if (s_gameModeLoader.Access.GameState == GameState.Level) s_gamePauser.Access.Resume();
 
             _gameControls.Menu.Disable();
             _gameControls.Menu.Back.performed -= (c) => BackButtonClickedEventHandler();

@@ -6,6 +6,8 @@ namespace SpaceAce.Gameplay.Shooting
     {
         private float _amplificationFactor = 1f;
 
+        public override float MaxDamagePerSecond => base.MaxDamagePerSecond * _amplificationFactor;
+
         protected override float NextProjectileTopSpeed => base.NextProjectileTopSpeed * _amplificationFactor;
         protected override float NextProjectileTopSpeedGainDuration => base.NextProjectileTopSpeedGainDuration / _amplificationFactor;
         protected override float NextProjectileDamage => base.NextProjectileDamage * _amplificationFactor;

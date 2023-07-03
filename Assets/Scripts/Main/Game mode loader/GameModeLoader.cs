@@ -20,7 +20,7 @@ namespace SpaceAce.Main
 
     public sealed class GameModeLoader : IGameService, IRunnable
     {
-        private const float GameModeLoadingDelay = 1f;
+        private const float GameModeLoadingDelay = 1.5f;
 
         public event EventHandler<LoadingStartedEventArgs> MainMenuLoadingStarted;
         public event EventHandler MainMenuLoaded;

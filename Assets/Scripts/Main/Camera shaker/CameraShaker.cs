@@ -14,48 +14,24 @@ namespace SpaceAce.Main
         private const float MaxFrequency = 10f;
         private const float AmplitudeCutoff = 0.01f;
 
+        private static readonly GameServiceFastAccess<GamePauser> s_gamePauser = new();
+
         public event EventHandler SavingRequested;
 
-        private bool _suppressSaveRequest = false;
-
-        private Rigidbody2D _body;
+        private readonly Rigidbody2D _body;
         private int _activeShakers = 0;
-        private bool _shakingEnabled = true;
 
-        public bool ShakingEnabled
-        {
-            get
-            {
-                return _shakingEnabled;
-            }
-            set
-            {
-                _shakingEnabled = value;
-
-                if (_suppressSaveRequest == false)
-                {
-                    SavingRequested?.Invoke(this, EventArgs.Empty);
-                }
-            }
-        }
+        public bool ShakingEnabled { get; private set; } = true;
 
         public string SaveName => "Camera shaker settings";
         public string ID { get; }
 
         public CameraShaker(string id, GameObject masterCameraAnchor)
         {
-            if (StringID.IsValid(id) == false)
-            {
-                throw new InvalidStringIDException();
-            }
-
+            if (StringID.IsValid(id) == false) throw new InvalidStringIDException();
             ID = id;
 
-            if (masterCameraAnchor == null)
-            {
-                throw new ArgumentNullException(nameof(masterCameraAnchor), "Attempted to pass an empty master camera anchor!");
-            }
-
+            if (masterCameraAnchor == null) throw new ArgumentNullException(nameof(masterCameraAnchor), "Attempted to pass an empty master camera anchor!");
             _body = masterCameraAnchor.AddComponent<Rigidbody2D>();
 
             _body.bodyType = RigidbodyType2D.Kinematic;
@@ -77,10 +53,7 @@ namespace SpaceAce.Main
 
         public void Shake(float amplitude, float attenuation, float frequency)
         {
-            if (ShakingEnabled)
-            {
-                CoroutineRunner.RunRoutine(ShakeOnce(amplitude, attenuation, frequency));
-            }
+            if (ShakingEnabled) CoroutineRunner.RunRoutine(ShakeOnce(amplitude, attenuation, frequency));
         }
 
         private IEnumerator ShakeOnce(float amplitude, float attenuation, float frequency)
@@ -105,13 +78,27 @@ namespace SpaceAce.Main
 
                 _body.MovePosition(deltaPos);
 
+                while (s_gamePauser.Access.Paused == true) yield return null;
                 yield return new WaitForFixedUpdate();
             }
 
-            if (--_activeShakers == 0)
-            {
-                _body.MovePosition(Vector2.zero);
-            }
+            if (--_activeShakers == 0) _body.MovePosition(Vector2.zero);
+        }
+
+        public void Enable()
+        {
+            if (ShakingEnabled == true) return;
+
+            ShakingEnabled = true;
+            SavingRequested?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void Disable()
+        {
+            if (ShakingEnabled == false) return;
+
+            ShakingEnabled = false;
+            SavingRequested?.Invoke(this, EventArgs.Empty);
         }
 
         #region interfaces
@@ -123,26 +110,14 @@ namespace SpaceAce.Main
 
         public void OnSubscribe()
         {
-            if (GameServices.TryGetService(out SavingSystem system) == true)
-            {
-                system.Register(this);
-            }
-            else
-            {
-                throw new UnregisteredGameServiceAccessAttemptException(typeof(SavingSystem));
-            }
+            if (GameServices.TryGetService(out SavingSystem system) == true) system.Register(this);
+            else throw new UnregisteredGameServiceAccessAttemptException(typeof(SavingSystem));
         }
 
         public void OnUnsubscribe()
         {
-            if (GameServices.TryGetService(out SavingSystem system) == true)
-            {
-                system.Deregister(this);
-            }
-            else
-            {
-                throw new UnregisteredGameServiceAccessAttemptException(typeof(SavingSystem));
-            }
+            if (GameServices.TryGetService(out SavingSystem system) == true) system.Deregister(this);
+            else throw new UnregisteredGameServiceAccessAttemptException(typeof(SavingSystem));
         }
 
         public void OnClear()
@@ -161,7 +136,7 @@ namespace SpaceAce.Main
         {
             var data = JsonUtility.FromJson<CameraShakerSavableData>(state);
 
-            _shakingEnabled = data.ShakingEnabled;
+            ShakingEnabled = data.ShakingEnabled;
         }
 
         public override bool Equals(object obj) => Equals(obj as ISavable);

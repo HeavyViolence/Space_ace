@@ -1,3 +1,4 @@
+using SpaceAce.Architecture;
 using SpaceAce.Auxiliary;
 using SpaceAce.Gameplay.Experience;
 using SpaceAce.UI;
@@ -8,6 +9,8 @@ namespace SpaceAce.Gameplay.Damageables
 {
     public abstract class Armor : MonoBehaviour, IExperienceSource, IArmorView
     {
+        protected static readonly GameServiceFastAccess<GamePauser> GamePauser = new();
+
         public event EventHandler<FloatValueChangedEventArgs> ValueChanged;
 
         [SerializeField] private ArmorConfig _config;

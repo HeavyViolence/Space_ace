@@ -14,6 +14,7 @@ namespace SpaceAce.Gameplay.Shooting
         private static readonly GameServiceFastAccess<MultiobjectPool> s_multiobjectPool = new();
         private static readonly GameServiceFastAccess<MasterCameraHolder> s_masterCameraHolder = new();
         private static readonly GameServiceFastAccess<CameraShaker> s_cameraShaker = new();
+        private static readonly GameServiceFastAccess<GamePauser> s_gamePauser = new();
 
         [SerializeField] protected ProjectileGunConfig _config;
 
@@ -21,11 +22,11 @@ namespace SpaceAce.Gameplay.Shooting
         private float _currentCooldown = 0f;
         private Coroutine _firingRoutine;
 
-        public float MaxDamagePerSecond => _config.Damage.MaxValue *
-                                           _config.ProjectilesPerShot.MaxValue *
-                                           _config.FireRate.MaxValue *
-                                           _config.FireDuration.MaxValue * 2f /
-                                           (_config.FireDuration.MaxValue + _config.Cooldown.MinValue);
+        public virtual float MaxDamagePerSecond => _config.Damage.MaxValue *
+                                                   _config.ProjectilesPerShot.MaxValue *
+                                                   _config.FireRate.MaxValue *
+                                                   _config.FireDuration.MaxValue * 2f /
+                                                   (_config.FireDuration.MaxValue + _config.Cooldown.MinValue);
         public bool ReadyToFire => _firingRoutine == null && _cooldownTimer > _currentCooldown;
         public bool CoolingDown => _firingRoutine == null && _cooldownTimer < _currentCooldown;
         public bool IsFiring => _firingRoutine != null;
@@ -45,7 +46,7 @@ namespace SpaceAce.Gameplay.Shooting
         protected virtual MovementBehaviour ProjectileBehaviour { get; set; }
         protected virtual TargetSupplier TargetSupplier { get; set; }
 
-        private void Awake()
+        protected virtual void Awake()
         {
             _config.EnsureNecessaryObjectPoolsExistence();
 
@@ -53,12 +54,9 @@ namespace SpaceAce.Gameplay.Shooting
             TargetSupplier = _config.TargetSupplier;
         }
 
-        private void Update()
+        protected virtual void Update()
         {
-            if (CoolingDown)
-            {
-                _cooldownTimer += Time.deltaTime;
-            }
+            if (CoolingDown && s_gamePauser.Access.Paused == false) _cooldownTimer += Time.deltaTime;
         }
 
         public bool Fire()
@@ -93,6 +91,8 @@ namespace SpaceAce.Gameplay.Shooting
 
             for (int i = 0; i < shotsToFire; i++)
             {
+                while (s_gamePauser.Access.Paused == true) yield return null;
+
                 int projectilesPerShot = NextProjectilesPerShot;
 
                 for (int y = 0; y < projectilesPerShot; y++)
@@ -134,22 +134,13 @@ namespace SpaceAce.Gameplay.Shooting
             SupplyProjectileBehaviour(projectile, ProjectileBehaviour, settings);
             AwaitProjectileHit(projectile);
 
-            if (_config.CameraShakeOnShotEnabled)
-            {
-                s_cameraShaker.Access.ShakeOnShotFired();
-            }
+            if (_config.CameraShakeOnShotEnabled) s_cameraShaker.Access.ShakeOnShotFired();
         }
 
         private void SupplyProjectileBehaviour(GameObject projectile, MovementBehaviour behaviour, MovementBehaviourSettings settings)
         {
-            if (projectile.TryGetComponent(out IMovementBehaviourSupplier supplier) == true)
-            {
-                supplier.SupplyMovementBehaviour(behaviour, settings);
-            }
-            else
-            {
-                throw new MissingComponentException($"Projectile doesn't have mandatory {typeof(IMovementBehaviourSupplier)} component!");
-            }
+            if (projectile.TryGetComponent(out IMovementBehaviourSupplier supplier) == true) supplier.SupplyMovementBehaviour(behaviour, settings);
+            else throw new MissingComponentException($"Projectile doesn't have a mandatory {typeof(IMovementBehaviourSupplier)} component!");
         }
 
         private void AwaitProjectileHit(GameObject projectile)
@@ -167,10 +158,7 @@ namespace SpaceAce.Gameplay.Shooting
 
                     s_multiobjectPool.Access.ReleaseObject(_config.HitEffect.AnchorName, hitEffect, () => true, HitEffectDuration);
 
-                    if (_config.HitAudio != null)
-                    {
-                        _config.HitAudio.PlayRandomAudioClip(e.HitPosition);
-                    }
+                    if (_config.HitAudio != null) _config.HitAudio.PlayRandomAudioClip(e.HitPosition);
                 };
             }
             else

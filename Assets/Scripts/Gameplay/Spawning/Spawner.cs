@@ -20,6 +20,7 @@ namespace SpaceAce.Gameplay.Spawning
 
         private static readonly GameServiceFastAccess<MultiobjectPool> s_multiobjectPool = new();
         private static readonly GameServiceFastAccess<MasterCameraHolder> s_masterCameraHolder = new();
+        private static readonly GameServiceFastAccess<GamePauser> s_gamePauser = new();
 
         public event EventHandler SpawnStarted, SpawnPaused, SpawnResumed, SpawnEnded;
         public event EventHandler<EntitySpawnedEventArgs> EntitySpawned;
@@ -40,19 +41,17 @@ namespace SpaceAce.Gameplay.Spawning
 
         private void StartSpawn()
         {
-            if (SpawnIsActive == false)
-            {
-                _spawningRoutine = CoroutineRunner.RunRoutine(SpawningRoutine());
-            }
+            if (SpawnIsActive == true) return;
+
+            _spawningRoutine = CoroutineRunner.RunRoutine(SpawningRoutine());
         }
 
         private void StopSpawn()
         {
-            if (SpawnIsActive)
-            {
-                CoroutineRunner.StopRoutine(_spawningRoutine);
-                _spawningRoutine = null;
-            }
+            if (SpawnIsActive == false) return;
+
+            CoroutineRunner.StopRoutine(_spawningRoutine);
+            _spawningRoutine = null;
         }
 
         private IEnumerator SpawningRoutine()
@@ -63,7 +62,7 @@ namespace SpaceAce.Gameplay.Spawning
             {
                 foreach (var (anchorName, spawnDelay) in Config.GetProceduralWave())
                 {
-                    yield return new WaitForSeconds(spawnDelay);
+                    yield return CoroutineRunner.RunRoutine(SpawnDelayer(spawnDelay));
 
                     SpawnEntity(anchorName);
 
@@ -154,6 +153,19 @@ namespace SpaceAce.Gameplay.Spawning
             return new Vector3(x, y, z);
         }
 
+        private IEnumerator SpawnDelayer(float delay)
+        {
+            float timer = 0f;
+
+            while (timer < delay)
+            {
+                timer += Time.deltaTime;
+
+                yield return null;
+                while (s_gamePauser.Access.Paused == true) yield return null;
+            }
+        }
+
         protected virtual Quaternion GetSpawnedEntityRotation() => Quaternion.identity;
 
         #region interfaces
@@ -168,6 +180,8 @@ namespace SpaceAce.Gameplay.Spawning
             if (GameServices.TryGetService(out GameModeLoader loader) == true)
             {
                 loader.LevelLoaded += LevelLoadedEventHandler;
+
+                loader.MainMenuLoadingStarted += MainMenuLoadingStartedEventHandler;
                 loader.MainMenuLoaded += MainMenuLoadedEventHandler;
             }
             else
@@ -175,14 +189,8 @@ namespace SpaceAce.Gameplay.Spawning
                 throw new UnregisteredGameServiceAccessAttemptException(typeof(GameModeLoader));
             }
 
-            if (GameServices.TryGetService(out LevelCompleter completer) == true)
-            {
-                completer.LevelConcluded += LevelConcludedEventHandler;
-            }
-            else
-            {
-                throw new UnregisteredGameServiceAccessAttemptException(typeof(LevelCompleter));
-            }
+            if (GameServices.TryGetService(out LevelCompleter completer) == true) completer.LevelConcluded += LevelConcludedEventHandler;
+            else throw new UnregisteredGameServiceAccessAttemptException(typeof(LevelCompleter));
         }
 
         public virtual void OnUnsubscribe()
@@ -190,6 +198,8 @@ namespace SpaceAce.Gameplay.Spawning
             if (GameServices.TryGetService(out GameModeLoader loader) == true)
             {
                 loader.LevelLoaded -= LevelLoadedEventHandler;
+
+                loader.MainMenuLoadingStarted -= MainMenuLoadingStartedEventHandler;
                 loader.MainMenuLoaded -= MainMenuLoadedEventHandler;
             }
             else
@@ -197,14 +207,8 @@ namespace SpaceAce.Gameplay.Spawning
                 throw new UnregisteredGameServiceAccessAttemptException(typeof(GameModeLoader));
             }
 
-            if (GameServices.TryGetService(out LevelCompleter completer) == true)
-            {
-                completer.LevelConcluded -= LevelConcludedEventHandler;
-            }
-            else
-            {
-                throw new UnregisteredGameServiceAccessAttemptException(typeof(LevelCompleter));
-            }
+            if (GameServices.TryGetService(out LevelCompleter completer) == true) completer.LevelConcluded -= LevelConcludedEventHandler;
+            else throw new UnregisteredGameServiceAccessAttemptException(typeof(LevelCompleter));
         }
 
         public virtual void OnClear()
@@ -230,7 +234,12 @@ namespace SpaceAce.Gameplay.Spawning
         private void LevelConcludedEventHandler(object sender, EventArgs e)
         {
             StopSpawn();
+            Config = null;
+        }
 
+        private void MainMenuLoadingStartedEventHandler(object sender, LoadingStartedEventArgs e)
+        {
+            StopSpawn();
             Config = null;
         }
 

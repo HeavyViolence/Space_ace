@@ -8,6 +8,8 @@ namespace SpaceAce.Levels
 {
     public sealed class LevelTimer : IGameService, IUpdatable
     {
+        private static readonly GameServiceFastAccess<GamePauser> s_gamePauser = new();
+
         private bool _gameLevelInProgress = false;
         private float _value = 0f;
 
@@ -23,44 +25,20 @@ namespace SpaceAce.Levels
 
         public void OnSubscribe()
         {
-            if (GameServices.TryGetService(out GameModeLoader loader) == true)
-            {
-                loader.LevelLoaded += LevelLoadedEventHandler;
-            }
-            else
-            {
-                throw new UnregisteredGameServiceAccessAttemptException(typeof(GameModeLoader));
-            }
+            if (GameServices.TryGetService(out GameModeLoader loader) == true) loader.LevelLoaded += LevelLoadedEventHandler;
+            else throw new UnregisteredGameServiceAccessAttemptException(typeof(GameModeLoader));
 
-            if (GameServices.TryGetService(out LevelCompleter completer) == true)
-            {
-                completer.LevelConcluded += LevelConcludedEventHandler;
-            }
-            else
-            {
-                throw new UnregisteredGameServiceAccessAttemptException(typeof(LevelCompleter));
-            }
+            if (GameServices.TryGetService(out LevelCompleter completer) == true) completer.LevelConcluded += LevelConcludedEventHandler;
+            else throw new UnregisteredGameServiceAccessAttemptException(typeof(LevelCompleter));
         }
 
         public void OnUnsubscribe()
         {
-            if (GameServices.TryGetService(out GameModeLoader loader) == true)
-            {
-                loader.LevelLoaded -= LevelLoadedEventHandler;
-            }
-            else
-            {
-                throw new UnregisteredGameServiceAccessAttemptException(typeof(GameModeLoader));
-            }
+            if (GameServices.TryGetService(out GameModeLoader loader) == true) loader.LevelLoaded -= LevelLoadedEventHandler;
+            else throw new UnregisteredGameServiceAccessAttemptException(typeof(GameModeLoader));
 
-            if (GameServices.TryGetService(out LevelCompleter completer) == true)
-            {
-                completer.LevelConcluded -= LevelConcludedEventHandler;
-            }
-            else
-            {
-                throw new UnregisteredGameServiceAccessAttemptException(typeof(LevelCompleter));
-            }
+            if (GameServices.TryGetService(out LevelCompleter completer) == true) completer.LevelConcluded -= LevelConcludedEventHandler;
+            else throw new UnregisteredGameServiceAccessAttemptException(typeof(LevelCompleter));
         }
 
         public void OnClear()
@@ -70,7 +48,7 @@ namespace SpaceAce.Levels
 
         public void OnUpdate()
         {
-            if (_gameLevelInProgress == true)
+            if (_gameLevelInProgress == true && s_gamePauser.Access.Paused == false)
             {
                 _value += Time.deltaTime;
 

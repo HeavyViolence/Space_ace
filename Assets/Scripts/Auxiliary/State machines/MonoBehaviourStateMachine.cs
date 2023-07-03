@@ -24,39 +24,16 @@ namespace SpaceAce.Auxiliary.StateMachines
 
         private void OnEnable() => OnInitialize();
 
+        private void OnDisable() => OnDeinitialize();
+
         private void Update() => OnUpdate();
 
-        private void FixedUpdate() => _currentState?.OnStateFixedUpdate();
-
-        private void OnUpdate()
-        {
-            Transition t = GetTransition();
-
-            if (TransitionIsValid(t))
-            {
-                SetCurrentState(t.To);
-            }
-
-            _currentState?.OnStateUpdate();
-        }
+        private void FixedUpdate() => OnFixedUpdate();
 
         private Transition GetTransition()
         {
-            foreach (var t in _currentStateTransitions)
-            {
-                if (t.Condition())
-                {
-                    return t;
-                }
-            }
-
-            foreach (var t in _defaultStateTransitions)
-            {
-                if (t.Condition())
-                {
-                    return t;
-                }
-            }
+            foreach (var t in _currentStateTransitions) if (t.Condition()) return t;
+            foreach (var t in _defaultStateTransitions) if (t.Condition()) return t;
 
             return null;
         }
@@ -88,14 +65,8 @@ namespace SpaceAce.Auxiliary.StateMachines
 
             if (_availableTransitions.TryGetValue(from.GetType(), out var transitions))
             {
-                if (transitions.Contains(t))
-                {
-                    throw new ArgumentException("Attempted to add already existing transition!");
-                }
-                else
-                {
-                    transitions.Add(t);
-                }
+                if (transitions.Contains(t)) throw new ArgumentException("Attempted to add already existing transition!");
+                else transitions.Add(t);
             }
             else
             {
@@ -107,18 +78,25 @@ namespace SpaceAce.Auxiliary.StateMachines
         {
             Transition t = new(to, condition);
 
-            if (_defaultStateTransitions.Contains(t))
-            {
-                throw new ArgumentException("Attempted to add already existing transition!");
-            }
-            else
-            {
-                _defaultStateTransitions.Add(t);
-            }
+            if (_defaultStateTransitions.Contains(t)) throw new ArgumentException("Attempted to add already existing transition!");
+            else _defaultStateTransitions.Add(t);
         }
 
         protected abstract void OnSetup();
 
         protected abstract void OnInitialize();
+
+        protected abstract void OnDeinitialize();
+
+        protected virtual void OnUpdate()
+        {
+            Transition t = GetTransition();
+
+            if (TransitionIsValid(t)) SetCurrentState(t.To);
+
+            _currentState?.OnStateUpdate();
+        }
+
+        protected virtual void OnFixedUpdate() => _currentState?.OnStateFixedUpdate();
     }
 }

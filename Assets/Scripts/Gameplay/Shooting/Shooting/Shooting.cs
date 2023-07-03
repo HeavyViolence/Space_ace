@@ -32,7 +32,7 @@ namespace SpaceAce.Gameplay.Shooting
             }
         }
 
-        private void Awake()
+        protected virtual void Awake()
         {
             AssembleWeaponGroups();
         }
