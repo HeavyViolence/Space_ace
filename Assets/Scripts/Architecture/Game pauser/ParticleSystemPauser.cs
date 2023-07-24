@@ -13,7 +13,7 @@ namespace SpaceAce.Architecture
 
         private void Awake()
         {
-            foreach (var system in gameObject.GetComponentsInChildren<ParticleSystem>()) _particleSystems.Add(system);
+            _particleSystems.AddRange(gameObject.GetComponentsInChildren<ParticleSystem>());
         }
 
         private void OnEnable()

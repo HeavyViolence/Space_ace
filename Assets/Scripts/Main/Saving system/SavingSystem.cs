@@ -20,27 +20,18 @@ namespace SpaceAce.Main.Saving
 
         public SavingSystem(string id)
         {
-            if (StringID.IsValid(id) == false)
-            {
-                throw new InvalidStringIDException();
-            }
+            if (StringID.IsValid(id) == false) throw new InvalidStringIDException();
 
             _id = id;
         }
 
         public bool Register(ISavable entity)
         {
-            if (entity is null)
-            {
-                throw new ArgumentNullException(nameof(entity), $"Attempted to register an empty {nameof(ISavable)} entity!");
-            }
+            if (entity is null) throw new ArgumentNullException(nameof(entity));
 
             if (_registeredEntities.Add(entity) == true)
             {
-                if (TryLoadEntityState(entity, out string state) == true)
-                {
-                    entity.SetState(state);
-                }
+                if (TryLoadEntityState(entity, out string state) == true) entity.SetState(state);
 
                 entity.SavingRequested += (s, e) => SaveEntityState(entity);
 
@@ -52,10 +43,7 @@ namespace SpaceAce.Main.Saving
 
         public bool Deregister(ISavable entity)
         {
-            if (entity is null)
-            {
-                throw new ArgumentNullException(nameof(entity), $"Attempted to deregister an empty {nameof(ISavable)} entity!");
-            }
+            if (entity is null) throw new ArgumentNullException(nameof(entity));
 
             if (_registeredEntities.Remove(entity) == true)
             {
@@ -104,7 +92,6 @@ namespace SpaceAce.Main.Saving
             else
             {
                 state = default;
-
                 return false;
             }
         }

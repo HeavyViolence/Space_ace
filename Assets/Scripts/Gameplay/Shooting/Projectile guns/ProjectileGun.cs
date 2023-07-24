@@ -14,7 +14,7 @@ namespace SpaceAce.Gameplay.Shooting
         private static readonly GameServiceFastAccess<MultiobjectPool> s_multiobjectPool = new();
         private static readonly GameServiceFastAccess<MasterCameraHolder> s_masterCameraHolder = new();
         private static readonly GameServiceFastAccess<CameraShaker> s_cameraShaker = new();
-        private static readonly GameServiceFastAccess<GamePauser> s_gamePauser = new();
+        protected static readonly GameServiceFastAccess<GamePauser> GamePauser = new();
 
         [SerializeField] protected ProjectileGunConfig _config;
 
@@ -56,7 +56,7 @@ namespace SpaceAce.Gameplay.Shooting
 
         protected virtual void Update()
         {
-            if (CoolingDown && s_gamePauser.Access.Paused == false) _cooldownTimer += Time.deltaTime;
+            if (CoolingDown && GamePauser.Access.Paused == false) _cooldownTimer += Time.deltaTime;
         }
 
         public bool Fire()
@@ -91,7 +91,7 @@ namespace SpaceAce.Gameplay.Shooting
 
             for (int i = 0; i < shotsToFire; i++)
             {
-                while (s_gamePauser.Access.Paused == true) yield return null;
+                while (GamePauser.Access.Paused == true) yield return null;
 
                 int projectilesPerShot = NextProjectilesPerShot;
 

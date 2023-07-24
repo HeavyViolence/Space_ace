@@ -1,0 +1,9 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/Style%20sheets/Inventory%20icon.uss?fileID=7433441132597879392&amp;guid=ef22ccbfa20dfed4db3d60de0b79c27a&amp;type=3#Inventory icon" />
+    <ui:Button display-tooltip-when-elided="true" enable-rich-text="true" name="Infusion-slot" class="inventory-slot" style="margin-left: 8px;">
+        <ui:VisualElement name="Item-icon" style="flex-grow: 0; background-color: rgba(128, 0, 255, 0); width: 96px; height: 96px; background-image: none; border-top-left-radius: 16px; border-bottom-left-radius: 16px; border-top-right-radius: 16px; border-bottom-right-radius: 16px;" />
+        <ui:VisualElement name="Action-panel" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); justify-content: flex-start; align-self: flex-start; flex-direction: row; align-items: center;">
+            <ui:Button display-tooltip-when-elided="true" name="Remove-item-button" class="inventory-slot-button" style="background-image: url(&apos;project://database/Assets/Sprites/Icons/Interface/Remove%20item.png?fileID=2800000&amp;guid=fe6dcf41608315b47822be617ea909f3&amp;type=3#Remove item&apos;); background-color: rgba(188, 188, 188, 0); align-self: auto;" />
+        </ui:VisualElement>
+    </ui:Button>
+</ui:UXML>

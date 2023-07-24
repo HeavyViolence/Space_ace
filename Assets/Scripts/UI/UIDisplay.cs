@@ -1,5 +1,4 @@
 using SpaceAce.Architecture;
-using SpaceAce.Main.Audio;
 using System;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -14,25 +13,25 @@ namespace SpaceAce.UI
         public bool Active { get; private set; } = false;
 
         protected VisualTreeAsset Display { get; private set; }
-        protected UIDocument DisplayDocument { get; private set; }
+        protected UIDocument DisplayedDocument { get; private set; }
         protected PanelSettings Settings { get; private set; }
-        protected AudioCollection ButtonClickAudio { get; private set; }
+        protected UIAudio UIAudio { get; private set; }
 
-        public UIDisplay(VisualTreeAsset display, PanelSettings settings, AudioCollection buttonClickAudio)
+        public UIDisplay(VisualTreeAsset display, PanelSettings settings, UIAudio audio)
         {
-            if (display == null) throw new ArgumentNullException(nameof(display), "Attempted to pass an empty UI document!");
+            if (display == null) throw new ArgumentNullException(nameof(display));
             Display = display;
 
-            if (settings == null) throw new ArgumentNullException(nameof(settings), "Attempted to pass an empty display settings!");
+            if (settings == null) throw new ArgumentNullException(nameof(settings));
             Settings = settings;
 
-            if (buttonClickAudio == null) throw new ArgumentNullException(nameof(buttonClickAudio), "Attempted to pass an empty button click audio collection!");
-            ButtonClickAudio = buttonClickAudio;
+            if (audio == null) throw new ArgumentNullException(nameof(audio));
+            UIAudio = audio;
 
             GameObject uiDisplay = new(DisplayHolderName);
 
-            DisplayDocument = uiDisplay.AddComponent<UIDocument>();
-            DisplayDocument.panelSettings = settings;
+            DisplayedDocument = uiDisplay.AddComponent<UIDocument>();
+            DisplayedDocument.panelSettings = settings;
         }
 
         public abstract void OnInitialize();

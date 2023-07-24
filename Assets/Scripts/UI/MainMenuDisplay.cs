@@ -8,7 +8,7 @@ namespace SpaceAce.UI
     {
         public override string DisplayHolderName => "Main menu display";
 
-        public MainMenuDisplay(UIAssets assets) : base(assets.MainMenu, assets.Settings, assets.ButtonClickAudio) { }
+        public MainMenuDisplay(UIAssets assets) : base(assets.MainMenu, assets.Settings, assets.UIAudio) { }
 
         public override void OnInitialize()
         {
@@ -36,20 +36,20 @@ namespace SpaceAce.UI
         {
             base.Enable();
 
-            DisplayDocument.visualTreeAsset = Display;
+            DisplayedDocument.visualTreeAsset = Display;
 
-            DisplayDocument.rootVisualElement.Q<Button>("play-button").clicked += PlayButtonClickedEventHandler;
-            DisplayDocument.rootVisualElement.Q<Button>("inventory-button").clicked += InventoryButtonClickedEventHandler;
+            DisplayedDocument.rootVisualElement.Q<Button>("Play-button").clicked += PlayButtonClickedEventHandler;
+            DisplayedDocument.rootVisualElement.Q<Button>("Inventory-button").clicked += InventoryButtonClickedEventHandler;
         }
 
         protected override void Disable()
         {
             base.Disable();
 
-            DisplayDocument.rootVisualElement.Q<Button>("play-button").clicked -= PlayButtonClickedEventHandler;
-            DisplayDocument.rootVisualElement.Q<Button>("inventory-button").clicked -= InventoryButtonClickedEventHandler;
+            DisplayedDocument.rootVisualElement.Q<Button>("Play-button").clicked -= PlayButtonClickedEventHandler;
+            DisplayedDocument.rootVisualElement.Q<Button>("Inventory-button").clicked -= InventoryButtonClickedEventHandler;
 
-            DisplayDocument.visualTreeAsset = null;
+            DisplayedDocument.visualTreeAsset = null;
         }
 
         #region event handlers
@@ -57,7 +57,7 @@ namespace SpaceAce.UI
         private void PlayButtonClickedEventHandler()
         {
             Disable();
-            ButtonClickAudio.PlayRandomAudioClip(Vector2.zero);
+            UIAudio.ForwardButtonClick.PlayRandomAudioClip(Vector2.zero);
 
             if (GameServices.TryGetService<LevelSelectionDisplay>(out var display) == true) display.Enable();
             else throw new UnregisteredGameServiceAccessAttemptException(typeof(LevelSelectionDisplay));
@@ -66,7 +66,7 @@ namespace SpaceAce.UI
         private void InventoryButtonClickedEventHandler()
         {
             Disable();
-            ButtonClickAudio.PlayRandomAudioClip(Vector2.zero);
+            UIAudio.ForwardButtonClick.PlayRandomAudioClip(Vector2.zero);
 
             if (GameServices.TryGetService<InventoryDisplay>(out var display) == true) display.Enable();
             else throw new UnregisteredGameServiceAccessAttemptException(typeof(InventoryDisplay));

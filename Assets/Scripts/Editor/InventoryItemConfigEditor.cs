@@ -9,8 +9,8 @@ namespace SpaceAce.Editors
     {
         private SerializedProperty _rarity;
 
-        private SerializedProperty _scrapValue;
-        private SerializedProperty _scrapValueRandomDeviation;
+        private SerializedProperty _sellValue;
+        private SerializedProperty _sellValueRandomDeviation;
 
         private SerializedProperty _duration;
         private SerializedProperty _durationRandomDeviation;
@@ -19,8 +19,8 @@ namespace SpaceAce.Editors
         {
             _rarity = serializedObject.FindProperty("_rarity");
 
-            _scrapValue = serializedObject.FindProperty("_scrapValue");
-            _scrapValueRandomDeviation = serializedObject.FindProperty("_scrapValueRandomDeviation");
+            _sellValue = serializedObject.FindProperty("_sellValue");
+            _sellValueRandomDeviation = serializedObject.FindProperty("_sellValueRandomDeviation");
 
             _duration = serializedObject.FindProperty("_duration");
             _durationRandomDeviation = serializedObject.FindProperty("_durationRandomDeviation");
@@ -33,13 +33,13 @@ namespace SpaceAce.Editors
             EditorGUILayout.PropertyField(_rarity, new GUIContent("Rarity"));
 
             EditorGUILayout.Separator();
-            EditorGUILayout.IntSlider(_scrapValue, InventoryItemConfig.MinScrapValue, InventoryItemConfig.MaxScrapValue, "Scrap value");
-            EditorGUILayout.IntSlider(_scrapValueRandomDeviation, 0, _scrapValue.intValue, "Max random deviation");
+            EditorGUILayout.IntSlider(_sellValue, InventoryItem.MinSellValue, InventoryItem.MaxSellValue, "Sell value");
+            EditorGUILayout.IntSlider(_sellValueRandomDeviation, 0, _sellValue.intValue, "Max random deviation");
 
-            _scrapValueRandomDeviation.intValue = Mathf.Clamp(_scrapValueRandomDeviation.intValue, 0, _scrapValue.intValue);
+            _sellValueRandomDeviation.intValue = Mathf.Clamp(_sellValueRandomDeviation.intValue, 0, _sellValue.intValue);
 
             EditorGUILayout.Separator();
-            EditorGUILayout.Slider(_duration, InventoryItemConfig.MinDuration, InventoryItemConfig.MaxDuration, "Duration");
+            EditorGUILayout.Slider(_duration, InventoryItem.MinDuration, InventoryItem.MaxDuration, "Duration");
             EditorGUILayout.Slider(_durationRandomDeviation, 0f, _duration.floatValue, "Max random deviation");
 
             _durationRandomDeviation.floatValue = Mathf.Clamp(_durationRandomDeviation.floatValue, 0f, _duration.floatValue);

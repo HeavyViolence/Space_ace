@@ -13,9 +13,11 @@ MonoBehaviour:
   m_Name: Plasma shield common
   m_EditorClassIdentifier: 
   _rarity: 0
-  _scrapValue: 100
-  _scrapValueRandomDeviation: 10
-  _duration: 10
-  _durationRandomDeviation: 1
-  _armorBoost: 500
-  _armorBoostRandomDeviation: 50
+  _sellValue: 100
+  _sellValueRandomDeviation: 10
+  _duration: 30
+  _durationRandomDeviation: 5
+  _armorBoost: 200
+  _armorBoostRandomDeviation: 20
+  _projectilesSlowdown: 0.4
+  _projectilesSlowdownRandomDeviation: 0.05

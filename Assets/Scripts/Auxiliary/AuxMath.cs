@@ -7,10 +7,10 @@ namespace SpaceAce.Auxiliary
 {
     public static class AuxMath
     {
-        public const float SecondsPerMinute = 60f;
-        public const float MinutesPerHour = 60f;
+        public const int SecondsPerMinute = 60;
+        public const int MinutesPerHour = 60;
 
-        public const float DegreesPerRevolution = 360f;
+        public const int DegreesPerRevolution = 360;
 
         public static float Random => UnityEngine.Random.Range(0f, 1f);
         public static float RandomNormal => UnityEngine.Random.Range(-1f, 1f);
@@ -69,6 +69,14 @@ namespace SpaceAce.Auxiliary
             }
 
             return generatedNumbers;
+        }
+
+        public static string GetFormattedTime(int time)
+        {
+            int minutes = time / SecondsPerMinute;
+            int seconds = time % SecondsPerMinute;
+
+            return $"{minutes:###0}:{seconds:00}";
         }
     }
 }

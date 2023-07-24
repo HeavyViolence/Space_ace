@@ -13,9 +13,11 @@ MonoBehaviour:
   m_Name: Plasma shield epic
   m_EditorClassIdentifier: 
   _rarity: 4
-  _scrapValue: 1110
-  _scrapValueRandomDeviation: 111
-  _duration: 35
-  _durationRandomDeviation: 3.5
-  _armorBoost: 5540
-  _armorBoostRandomDeviation: 554
+  _sellValue: 1100
+  _sellValueRandomDeviation: 110
+  _duration: 55
+  _durationRandomDeviation: 5
+  _armorBoost: 2100
+  _armorBoostRandomDeviation: 210
+  _projectilesSlowdown: 0.15
+  _projectilesSlowdownRandomDeviation: 0.05

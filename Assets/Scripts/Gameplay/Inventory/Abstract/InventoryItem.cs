@@ -1,6 +1,7 @@
 using SpaceAce.Architecture;
 using SpaceAce.Gameplay.Players;
 using SpaceAce.Main;
+using SpaceAce.UI;
 using SpaceAce.Visualization;
 using System;
 using UnityEngine;
@@ -19,28 +20,32 @@ namespace SpaceAce.Gameplay.Inventories
     }
 
     [Serializable]
-    public abstract class InventoryItem
+    public abstract class InventoryItem: IEquatable<InventoryItem>
     {
+        public const int MinSellValue = 10;
+        public const int MaxSellValue = 10000;
+
+        public const float MinDuration = 1f;
+        public const float MaxDuration = 300f;
+
+        public const int ItemsPerInfusion = 3;
+
         private const float LegendaryItemHighestSpawnProbability = 0.01f;
         protected const float FusedItemPropertyFactor = 0.618f;
 
-        protected static readonly GameServiceFastAccess<EntityVisualizer> s_entityVisualizer = new();
-        protected static readonly GameServiceFastAccess<GameModeLoader> s_gameModeLoader = new();
-        protected static readonly GameServiceFastAccess<Player> s_player = new();
+        protected static readonly GameServiceFastAccess<EntityVisualizer> EntityVisualizer = new();
+        protected static readonly GameServiceFastAccess<GameModeLoader> GameModeLoader = new();
+        protected static readonly GameServiceFastAccess<Player> Player = new();
+        protected static readonly GameServiceFastAccess<HUDDisplay> HUDDisplay = new();
 
-        [SerializeField] private ItemRarity _rarity;
-        [SerializeField] private float _duration;
-        [SerializeField] private int _worth;
-
-        public ItemRarity Rarity => _rarity;
-        public Color32 RarityColor => s_entityVisualizer.Access.GetInventoryItemRarityColor(Rarity);
-        public Sprite Icon => s_entityVisualizer.Access.GetInventoryItemIcon(GetType());
+        public ItemRarity Rarity { get; private set; }
+        public Color32 RarityColor => EntityVisualizer.Access.GetInventoryItemRarityColor(Rarity);
+        public Sprite Icon => EntityVisualizer.Access.GetInventoryItemIcon(GetType());
         public string Title => throw new NotImplementedException();
         public string Description => throw new NotImplementedException();
         public abstract string Stats { get; }
-        public float Duration => _duration;
-        public int Worth => _worth;
-        public abstract bool UsableOutsideOfLevel { get; }
+        public float Duration { get; private set; }
+        public int SellValue { get; private set; }
 
         public static float GetHighestSpawnProbabilityFromRarity(ItemRarity rarity)
         {
@@ -56,18 +61,29 @@ namespace SpaceAce.Gameplay.Inventories
 
         public static ItemRarity GetPreviousRarity(ItemRarity rarity) => (ItemRarity)Mathf.Clamp((int)rarity - 1, 0, (int)ItemRarity.Legendary);
 
-        public InventoryItem(ItemRarity rarity,
-                             float duration,
-                             int worth)
+        public InventoryItem(ItemRarity rarity, float duration, int sellValue)
         {
-            _rarity = rarity;
-            _duration = duration;
-            _worth = worth;
+            Rarity = rarity;
+
+            if (duration < MinDuration || duration > MaxDuration) throw new ArgumentOutOfRangeException(nameof(duration));
+            Duration = duration;
+
+            if (sellValue < MinSellValue || sellValue > MaxSellValue) throw new ArgumentOutOfRangeException(nameof(sellValue));
+            SellValue = sellValue;
         }
 
-        public void Sell() => s_player.Access.Wallet.AddCredits(Worth);
+        public void Sell() => Player.Access.Wallet.AddCredits(SellValue);
 
         public abstract bool Use();
         public abstract bool Fuse(InventoryItem item1, InventoryItem item2, out InventoryItem result);
+
+        public override bool Equals(object obj) => Equals(obj as InventoryItem);
+
+        public bool Equals(InventoryItem other) => other is not null &&
+                                                   Rarity.Equals(other.Rarity) &&
+                                                   Duration.Equals(other.Duration) &&
+                                                   SellValue.Equals(other.SellValue);
+
+        public override int GetHashCode() => Rarity.GetHashCode() ^ Duration.GetHashCode() ^ SellValue.GetHashCode();
     }
 }

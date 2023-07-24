@@ -9,7 +9,7 @@ namespace SpaceAce.Gameplay.Players
     public sealed class PlayerSavableData
     {
         [SerializeField] private string _selectedShipAnchorName;
-        [SerializeField] private List<InventoryItem> _inventoryContent;
+        [SerializeField] private List<InventoryItem> _inventoryContent = new();
         [SerializeField] private int _credits;
         [SerializeField] private float _experience;
 
@@ -24,15 +24,9 @@ namespace SpaceAce.Gameplay.Players
                                  float experience)
         {
             if (string.IsNullOrEmpty(selectedShipAnchorName) ||
-                string.IsNullOrWhiteSpace(selectedShipAnchorName))
-            {
-                throw new ArgumentNullException(nameof(selectedShipAnchorName), "Attepted to pass an empty selected ship anchor name!");
-            }
+                string.IsNullOrWhiteSpace(selectedShipAnchorName)) throw new ArgumentNullException(nameof(selectedShipAnchorName));
 
-            if (inventoryItems is not null)
-            {
-                _inventoryContent = new(inventoryItems);
-            }
+            if (inventoryItems is not null) _inventoryContent = new(inventoryItems);
 
             _selectedShipAnchorName = selectedShipAnchorName;
             _credits = credits;

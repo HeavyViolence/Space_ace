@@ -1,5 +1,6 @@
 using SpaceAce.Architecture;
 using SpaceAce.Auxiliary;
+using SpaceAce.Gameplay.Inventories;
 using SpaceAce.Gameplay.Spawning;
 using SpaceAce.Levels;
 using System;
@@ -20,16 +21,14 @@ namespace SpaceAce.UI
         private static readonly GameServiceFastAccess<SpaceDebrisSpawner> s_spaceDebrisSpawner = new();
         private static readonly GameServiceFastAccess<LevelTimer> s_levelTimer = new();
         private static readonly GameServiceFastAccess<LevelRewardCollector> s_levelRewardCollector = new();
+        private static readonly GameServiceFastAccess<GamePauser> s_gamePauser = new();
 
-        private readonly GameControls _gameControls;
+        private readonly GameControls _gameControls = new();
 
-        private readonly HashSet<EntityView> _entityViews;
-        private EntityView _activeEntityView;
-        private Coroutine _activeEntityViewRoutine;
+        private readonly HashSet<EntityView> _entityViews = new();
+        private EntityView _activeEntityView = null;
+        private Coroutine _activeEntityViewRoutine = null;
         private EntityView _playerShipView;
-
-        private VisualElement _overdriveDisplay;
-        private VisualElement _powerupDisplay;
 
         private VisualElement _playerShipDisplay;
         private VisualElement _playerShipIcon;
@@ -53,14 +52,16 @@ namespace SpaceAce.UI
         private Label _levelExperienceRewardLabel;
         private Label _levelTimeLabel;
 
+        private VisualElement _activeItemsDisplay;
+        private readonly VisualTreeAsset _activeItemThumbnail;
+        private readonly HashSet<ActiveItem> _activeItems = new();
+        private readonly HashSet<ActiveItem> _activeItemsToBeRemoved = new();
+
         public override string DisplayHolderName => "HUD display";
 
-        public HUDDisplay(UIAssets assets) : base(assets.HUDDisplay, assets.Settings, assets.ButtonClickAudio)
+        public HUDDisplay(UIAssets assets) : base(assets.HUDDisplay, assets.Settings, assets.UIAudio)
         {
-            _gameControls = new();
-            _entityViews = new();
-            _activeEntityView = null;
-            _activeEntityViewRoutine = null;
+            _activeItemThumbnail = assets.ActiveItemThumbnail;
         }
 
         public bool RegisterEntityView(EntityView view)
@@ -146,9 +147,10 @@ namespace SpaceAce.UI
                 _enemiesKilledLabel.text = $"{s_enemySpawner.Access.DestroyedCount}/{s_enemySpawner.Access.ToSpawnCount}";
                 _meteorsKilledLabel.text = $"{s_meteorSpawner.Access.DestroyedCount}/{s_meteorSpawner.Access.SpawnedCount}";
                 _spaceDebrisKilledLabel.text = $"{s_spaceDebrisSpawner.Access.DestroyedCount}/{s_spaceDebrisSpawner.Access.SpawnedCount}";
-                _levelTimeLabel.text = $"{s_levelTimer.Access.Minutes:##0}:{s_levelTimer.Access.Seconds:00}";
+                _levelTimeLabel.text = $"{s_levelTimer.Access.Minutes:###0}:{s_levelTimer.Access.Seconds:00}";
 
-                UpdatePlayerShipViewDisplay();
+                UpdatePlayerShipDisplay();
+                UpdateActiveItemsDisplay();
             }
         }
 
@@ -156,35 +158,34 @@ namespace SpaceAce.UI
         {
             base.Enable();
 
-            DisplayDocument.visualTreeAsset = Display;
+            s_gamePauser.Access.Resume();
 
-            _overdriveDisplay = DisplayDocument.rootVisualElement.Q<VisualElement>("Overdrive-display");
-            _powerupDisplay = DisplayDocument.rootVisualElement.Q<VisualElement>("Powerup-display");
+            DisplayedDocument.visualTreeAsset = Display;
 
-            _enemiesKilledLabel = DisplayDocument.rootVisualElement.Q<Label>("Enemies-to-kill-label");
-            _meteorsKilledLabel = DisplayDocument.rootVisualElement.Q<Label>("Meteors-killed-label");
-            _spaceDebrisKilledLabel = DisplayDocument.rootVisualElement.Q<Label>("Space-debris-killed-label");
-            _levelCreditRewardLabel = DisplayDocument.rootVisualElement.Q<Label>("Level-credit-reward-label");
-            _levelExperienceRewardLabel = DisplayDocument.rootVisualElement.Q<Label>("Level-experience-reward-label");
-            _levelTimeLabel = DisplayDocument.rootVisualElement.Q<Label>("Level-time-label");
+            _enemiesKilledLabel = DisplayedDocument.rootVisualElement.Q<Label>("Enemies-to-kill-label");
+            _meteorsKilledLabel = DisplayedDocument.rootVisualElement.Q<Label>("Meteors-killed-label");
+            _spaceDebrisKilledLabel = DisplayedDocument.rootVisualElement.Q<Label>("Space-debris-killed-label");
+            _levelCreditRewardLabel = DisplayedDocument.rootVisualElement.Q<Label>("Level-credit-reward-label");
+            _levelExperienceRewardLabel = DisplayedDocument.rootVisualElement.Q<Label>("Level-experience-reward-label");
+            _levelTimeLabel = DisplayedDocument.rootVisualElement.Q<Label>("Level-time-label");
 
-            _playerShipDisplay = DisplayDocument.rootVisualElement.Q<VisualElement>("Player-ship-display");
-            _playerShipIcon = DisplayDocument.rootVisualElement.Q<VisualElement>("Player-ship-icon");
-            _playerShipHealthbar = DisplayDocument.rootVisualElement.Q<VisualElement>("Player-ship-healthbar-foreground");
-            _playerShipMaxHealthLabel = DisplayDocument.rootVisualElement.Q<Label>("Player-ship-max-health-label");
-            _playerShipArmorLabel = DisplayDocument.rootVisualElement.Q<Label>("Player-ship-armor-label");
-            _playerShipWeaponsLabel = DisplayDocument.rootVisualElement.Q<Label>("Player-ship-weapons-label");
+            _playerShipDisplay = DisplayedDocument.rootVisualElement.Q<VisualElement>("Player-ship-display");
+            _playerShipIcon = DisplayedDocument.rootVisualElement.Q<VisualElement>("Player-ship-icon");
+            _playerShipHealthbar = DisplayedDocument.rootVisualElement.Q<VisualElement>("Player-ship-healthbar-foreground");
+            _playerShipMaxHealthLabel = DisplayedDocument.rootVisualElement.Q<Label>("Player-ship-max-health-label");
+            _playerShipArmorLabel = DisplayedDocument.rootVisualElement.Q<Label>("Player-ship-armor-label");
+            _playerShipWeaponsLabel = DisplayedDocument.rootVisualElement.Q<Label>("Player-ship-weapons-label");
 
-            _entityDisplay = DisplayDocument.rootVisualElement.Q<VisualElement>("Entity-display");
-            _entityIcon = DisplayDocument.rootVisualElement.Q<VisualElement>("Entity-icon");
-            _entityHealthbar = DisplayDocument.rootVisualElement.Q<VisualElement>("Entity-healthbar-foreground");
-            _entityMaxHealthLabel = DisplayDocument.rootVisualElement.Q<Label>("Entity-max-health-label");
-            _entityArmorLabel = DisplayDocument.rootVisualElement.Q<Label>("Entity-armor-label");
-            _entityWeaponsDisplay = DisplayDocument.rootVisualElement.Q<VisualElement>("Entity-weapons-display");
-            _entityWeaponsLabel = DisplayDocument.rootVisualElement.Q<Label>("Entity-weapons-label");
+            _entityDisplay = DisplayedDocument.rootVisualElement.Q<VisualElement>("Entity-display");
+            _entityIcon = DisplayedDocument.rootVisualElement.Q<VisualElement>("Entity-icon");
+            _entityHealthbar = DisplayedDocument.rootVisualElement.Q<VisualElement>("Entity-healthbar-foreground");
+            _entityMaxHealthLabel = DisplayedDocument.rootVisualElement.Q<Label>("Entity-max-health-label");
+            _entityArmorLabel = DisplayedDocument.rootVisualElement.Q<Label>("Entity-armor-label");
+            _entityWeaponsDisplay = DisplayedDocument.rootVisualElement.Q<VisualElement>("Entity-weapons-display");
+            _entityWeaponsLabel = DisplayedDocument.rootVisualElement.Q<Label>("Entity-weapons-label");
 
-            _overdriveDisplay.style.display = DisplayStyle.None;
-            _powerupDisplay.style.display = DisplayStyle.None;
+            _activeItemsDisplay = DisplayedDocument.rootVisualElement.Q<VisualElement>("Active-items-display");
+
             _entityDisplay.style.display = DisplayStyle.None;
             _playerShipDisplay.style.display = DisplayStyle.None;
 
@@ -200,11 +201,15 @@ namespace SpaceAce.UI
 
             _playerShipDisplay.style.display = DisplayStyle.None;
             _entityDisplay.style.display = DisplayStyle.None;
+
+            PopulateActiveItemsDisplay();
         }
 
         protected override void Disable()
         {
             base.Disable();
+
+            s_gamePauser.Access.Pause();
 
             _gameControls.Menu.Disable();
             _gameControls.Menu.Back.performed -= BackButtonClickedEventHandler;
@@ -213,7 +218,45 @@ namespace SpaceAce.UI
             s_levelRewardCollector.Access.ExperienceRewardChanged -= (s, e) => CoroutineRunner.RunRoutine(UpdateExperienceRewardDisplay(e.OldValue, e.NewValue));
             s_levelRewardCollector.Access.CreditRewardChanged -= (s, e) => CoroutineRunner.RunRoutine(UpdateCreditRewardDisplay(e.OldValue, e.NewValue));
 
-            DisplayDocument.visualTreeAsset = null;
+            DisplayedDocument.visualTreeAsset = null;
+        }
+
+        public void RegisterActiveItem(InventoryItem item)
+        {
+            ActiveItem itemToAdd = new(item, _activeItemThumbnail.CloneTree());
+            _activeItems.Add(itemToAdd);
+        }
+
+        private void PopulateActiveItemsDisplay()
+        {
+            if (_activeItems.Count > 0)
+            {
+                foreach (var item in _activeItems) _activeItemsDisplay.Add(item.Thumbnail);
+            }
+        }
+
+        private void UpdateActiveItemsDisplay()
+        {
+            if (_activeItems.Count > 0)
+            {
+                foreach (var item in _activeItems)
+                {
+                    item.Tick();
+
+                    if (item.TimerIsUp) _activeItemsToBeRemoved.Add(item);
+                }
+            }
+
+            if (_activeItemsToBeRemoved.Count > 0)
+            {
+                foreach (var item in _activeItemsToBeRemoved)
+                {
+                    _activeItemsDisplay.Remove(item.Thumbnail);
+                    _activeItems.Remove(item);
+                }
+
+                _activeItemsToBeRemoved.Clear();
+            }
         }
 
         #region event handlers
@@ -221,7 +264,7 @@ namespace SpaceAce.UI
         private void BackButtonClickedEventHandler(InputAction.CallbackContext context)
         {
             Disable();
-            ButtonClickAudio.PlayRandomAudioClip(Vector2.zero);
+            UIAudio.BackButtonClick.PlayRandomAudioClip(Vector2.zero);
 
             if (GameServices.TryGetService(out PauseDisplay display) == true) display.Enable();
             else throw new UnregisteredGameServiceAccessAttemptException(typeof(PauseDisplay));
@@ -230,7 +273,7 @@ namespace SpaceAce.UI
         private void InventoryButtonClickedEventHandler(InputAction.CallbackContext context)
         {
             Disable();
-            ButtonClickAudio.PlayRandomAudioClip(Vector2.zero);
+            UIAudio.ForwardButtonClick.PlayRandomAudioClip(Vector2.zero);
 
             if (GameServices.TryGetService<InventoryDisplay>(out var display) == true) display.Enable();
             else throw new UnregisteredGameServiceAccessAttemptException(typeof(InventoryDisplay));
@@ -329,8 +372,10 @@ namespace SpaceAce.UI
             _activeEntityView = null;
         }
 
-        private void UpdatePlayerShipViewDisplay()
+        private void UpdatePlayerShipDisplay()
         {
+            if (_playerShipView == null) return;
+
             if (_playerShipView == null &&
                 _playerShipDisplay.style.display == DisplayStyle.Flex) _playerShipDisplay.style.display = DisplayStyle.None;
 

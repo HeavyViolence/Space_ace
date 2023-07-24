@@ -24,7 +24,7 @@ namespace SpaceAce.Gameplay.Players
         private readonly ObjectPoolEntry _defaultShip;
         private ObjectPoolEntry _selectedShip;
 
-        private readonly GameControls _gameControls;
+        private readonly GameControls _gameControls = new();
         private GameObject _activeShip;
 
         private IMovementController _shipMovementController;
@@ -33,9 +33,9 @@ namespace SpaceAce.Gameplay.Players
         public string ID { get; }
         public string SaveName => "Player";
         public ObjectPoolEntry SelectedShip => _selectedShip != null ? _selectedShip : _defaultShip;
-        public Inventory Inventory { get; }
-        public Wallet Wallet { get; }
-        public Experience Experience { get; }
+        public Inventory Inventory { get; } = new();
+        public Wallet Wallet { get; } = new();
+        public Experience Experience { get; } = new();
 
         public Player(string id, ObjectPoolEntry defaultPlayerShip, ObjectPoolEntryLookupTable table)
         {
@@ -48,12 +48,7 @@ namespace SpaceAce.Gameplay.Players
             if (table == null) throw new ArgumentNullException(nameof(table), $"Attempted to pass an empty {nameof(ObjectPoolEntryLookupTable)}!");
             _objectPoolEntryLookupTable = table;
 
-            _gameControls = new();
             _gameControls.Gameplay.Disable();
-
-            Inventory = new();
-            Wallet = new();
-            Experience = new();
         }
 
         #region interfaces
@@ -152,10 +147,7 @@ namespace SpaceAce.Gameplay.Players
 
         public string GetState()
         {
-            PlayerSavableData data = new(SelectedShip.AnchorName,
-                                         Inventory.GetContent(),
-                                         Wallet.Credits,
-                                         Experience.Value);
+            PlayerSavableData data = new(SelectedShip.AnchorName, Inventory.GetContent(), Wallet.Credits, Experience.Value);
 
             return JsonUtility.ToJson(data);
         }

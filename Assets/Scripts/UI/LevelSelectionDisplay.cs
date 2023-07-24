@@ -18,7 +18,7 @@ namespace SpaceAce.UI
 
         public override string DisplayHolderName => "Level selection display";
 
-        public LevelSelectionDisplay(UIAssets assets) : base(assets.LevelSelectionMenu, assets.Settings, assets.ButtonClickAudio)
+        public LevelSelectionDisplay(UIAssets assets) : base(assets.LevelSelectionMenu, assets.Settings, assets.UIAudio)
         {
             _gameControls = new();
         }
@@ -47,23 +47,23 @@ namespace SpaceAce.UI
         {
             base.Enable();
 
-            DisplayDocument.visualTreeAsset = Display;
+            DisplayedDocument.visualTreeAsset = Display;
 
             _gameControls.Menu.Back.Enable();
             _gameControls.Menu.Back.performed += (c) => BackButtonClickedEventHandler();
 
             UpdateBestLevelRunDisplay(BestLevelRunStatistics.Default);
 
-            var playButton = DisplayDocument.rootVisualElement.Q<Button>("play-selected-level-button");
+            var playButton = DisplayedDocument.rootVisualElement.Q<Button>("Play-selected-level-button");
             playButton.SetEnabled(false);
             playButton.clicked += PlayButtonClickedEventHandler;
 
-            var backButton = DisplayDocument.rootVisualElement.Q<Button>("back-button");
+            var backButton = DisplayedDocument.rootVisualElement.Q<Button>("Back-button");
             backButton.clicked += BackButtonClickedEventHandler;
 
             for (int i = 1; i <= LevelConfig.MaxLevelIndex; i++)
             {
-                var levelButton = DisplayDocument.rootVisualElement.Q<Button>($"level-{i}-button");
+                var levelButton = DisplayedDocument.rootVisualElement.Q<Button>($"Level-{i}-button");
 
                 levelButton.SetEnabled(s_levelUnlocker.Access.IsLevelUnlocked(i));
                 levelButton.clicked += () => LevelButtonClickedEventHandler(levelButton, playButton);
@@ -77,20 +77,19 @@ namespace SpaceAce.UI
             _gameControls.Menu.Back.Disable();
             _gameControls.Menu.Back.performed -= (c) => BackButtonClickedEventHandler();
 
-            var playButton = DisplayDocument.rootVisualElement.Q<Button>("play-selected-level-button");
+            var playButton = DisplayedDocument.rootVisualElement.Q<Button>("Play-selected-level-button");
             playButton.clicked -= PlayButtonClickedEventHandler;
 
-            var backButton = DisplayDocument.rootVisualElement.Q<Button>("back-button");
+            var backButton = DisplayedDocument.rootVisualElement.Q<Button>("Back-button");
             backButton.clicked -= BackButtonClickedEventHandler;
 
             for (int i = 1; i <= LevelConfig.MaxLevelIndex; i++)
             {
-                var levelButton = DisplayDocument.rootVisualElement.Q<Button>($"level-{i}-button");
-
+                var levelButton = DisplayedDocument.rootVisualElement.Q<Button>($"Level-{i}-button");
                 levelButton.clicked -= () => LevelButtonClickedEventHandler(levelButton, playButton);
             }
 
-            DisplayDocument.visualTreeAsset = null;
+            DisplayedDocument.visualTreeAsset = null;
         }
 
         #region event handlers
@@ -98,7 +97,7 @@ namespace SpaceAce.UI
         private void PlayButtonClickedEventHandler()
         {
             s_gameModeLoader.Access.LoadLevel(_selectedLevelIndex);
-            ButtonClickAudio.PlayRandomAudioClip(Vector2.zero);
+            UIAudio.ForwardButtonClick.PlayRandomAudioClip(Vector2.zero);
             Disable();
 
             if (GameServices.TryGetService<HUDDisplay>(out var display) == true)
@@ -120,13 +119,13 @@ namespace SpaceAce.UI
             var selectedLevelStatistics = s_bestLevelsRunsStatisticsCollector.Access.GetStatistics(_selectedLevelIndex);
             UpdateBestLevelRunDisplay(selectedLevelStatistics);
 
-            ButtonClickAudio.PlayRandomAudioClip(Vector2.zero);
+            UIAudio.ForwardButtonClick.PlayRandomAudioClip(Vector2.zero);
         }
 
         private void BackButtonClickedEventHandler()
         {
             Disable();
-            ButtonClickAudio.PlayRandomAudioClip(Vector2.zero);
+            UIAudio.BackButtonClick.PlayRandomAudioClip(Vector2.zero);
 
             if (GameServices.TryGetService<MainMenuDisplay>(out var display) == true) display.Enable();
             else throw new UnregisteredGameServiceAccessAttemptException(typeof(MainMenuDisplay));
@@ -136,25 +135,25 @@ namespace SpaceAce.UI
         {
             if (statistics is null) throw new ArgumentNullException(nameof(statistics), $"Attempted to pass an empty {nameof(BestLevelRunStatistics)}!");
 
-            var timeSpentLabel = DisplayDocument.rootVisualElement.Q<Label>("time-spent-label");
-            var crystalsEarnedLabel = DisplayDocument.rootVisualElement.Q<Label>("credits-earned-label");
-            var experienceEarnedLabel = DisplayDocument.rootVisualElement.Q<Label>("experience-earned-label");
-            var enemiesDefeatedLabel = DisplayDocument.rootVisualElement.Q<Label>("enemies-defeated-label");
+            var timeSpentLabel = DisplayedDocument.rootVisualElement.Q<Label>("Time-spent-label");
+            var crystalsEarnedLabel = DisplayedDocument.rootVisualElement.Q<Label>("Credits-earned-label");
+            var experienceEarnedLabel = DisplayedDocument.rootVisualElement.Q<Label>("Experience-earned-label");
+            var enemiesDefeatedLabel = DisplayedDocument.rootVisualElement.Q<Label>("Enemies-defeated-label");
 
-            var shootingAccuracyIndicatorLabel = DisplayDocument.rootVisualElement.Q<Label>("shooting-accuracy-indicator-label");
-            var shootingAccuracyIndicator = DisplayDocument.rootVisualElement.Q<VisualElement>("shooting-accuracy-indicator-foreground");
+            var shootingAccuracyIndicatorLabel = DisplayedDocument.rootVisualElement.Q<Label>("Shooting-accuracy-indicator-label");
+            var shootingAccuracyIndicator = DisplayedDocument.rootVisualElement.Q<VisualElement>("Shooting-accuracy-indicator-foreground");
 
-            var playerDamageIndicatorLabel = DisplayDocument.rootVisualElement.Q<Label>("player-damage-indicator-label");
-            var playerDamageIndicator = DisplayDocument.rootVisualElement.Q<VisualElement>("player-damage-indicator-foreground");
+            var playerDamageIndicatorLabel = DisplayedDocument.rootVisualElement.Q<Label>("Player-damage-indicator-label");
+            var playerDamageIndicator = DisplayedDocument.rootVisualElement.Q<VisualElement>("Player-damage-indicator-foreground");
 
-            var meteorsCrushedIndicatorLabel = DisplayDocument.rootVisualElement.Q<Label>("meteors-crushed-indicator-label");
-            var meteorsCrushedIndicator = DisplayDocument.rootVisualElement.Q<VisualElement>("meteors-crushed-indicator-foreground");
+            var meteorsCrushedIndicatorLabel = DisplayedDocument.rootVisualElement.Q<Label>("Meteors-crushed-indicator-label");
+            var meteorsCrushedIndicator = DisplayedDocument.rootVisualElement.Q<VisualElement>("Meteors-crushed-indicator-foreground");
 
-            var spaceDebrisCrushedIndicatorLabel = DisplayDocument.rootVisualElement.Q<Label>("space-debris-crushed-indicator-label");
-            var spaceDebrisCrushedIndicator = DisplayDocument.rootVisualElement.Q<VisualElement>("space-debris-crushed-indicator-foreground");
+            var spaceDebrisCrushedIndicatorLabel = DisplayedDocument.rootVisualElement.Q<Label>("Space-debris-crushed-indicator-label");
+            var spaceDebrisCrushedIndicator = DisplayedDocument.rootVisualElement.Q<VisualElement>("Space-debris-crushed-indicator-foreground");
 
-            var levelMasteryIndicatorLabel = DisplayDocument.rootVisualElement.Q<Label>("level-mastery-indicator-label");
-            var levelMasteryIndicator = DisplayDocument.rootVisualElement.Q<VisualElement>("level-mastery-indicator-foreground");
+            var levelMasteryIndicatorLabel = DisplayedDocument.rootVisualElement.Q<Label>("Level-mastery-indicator-label");
+            var levelMasteryIndicator = DisplayedDocument.rootVisualElement.Q<VisualElement>("Level-mastery-indicator-foreground");
 
             if (statistics == BestLevelRunStatistics.Default)
             {
@@ -180,11 +179,10 @@ namespace SpaceAce.UI
             }
             else
             {
-                timeSpentLabel.text = statistics.TimeSpent.minutes.ToString("##") + ":" +
-                                      statistics.TimeSpent.seconds.ToString("##");
-                crystalsEarnedLabel.text = statistics.CreditsEarned.ToString("###,###");
-                experienceEarnedLabel.text = statistics.ExperienceEarned.ToString("###,###,###");
-                enemiesDefeatedLabel.text = statistics.EnemiesDefeated.ToString();
+                timeSpentLabel.text = $"{statistics.TimeSpent.minutes:n0}:{statistics.TimeSpent.seconds:n0}";
+                crystalsEarnedLabel.text = $"{statistics.CreditsEarned:n0}";
+                experienceEarnedLabel.text = $"{statistics.ExperienceEarned:n0}";
+                enemiesDefeatedLabel.text = $"{statistics.EnemiesDefeated:n0}";
 
                 shootingAccuracyIndicatorLabel.text = $"Shooting accuracy ({statistics.ShootingAccuracy * 100f:n2}%)";
                 shootingAccuracyIndicator.style.width = new(Length.Percent(statistics.ShootingAccuracy * 100f));

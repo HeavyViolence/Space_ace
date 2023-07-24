@@ -34,10 +34,7 @@ namespace SpaceAce.Main
 
         public GameModeLoader(IEnumerable<LevelConfig> levelConfigs)
         {
-            if (levelConfigs is null)
-            {
-                throw new ArgumentNullException(nameof(levelConfigs), $"Attempted to pass an empty {nameof(LevelConfig)} collection!");
-            }
+            if (levelConfigs is null) throw new ArgumentNullException(nameof(levelConfigs), $"Attempted to pass an empty {nameof(LevelConfig)} collection!");
 
             _levelConfigs = new(levelConfigs);
         }
@@ -89,22 +86,13 @@ namespace SpaceAce.Main
                     }
                 }
 
-                if (necessaryLevelConfigFound == false)
-                {
-                    throw new LevelLoadFailedException(levelIndex);
-                }
+                if (necessaryLevelConfigFound == false) throw new LevelLoadFailedException(levelIndex);
             }
         }
 
         public LevelConfig GetLevelConfig(int levelIndex)
         {
-            foreach (var config in _levelConfigs)
-            {
-                if (config.LevelIndex == levelIndex)
-                {
-                    return config;
-                }
-            }
+            foreach (var config in _levelConfigs) if (config.LevelIndex == levelIndex) return config;
 
             throw new Exception($"{nameof(LevelConfig)} for level #{levelIndex} is absent from the collection!");
         }

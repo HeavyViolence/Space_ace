@@ -19,10 +19,7 @@ namespace SpaceAce.Levels
 
         public LevelUnlocker(string id)
         {
-            if (StringID.IsValid(id) == false)
-            {
-                throw new InvalidStringIDException();
-            }
+            if (StringID.IsValid(id) == false) throw new InvalidStringIDException();
 
             ID = id;
             _unlockedLevels.Add(1);
@@ -119,7 +116,8 @@ namespace SpaceAce.Levels
         private void LevelPassedEventHandler(object sender, LevelDataEventArgs e)
         {
             _passedLevels.Add(e.LevelIndex);
-            _unlockedLevels.Add(e.LevelIndex + 1);
+
+            if (e.LevelIndex < 5) _unlockedLevels.Add(e.LevelIndex + 1);
 
             SavingRequested?.Invoke(this, EventArgs.Empty);
         }

@@ -26,12 +26,7 @@
                 </ui:VisualElement>
             </ui:VisualElement>
             <ui:VisualElement name="Lower-left" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); height: 50%; flex-direction: column-reverse;">
-                <ui:VisualElement name="Overdrive-display" style="flex-grow: 0; background-color: rgba(0, 0, 0, 0); height: 64px; flex-direction: row; align-items: center; align-self: flex-start; width: 100%; justify-content: flex-start;">
-                    <ui:VisualElement name="Overdrive-icon" style="flex-grow: 0; background-color: rgba(0, 0, 0, 0); height: 64px; width: 64px; background-image: url(&apos;project://database/Assets/Sprites/Icons/Interface/Overdrive%20icon.png?fileID=2800000&amp;guid=9459888903755b446ae2a91ab5df23db&amp;type=3#Overdrive icon&apos;); -unity-background-image-tint-color: rgba(255, 255, 255, 0.75);" />
-                    <ui:VisualElement name="Overdrive-progress-bar-background" style="flex-grow: 1; background-color: rgba(71, 69, 85, 0.75); height: 16px; border-top-left-radius: 8px; border-bottom-left-radius: 8px; border-top-right-radius: 8px; border-bottom-right-radius: 8px; width: auto; flex-shrink: 1; flex-direction: column; margin-left: 16px;">
-                        <ui:VisualElement name="Overdrive-progress-bar-foreground" style="flex-grow: 1; background-color: rgba(255, 192, 0, 0.75); height: 16px; border-top-left-radius: 8px; border-bottom-left-radius: 8px; border-top-right-radius: 8px; border-bottom-right-radius: 8px; width: 60%; flex-shrink: 1; flex-direction: column; margin-left: 0;" />
-                    </ui:VisualElement>
-                </ui:VisualElement>
+                <ui:VisualElement name="Active-items-display" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-wrap: wrap; flex-direction: column-reverse; white-space: normal; -unity-text-align: upper-left;" />
             </ui:VisualElement>
         </ui:VisualElement>
         <ui:VisualElement name="Center" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: row; width: 50%; justify-content: space-between; align-self: flex-start; border-left-width: 32px; border-right-width: 32px;">
@@ -85,14 +80,7 @@
                     <ui:VisualElement name="Entity-icon" focusable="false" style="flex-grow: 0; background-color: rgba(71, 69, 85, 0.5); width: 64px; height: 64px; background-image: url(&apos;project://database/Assets/Sprites/Player%20ships/Ship%202/Icons/Ship_LVL_5.png?fileID=2800000&amp;guid=480d35b2cf3fea2449d94fb295b3147c&amp;type=3#Ship_LVL_5&apos;); border-top-left-radius: 16px; border-bottom-left-radius: 16px; border-top-right-radius: 16px; border-bottom-right-radius: 16px; visibility: visible; -unity-background-image-tint-color: rgba(255, 255, 255, 0.75); rotate: 0; -unity-background-scale-mode: scale-to-fit;" />
                 </ui:VisualElement>
             </ui:VisualElement>
-            <ui:VisualElement name="Lower-right" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); height: 50%; flex-direction: column-reverse;">
-                <ui:VisualElement name="Powerup-display" style="flex-grow: 0; background-color: rgba(0, 0, 0, 0); height: 64px; flex-direction: row-reverse; align-items: center; align-self: flex-start; width: 100%; justify-content: flex-start;">
-                    <ui:VisualElement name="Powerup-icon" style="flex-grow: 0; background-color: rgba(0, 0, 0, 0); height: 64px; width: 64px; background-image: url(&apos;project://database/Assets/Sprites/Icons/Inventory%20items/Mass%20negator.png?fileID=2800000&amp;guid=3c4b5ba8e8509404d86a867a56abf618&amp;type=3#Mass negator&apos;); -unity-background-image-tint-color: rgba(255, 255, 255, 0.75);" />
-                    <ui:VisualElement name="Powerup-progress-bar-background" style="flex-grow: 1; background-color: rgba(71, 69, 85, 0.75); height: 16px; border-top-left-radius: 8px; border-bottom-left-radius: 8px; border-top-right-radius: 8px; border-bottom-right-radius: 8px; width: auto; flex-shrink: 1; flex-direction: column; margin-left: 0; margin-right: 16px;">
-                        <ui:VisualElement name="Powerup-progress-bar-foreground" style="flex-grow: 1; background-color: rgba(0, 128, 255, 0.75); height: 16px; border-top-left-radius: 8px; border-bottom-left-radius: 8px; border-top-right-radius: 8px; border-bottom-right-radius: 8px; width: 60%; flex-shrink: 1; flex-direction: column; margin-left: 0; align-self: flex-end;" />
-                    </ui:VisualElement>
-                </ui:VisualElement>
-            </ui:VisualElement>
+            <ui:VisualElement name="Lower-right" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); height: 50%; flex-direction: column-reverse;" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

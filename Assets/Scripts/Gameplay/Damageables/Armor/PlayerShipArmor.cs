@@ -7,7 +7,7 @@ namespace SpaceAce.Gameplay.Damageables
 {
     public sealed class PlayerShipArmor : Armor, IPlasmaShieldUser
     {
-        private Coroutine _armorBoostingRoutine = null;
+        private Coroutine _armorBooster = null;
 
         protected override void OnEnable()
         {
@@ -20,32 +20,32 @@ namespace SpaceAce.Gameplay.Damageables
         {
             SpecialEffectsMediator.Deregister(this);
 
-            if (_armorBoostingRoutine != null)
+            if (_armorBooster != null)
             {
-                StopCoroutine(_armorBoostingRoutine);
-                _armorBoostingRoutine = null;
+                StopCoroutine(_armorBooster);
+                _armorBooster = null;
             }
         }
 
         public bool Use(PlasmaShield shield)
         {
-            if (shield is null) throw new ArgumentNullException(nameof(shield), "Attempted to pass an empty plasma shield!");
+            if (shield is null) throw new ArgumentNullException(nameof(shield));
 
-            if (_armorBoostingRoutine == null)
+            if (_armorBooster == null)
             {
-                _armorBoostingRoutine = StartCoroutine(BoostArmor(shield.ArmorBoost, shield.Duration));
+                _armorBooster = StartCoroutine(BoostArmor(shield));
                 return true;
             }
 
             return false;
         }
 
-        private IEnumerator BoostArmor(float boostValue, float duration)
+        private IEnumerator BoostArmor(PlasmaShield shield)
         {
-            Value += boostValue;
+            Value += shield.ArmorBoost;
             float timer = 0f;
 
-            while (timer < duration)
+            while (timer < shield.Duration)
             {
                 timer += Time.deltaTime;
 
@@ -53,8 +53,8 @@ namespace SpaceAce.Gameplay.Damageables
                 while (GamePauser.Access.Paused == true) yield return null;
             }
 
-            Value -= boostValue;
-            _armorBoostingRoutine = null;
+            Value -= shield.ArmorBoost;
+            _armorBooster = null;
         }
     }
 }

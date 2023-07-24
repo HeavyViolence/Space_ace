@@ -9,13 +9,11 @@ namespace SpaceAce.UI
 {
     public sealed class PauseDisplay : UIDisplay
     {
-        private static readonly GameServiceFastAccess<GamePauser> s_gamePauser = new();
-
         private readonly GameControls _gameControls;
 
         public override string DisplayHolderName => "Pause display";
 
-        public PauseDisplay(UIAssets assets) : base(assets.PauseMenu, assets.Settings, assets.ButtonClickAudio)
+        public PauseDisplay(UIAssets assets) : base(assets.PauseMenu, assets.Settings, assets.UIAudio)
         {
             _gameControls = new();
         }
@@ -44,39 +42,35 @@ namespace SpaceAce.UI
         {
             base.Enable();
 
-            s_gamePauser.Access.Pause();
-
-            DisplayDocument.visualTreeAsset = Display;
+            DisplayedDocument.visualTreeAsset = Display;
 
             _gameControls.Menu.Back.Enable();
             _gameControls.Menu.Back.performed += BackButtonClickedEventHandler;
 
-            DisplayDocument.rootVisualElement.Q<Button>("Resume-button").clicked += () => BackButtonClickedEventHandler(new());
-            DisplayDocument.rootVisualElement.Q<Button>("Settings-button").clicked += SettingsButtonClickedEventHandler;
-            DisplayDocument.rootVisualElement.Q<Button>("Quit-level-button").clicked += QuitLevelButtonClickedEventHandler;
+            DisplayedDocument.rootVisualElement.Q<Button>("Resume-button").clicked += () => BackButtonClickedEventHandler(new());
+            DisplayedDocument.rootVisualElement.Q<Button>("Settings-button").clicked += SettingsButtonClickedEventHandler;
+            DisplayedDocument.rootVisualElement.Q<Button>("Quit-level-button").clicked += QuitLevelButtonClickedEventHandler;
         }
 
         protected override void Disable()
         {
             base.Disable();
 
-            s_gamePauser.Access.Resume();
-
             _gameControls.Menu.Back.Disable();
             _gameControls.Menu.Back.performed -= BackButtonClickedEventHandler;
 
-            DisplayDocument.rootVisualElement.Q<Button>("Resume-button").clicked -= () => BackButtonClickedEventHandler(new());
-            DisplayDocument.rootVisualElement.Q<Button>("Settings-button").clicked -= SettingsButtonClickedEventHandler;
-            DisplayDocument.rootVisualElement.Q<Button>("Quit-level-button").clicked -= QuitLevelButtonClickedEventHandler;
+            DisplayedDocument.rootVisualElement.Q<Button>("Resume-button").clicked -= () => BackButtonClickedEventHandler(new());
+            DisplayedDocument.rootVisualElement.Q<Button>("Settings-button").clicked -= SettingsButtonClickedEventHandler;
+            DisplayedDocument.rootVisualElement.Q<Button>("Quit-level-button").clicked -= QuitLevelButtonClickedEventHandler;
 
-            DisplayDocument.visualTreeAsset = null;
+            DisplayedDocument.visualTreeAsset = null;
         }
 
         #region event handlers
 
         private void BackButtonClickedEventHandler(InputAction.CallbackContext ctx)
         {
-            ButtonClickAudio.PlayRandomAudioClip(Vector2.zero);
+            UIAudio.BackButtonClick.PlayRandomAudioClip(Vector2.zero);
             Disable();
 
             if (GameServices.TryGetService(out HUDDisplay display) == true) display.Enable();
@@ -90,7 +84,7 @@ namespace SpaceAce.UI
 
         private void QuitLevelButtonClickedEventHandler()
         {
-            ButtonClickAudio.PlayRandomAudioClip(Vector2.zero);
+            UIAudio.ForwardButtonClick.PlayRandomAudioClip(Vector2.zero);
             Disable();
 
             if (GameServices.TryGetService(out GameModeLoader loader) == true)
