@@ -114,7 +114,7 @@ namespace SpaceAce.Gameplay.Spawning
             if (entity.TryGetComponent(out IEscapable e) == true)
             {
                 escapable = e;
-                escapable.StartWatchingForEscape(() => s_masterCameraHolder.Access.InsideViewport(entity.transform.position, Config.Escapedelta) == false);
+                escapable.StartWatchingForEscape(() => s_masterCameraHolder.Access.InsideViewport(entity.transform.position, Config.EscapeDelta) == false);
 
                 escapable.Escaped += (s, e) =>
                 {

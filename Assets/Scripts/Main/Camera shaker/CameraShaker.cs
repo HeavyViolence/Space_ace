@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using SpaceAce.Architecture;
 using SpaceAce.Auxiliary;
 using SpaceAce.Main.Saving;
@@ -31,7 +32,7 @@ namespace SpaceAce.Main
             if (StringID.IsValid(id) == false) throw new InvalidStringIDException();
             ID = id;
 
-            if (masterCameraAnchor == null) throw new ArgumentNullException(nameof(masterCameraAnchor), "Attempted to pass an empty master camera anchor!");
+            if (masterCameraAnchor == null) throw new ArgumentNullException(nameof(masterCameraAnchor));
             _body = masterCameraAnchor.AddComponent<Rigidbody2D>();
 
             _body.bodyType = RigidbodyType2D.Kinematic;
@@ -129,13 +130,12 @@ namespace SpaceAce.Main
         {
             CameraShakerSavableData data = new(ShakingEnabled);
 
-            return JsonUtility.ToJson(data);
+            return JsonConvert.SerializeObject(data);
         }
 
         public void SetState(string state)
         {
-            var data = JsonUtility.FromJson<CameraShakerSavableData>(state);
-
+            var data = JsonConvert.DeserializeObject<CameraShakerSavableData>(state);
             ShakingEnabled = data.ShakingEnabled;
         }
 

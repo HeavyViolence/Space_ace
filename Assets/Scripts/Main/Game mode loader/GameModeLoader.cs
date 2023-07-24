@@ -34,8 +34,7 @@ namespace SpaceAce.Main
 
         public GameModeLoader(IEnumerable<LevelConfig> levelConfigs)
         {
-            if (levelConfigs is null) throw new ArgumentNullException(nameof(levelConfigs), $"Attempted to pass an empty {nameof(LevelConfig)} collection!");
-
+            if (levelConfigs is null) throw new ArgumentNullException(nameof(levelConfigs));
             _levelConfigs = new(levelConfigs);
         }
 
@@ -57,10 +56,8 @@ namespace SpaceAce.Main
 
         public void LoadLevel(int levelIndex)
         {
-            if (levelIndex < LevelConfig.MinLevelIndex || levelIndex > LevelConfig.MaxLevelIndex)
-            {
-                throw new ArgumentOutOfRangeException(nameof(levelIndex), "Attempted to pass an invalid level index!");
-            }
+            if (levelIndex < LevelConfig.MinLevelIndex ||
+                levelIndex > LevelConfig.MaxLevelIndex) throw new ArgumentOutOfRangeException(nameof(levelIndex));
 
             CoroutineRunner.RunRoutine(GameLevelLoader());
 

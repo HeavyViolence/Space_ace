@@ -127,8 +127,8 @@ namespace SpaceAce.Gameplay.Movement.EnemyMovement
 
                 while (escapeCondition() == false) yield return null;
 
-                _escapeAwaitingRoutine = null;
                 Escaped?.Invoke(this, EventArgs.Empty);
+                _escapeAwaitingRoutine = null;
             }
         }
 

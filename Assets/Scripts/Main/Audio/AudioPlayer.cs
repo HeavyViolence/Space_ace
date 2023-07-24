@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using SpaceAce.Architecture;
 using SpaceAce.Auxiliary;
 using SpaceAce.Main.Saving;
@@ -32,7 +33,7 @@ namespace SpaceAce.Main.Audio
             if (StringID.IsValid(id) == false) throw new InvalidStringIDException();
             ID = id;
 
-            if (audioMixer == null) throw new ArgumentNullException(nameof(audioMixer), $"Attempted to set an empty {nameof(AudioMixer)}!");
+            if (audioMixer == null) throw new ArgumentNullException(nameof(audioMixer));
             _audioMixer = audioMixer;
 
             Settings = AudioPlayerSettings.Default;
@@ -41,7 +42,7 @@ namespace SpaceAce.Main.Audio
 
         public void ApplySettings(AudioPlayerSettings settings, bool save)
         {
-            if (settings is null) throw new ArgumentNullException(nameof(settings), $"Attempted to apply an empty {nameof(AudioPlayerSettings)}!");
+            if (settings is null) throw new ArgumentNullException(nameof(settings));
 
             SetVolume("Master volume", settings.MasterVolume);
             SetVolume("Shooting volume", settings.ShootingVolume);
@@ -219,11 +220,11 @@ namespace SpaceAce.Main.Audio
             GameServices.Deregister(this);
         }
 
-        public string GetState() => JsonUtility.ToJson(Settings);
+        public string GetState() => JsonConvert.SerializeObject(Settings);
 
         public void SetState(string state)
         {
-            var settings = JsonUtility.FromJson<AudioPlayerSettings>(state);
+            var settings = JsonConvert.DeserializeObject<AudioPlayerSettings>(state);
 
             ApplySettings(settings, false);
         }

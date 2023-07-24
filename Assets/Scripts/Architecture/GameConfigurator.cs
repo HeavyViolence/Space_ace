@@ -134,7 +134,7 @@ namespace SpaceAce.Architecture
             _gameServices.Add(new EntityVisualizer(_itemIconsConfig, _itemRarityColorsConfig));
             _gameServices.Add(new LootSpawner(_lootItemBox));
 
-            _gameServices.Add(new SavingSystem(_idGenerator.Next()));
+            _gameServices.Add(new SavingSystem());
             _gameServices.Add(new CameraShaker(_idGenerator.Next(), cameraHolder.MasterCameraAnchor));
             _gameServices.Add(new AudioPlayer(_idGenerator.Next(), _audioMixer));
             _gameServices.Add(new MusicPlayer(_idGenerator.Next(), _music));

@@ -1,5 +1,4 @@
 using SpaceAce.Architecture;
-using SpaceAce.Auxiliary;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -16,14 +15,8 @@ namespace SpaceAce.Main.Saving
         private const int EncryptionKeyLength = 16;
 
         private readonly HashSet<ISavable> _registeredEntities = new();
-        private readonly string _id;
 
-        public SavingSystem(string id)
-        {
-            if (StringID.IsValid(id) == false) throw new InvalidStringIDException();
-
-            _id = id;
-        }
+        public SavingSystem() { }
 
         public bool Register(ISavable entity)
         {

@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using SpaceAce.Architecture;
 using SpaceAce.Auxiliary;
 using SpaceAce.Gameplay.Damageables;
@@ -26,6 +27,8 @@ namespace SpaceAce.Gameplay.Players
 
         private readonly GameControls _gameControls = new();
         private GameObject _activeShip;
+
+        private readonly JsonSerializerSettings _serializationSettings = new() { TypeNameHandling = TypeNameHandling.Auto };
 
         private IMovementController _shipMovementController;
         private IShootingController _shipShootingController;
@@ -149,12 +152,12 @@ namespace SpaceAce.Gameplay.Players
         {
             PlayerSavableData data = new(SelectedShip.AnchorName, Inventory.GetContent(), Wallet.Credits, Experience.Value);
 
-            return JsonUtility.ToJson(data);
+            return JsonConvert.SerializeObject(data, _serializationSettings);
         }
 
         public void SetState(string state)
         {
-            var data = JsonUtility.FromJson<PlayerSavableData>(state);
+            var data = JsonConvert.DeserializeObject<PlayerSavableData>(state, _serializationSettings);
 
             if (_objectPoolEntryLookupTable.TryGetEntryByName(data.SelectedShipAnchorName, out var entry) == true) _selectedShip = entry;
             if (data.InventoryContent is not null) Inventory.AddItems(data.InventoryContent);

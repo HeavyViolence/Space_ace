@@ -73,7 +73,7 @@ namespace SpaceAce.Gameplay.Spawning
         public bool AmplificationEnabled => _enableAmplification;
         public AmplificationConfig AmplificationConfig => AmplificationEnabled ? _amplificationConfig : null;
 
-        public float Escapedelta => _escapeDelta;
+        public float EscapeDelta => _escapeDelta;
 
         private void OnEnable()
         {

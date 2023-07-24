@@ -1,10 +1,10 @@
+using Newtonsoft.Json;
 using SpaceAce.Main;
 using System;
 using System.Collections.Generic;
 
 namespace SpaceAce.Gameplay.Inventories
 {
-    [Serializable]
     public sealed class PlasmaShield : InventoryItem, IEquatable<PlasmaShield>
     {
         public const float MinArmorBoost = 100f;
@@ -16,13 +16,14 @@ namespace SpaceAce.Gameplay.Inventories
         public float ArmorBoost { get; private set; }
         public float ProjectilesSlowdown { get; private set; }
 
+        [JsonIgnore]
         public override string Stats => throw new NotImplementedException();
 
         public PlasmaShield(ItemRarity rarity,
                             float duration,
-                            int worth,
+                            int sellValue,
                             float armorBoost,
-                            float projectilesSlowdown) : base(rarity, duration, worth)
+                            float projectilesSlowdown) : base(rarity, duration, sellValue)
         {
             if (armorBoost < MinArmorBoost ||
                 armorBoost > MaxArmorBoost) throw new ArgumentOutOfRangeException(nameof(armorBoost));

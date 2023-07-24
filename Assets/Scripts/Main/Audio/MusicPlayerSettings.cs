@@ -1,18 +1,12 @@
-using System;
-using UnityEngine;
-
 namespace SpaceAce.Main.Audio
 {
-    [Serializable]
     public sealed class MusicPlayerSettings
     {
-        [SerializeField] private float _playbackInterval;
-
-        public float PlaybackInterval => _playbackInterval;
+        public float PlaybackInterval { get; private set; }
 
         public MusicPlayerSettings(float playbackInterval)
         {
-            _playbackInterval = playbackInterval;
+            PlaybackInterval = playbackInterval;
         }
     }
 }

@@ -1,9 +1,9 @@
+using Newtonsoft.Json;
 using SpaceAce.Architecture;
 using SpaceAce.Auxiliary;
 using SpaceAce.Main.Saving;
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace SpaceAce.Levels
 {
@@ -11,18 +11,14 @@ namespace SpaceAce.Levels
     {
         public event EventHandler SavingRequested;
 
-        private Dictionary<int, BestLevelRunStatistics> _statistics = new(LevelConfig.MaxLevelIndex);
+        private Dictionary<int, BestLevelRunStatistics> _statistics = new() { {1, BestLevelRunStatistics.Default } };
 
         public string ID { get; }
         public string SaveName => "Best levels runs statistics";
 
         public BestLevelsRunsStatisticsCollector(string id)
         {
-            if (StringID.IsValid(id) == false)
-            {
-                throw new InvalidStringIDException();
-            }
-
+            if (StringID.IsValid(id) == false) throw new InvalidStringIDException();
             ID = id;
         }
 
@@ -34,10 +30,7 @@ namespace SpaceAce.Levels
                                                       $"Passed level index must be within the following range: [1, {LevelConfig.MaxLevelIndex}]!");
             }
 
-            if (_statistics.TryGetValue(levelIndex, out var statistics) == true)
-            {
-                return statistics;
-            }
+            if (_statistics.TryGetValue(levelIndex, out var statistics) == true) return statistics;
 
             return BestLevelRunStatistics.Default;
         }
@@ -51,44 +44,20 @@ namespace SpaceAce.Levels
 
         public void OnSubscribe()
         {
-            if (GameServices.TryGetService(out SavingSystem system) == true)
-            {
-                system.Register(this);
-            }
-            else
-            {
-                throw new UnregisteredGameServiceAccessAttemptException(typeof(SavingSystem));
-            }
+            if (GameServices.TryGetService(out SavingSystem system) == true) system.Register(this);
+            else throw new UnregisteredGameServiceAccessAttemptException(typeof(SavingSystem));
 
-            if (GameServices.TryGetService(out LevelCompleter completer) == true)
-            {
-                completer.LevelPassed += LevelPassedEventHandler;
-            }
-            else
-            {
-                throw new UnregisteredGameServiceAccessAttemptException(typeof(LevelCompleter));
-            }
+            if (GameServices.TryGetService(out LevelCompleter completer) == true) completer.LevelPassed += LevelPassedEventHandler;
+            else throw new UnregisteredGameServiceAccessAttemptException(typeof(LevelCompleter));
         }
 
         public void OnUnsubscribe()
         {
-            if (GameServices.TryGetService(out SavingSystem system) == true)
-            {
-                system.Deregister(this);
-            }
-            else
-            {
-                throw new UnregisteredGameServiceAccessAttemptException(typeof(SavingSystem));
-            }
+            if (GameServices.TryGetService(out SavingSystem system) == true) system.Deregister(this);
+            else throw new UnregisteredGameServiceAccessAttemptException(typeof(SavingSystem));
 
-            if (GameServices.TryGetService(out LevelCompleter completer) == true)
-            {
-                completer.LevelPassed -= LevelPassedEventHandler;
-            }
-            else
-            {
-                throw new UnregisteredGameServiceAccessAttemptException(typeof(LevelCompleter));
-            }
+            if (GameServices.TryGetService(out LevelCompleter completer) == true) completer.LevelPassed -= LevelPassedEventHandler;
+            else throw new UnregisteredGameServiceAccessAttemptException(typeof(LevelCompleter));
         }
 
         public void OnClear()
@@ -96,19 +65,9 @@ namespace SpaceAce.Levels
             GameServices.Deregister(this);
         }
 
-        public string GetState()
-        {
-            BestLevelsRunsStatisticsCollectorSavableData data = new(_statistics.Keys, _statistics.Values);
+        public string GetState() => JsonConvert.SerializeObject(_statistics);
 
-            return JsonUtility.ToJson(data);
-        }
-
-        public void SetState(string state)
-        {
-            var data = JsonUtility.FromJson<BestLevelsRunsStatisticsCollectorSavableData>(state);
-
-            _statistics = new(data.Contents);
-        }
+        public void SetState(string state) => _statistics = JsonConvert.DeserializeObject<Dictionary<int, BestLevelRunStatistics>>(state);
 
         public override bool Equals(object obj) => Equals(obj as ISavable);
 

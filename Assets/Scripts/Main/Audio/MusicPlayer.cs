@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using SpaceAce.Architecture;
 using SpaceAce.Auxiliary;
 using SpaceAce.Main.Saving;
@@ -28,27 +29,16 @@ namespace SpaceAce.Main.Audio
 
         public MusicPlayer(string id, AudioCollection music)
         {
-            if (StringID.IsValid(id) == false)
-            {
-                throw new InvalidStringIDException();
-            }
-
+            if (StringID.IsValid(id) == false) throw new InvalidStringIDException();
             ID = id;
 
-            if (music == null)
-            {
-                throw new ArgumentNullException(nameof(music), $"Attempted to set an empty {typeof(AudioCollection)}!");
-            }
-
+            if (music == null) throw new ArgumentNullException(nameof(music));
             _music = music;
         }
 
         public void Play()
         {
-            if (IsPlaying == false)
-            {
-                _musicRoutine = CoroutineRunner.RunRoutine(PlayMusicForever());
-            }
+            if (IsPlaying == false) _musicRoutine = CoroutineRunner.RunRoutine(PlayMusicForever());
         }
 
         public void Stop()
@@ -76,10 +66,7 @@ namespace SpaceAce.Main.Audio
         {
             PlaybackInterval = Mathf.Clamp(value, MinPlaybackInterval, MaxPlaybackInterval);
 
-            if (save == true)
-            {
-                SavingRequested?.Invoke(this, EventArgs.Empty);
-            }
+            if (save == true) SavingRequested?.Invoke(this, EventArgs.Empty);
         }
 
         public void SetDefaultPlaybackInterval(bool save) => SetPlaybackInterval(DefaultPlaybackInterval, save);
@@ -93,26 +80,14 @@ namespace SpaceAce.Main.Audio
 
         public void OnSubscribe()
         {
-            if (GameServices.TryGetService(out SavingSystem system) == true)
-            {
-                system.Register(this);
-            }
-            else
-            {
-                throw new UnregisteredGameServiceAccessAttemptException(typeof(SavingSystem));
-            }
+            if (GameServices.TryGetService(out SavingSystem system) == true) system.Register(this);
+            else throw new UnregisteredGameServiceAccessAttemptException(typeof(SavingSystem));
         }
 
         public void OnUnsubscribe()
         {
-            if (GameServices.TryGetService(out SavingSystem system) == true)
-            {
-                system.Deregister(this);
-            }
-            else
-            {
-                throw new UnregisteredGameServiceAccessAttemptException(typeof(SavingSystem));
-            }
+            if (GameServices.TryGetService(out SavingSystem system) == true) system.Deregister(this);
+            else throw new UnregisteredGameServiceAccessAttemptException(typeof(SavingSystem));
         }
 
         public void OnClear()
@@ -129,12 +104,12 @@ namespace SpaceAce.Main.Audio
         {
             MusicPlayerSettings settings = new(PlaybackInterval);
 
-            return JsonUtility.ToJson(settings);
+            return JsonConvert.SerializeObject(settings);
         }
 
         public void SetState(string state)
         {
-            var settings = JsonUtility.FromJson<MusicPlayerSettings>(state);
+            var settings = JsonConvert.DeserializeObject<MusicPlayerSettings>(state);
 
             SetPlaybackInterval(settings.PlaybackInterval, false);
         }

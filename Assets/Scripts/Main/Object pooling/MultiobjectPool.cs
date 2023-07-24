@@ -24,9 +24,9 @@ namespace SpaceAce.Main.ObjectPooling
         public void EnsureObjectPoolExistence(string anchorName, GameObject sample)
         {
             if (string.IsNullOrEmpty(anchorName) || string.IsNullOrWhiteSpace(anchorName))
-                throw new ArgumentNullException(nameof(anchorName), $"Attempted to assign an invalid anchor name to a new object pool anchor!");
+                throw new ArgumentNullException(nameof(anchorName));
 
-            if (sample == null) throw new ArgumentNullException(nameof(sample), $"Attempted to pass an empty sample object!");
+            if (sample == null) throw new ArgumentNullException(nameof(sample));
 
             if (_multiobjectPool.ContainsKey(anchorName) == false)
             {
@@ -80,7 +80,7 @@ namespace SpaceAce.Main.ObjectPooling
 
         public void ReleaseObject(string anchorName, GameObject member, Func<bool> condition, float delay = 0f)
         {
-            if (member == null) throw new ArgumentNullException(nameof(member), "Attempted to release an empty object to an object pool!");
+            if (member == null) throw new ArgumentNullException(nameof(member));
 
             if (member.activeInHierarchy == false) return;
 
@@ -90,14 +90,17 @@ namespace SpaceAce.Main.ObjectPooling
             {
                 while (condition() == false || s_gamePauser.Access.Paused == true) yield return null;
 
-                float timer = 0f;
-
-                while (timer < delay)
+                if (delay > 0f)
                 {
-                    timer += Time.deltaTime;
+                    float timer = 0f;
 
-                    yield return null;
-                    while (s_gamePauser.Access.Paused == true) yield return null;
+                    while (timer < delay)
+                    {
+                        timer += Time.deltaTime;
+
+                        yield return null;
+                        while (s_gamePauser.Access.Paused == true) yield return null;
+                    }
                 }
 
                 yield return null;

@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using SpaceAce.Architecture;
 using SpaceAce.Gameplay.Players;
 using SpaceAce.Main;
@@ -19,13 +20,12 @@ namespace SpaceAce.Gameplay.Inventories
         Legendary
     }
 
-    [Serializable]
     public abstract class InventoryItem: IEquatable<InventoryItem>
     {
         public const int MinSellValue = 10;
         public const int MaxSellValue = 10000;
 
-        public const float MinDuration = 1f;
+        public const float MinDuration = 15f;
         public const float MaxDuration = 300f;
 
         public const int ItemsPerInfusion = 3;
@@ -39,11 +39,22 @@ namespace SpaceAce.Gameplay.Inventories
         protected static readonly GameServiceFastAccess<HUDDisplay> HUDDisplay = new();
 
         public ItemRarity Rarity { get; private set; }
+
+        [JsonIgnore]
         public Color32 RarityColor => EntityVisualizer.Access.GetInventoryItemRarityColor(Rarity);
+
+        [JsonIgnore]
         public Sprite Icon => EntityVisualizer.Access.GetInventoryItemIcon(GetType());
+
+        [JsonIgnore]
         public string Title => throw new NotImplementedException();
+
+        [JsonIgnore]
         public string Description => throw new NotImplementedException();
+
+        [JsonIgnore]
         public abstract string Stats { get; }
+
         public float Duration { get; private set; }
         public int SellValue { get; private set; }
 

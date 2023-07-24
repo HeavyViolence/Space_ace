@@ -133,7 +133,7 @@ namespace SpaceAce.UI
 
         private void UpdateBestLevelRunDisplay(BestLevelRunStatistics statistics)
         {
-            if (statistics is null) throw new ArgumentNullException(nameof(statistics), $"Attempted to pass an empty {nameof(BestLevelRunStatistics)}!");
+            if (statistics is null) throw new ArgumentNullException(nameof(statistics));
 
             var timeSpentLabel = DisplayedDocument.rootVisualElement.Q<Label>("Time-spent-label");
             var crystalsEarnedLabel = DisplayedDocument.rootVisualElement.Q<Label>("Credits-earned-label");
@@ -179,7 +179,7 @@ namespace SpaceAce.UI
             }
             else
             {
-                timeSpentLabel.text = $"{statistics.TimeSpent.minutes:n0}:{statistics.TimeSpent.seconds:n0}";
+                timeSpentLabel.text = $"{statistics.Minutes:n0}:{statistics.Seconds:n0}";
                 crystalsEarnedLabel.text = $"{statistics.CreditsEarned:n0}";
                 experienceEarnedLabel.text = $"{statistics.ExperienceEarned:n0}";
                 enemiesDefeatedLabel.text = $"{statistics.EnemiesDefeated:n0}";
