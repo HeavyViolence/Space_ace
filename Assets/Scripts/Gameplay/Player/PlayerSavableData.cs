@@ -6,10 +6,10 @@ namespace SpaceAce.Gameplay.Players
 {
     public sealed class PlayerSavableData
     {
-        public string SelectedShipAnchorName { get; private set; }
-        public List<InventoryItem> InventoryContent { get; private set; } = new();
-        public int Credits { get; private set; }
-        public float Experience { get; private set; }
+        public string SelectedShipAnchorName { get; }
+        public List<InventoryItem> InventoryContent { get; } = new();
+        public int Credits { get; }
+        public float Experience { get; }
 
         public PlayerSavableData(string selectedShipAnchorName,
                                  IEnumerable<InventoryItem> inventoryItems,

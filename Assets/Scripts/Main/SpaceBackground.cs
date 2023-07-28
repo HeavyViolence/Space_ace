@@ -173,7 +173,7 @@ namespace SpaceAce.Main
         private void MainMenuLoadedEventHandler(object sender, EventArgs e)
         {
             ScrollSpeed = MinScrollSpeed;
-            _dustfield.Stop();
+            _dustfield.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
             _spaceBackgroundMeshRenderer.sharedMaterial = _mainMenuSpaceBackground;
         }
 

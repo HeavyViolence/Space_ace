@@ -5,8 +5,8 @@ namespace SpaceAce.Levels
 {
     public sealed class LevelUnlockerSavableData
     {
-        public HashSet<int> PassedLevels { get; private set; }
-        public HashSet<int> UnlockedLevels { get; private set; }
+        public HashSet<int> PassedLevels { get; }
+        public HashSet<int> UnlockedLevels { get; }
 
         public LevelUnlockerSavableData(IEnumerable<int> passedLevels, IEnumerable<int> unlockedLevels)
         {

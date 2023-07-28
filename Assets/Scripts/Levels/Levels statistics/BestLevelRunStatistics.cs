@@ -9,15 +9,15 @@ namespace SpaceAce.Levels
     {
         public static BestLevelRunStatistics Default => new(0f, 0f, 0f, 0f, (0, 0), 0, 0, 0);
 
-        public float ShootingAccuracy { get; private set; }
-        public float PlayerDamagePercentage { get; private set; }
-        public float MeteorsCrushedPercentage { get; private set; }
-        public float SpaceDebrisCrushedPercentage { get; private set; }
-        public int Minutes { get; private set; }
-        public int Seconds { get; private set; }
-        public int CreditsEarned { get; private set; }
-        public int ExperienceEarned { get; private set; }
-        public int EnemiesDefeated { get; private set; }
+        public float ShootingAccuracy { get; }
+        public float PlayerDamagePercentage { get; }
+        public float MeteorsCrushedPercentage { get; }
+        public float SpaceDebrisCrushedPercentage { get; }
+        public int Minutes { get; }
+        public int Seconds { get; }
+        public int CreditsEarned { get; }
+        public int ExperienceEarned { get; }
+        public int EnemiesDefeated { get; }
 
         public float LevelMastery => ShootingAccuracy *
                                      MeteorsCrushedPercentage *

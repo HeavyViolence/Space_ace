@@ -19,6 +19,8 @@ namespace SpaceAce.UI
 
         [SerializeField] private AudioCollection _powerup;
 
+        [SerializeField] private AudioCollection _gainedOrUnlocked;
+
         public AudioCollection ForwardButtonClick => _forwardButtonClick;
         public AudioCollection BackButtonClick => _backButtonClick;
 
@@ -31,5 +33,7 @@ namespace SpaceAce.UI
         public AudioCollection Win => _win;
 
         public AudioCollection Powerup => _powerup;
+
+        public AudioCollection GainedOrUnlocked => _gainedOrUnlocked;
     }
 }

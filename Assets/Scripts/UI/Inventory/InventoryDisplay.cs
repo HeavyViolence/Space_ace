@@ -15,9 +15,9 @@ namespace SpaceAce.UI
 
         private readonly VisualTreeAsset _inventorySlot;
         private readonly GameControls _gameControls = new();
+        private readonly ItemInfuser _itemInfuser = new();
 
         private VisualElement _inventoryContainer;
-        private ItemInfusionPanel _itemInfusionPanel;
 
         public override string DisplayHolderName => "Inventory display";
 
@@ -33,12 +33,14 @@ namespace SpaceAce.UI
 
         public override void OnSubscribe()
         {
-
+            _itemInfuser.ItemToInfuseCollected += ItemToInfuseCollectedEventHandler;
+            _itemInfuser.InfusedItemCollected += InfusedItemCollectedEventHandler;
         }
 
         public override void OnUnsubscribe()
         {
-
+            _itemInfuser.ItemToInfuseCollected -= ItemToInfuseCollectedEventHandler;
+            _itemInfuser.InfusedItemCollected -= InfusedItemCollectedEventHandler;
         }
 
         public override void OnClear()
@@ -53,17 +55,14 @@ namespace SpaceAce.UI
             if (s_gameModeLoader.Access.GameState == GameState.Level) s_gamePauser.Access.Pause();
 
             DisplayedDocument.visualTreeAsset = Display;
-            DisplayedDocument.rootVisualElement.Q<Button>("Back-button").clicked += BackButtonClicked;
+            DisplayedDocument.rootVisualElement.Q<Button>("Back-button").clicked += BackButtonClickedEventHandler;
 
-            _itemInfusionPanel = new(DisplayedDocument.rootVisualElement);
-            _itemInfusionPanel.OnEnable();
-
-            _itemInfusionPanel.ItemToInfuseCollected += ItemToInfuseCollectedEventHandler;
-            _itemInfusionPanel.InfusedItemCollected += InfusedItemCollectedEventHandler;
+            _itemInfuser.SetInventoryDisplay(DisplayedDocument.rootVisualElement);
+            _itemInfuser.OnEnable();
 
             _gameControls.Menu.Enable();
-            _gameControls.Menu.Back.performed += (c) => BackButtonClicked();
-            _gameControls.Menu.Inventory.performed += (c) => BackButtonClicked();
+            _gameControls.Menu.Back.performed += (c) => BackButtonClickedEventHandler();
+            _gameControls.Menu.Inventory.performed += (c) => BackButtonClickedEventHandler();
 
             _inventoryContainer = DisplayedDocument.rootVisualElement.Q<VisualElement>("Inventory-container");
 
@@ -76,18 +75,19 @@ namespace SpaceAce.UI
         {
             base.Disable();
 
-            _gameControls.Menu.Disable();
-            _gameControls.Menu.Back.performed -= (c) => BackButtonClicked();
-            _gameControls.Menu.Inventory.performed -= (c) => BackButtonClicked();
+            _itemInfuser.OnDisable();
 
-            DisplayedDocument.rootVisualElement.Q<Button>("Back-button").clicked -= BackButtonClicked;
+            if (_itemInfuser.TryReclaimItemsToInfuse(out var items) == true) s_player.Access.Inventory.AddItems(items);
+            if (_itemInfuser.TryCollectInfusedItem(out InventoryItem item) == true) s_player.Access.Inventory.AddItem(item);
+
+            _gameControls.Menu.Disable();
+            _gameControls.Menu.Back.performed -= (c) => BackButtonClickedEventHandler();
+            _gameControls.Menu.Inventory.performed -= (c) => BackButtonClickedEventHandler();
+
+            DisplayedDocument.rootVisualElement.Q<Button>("Back-button").clicked -= BackButtonClickedEventHandler;
             DisplayedDocument.visualTreeAsset = null;
 
             s_player.Access.Inventory.ContentChanged -= (s, e) => UpdateInventoryView();
-
-            _itemInfusionPanel.OnDisable();
-            _itemInfusionPanel.ItemToInfuseCollected -= ItemToInfuseCollectedEventHandler;
-            _itemInfusionPanel.InfusedItemCollected -= InfusedItemCollectedEventHandler;
         }
 
         private void UpdateInventoryView()
@@ -114,14 +114,14 @@ namespace SpaceAce.UI
                 else sellItemButton.SetEnabled(false);
 
                 var fuseItemButton = inventorySlot.Q<Button>("Fuse-item-button");
-                fuseItemButton.clicked += () => PutItemToInfusion(item);
+                fuseItemButton.clicked += () => AddItemToInfuse(item);
 
                 if (s_gameModeLoader.Access.GameState == GameState.MainMenu) fuseItemButton.SetEnabled(true);
                 else fuseItemButton.SetEnabled(false);
 
                 var itemIcon = inventorySlot.Q<VisualElement>("Item-icon");
-                itemIcon.style.backgroundImage = new(item.Icon);
                 itemIcon.style.backgroundColor = new(item.RarityColor);
+                itemIcon.style.backgroundImage = new(item.Icon);
 
                 _inventoryContainer.Add(inventorySlot);
             }
@@ -129,7 +129,7 @@ namespace SpaceAce.UI
 
         #region event handlers
 
-        private void BackButtonClicked()
+        private void BackButtonClickedEventHandler()
         {
             Disable();
             UIAudio.BackButtonClick.PlayRandomAudioClip(Vector2.zero);
@@ -166,9 +166,9 @@ namespace SpaceAce.UI
             UIAudio.ItemSold.PlayRandomAudioClip(Vector2.zero);
         }
 
-        private void PutItemToInfusion(InventoryItem item)
+        private void AddItemToInfuse(InventoryItem item)
         {
-            if (_itemInfusionPanel.AddItem(item) == true)
+            if (_itemInfuser.AddItem(item) == true)
             {
                 s_player.Access.Inventory.RemoveItem(item);
                 UIAudio.ForwardButtonClick.PlayRandomAudioClip(Vector2.zero);
@@ -188,7 +188,7 @@ namespace SpaceAce.UI
         private void InfusedItemCollectedEventHandler(object sender, ItemEventArgs e)
         {
             s_player.Access.Inventory.AddItem(e.Item);
-            UIAudio.ForwardButtonClick.PlayRandomAudioClip(Vector2.zero);
+            UIAudio.GainedOrUnlocked.PlayRandomAudioClip(Vector2.zero);
         }
 
         #endregion

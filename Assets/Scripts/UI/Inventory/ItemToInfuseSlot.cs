@@ -5,7 +5,7 @@ using UnityEngine.UIElements;
 
 namespace SpaceAce.UI
 {
-    public sealed class ItemInfusionSlot
+    public sealed class ItemToInfuseSlot
     {
         public event EventHandler<ItemEventArgs> ItemRemoved;
 
@@ -13,9 +13,9 @@ namespace SpaceAce.UI
         private readonly Button _removeItemButton;
 
         public InventoryItem Item { get; private set; } = null;
-        public bool IsEmpty => Item == null;
+        public bool IsEmpty => Item is null;
 
-        public ItemInfusionSlot(VisualElement infusionSlot)
+        public ItemToInfuseSlot(VisualElement infusionSlot)
         {
             if (infusionSlot == null) throw new ArgumentNullException(nameof(infusionSlot));
 

@@ -13,7 +13,7 @@ namespace SpaceAce.UI
         private readonly Button _collectItemButton;
 
         public InventoryItem Item { get; private set; } = null;
-        public bool IsEmpty => Item == null;
+        public bool IsEmpty => Item is null;
 
         public InfusedItemSlot(VisualElement infusedItemSlot)
         {
@@ -49,6 +49,18 @@ namespace SpaceAce.UI
             _collectItemButton.SetEnabled(true);
 
             return true;
+        }
+
+        public void Clear()
+        {
+            if (IsEmpty) return;
+
+            Item = null;
+
+            _itemIcon.style.backgroundColor = new Color(0f, 0f, 0f, 0f);
+            _itemIcon.style.backgroundImage = null;
+
+            _collectItemButton.SetEnabled(false);
         }
 
         private void CollectItemButtonClickedEventHandler()

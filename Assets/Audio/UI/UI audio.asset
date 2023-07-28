@@ -20,3 +20,4 @@ MonoBehaviour:
   _lost: {fileID: 11400000, guid: 5b4f0cc23fd058b4cba57aa0531bf829, type: 2}
   _win: {fileID: 11400000, guid: 8c0eb0070289c21488a9d4d4d9833a38, type: 2}
   _powerup: {fileID: 11400000, guid: 9a207899450c06b4a876214fb774ae14, type: 2}
+  _gainedOrUnlocked: {fileID: 11400000, guid: 2b6bbea2434c047458783180eef1b6e9, type: 2}

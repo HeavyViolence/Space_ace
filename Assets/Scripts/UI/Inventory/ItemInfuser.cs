@@ -5,33 +5,47 @@ using UnityEngine.UIElements;
 
 namespace SpaceAce.UI
 {
-    public sealed class ItemInfusionPanel
+    public sealed class ItemInfuser
     {
         public event EventHandler<ItemEventArgs> ItemToInfuseCollected;
         public event EventHandler<ItemEventArgs> InfusedItemCollected;
 
-        private readonly List<ItemInfusionSlot> _itemInfusionSlots = new(InventoryItem.ItemsPerInfusion);
-        private readonly InfusedItemSlot _infusedItemSlot;
-        private readonly Button _infuseButton;
+        private readonly List<ItemToInfuseSlot> _itemInfusionSlots = new(InventoryItem.ItemsPerInfusion);
+        private InfusedItemSlot _infusedItemSlot;
+        private Button _infuseButton;
 
-        public bool InfusionSlotsPopulated => _itemInfusionSlots.Count == InventoryItem.ItemsPerInfusion;
-
-        public ItemInfusionPanel(VisualElement inventoryDisplay)
+        public bool InfusionSlotsPopulated
         {
-            if (inventoryDisplay == null) throw new ArgumentNullException(nameof(inventoryDisplay));
+            get
+            {
+                if (_itemInfusionSlots.Count == 0) return false;
+
+                foreach (var slot in _itemInfusionSlots) if (slot.IsEmpty) return false;
+
+                return true;
+            }
+        }
+
+        public ItemInfuser() { }
+
+        public void SetInventoryDisplay(VisualElement inventory)
+        {
+            if (inventory == null) throw new ArgumentNullException(nameof(inventory));
+
+            _itemInfusionSlots.Clear();
 
             for (int i = 0; i < InventoryItem.ItemsPerInfusion; i++)
             {
-                var slot = inventoryDisplay.Q<VisualElement>($"Item-infusion-slot-{i}");
-                ItemInfusionSlot infusionSlot = new(slot);
+                var slot = inventory.Q<VisualElement>($"Item-infusion-slot-{i}");
+                ItemToInfuseSlot infusionSlot = new(slot);
 
                 _itemInfusionSlots.Add(infusionSlot);
             }
 
-            var infusedItemSlot = inventoryDisplay.Q<VisualElement>("Infused-item-slot");
+            var infusedItemSlot = inventory.Q<VisualElement>("Infused-item-slot");
             _infusedItemSlot = new(infusedItemSlot);
 
-            _infuseButton = inventoryDisplay.Q<Button>("Infuse-button");
+            _infuseButton = inventory.Q<Button>("Infuse-button");
             _infuseButton.SetEnabled(false);
             _infuseButton.clicked += InfuseButtonClickedEventHandler;
         }
@@ -56,8 +70,6 @@ namespace SpaceAce.UI
 
         public bool AddItem(InventoryItem item)
         {
-            if (InfusionSlotsPopulated) return false;
-
             foreach (var slot in _itemInfusionSlots)
             {
                 if (slot.AddItem(item) == true)
@@ -70,6 +82,49 @@ namespace SpaceAce.UI
 
             return false;
         }
+
+        public bool TryReclaimItemsToInfuse(out IEnumerable<InventoryItem> items)
+        {
+            List<InventoryItem> itemsToCollect = new(InventoryItem.ItemsPerInfusion);
+
+            foreach (var slot in _itemInfusionSlots)
+            {
+                if (slot.IsEmpty == false)
+                {
+                    itemsToCollect.Add(slot.Item);
+                    slot.Clear();
+                }
+            }
+
+            if (itemsToCollect.Count > 0)
+            {
+                items = itemsToCollect;
+                return true;
+            }
+            else
+            {
+                items = null;
+                return false;
+            }
+        }
+
+        public bool TryCollectInfusedItem(out InventoryItem item)
+        {
+            if (_infusedItemSlot.IsEmpty == false)
+            {
+                item = _infusedItemSlot.Item;
+                _infusedItemSlot.Clear();
+
+                return true;
+            }
+            else
+            {
+                item = null;
+                return false;
+            }
+        }
+
+        #region event handlers
 
         private void InfuseButtonClickedEventHandler()
         {
@@ -98,5 +153,7 @@ namespace SpaceAce.UI
 
             if (InfusionSlotsPopulated) _infuseButton.SetEnabled(true);
         }
+
+        #endregion
     }
 }

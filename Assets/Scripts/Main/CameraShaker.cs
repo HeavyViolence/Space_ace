@@ -126,18 +126,9 @@ namespace SpaceAce.Main
             GameServices.Deregister(this);
         }
 
-        public string GetState()
-        {
-            CameraShakerSavableData data = new(ShakingEnabled);
+        public string GetState() => JsonConvert.SerializeObject(ShakingEnabled);
 
-            return JsonConvert.SerializeObject(data);
-        }
-
-        public void SetState(string state)
-        {
-            var data = JsonConvert.DeserializeObject<CameraShakerSavableData>(state);
-            ShakingEnabled = data.ShakingEnabled;
-        }
+        public void SetState(string state) => ShakingEnabled = JsonConvert.DeserializeObject<bool>(state);
 
         public override bool Equals(object obj) => Equals(obj as ISavable);
 

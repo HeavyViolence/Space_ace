@@ -4,14 +4,14 @@ namespace SpaceAce.Main.Audio
     {
         public static AudioPlayerSettings Default => new(0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f);
 
-        public float MasterVolume { get; private set; }
-        public float MusicVolume { get; private set; }
-        public float ShootingVolume { get; private set; }
-        public float ExplosionsVolume { get; private set; }
-        public float InterfaceVolume { get; private set; }
-        public float BackgroundVolume { get; private set; }
-        public float NotificationsVolume { get; private set; }
-        public float InteractionsVolume { get; private set; }
+        public float MasterVolume { get; }
+        public float MusicVolume { get; }
+        public float ShootingVolume { get; }
+        public float ExplosionsVolume { get; }
+        public float InterfaceVolume { get; }
+        public float BackgroundVolume { get; }
+        public float NotificationsVolume { get; }
+        public float InteractionsVolume { get; }
 
         public AudioPlayerSettings(float masterVolume,
                                    float musicVolume,

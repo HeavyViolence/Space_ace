@@ -100,18 +100,12 @@ namespace SpaceAce.Main.Audio
             Play();
         }
 
-        public string GetState()
-        {
-            MusicPlayerSettings settings = new(PlaybackInterval);
-
-            return JsonConvert.SerializeObject(settings);
-        }
+        public string GetState() => JsonConvert.SerializeObject(PlaybackInterval);
 
         public void SetState(string state)
         {
-            var settings = JsonConvert.DeserializeObject<MusicPlayerSettings>(state);
-
-            SetPlaybackInterval(settings.PlaybackInterval, false);
+            var playbackInterval = JsonConvert.DeserializeObject<float>(state);
+            SetPlaybackInterval(playbackInterval, false);
         }
 
         public override bool Equals(object obj) => Equals(obj as ISavable);
