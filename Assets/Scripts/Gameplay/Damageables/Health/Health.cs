@@ -15,9 +15,10 @@ namespace SpaceAce.Gameplay.Damageables
 
         private static readonly GameServiceFastAccess<CameraShaker> s_cameraShaker = new();
         private static readonly GameServiceFastAccess<MultiobjectPool> s_multiobjectPool = new();
+        protected static readonly GameServiceFastAccess<GamePauser> GamePauser = new();
 
         public event EventHandler Depleted, Restored;
-        public event EventHandler<FloatValueChangedEventArgs> ValueChanged, MaxValueChanged, RegenerationPerSecondValueChanged;
+        public event EventHandler<FloatValueChangedEventArgs> ValueChanged, MaxValueChanged, RegenPerSecondChanged;
 
         [SerializeField] private HealthConfig _config = null;
 
@@ -65,7 +66,7 @@ namespace SpaceAce.Gameplay.Damageables
                 float oldValue = _regenPerSecond;
 
                 _regenPerSecond = Mathf.Clamp(value, 0f, float.MaxValue);
-                RegenerationPerSecondValueChanged?.Invoke(this, new(oldValue, _regenPerSecond));
+                RegenPerSecondChanged?.Invoke(this, new(oldValue, _regenPerSecond));
             }
         }
 

@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: af97f4e0bfac8cd4eb08c68a5a5ac1dc, type: 3}
-  m_Name: Plasma shield rare
+  m_Name: Plasma shield 5
   m_EditorClassIdentifier: 
-  _rarity: 2
-  _sellValue: 260
-  _sellValueRandomDeviation: 26
-  _duration: 40
+  _rarity: 4
+  _sellValue: 685
+  _sellValueRandomDeviation: 68
+  _duration: 70
   _durationRandomDeviation: 5
-  _armorBoost: 500
-  _armorBoostRandomDeviation: 50
-  _projectilesSlowdown: 0.3
+  _armorBoost: 1300
+  _armorBoostRandomDeviation: 130
+  _projectilesSlowdown: 0.2
   _projectilesSlowdownRandomDeviation: 0.05

@@ -25,7 +25,6 @@ namespace SpaceAce.Gameplay.Inventories
 
         public override InventoryItem GetItem() => new PlasmaShield(Rarity,
                                                                     Duration.RandomValue,
-                                                                    SellValue.RandomValue,
                                                                     ArmorBoost.RandomValue,
                                                                     ProjectilesSlowdown.RandomValue);
     }

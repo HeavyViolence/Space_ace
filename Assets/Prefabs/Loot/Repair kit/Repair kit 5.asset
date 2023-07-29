@@ -9,9 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c7dfd7732058e24dab1d7a179dd0f99, type: 3}
-  m_Name: Pirate seker armor config
+  m_Script: {fileID: 11500000, guid: a4e0052b4b13d6340ba66683732e7138, type: 3}
+  m_Name: Repair kit 5
   m_EditorClassIdentifier: 
-  _armorEnabled: 1
-  _armor: 180
-  _armorRandomDeviation: 15
+  _rarity: 4
+  _duration: 70
+  _durationRandomDeviation: 5
+  _regenPerSecond: 35
+  _regenPerSecondRandomDeviation: 3.5

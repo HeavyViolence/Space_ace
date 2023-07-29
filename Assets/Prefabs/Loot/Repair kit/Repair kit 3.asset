@@ -9,15 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af97f4e0bfac8cd4eb08c68a5a5ac1dc, type: 3}
-  m_Name: Plasma shield exotic
+  m_Script: {fileID: 11500000, guid: a4e0052b4b13d6340ba66683732e7138, type: 3}
+  m_Name: Repair kit 3
   m_EditorClassIdentifier: 
-  _rarity: 4
-  _sellValue: 685
-  _sellValueRandomDeviation: 68
+  _rarity: 2
   _duration: 50
   _durationRandomDeviation: 5
-  _armorBoost: 1300
-  _armorBoostRandomDeviation: 130
-  _projectilesSlowdown: 0.2
-  _projectilesSlowdownRandomDeviation: 0.05
+  _regenPerSecond: 25
+  _regenPerSecondRandomDeviation: 2.5

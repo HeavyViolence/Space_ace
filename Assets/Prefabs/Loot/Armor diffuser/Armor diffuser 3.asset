@@ -9,15 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af97f4e0bfac8cd4eb08c68a5a5ac1dc, type: 3}
-  m_Name: Plasma shield epic
+  m_Script: {fileID: 11500000, guid: fb4b2c0065c856144931941e91ffb163, type: 3}
+  m_Name: Armor diffuser 3
   m_EditorClassIdentifier: 
-  _rarity: 4
-  _sellValue: 1100
-  _sellValueRandomDeviation: 110
-  _duration: 55
+  _rarity: 3
+  _duration: 50
   _durationRandomDeviation: 5
-  _armorBoost: 2100
-  _armorBoostRandomDeviation: 210
-  _projectilesSlowdown: 0.15
-  _projectilesSlowdownRandomDeviation: 0.05
+  _armorReduction: 80
+  _armorReductionRandomDeviation: 8

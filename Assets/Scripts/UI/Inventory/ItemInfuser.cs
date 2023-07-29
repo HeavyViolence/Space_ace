@@ -7,12 +7,11 @@ namespace SpaceAce.UI
 {
     public sealed class ItemInfuser
     {
-        public event EventHandler<ItemEventArgs> ItemToInfuseCollected;
-        public event EventHandler<ItemEventArgs> InfusedItemCollected;
+        public event EventHandler<ItemEventArgs> ItemToInfuseReleased;
+        public event EventHandler<ItemEventArgs> InfusedItemReleased;
 
         private readonly List<ItemToInfuseSlot> _itemInfusionSlots = new(InventoryItem.ItemsPerInfusion);
         private InfusedItemSlot _infusedItemSlot;
-        private Button _infuseButton;
 
         public bool InfusionSlotsPopulated
         {
@@ -25,6 +24,8 @@ namespace SpaceAce.UI
                 return true;
             }
         }
+
+        public bool InfusedItemSlotOccupied => _infusedItemSlot.Item is not null;
 
         public ItemInfuser() { }
 
@@ -44,16 +45,12 @@ namespace SpaceAce.UI
 
             var infusedItemSlot = inventory.Q<VisualElement>("Infused-item-slot");
             _infusedItemSlot = new(infusedItemSlot);
-
-            _infuseButton = inventory.Q<Button>("Infuse-button");
-            _infuseButton.SetEnabled(false);
-            _infuseButton.clicked += InfuseButtonClickedEventHandler;
         }
 
         public void OnEnable()
         {
-            foreach (var slot in  _itemInfusionSlots) slot.ItemRemoved += ItemToInfuseCollectedEventHandler;
-            _infusedItemSlot.ItemCollected += InfusedItemCollectedEventHandler;
+            foreach (var slot in _itemInfusionSlots) slot.ItemRemoved += ItemToInfuseReleasedEventHandler;
+            _infusedItemSlot.ItemCollected += InfusedItemReleasedEventHandler;
 
             foreach (var slot in _itemInfusionSlots) slot.OnEnable();
             _infusedItemSlot.OnEnable();
@@ -61,24 +58,16 @@ namespace SpaceAce.UI
 
         public void OnDisable()
         {
-            foreach (var slot in _itemInfusionSlots) slot.ItemRemoved -= ItemToInfuseCollectedEventHandler;
-            _infusedItemSlot.ItemCollected -= InfusedItemCollectedEventHandler;
+            foreach (var slot in _itemInfusionSlots) slot.ItemRemoved -= ItemToInfuseReleasedEventHandler;
+            _infusedItemSlot.ItemCollected -= InfusedItemReleasedEventHandler;
 
             foreach (var slot in _itemInfusionSlots) slot.OnDisable();
             _infusedItemSlot.OnDisable();
         }
 
-        public bool AddItem(InventoryItem item)
+        public bool TryAddItemToInfuse(InventoryItem item)
         {
-            foreach (var slot in _itemInfusionSlots)
-            {
-                if (slot.AddItem(item) == true)
-                {
-                    if (InfusionSlotsPopulated && _infusedItemSlot.IsEmpty) _infuseButton?.SetEnabled(true);
-
-                    return true;
-                }
-            }
+            foreach (var slot in _itemInfusionSlots) if (slot.AddItem(item) == true) return true;
 
             return false;
         }
@@ -108,6 +97,24 @@ namespace SpaceAce.UI
             }
         }
 
+        public bool TryInfuseItems()
+        {
+            var item1 = _itemInfusionSlots[0].Item;
+            var item2 = _itemInfusionSlots[1].Item;
+            var item3 = _itemInfusionSlots[2].Item;
+
+            if (item1.Fuse(item2, item3, out var infusedItem) == true)
+            {
+                _infusedItemSlot.AddItem(infusedItem);
+
+                foreach (var slot in _itemInfusionSlots) slot.Clear();
+
+                return true;
+            }
+
+            return false;
+        }
+
         public bool TryCollectInfusedItem(out InventoryItem item)
         {
             if (_infusedItemSlot.IsEmpty == false)
@@ -126,32 +133,14 @@ namespace SpaceAce.UI
 
         #region event handlers
 
-        private void InfuseButtonClickedEventHandler()
+        private void ItemToInfuseReleasedEventHandler(object sender, ItemEventArgs e)
         {
-            var item1 = _itemInfusionSlots[0].Item;
-            var item2 = _itemInfusionSlots[1].Item;
-            var item3 = _itemInfusionSlots[2].Item;
-
-            if (item1.Fuse(item2, item3, out var infusedItem) == true)
-            {
-                _infusedItemSlot.AddItem(infusedItem);
-
-                foreach (var slot in _itemInfusionSlots) slot.Clear();
-
-                _infuseButton.SetEnabled(false);
-            }
+            ItemToInfuseReleased?.Invoke(this, e);
         }
 
-        private void ItemToInfuseCollectedEventHandler(object sender, ItemEventArgs e)
+        private void InfusedItemReleasedEventHandler(object sender, ItemEventArgs e)
         {
-            ItemToInfuseCollected?.Invoke(this, e);
-        }
-
-        private void InfusedItemCollectedEventHandler(object sender, ItemEventArgs e)
-        {
-            InfusedItemCollected?.Invoke(this, e);
-
-            if (InfusionSlotsPopulated) _infuseButton.SetEnabled(true);
+            InfusedItemReleased?.Invoke(this, e);
         }
 
         #endregion

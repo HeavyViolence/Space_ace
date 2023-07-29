@@ -71,7 +71,7 @@ namespace SpaceAce.Levels
 
             if (GameServices.TryGetService(out LevelCompleter completer) == true)
             {
-                completer.LevelPassed += (s, e) => RewardDispensed?.Invoke(this, new(CreditReward, ExperienceReward));
+                completer.LevelPassed += LevelPassedEventHandler;
             }
             else
             {
@@ -129,7 +129,7 @@ namespace SpaceAce.Levels
 
             if (GameServices.TryGetService(out LevelCompleter completer) == true)
             {
-                completer.LevelPassed -= (s, e) => RewardDispensed?.Invoke(this, new(CreditReward, ExperienceReward));
+                completer.LevelPassed -= LevelPassedEventHandler;
             }
             else
             {
@@ -168,6 +168,11 @@ namespace SpaceAce.Levels
                 ExperienceReward += e.EarnedExperience;
                 ExperienceRewardChanged?.Invoke(this, new LevelExperienceRewardChangedEventArgs(oldReward, newReward));
             };
+        }
+
+        private void LevelPassedEventHandler(object sender, LevelDataEventArgs e)
+        {
+            RewardDispensed?.Invoke(this, new(CreditReward, ExperienceReward));
         }
 
         #endregion

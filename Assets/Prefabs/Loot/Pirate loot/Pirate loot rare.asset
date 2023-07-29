@@ -13,9 +13,15 @@ MonoBehaviour:
   m_Name: Pirate loot rare
   m_EditorClassIdentifier: 
   _loot:
+  - {fileID: 11400000, guid: b9e47539ea0b12e4899c1f150abb255c, type: 2}
   - {fileID: 11400000, guid: 139d048f096c5e748b6585e3126aa082, type: 2}
+  - {fileID: 11400000, guid: b19563515d4797d4f8c5c2fc943d60aa, type: 2}
+  - {fileID: 11400000, guid: becf737e4face5b459efcc443f97f119, type: 2}
   - {fileID: 11400000, guid: 4cc4dbfa907b18e46a92868386b4c789, type: 2}
+  - {fileID: 11400000, guid: db686dc7c833d8d46ae334a81b98e883, type: 2}
+  - {fileID: 11400000, guid: a1872608ca439c0409679c3b54774e5f, type: 2}
   - {fileID: 11400000, guid: 36aa60ea1506c9749a751801a4e140b9, type: 2}
+  - {fileID: 11400000, guid: 0b3ffa7a2383ca541ae01ff2e8302ac0, type: 2}
   _lootAmount: 1
   _lootAmountRandomDeviation: 0
   _spawnProbability: 0.25

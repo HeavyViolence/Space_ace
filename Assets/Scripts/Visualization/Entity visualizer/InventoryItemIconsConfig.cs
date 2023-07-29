@@ -9,15 +9,16 @@ namespace SpaceAce.Visualization
     public sealed class InventoryItemIconsConfig : ScriptableObject
     {
         [SerializeField] private Sprite _plasmaShieldIcon;
-        [SerializeField] private Sprite _atomizerIcon;
-        [SerializeField] private Sprite _massNegatorIcon;
-        [SerializeField] private Sprite _matterDegausserIcon;
+        [SerializeField] private Sprite _repairKitIcon;
+        [SerializeField] private Sprite _armorDiffuserIcon;
 
         public Sprite GetIcon(Type itemType)
         {
-            if (itemType is null) throw new ArgumentNullException(nameof(itemType), "Attempted to pass an empty inventory item type!");
+            if (itemType is null) throw new ArgumentNullException(nameof(itemType));
 
             if (itemType == typeof(PlasmaShield)) return _plasmaShieldIcon;
+            if (itemType == typeof(RepairKit)) return _repairKitIcon;
+            if (itemType == typeof(ArmorDiffuser)) return _armorDiffuserIcon;
 
             return null;
         }

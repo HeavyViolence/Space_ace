@@ -22,8 +22,10 @@ namespace SpaceAce.Gameplay.Inventories
 
     public abstract class InventoryItem: IEquatable<InventoryItem>
     {
-        public const int MinSellValue = 10;
-        public const int MaxSellValue = 10000;
+        public const float DurationUnitWorth = 0.8f;
+        public const float HealthUnitWorth = 0.3f;
+        public const float ArmorUnitWorth = 0.5f;
+        public const float ProjectilesSlowdownUnitWorth = -100f;
 
         public const float MinDuration = 15f;
         public const float MaxDuration = 300f;
@@ -37,6 +39,7 @@ namespace SpaceAce.Gameplay.Inventories
         protected static readonly GameServiceFastAccess<GameModeLoader> GameModeLoader = new();
         protected static readonly GameServiceFastAccess<Player> Player = new();
         protected static readonly GameServiceFastAccess<HUDDisplay> HUDDisplay = new();
+        protected static readonly GameServiceFastAccess<GamePauser> GamePauser = new();
 
         public ItemRarity Rarity { get; private set; }
 
@@ -47,16 +50,18 @@ namespace SpaceAce.Gameplay.Inventories
         public Sprite Icon => EntityVisualizer.Access.GetInventoryItemIcon(GetType());
 
         [JsonIgnore]
-        public string Title => throw new NotImplementedException();
+        public abstract string Title { get; }
 
         [JsonIgnore]
-        public string Description => throw new NotImplementedException();
+        public abstract string Description { get; }
 
         [JsonIgnore]
         public abstract string Stats { get; }
 
+        [JsonIgnore]
+        public virtual float Worth => Duration * DurationUnitWorth;
+
         public float Duration { get; private set; }
-        public int SellValue { get; private set; }
 
         public static float GetHighestSpawnProbabilityFromRarity(ItemRarity rarity)
         {
@@ -72,29 +77,19 @@ namespace SpaceAce.Gameplay.Inventories
 
         public static ItemRarity GetPreviousRarity(ItemRarity rarity) => (ItemRarity)Mathf.Clamp((int)rarity - 1, 0, (int)ItemRarity.Legendary);
 
-        public InventoryItem(ItemRarity rarity, float duration, int sellValue)
+        public InventoryItem(ItemRarity rarity, float duration)
         {
             Rarity = rarity;
-
-            if (duration < MinDuration || duration > MaxDuration) throw new ArgumentOutOfRangeException(nameof(duration));
-            Duration = duration;
-
-            if (sellValue < MinSellValue || sellValue > MaxSellValue) throw new ArgumentOutOfRangeException(nameof(sellValue));
-            SellValue = sellValue;
+            Duration = Mathf.Clamp(duration, MinDuration, MaxDuration);
         }
-
-        public void Sell() => Player.Access.Wallet.AddCredits(SellValue);
 
         public abstract bool Use();
         public abstract bool Fuse(InventoryItem item1, InventoryItem item2, out InventoryItem result);
 
         public override bool Equals(object obj) => Equals(obj as InventoryItem);
 
-        public bool Equals(InventoryItem other) => other is not null &&
-                                                   Rarity.Equals(other.Rarity) &&
-                                                   Duration.Equals(other.Duration) &&
-                                                   SellValue.Equals(other.SellValue);
+        public bool Equals(InventoryItem other) => other is not null && Rarity.Equals(other.Rarity) && Duration.Equals(other.Duration);
 
-        public override int GetHashCode() => Rarity.GetHashCode() ^ Duration.GetHashCode() ^ SellValue.GetHashCode();
+        public override int GetHashCode() => Rarity.GetHashCode() ^ Duration.GetHashCode();
     }
 }
