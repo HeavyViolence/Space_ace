@@ -50,8 +50,8 @@ namespace SpaceAce.Gameplay.Loot
 
         private int CompareItemConfigsByRarityDescending(InventoryItemConfig c1, InventoryItemConfig c2)
         {
-            if ((int)c1.Rarity < (int)c2.Rarity) return 1;
-            if ((int)c1.Rarity > (int)c2.Rarity) return -1;
+            if (c1.Rarity < c2.Rarity) return 1;
+            if (c1.Rarity > c2.Rarity) return -1;
 
             return 0;
         }

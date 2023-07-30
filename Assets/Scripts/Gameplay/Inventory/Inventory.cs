@@ -10,19 +10,19 @@ namespace SpaceAce.Gameplay.Inventories
 
         public event EventHandler ContentChanged;
 
-        [SerializeField] private HashSet<InventoryItem> _inventoryItems = new(DefaultCapacity);
+        [SerializeField] private HashSet<InventoryItem> _items = new(DefaultCapacity);
 
-        public int ItemsAmount => _inventoryItems.Count;
+        public int ItemsAmount => _items.Count;
 
         public Inventory() { }
 
-        public IEnumerable<InventoryItem> GetContent() => _inventoryItems;
+        public IEnumerable<InventoryItem> GetContent() => _items;
 
         public void AddItem(InventoryItem item)
         {
             if (item is null) throw new ArgumentNullException(nameof(item));
 
-            _inventoryItems.Add(item);
+            _items.Add(item);
             ContentChanged?.Invoke(this, EventArgs.Empty);
         }
 
@@ -30,7 +30,7 @@ namespace SpaceAce.Gameplay.Inventories
         {
             if (items is null) throw new ArgumentNullException(nameof(items));
 
-            foreach (var item in items) _inventoryItems.Add(item);
+            foreach (var item in items) _items.Add(item);
 
             ContentChanged?.Invoke(this, EventArgs.Empty);
         }
@@ -39,7 +39,7 @@ namespace SpaceAce.Gameplay.Inventories
         {
             if (item is null) throw new ArgumentNullException(nameof(item));
 
-            if (_inventoryItems.Remove(item) == true)
+            if (_items.Remove(item) == true)
             {
                 ContentChanged?.Invoke(this, EventArgs.Empty);
                 return true;
@@ -50,7 +50,7 @@ namespace SpaceAce.Gameplay.Inventories
 
         public void Clear()
         {
-            _inventoryItems.Clear();
+            _items.Clear();
             ContentChanged?.Invoke(this, EventArgs.Empty);
         }
     }

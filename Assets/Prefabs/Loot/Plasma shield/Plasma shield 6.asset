@@ -12,11 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af97f4e0bfac8cd4eb08c68a5a5ac1dc, type: 3}
   m_Name: Plasma shield 6
   m_EditorClassIdentifier: 
-  _rarity: 4
-  _sellValue: 1100
-  _sellValueRandomDeviation: 110
+  _rarity: 5
   _duration: 80
-  _durationRandomDeviation: 5
+  _durationRandomDeviation: 2.5
   _armorBoost: 2100
   _armorBoostRandomDeviation: 210
   _projectilesSlowdown: 0.15

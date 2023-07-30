@@ -99,7 +99,7 @@ namespace SpaceAce.Gameplay.Damageables
 
         private void RestoreHealthIfRegenerationIsEnabled()
         {
-            if (_config.RegenerationEnabled && Full == false)
+            if (RegenPerSecond > 0f && Full == false)
             {
                 float regainedValue = RegenPerSecond * Time.deltaTime;
 

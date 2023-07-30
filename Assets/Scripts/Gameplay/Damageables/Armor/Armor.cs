@@ -39,9 +39,9 @@ namespace SpaceAce.Gameplay.Damageables
             BlockedDamage = 0f;
         }
 
-        public float GetDamageToBeDealt(float receivedDamage)
+        public virtual float GetDamageToBeDealt(float receivedDamage)
         {
-            if (receivedDamage < 0f) throw new ArgumentOutOfRangeException(nameof(receivedDamage), receivedDamage, $"Incoming damage must be positive!");
+            if (receivedDamage < 0f) throw new ArgumentOutOfRangeException(nameof(receivedDamage));
             if (Enabled == false) return receivedDamage;
 
             float damageToBeDealt = receivedDamage < Value ? receivedDamage * receivedDamage / Value : receivedDamage;

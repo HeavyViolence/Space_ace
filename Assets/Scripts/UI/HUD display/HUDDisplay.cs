@@ -66,7 +66,7 @@ namespace SpaceAce.UI
 
         public bool RegisterEntityView(EntityView view)
         {
-            if (view == null) throw new ArgumentNullException(nameof(view), $"Attempted to register an empty {typeof(EntityView)}!");
+            if (view == null) throw new ArgumentNullException(nameof(view));
 
             if (_entityViews.Add(view) == true)
             {
@@ -81,7 +81,7 @@ namespace SpaceAce.UI
 
         public bool DeregisterEntityView(EntityView view)
         {
-            if (view == null) throw new ArgumentNullException(nameof(view), $"Attempted to deregister an empty {typeof(EntityView)}!");
+            if (view == null) throw new ArgumentNullException(nameof(view));
 
             if (_entityViews.Remove(view) == true)
             {
@@ -96,7 +96,7 @@ namespace SpaceAce.UI
 
         public bool RegisterPlayerView(EntityView playerView)
         {
-            if (playerView == null) throw new ArgumentNullException(nameof(playerView), $"Attempted to register an empty {typeof(EntityView)}!");
+            if (playerView == null) throw new ArgumentNullException(nameof(playerView));
 
             if (_playerShipView == null)
             {

@@ -62,6 +62,7 @@ namespace SpaceAce.UI
             _backButton.clicked += BackButtonClickedEventHandler;
 
             _infuseItemsButton = DisplayedDocument.rootVisualElement.Q<Button>("Infuse-button");
+            _infuseItemsButton.SetEnabled(false);
             _infuseItemsButton.clicked += InfuseItemsButtonClickedEventHandler;
 
             _itemInfuser.SetInventoryDisplay(DisplayedDocument.rootVisualElement);

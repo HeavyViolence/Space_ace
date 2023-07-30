@@ -26,7 +26,7 @@ namespace SpaceAce.Gameplay.Inventories
         [JsonIgnore]
         public override float Worth => (base.Worth +
                                        ArmorBoost * ArmorUnitWorth +
-                                       ProjectilesSlowdown * ProjectilesSlowdownUnitWorth) *
+                                       ProjectilesSlowdown * SlowdownUnitWorth) *
                                        (float)(Rarity + 1);
 
         public float ArmorBoost { get; private set; }
@@ -70,9 +70,9 @@ namespace SpaceAce.Gameplay.Inventories
                 item2 is PlasmaShield other2)
             {
                 ItemRarity nextRarity = GetNextRarity(Rarity);
-                float newDuration = (Duration + other1.Duration) * FusedItemPropertyFactor;
-                float newArmorBoost = (ArmorBoost + other1.ArmorBoost + other2.ArmorBoost) * FusedItemPropertyFactor;
-                float newProjectilesSlowdown = (ProjectilesSlowdown + other1.ProjectilesSlowdown + other2.ProjectilesSlowdown) * FusedItemPropertyFactor;
+                float newDuration = (Duration + other1.Duration) * FusedPropertyFactor;
+                float newArmorBoost = (ArmorBoost + other1.ArmorBoost + other2.ArmorBoost) * FusedPropertyFactor;
+                float newProjectilesSlowdown = (ProjectilesSlowdown + other1.ProjectilesSlowdown + other2.ProjectilesSlowdown) * FusedPropertyFactor;
 
                 result = new PlasmaShield(nextRarity, newDuration, newArmorBoost, newProjectilesSlowdown);
                 return true;

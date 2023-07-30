@@ -68,8 +68,8 @@ namespace SpaceAce.Gameplay.Inventories
                 item2 is ArmorDiffuser other2)
             {
                 ItemRarity nextRarity = GetNextRarity(Rarity);
-                float newDuration = (Duration + other1.Duration + other2.Duration) * FusedItemPropertyFactor;
-                float newArmorReduction = (ArmorReduction + other1.ArmorReduction + other2.ArmorReduction) * FusedItemPropertyFactor;
+                float newDuration = (Duration + other1.Duration + other2.Duration) * FusedPropertyFactor;
+                float newArmorReduction = (ArmorReduction + other1.ArmorReduction + other2.ArmorReduction) * FusedPropertyFactor;
 
                 result = new ArmorDiffuser(nextRarity, newDuration, newArmorReduction);
                 return true;
@@ -84,6 +84,8 @@ namespace SpaceAce.Gameplay.Inventories
             if (GameModeLoader.Access.GameState == GameState.Level && _armorDiffusionRoutine == null)
             {
                 _armorDiffusionRoutine = CoroutineRunner.RunRoutine(ArmorDiffuserRoutine(this));
+                HUDDisplay.Access.RegisterActiveItem(this);
+
                 return true;
             }
 

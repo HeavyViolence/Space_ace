@@ -28,10 +28,7 @@ namespace SpaceAce.Gameplay.Inventories
         {
             List<T> requestedReceivers = new(s_receivers.Count);
 
-            foreach (var candidate in s_receivers)
-            {
-                if (candidate is T receiver) requestedReceivers.Add(receiver);
-            }
+            foreach (var candidate in s_receivers) if (candidate is T receiver) requestedReceivers.Add(receiver);
 
             if (requestedReceivers.Count > 0)
             {

@@ -13,9 +13,7 @@ MonoBehaviour:
   m_Name: Repair kit 1
   m_EditorClassIdentifier: 
   _rarity: 0
-  _sellValue: 50
-  _sellValueRandomDeviation: 5
   _duration: 30
-  _durationRandomDeviation: 5
+  _durationRandomDeviation: 2.5
   _regenPerSecond: 15
   _regenPerSecondRandomDeviation: 1.5

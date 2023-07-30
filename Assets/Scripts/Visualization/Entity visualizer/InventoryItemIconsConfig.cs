@@ -11,6 +11,8 @@ namespace SpaceAce.Visualization
         [SerializeField] private Sprite _plasmaShieldIcon;
         [SerializeField] private Sprite _repairKitIcon;
         [SerializeField] private Sprite _armorDiffuserIcon;
+        [SerializeField] private Sprite _reactiveArmorIcon;
+        [SerializeField] private Sprite _nanofuelIcon;
 
         public Sprite GetIcon(Type itemType)
         {
@@ -19,6 +21,8 @@ namespace SpaceAce.Visualization
             if (itemType == typeof(PlasmaShield)) return _plasmaShieldIcon;
             if (itemType == typeof(RepairKit)) return _repairKitIcon;
             if (itemType == typeof(ArmorDiffuser)) return _armorDiffuserIcon;
+            if (itemType == typeof(ReactiveArmor)) return _reactiveArmorIcon;
+            if (itemType == typeof(Nanofuel)) return _nanofuelIcon;
 
             return null;
         }

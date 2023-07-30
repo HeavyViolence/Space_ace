@@ -5,9 +5,10 @@ using UnityEngine;
 
 namespace SpaceAce.Gameplay.Damageables
 {
-    public sealed class PlayerShipHealth : Health, IRepairKitUser
+    public sealed class PlayerShipHealth : Health, IRepairKitUser, IReactiveArmorUser
     {
         private Coroutine _repairKitRoutine = null;
+        private Coroutine _reactiveArmorRoutine = null;
 
         protected override void OnEnable()
         {
@@ -27,6 +28,12 @@ namespace SpaceAce.Gameplay.Damageables
                 StopCoroutine(_repairKitRoutine);
                 _repairKitRoutine = null;
             }
+
+            if (_reactiveArmorRoutine != null)
+            {
+                StopCoroutine(_reactiveArmorRoutine);
+                _reactiveArmorRoutine = null;
+            }
         }
 
         public bool Use(RepairKit kit)
@@ -35,14 +42,14 @@ namespace SpaceAce.Gameplay.Damageables
 
             if (_repairKitRoutine == null)
             {
-                _repairKitRoutine = StartCoroutine(Repair(kit));
+                _repairKitRoutine = StartCoroutine(ApplyRepairKit(kit));
                 return true;
             }
 
             return false;
         }
 
-        private IEnumerator Repair(RepairKit kit)
+        private IEnumerator ApplyRepairKit(RepairKit kit)
         {
             RegenPerSecond += kit.RegenPerSecond;
             float timer = 0f;
@@ -57,6 +64,40 @@ namespace SpaceAce.Gameplay.Damageables
 
             RegenPerSecond -= kit.RegenPerSecond;
             _repairKitRoutine = null;
+        }
+
+        public bool Use(ReactiveArmor armor)
+        {
+            if (armor is null) throw new ArgumentNullException(nameof(armor));
+
+            if (_reactiveArmorRoutine == null)
+            {
+                _reactiveArmorRoutine = StartCoroutine(ApplyReactiveArmor(armor));
+                return true;
+            }
+
+            return false;
+        }
+
+        private IEnumerator ApplyReactiveArmor(ReactiveArmor armor)
+        {
+            MaxValue += armor.HealthIncrease;
+            Value = MaxValue;
+
+            float timer = 0f;
+
+            while (timer < armor.Duration)
+            {
+                timer += Time.deltaTime;
+
+                yield return null;
+                while (GamePauser.Access.Paused == true) yield return null;
+            }
+
+            MaxValue -= armor.HealthIncrease;
+            Value = MaxValue;
+
+            _reactiveArmorRoutine = null;
         }
     }
 }

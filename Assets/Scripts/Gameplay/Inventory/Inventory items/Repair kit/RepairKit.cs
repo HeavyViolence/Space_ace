@@ -40,8 +40,8 @@ namespace SpaceAce.Gameplay.Inventories
                 item2 is RepairKit other2)
             {
                 ItemRarity nextRarity = GetNextRarity(Rarity);
-                float newDuration = (Duration + other1.Duration) * FusedItemPropertyFactor;
-                float newRegenPerSecond = (RegenPerSecond + other1.RegenPerSecond + other2.RegenPerSecond) * FusedItemPropertyFactor;
+                float newDuration = (Duration + other1.Duration) * FusedPropertyFactor;
+                float newRegenPerSecond = (RegenPerSecond + other1.RegenPerSecond + other2.RegenPerSecond) * FusedPropertyFactor;
 
                 result = new RepairKit(nextRarity, newDuration, newRegenPerSecond);
                 return true;

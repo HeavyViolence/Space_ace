@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb4b2c0065c856144931941e91ffb163, type: 3}
   m_Name: Armor diffuser 3
   m_EditorClassIdentifier: 
-  _rarity: 3
+  _rarity: 2
   _duration: 50
-  _durationRandomDeviation: 5
+  _durationRandomDeviation: 2.5
   _armorReduction: 80
   _armorReductionRandomDeviation: 8

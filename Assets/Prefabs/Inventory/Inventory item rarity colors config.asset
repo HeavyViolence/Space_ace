@@ -14,22 +14,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _commonColor:
     serializedVersion: 2
-    rgba: 3238002687
+    rgba: 1644167167
   _uncommonColor:
     serializedVersion: 2
-    rgba: 3238002432
+    rgba: 1644166912
   _rareColor:
     serializedVersion: 2
-    rgba: 3221290752
+    rgba: 1627455232
   _exceptionalColor:
     serializedVersion: 2
-    rgba: 3221291007
+    rgba: 1627455487
   _exoticColor:
     serializedVersion: 2
-    rgba: 3221258239
+    rgba: 1627422719
   _epicColor:
     serializedVersion: 2
-    rgba: 3221225727
+    rgba: 1627390207
   _legendaryColor:
     serializedVersion: 2
-    rgba: 3237937280
+    rgba: 1644101760

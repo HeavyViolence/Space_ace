@@ -25,15 +25,17 @@ namespace SpaceAce.Gameplay.Inventories
         public const float DurationUnitWorth = 0.8f;
         public const float HealthUnitWorth = 0.3f;
         public const float ArmorUnitWorth = 0.5f;
-        public const float ProjectilesSlowdownUnitWorth = -100f;
+        public const float SlowdownUnitWorth = -100f;
+        public const float ConversionUnitWorth = 100f;
+        public const float SpeedUnitWorth = 10f;
 
         public const float MinDuration = 15f;
-        public const float MaxDuration = 300f;
+        public const float MaxDuration = 500f;
 
         public const int ItemsPerInfusion = 3;
 
         private const float LegendaryItemHighestSpawnProbability = 0.01f;
-        protected const float FusedItemPropertyFactor = 0.618f;
+        protected const float FusedPropertyFactor = 0.618f;
 
         protected static readonly GameServiceFastAccess<EntityVisualizer> EntityVisualizer = new();
         protected static readonly GameServiceFastAccess<GameModeLoader> GameModeLoader = new();
