@@ -10,18 +10,9 @@ namespace SpaceAce.Gameplay.Damageables
         private Coroutine _repairKitRoutine = null;
         private Coroutine _reactiveArmorRoutine = null;
 
-        protected override void OnEnable()
-        {
-            base.OnEnable();
-
-            SpecialEffectsMediator.Register(this);
-        }
-
         protected override void OnDisable()
         {
             base.OnDisable();
-
-            SpecialEffectsMediator.Deregister(this);
 
             if (_repairKitRoutine != null)
             {

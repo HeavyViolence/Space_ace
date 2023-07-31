@@ -4,6 +4,7 @@ using SpaceAce.Architecture;
 using SpaceAce.Main.ObjectPooling;
 using SpaceAce.Main;
 using SpaceAce.Gameplay.Movement;
+using SpaceAce.Gameplay.Inventories;
 
 namespace SpaceAce.Gameplay.Shooting
 {
@@ -14,6 +15,7 @@ namespace SpaceAce.Gameplay.Shooting
         private static readonly GameServiceFastAccess<MultiobjectPool> s_multiobjectPool = new();
         private static readonly GameServiceFastAccess<MasterCameraHolder> s_masterCameraHolder = new();
         private static readonly GameServiceFastAccess<CameraShaker> s_cameraShaker = new();
+        private static readonly GameServiceFastAccess<SpecialEffectsMediator> s_specialEffectsMediator = new();
         protected static readonly GameServiceFastAccess<GamePauser> GamePauser = new();
 
         [SerializeField] protected ProjectileGunConfig _config;
@@ -45,6 +47,16 @@ namespace SpaceAce.Gameplay.Shooting
         protected virtual float ConvergenceAngle => _config.GetConvergenceAngle(IsRightHandedGun);
         protected virtual MovementBehaviour ProjectileBehaviour { get; set; }
         protected virtual TargetSupplier TargetSupplier { get; set; }
+
+        protected virtual void OnEnable()
+        {
+            s_specialEffectsMediator.Access.Register(this);
+        }
+
+        protected virtual void OnDisable()
+        {
+            s_specialEffectsMediator.Access.Deregister(this);
+        }
 
         protected virtual void Awake()
         {

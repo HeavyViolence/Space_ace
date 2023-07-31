@@ -12,16 +12,9 @@ namespace SpaceAce.Gameplay.Damageables
         private Coroutine _reactiveArmorRoutine = null;
         private float _damageToArmorConversionRate = 0f;
 
-        protected override void OnEnable()
+        protected override void OnDisable()
         {
-            base.OnEnable();
-
-            SpecialEffectsMediator.Register(this);
-        }
-
-        private void OnDisable()
-        {
-            SpecialEffectsMediator.Deregister(this);
+            base.OnDisable();
 
             if (_plasmaShieldRoutine != null)
             {

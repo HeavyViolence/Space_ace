@@ -1,7 +1,6 @@
 using Newtonsoft.Json;
 using SpaceAce.Main;
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace SpaceAce.Gameplay.Inventories
@@ -44,17 +43,11 @@ namespace SpaceAce.Gameplay.Inventories
         public override bool Use()
         {
             if (GameModeLoader.Access.GameState == GameState.Level &&
-                SpecialEffectsMediator.TryGetEffectReceivers(out IEnumerable<IPlasmaShieldUser> users) == true)
+                SpecialEffectsMediator.Access.TryGetFirstEffectReceiver(out IPlasmaShieldUser user) == true &&
+                user.Use(this) == true)
             {
-                bool used = false;
-
-                foreach (var user in users) if (user.Use(this) == true) used = true;
-
-                if (used)
-                {
-                    HUDDisplay.Access.RegisterActiveItem(this);
-                    return true;
-                }
+                HUDDisplay.Access.RegisterActiveItem(this);
+                return true;
             }
 
             return false;

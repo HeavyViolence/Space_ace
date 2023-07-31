@@ -29,33 +29,35 @@ namespace SpaceAce.Gameplay.Inventories
 
         public float ArmorReduction { get; private set; }
 
-        private static IEnumerator ArmorDiffuserRoutine(ArmorDiffuser diffuser)
-        {
-            float timer = 0f;
-
-            while (timer < diffuser.Duration)
-            {
-                if (GameModeLoader.Access.GameState != GameState.Level) yield break;
-
-                timer += Time.deltaTime;
-
-                if (SpecialEffectsMediator.TryGetEffectReceivers(out IEnumerable<IArmorDiffuserUser> users) == true)
-                {
-                    foreach (var user in users) user.Use(diffuser);
-                }
-
-                yield return null;
-                while (GamePauser.Access.Paused == true) yield return null;
-            }
-
-            _armorDiffusionRoutine = null;
-        }
-
         public ArmorDiffuser(ItemRarity rarity,
                              float duration,
                              float armorReduction) : base(rarity, duration)
         {
             ArmorReduction = Mathf.Clamp(armorReduction, MinArmorReduction, MaxArmorReduction);
+        }
+
+        private IEnumerator ArmorDiffuserRoutine(ArmorDiffuser diffuser)
+        {
+            SpecialEffectsMediator.Access.RegisteredReceiverBehaviourUpdate += TryApplyItem;
+            float timer = 0f;
+
+            while (timer < diffuser.Duration)
+            {
+                timer += Time.deltaTime;
+
+                if (GameModeLoader.Access.GameState != GameState.Level) yield break;
+
+                yield return null;
+                while (GamePauser.Access.Paused == true) yield return null;
+            }
+
+            SpecialEffectsMediator.Access.RegisteredReceiverBehaviourUpdate -= TryApplyItem;
+            _armorDiffusionRoutine = null;
+        }
+
+        private void TryApplyItem(object receiver)
+        {
+            if (receiver is IArmorDiffuserUser user) user.Use(this);
         }
 
         public override bool Fuse(InventoryItem item1, InventoryItem item2, out InventoryItem result)
@@ -85,6 +87,11 @@ namespace SpaceAce.Gameplay.Inventories
             {
                 _armorDiffusionRoutine = CoroutineRunner.RunRoutine(ArmorDiffuserRoutine(this));
                 HUDDisplay.Access.RegisterActiveItem(this);
+
+                if (SpecialEffectsMediator.Access.TryGetEffectReceivers(out IEnumerable<IArmorDiffuserUser> users) == true)
+                {
+                    foreach (var user in users) user.Use(this);
+                }
 
                 return true;
             }

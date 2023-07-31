@@ -56,7 +56,7 @@ namespace SpaceAce.Gameplay.Inventories
         public override bool Use()
         {
             if (GameModeLoader.Access.GameState == Main.GameState.Level &&
-                SpecialEffectsMediator.TryGetFirstEffectReceiver(out IRepairKitUser user) == true &&
+                SpecialEffectsMediator.Access.TryGetFirstEffectReceiver(out IRepairKitUser user) == true &&
                 user.Use(this) == true)
             {
                 HUDDisplay.Access.RegisterActiveItem(this);

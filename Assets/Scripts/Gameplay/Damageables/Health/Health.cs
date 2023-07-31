@@ -1,6 +1,7 @@
 using SpaceAce.Architecture;
 using SpaceAce.Auxiliary;
 using SpaceAce.Gameplay.Experience;
+using SpaceAce.Gameplay.Inventories;
 using SpaceAce.Main;
 using SpaceAce.Main.ObjectPooling;
 using SpaceAce.UI;
@@ -15,6 +16,7 @@ namespace SpaceAce.Gameplay.Damageables
 
         private static readonly GameServiceFastAccess<CameraShaker> s_cameraShaker = new();
         private static readonly GameServiceFastAccess<MultiobjectPool> s_multiobjectPool = new();
+        private static readonly GameServiceFastAccess<SpecialEffectsMediator> s_specialEffectsMediator = new();
         protected static readonly GameServiceFastAccess<GamePauser> GamePauser = new();
 
         public event EventHandler Depleted, Restored;
@@ -77,12 +79,16 @@ namespace SpaceAce.Gameplay.Damageables
 
             RegenPerSecond = GetRegenPerSecond();
             RegainedValue = 0f;
+
+            s_specialEffectsMediator.Access.Register(this);
         }
 
         protected virtual void OnDisable()
         {
             Depleted = null;
             Restored = null;
+
+            s_specialEffectsMediator.Access.Deregister(this);
         }
 
         protected virtual void Awake()

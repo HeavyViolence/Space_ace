@@ -26,15 +26,11 @@ namespace SpaceAce.Gameplay.Movement
 
             transform.position = new(0f, Config.LowerBound * SpawnPositionDisplacementFactor, 0f);
             _speed2D = new(Config.HorizontalSpeed.RandomValue, Config.VerticalSpeed.RandomValue);
-
-            SpecialEffectsMediator.Register(this);
         }
 
         protected override void OnDisable()
         {
             base.OnDisable();
-
-            SpecialEffectsMediator.Deregister(this);
 
             if (_reactiveArmorRoutine != null)
             {

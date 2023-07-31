@@ -77,10 +77,7 @@ namespace SpaceAce.Gameplay.Spawning
 
         private void OnEnable()
         {
-            if (UniqueEntitiesAmount > 0)
-            {
-                ApplySettings();
-            }
+            if (UniqueEntitiesAmount > 0) ApplySettings();
         }
 
         public void ApplySettings()
@@ -95,16 +92,13 @@ namespace SpaceAce.Gameplay.Spawning
             }
             else
             {
-                throw new ArgumentNullException(nameof(_spawnableEntities), "Spawnable entities collection is empty! Populate it first!");
+                throw new ArgumentNullException(nameof(_spawnableEntities));
             }
         }
 
         public void EnsureNecessaryObjectPoolsExistence()
         {
-            foreach (var entity in _spawnableEntities)
-            {
-                entity.EnsureObjectPoolExistence();
-            }
+            foreach (var entity in _spawnableEntities) entity.EnsureObjectPoolExistence();
         }
 
         public IEnumerable<(string anchorName, float spawnDelay)> GetProceduralWave(int lengthOverride = 0)
@@ -154,20 +148,12 @@ namespace SpaceAce.Gameplay.Spawning
         {
             List<float> spawnProbabilities = new(uniqueEintitiesInWave);
 
-            for (int i = 0; i < uniqueEintitiesInWave; i++)
-            {
-                float randomSpawnProbability = UnityEngine.Random.Range(0f, 1f);
-                spawnProbabilities.Add(randomSpawnProbability);
-            }
+            for (int i = 0; i < uniqueEintitiesInWave; i++) spawnProbabilities.Add(AuxMath.Random);
 
             spawnProbabilities.Sort(CompareProbabilitiesByValueAscending);
-
             float normalizationFactor = 1f / spawnProbabilities[^1];
 
-            for (int i = 0; i < uniqueEintitiesInWave; i++)
-            {
-                spawnProbabilities[i] *= normalizationFactor;
-            }
+            for (int i = 0; i < uniqueEintitiesInWave; i++) spawnProbabilities[i] *= normalizationFactor;
 
             return spawnProbabilities;
         }

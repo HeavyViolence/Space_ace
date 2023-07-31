@@ -1,6 +1,7 @@
 using SpaceAce.Architecture;
 using SpaceAce.Auxiliary;
 using SpaceAce.Gameplay.Experience;
+using SpaceAce.Gameplay.Inventories;
 using SpaceAce.UI;
 using System;
 using UnityEngine;
@@ -9,6 +10,7 @@ namespace SpaceAce.Gameplay.Damageables
 {
     public abstract class Armor : MonoBehaviour, IExperienceSource, IArmorView
     {
+        private static readonly GameServiceFastAccess<SpecialEffectsMediator> s_specialEffectsMediator = new();
         protected static readonly GameServiceFastAccess<GamePauser> GamePauser = new();
 
         public event EventHandler<FloatValueChangedEventArgs> ValueChanged;
@@ -37,6 +39,13 @@ namespace SpaceAce.Gameplay.Damageables
         {
             Value = _config.Armor.RandomValue;
             BlockedDamage = 0f;
+
+            s_specialEffectsMediator.Access.Register(this);
+        }
+
+        protected virtual void OnDisable()
+        {
+            s_specialEffectsMediator.Access.Deregister(this);
         }
 
         public virtual float GetDamageToBeDealt(float receivedDamage)

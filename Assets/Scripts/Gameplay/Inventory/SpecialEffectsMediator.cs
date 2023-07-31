@@ -1,15 +1,31 @@
+using SpaceAce.Architecture;
+using System;
 using System.Collections.Generic;
 
 namespace SpaceAce.Gameplay.Inventories
 {
-    public static class SpecialEffectsMediator
+    public sealed class SpecialEffectsMediator : IGameService
     {
-        private static readonly HashSet<object> s_receivers = new();
+        private readonly HashSet<object> s_receivers = new();
 
-        public static bool Register(object receiver) => s_receivers.Add(receiver);
-        public static bool Deregister(object receiver) => s_receivers.Remove(receiver);
+        public Action<object> RegisteredReceiverBehaviourUpdate;
 
-        public static bool TryGetFirstEffectReceiver<T>(out T receiver)
+        public SpecialEffectsMediator() { }
+
+        public bool Register(object receiver)
+        {
+            if (s_receivers.Add(receiver) == true)
+            {
+                RegisteredReceiverBehaviourUpdate?.Invoke(receiver);
+                return true;
+            }
+
+            return false;
+        }
+
+        public bool Deregister(object receiver) => s_receivers.Remove(receiver);
+
+        public bool TryGetFirstEffectReceiver<T>(out T receiver)
         {
             foreach (var candidate in s_receivers)
             {
@@ -24,7 +40,7 @@ namespace SpaceAce.Gameplay.Inventories
             return false;
         }
 
-        public static bool TryGetEffectReceivers<T>(out IEnumerable<T> receivers)
+        public bool TryGetEffectReceivers<T>(out IEnumerable<T> receivers)
         {
             List<T> requestedReceivers = new(s_receivers.Count);
 
@@ -40,6 +56,26 @@ namespace SpaceAce.Gameplay.Inventories
                 receivers = null;
                 return false;
             }
+        }
+
+        public void OnInitialize()
+        {
+            GameServices.Register(this);
+        }
+
+        public void OnSubscribe()
+        {
+
+        }
+
+        public void OnUnsubscribe()
+        {
+
+        }
+
+        public void OnClear()
+        {
+            GameServices.Deregister(this);
         }
     }
 }

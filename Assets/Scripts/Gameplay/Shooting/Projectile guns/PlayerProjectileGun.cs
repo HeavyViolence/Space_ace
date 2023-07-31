@@ -12,14 +12,9 @@ namespace SpaceAce.Gameplay.Shooting
 
         protected override float NextProjectileTopSpeed => base.NextProjectileTopSpeed * _projectileSpeedFactor;
 
-        private void OnEnable()
+        protected override void OnDisable()
         {
-            SpecialEffectsMediator.Register(this);
-        }
-
-        private void OnDisable()
-        {
-            SpecialEffectsMediator.Deregister(this);
+            base.OnDisable();
 
             if (_projectileSlower != null)
             {

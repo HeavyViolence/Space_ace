@@ -23,15 +23,8 @@ namespace SpaceAce.Auxiliary
 
         public static IEnumerable<int> GetRandomNumbersWithoutRepetition(int min, int max, int amount)
         {
-            if (min >= max)
-            {
-                throw new ArgumentOutOfRangeException($"{nameof(min)}, {nameof(max)}", "Range bounds cannot be inverted!");
-            }
-
-            if (amount > max - min)
-            {
-                throw new ArgumentOutOfRangeException(nameof(amount), amount, "Amount cannot be greater than total integers within range!");
-            }
+            if (min >= max) throw new ArgumentOutOfRangeException($"{nameof(min)}, {nameof(max)}");
+            if (amount > max - min) throw new ArgumentOutOfRangeException(nameof(amount));
 
             System.Random random = new();
             List<int> availableNumbers = Enumerable.Range(min, max - min).ToList();
@@ -50,10 +43,7 @@ namespace SpaceAce.Auxiliary
 
         public static IEnumerable<int> GetRandomNumbersWithoutRepetition(IEnumerable<int> availableNumbers, int amount)
         {
-            if (availableNumbers.Count() < amount)
-            {
-                throw new ArgumentOutOfRangeException(nameof(amount), $"Amount of random numbers to generate must not surpass the available numbers count!");
-            }
+            if (availableNumbers.Count() < amount) throw new ArgumentOutOfRangeException(nameof(amount));
 
             System.Random random = new();
             HashSet<int> numbersToUse = new(availableNumbers);

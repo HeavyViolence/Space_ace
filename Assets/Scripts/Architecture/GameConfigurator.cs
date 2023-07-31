@@ -1,4 +1,5 @@
 using SpaceAce.Auxiliary;
+using SpaceAce.Gameplay.Inventories;
 using SpaceAce.Gameplay.Players;
 using SpaceAce.Gameplay.Spawning;
 using SpaceAce.Levels;
@@ -133,6 +134,7 @@ namespace SpaceAce.Architecture
             _gameServices.Add(new BombSpawner());
             _gameServices.Add(new EntityVisualizer(_itemIconsConfig, _itemRarityColorsConfig));
             _gameServices.Add(new LootSpawner(_lootItemBox));
+            _gameServices.Add(new SpecialEffectsMediator());
 
             _gameServices.Add(new SavingSystem());
             _gameServices.Add(new CameraShaker(_idGenerator.Next(), cameraHolder.MasterCameraAnchor));

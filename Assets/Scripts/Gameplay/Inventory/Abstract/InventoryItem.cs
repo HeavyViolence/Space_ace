@@ -42,6 +42,7 @@ namespace SpaceAce.Gameplay.Inventories
         protected static readonly GameServiceFastAccess<Player> Player = new();
         protected static readonly GameServiceFastAccess<HUDDisplay> HUDDisplay = new();
         protected static readonly GameServiceFastAccess<GamePauser> GamePauser = new();
+        protected static readonly GameServiceFastAccess<SpecialEffectsMediator> SpecialEffectsMediator = new();
 
         public ItemRarity Rarity { get; private set; }
 

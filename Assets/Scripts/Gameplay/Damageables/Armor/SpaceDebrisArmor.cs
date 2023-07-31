@@ -7,16 +7,10 @@ namespace SpaceAce.Gameplay.Damageables
     {
         private bool _armorDiffused = false;
 
-        protected override void OnEnable()
+        protected override void OnDisable()
         {
-            base.OnEnable();
+            base.OnDisable();
 
-            SpecialEffectsMediator.Register(this);
-        }
-
-        private void OnDisable()
-        {
-            SpecialEffectsMediator.Deregister(this);
             _armorDiffused = false;
         }
 

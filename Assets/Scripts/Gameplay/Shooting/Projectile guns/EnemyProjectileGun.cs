@@ -15,8 +15,10 @@ namespace SpaceAce.Gameplay.Shooting
         protected override float NextFireDuration => base.NextFireDuration * _amplificationFactor;
         protected override float NextFireRate => base.NextFireRate * _amplificationFactor;
 
-        private void OnEnable()
+        protected override void OnEnable()
         {
+            base.OnEnable();
+
             _amplificationFactor = 1f;
         }
 
