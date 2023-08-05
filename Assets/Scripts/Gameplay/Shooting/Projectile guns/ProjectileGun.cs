@@ -5,6 +5,7 @@ using SpaceAce.Main.ObjectPooling;
 using SpaceAce.Main;
 using SpaceAce.Gameplay.Movement;
 using SpaceAce.Gameplay.Inventories;
+using System;
 
 namespace SpaceAce.Gameplay.Shooting
 {
@@ -18,7 +19,7 @@ namespace SpaceAce.Gameplay.Shooting
         private static readonly GameServiceFastAccess<SpecialEffectsMediator> s_specialEffectsMediator = new();
         protected static readonly GameServiceFastAccess<GamePauser> GamePauser = new();
 
-        [SerializeField] protected ProjectileGunConfig _config;
+        [SerializeField] private ProjectileGunConfig _config;
 
         private float _cooldownTimer = Mathf.Infinity;
         private float _currentCooldown = 0f;
@@ -46,7 +47,7 @@ namespace SpaceAce.Gameplay.Shooting
         protected virtual float NextDispersion => _config.Dispersion.RandomValue;
         protected virtual float ConvergenceAngle => _config.GetConvergenceAngle(IsRightHandedGun);
         protected virtual MovementBehaviour ProjectileBehaviour { get; set; }
-        protected virtual TargetSupplier TargetSupplier { get; set; }
+        protected virtual Func<Vector2, Transform> TargetSupplier { get; set; }
 
         protected virtual void OnEnable()
         {
@@ -76,7 +77,6 @@ namespace SpaceAce.Gameplay.Shooting
             if (ReadyToFire)
             {
                 _firingRoutine = StartCoroutine(FiringRoutine());
-
                 return true;
             }
 
@@ -99,7 +99,7 @@ namespace SpaceAce.Gameplay.Shooting
         private IEnumerator FiringRoutine()
         {
             int shotsToFire = Mathf.RoundToInt(NextFireRate * NextFireDuration);
-            Transform target = TargetSupplier.GetTarget(transform.position);
+            Transform target = TargetSupplier?.Invoke(transform.position);
 
             for (int i = 0; i < shotsToFire; i++)
             {
@@ -107,10 +107,7 @@ namespace SpaceAce.Gameplay.Shooting
 
                 int projectilesPerShot = NextProjectilesPerShot;
 
-                for (int y = 0; y < projectilesPerShot; y++)
-                {
-                    PerformShot(target);
-                }
+                for (int y = 0; y < projectilesPerShot; y++) PerformShot(target);
 
                 _config.FireAudio.PlayRandomAudioClip(transform.position);
 

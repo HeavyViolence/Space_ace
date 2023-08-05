@@ -16,23 +16,17 @@ namespace SpaceAce.Gameplay.Shooting
             float speed = settings.TopSpeed * speedFactor;
             Vector2 velocity;
 
-            if (data.CurrentDirection == Vector3.zero)
-            {
-                data.CurrentDirection = settings.InitialDirection;
-            }
+            if (data.CurrentDirection == Vector3.zero) data.CurrentDirection = settings.InitialDirection;
 
             if (settings.Target == null)
             {
                 velocity = Time.fixedDeltaTime * speed * settings.InitialDirection;
-
                 body.MovePosition(body.position + velocity);
             }
             else
             {
                 if (data.CurrentRotation == Quaternion.identity)
-                {
                     data.CurrentRotation = Quaternion.LookRotation(Vector3.forward, settings.InitialDirection);
-                }
 
                 if (settings.Target.gameObject.activeInHierarchy == true)
                 {
@@ -53,7 +47,6 @@ namespace SpaceAce.Gameplay.Shooting
                 else
                 {
                     velocity = Time.fixedDeltaTime * speed * data.CurrentDirection;
-
                     body.MovePosition(body.position + velocity);
                 }
             }

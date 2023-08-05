@@ -20,6 +20,7 @@ GameObject:
   - component: {fileID: 8255717093205191389}
   - component: {fileID: 8033182911709200172}
   - component: {fileID: -7222823682840751852}
+  - component: {fileID: 1944914777304504177}
   m_Layer: 12
   m_Name: Pirate space debris 1
   m_TagString: Untagged
@@ -260,3 +261,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _config: {fileID: 11400000, guid: 862b35bc85ca6764ab59db80e2e9d9be, type: 2}
+--- !u!114 &1944914777304504177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6726910270386487725}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc78f0ad3acc95a4e86f2e5a69b11fa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _lootConfig: {fileID: 11400000, guid: 62ebe73c7cd4bfb489fd06652891077f, type: 2}
+  _enableAmplifiedLoot: 0
+  _amplifiedLootConfig: {fileID: 0}

@@ -11,13 +11,13 @@ namespace SpaceAce.Gameplay.Players
 
         public Wallet(int credits = 0)
         {
-            if (credits < 0) throw new ArgumentOutOfRangeException(nameof(credits), "Attempted to set a negative balance to a new wallet!");
+            if (credits < 0) throw new ArgumentOutOfRangeException(nameof(credits));
             if (credits > 0) Credits = credits;
         }
 
         public void AddCredits(int amount)
         {
-            if (amount <= 0) throw new ArgumentOutOfRangeException(nameof(amount), "Attempted to add a non-positive amount of credits to the wallet!");
+            if (amount <= 0) throw new ArgumentOutOfRangeException(nameof(amount));
 
             int oldValue = Credits;
             int newValue = Credits + amount;
@@ -28,7 +28,7 @@ namespace SpaceAce.Gameplay.Players
 
         public bool TryBuy(int price)
         {
-            if (price < 0) throw new ArgumentOutOfRangeException(nameof(price), "Price cannot be negative!");
+            if (price < 0) throw new ArgumentOutOfRangeException(nameof(price));
 
             if (Credits >= price)
             {

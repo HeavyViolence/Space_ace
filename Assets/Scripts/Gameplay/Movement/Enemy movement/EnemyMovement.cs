@@ -2,6 +2,7 @@ using SpaceAce.Architecture;
 using SpaceAce.Auxiliary.StateMachines;
 using SpaceAce.Gameplay.Amplifications;
 using SpaceAce.Gameplay.Experience;
+using SpaceAce.Gameplay.Inventories;
 using SpaceAce.Gameplay.Shooting;
 using SpaceAce.Main;
 using System;
@@ -12,7 +13,10 @@ namespace SpaceAce.Gameplay.Movement.EnemyMovement
 {
     [RequireComponent(typeof(DamageDealer))]
     [RequireComponent(typeof(Rigidbody2D))]
-    public abstract class EnemyMovement : MonoBehaviourStateMachine, IEscapable, IExperienceSource, IAmplifiable
+    public abstract class EnemyMovement : MonoBehaviourStateMachine, IEscapable,
+                                                                     IExperienceSource,
+                                                                     IAmplifiable,
+                                                                     IStasisFieldUser
     {
         private const float BoundsNarrowingFactor = 0.85f;
 
@@ -28,22 +32,36 @@ namespace SpaceAce.Gameplay.Movement.EnemyMovement
 
         private DamageDealer _collisionDamageDealer;
 
-        private float _speedAmplifier = 1f;
-        private float _speedDurationAmplifier = 1f;
-        private float _speedTransitionDurationAmplifier = 1f;
-        private float _collisionDamageAmplifier = 1f;
+        private float _amplificationFactor = 1f;
 
-        public float NextHorizontalSpeed => _config.HorizontalSpeed.RandomValue * _speedAmplifier;
-        public float NextHorizontalSpeedDuration => _config.HorizontalSpeedDuration.RandomValue * _speedDurationAmplifier;
-        public float NextHorizontalSpeedTransitionDuration => _config.HorizontalSpeedTransitionDuration.RandomValue * _speedTransitionDurationAmplifier;
-        public float NextVerticalSpeed => _config.VerticalSpeed.RandomValue * _speedAmplifier;
-        public float NextVerticalSpeedDuration => _config.VerticalSpeedDuration.RandomValue * _speedDurationAmplifier;
-        public float NextVerticalSpeedTransitionDuration => _config.VerticalSpeedTransitionDuration.RandomValue * _speedTransitionDurationAmplifier;
-        public float LeftBound => _speedAmplifier == 1f ? _config.LeftBound : _config.LeftBound * BoundsNarrowingFactor;
-        public float RightBound => _speedAmplifier == 1f ? _config.RightBound : _config.RightBound * BoundsNarrowingFactor;
-        public float UpperBound => _speedAmplifier == 1f ? _config.UpperBound : _config.UpperBound * BoundsNarrowingFactor;
+        private float _stasisFieldSlowdown = 1f;
+        private Coroutine _stasisFieldRoutine = null;
+
+        public float NextHorizontalSpeed => _config.HorizontalSpeed.RandomValue *
+                                            _amplificationFactor *
+                                            _stasisFieldSlowdown;
+
+        public float NextHorizontalSpeedDuration => _config.HorizontalSpeedDuration.RandomValue / _amplificationFactor;
+
+        public float NextHorizontalSpeedTransitionDuration => _config.HorizontalSpeedTransitionDuration.RandomValue /
+                                                              _amplificationFactor *
+                                                              _stasisFieldSlowdown;
+
+        public float NextVerticalSpeed => _config.VerticalSpeed.RandomValue *
+                                          _amplificationFactor *
+                                          _stasisFieldSlowdown;
+
+        public float NextVerticalSpeedDuration => _config.VerticalSpeedDuration.RandomValue / _amplificationFactor;
+
+        public float NextVerticalSpeedTransitionDuration => _config.VerticalSpeedTransitionDuration.RandomValue /
+                                                            _amplificationFactor *
+                                                            _stasisFieldSlowdown;
+
+        public float LeftBound => _amplificationFactor == 1f ? _config.LeftBound : _config.LeftBound * BoundsNarrowingFactor;
+        public float RightBound => _amplificationFactor == 1f ? _config.RightBound : _config.RightBound * BoundsNarrowingFactor;
+        public float UpperBound => _amplificationFactor == 1f ? _config.UpperBound : _config.UpperBound * BoundsNarrowingFactor;
         public float LowerBound => _config.LowerBound;
-        public float NextCollisionDamage => _config.CollisionDamageEnabled ? _config.CollisionDamage.RandomValue * _collisionDamageAmplifier : 0f;
+        public float NextCollisionDamage => _config.CollisionDamageEnabled ? _config.CollisionDamage.RandomValue * _amplificationFactor : 0f;
 
         public Vector2 PreviousStateExitVelocity { get; set; }
         public Rigidbody2D Body { get; private set; }
@@ -58,10 +76,7 @@ namespace SpaceAce.Gameplay.Movement.EnemyMovement
         {
             _collisionDamageDealer.Hit += CollisionHitEventHandler;
 
-            _speedAmplifier = 1f;
-            _speedDurationAmplifier = 1f;
-            _speedTransitionDurationAmplifier = 1f;
-            _collisionDamageAmplifier = 1f;
+            _amplificationFactor = 1f;
         }
 
         protected override void OnDeinitialize()
@@ -70,6 +85,12 @@ namespace SpaceAce.Gameplay.Movement.EnemyMovement
 
             Escaped = null;
             StopWatchingForEscape();
+
+            if (_stasisFieldRoutine != null)
+            {
+                StopCoroutine(_stasisFieldRoutine);
+                _stasisFieldRoutine = null;
+            }
         }
 
         protected override void OnUpdate()
@@ -151,12 +172,34 @@ namespace SpaceAce.Gameplay.Movement.EnemyMovement
             return value;
         }
 
-        public void Amplify(float factor)
+        public void Amplify(float factor) => _amplificationFactor = factor;
+
+        public bool Use(StasisField field)
         {
-            _speedAmplifier *= factor;
-            _speedDurationAmplifier /= factor;
-            _speedTransitionDurationAmplifier /= factor;
-            _collisionDamageAmplifier *= factor;
+            if (_stasisFieldRoutine == null)
+            {
+                _stasisFieldRoutine = StartCoroutine(StasisFieldRoutine(field));
+                return true;
+            }
+
+            return false;
+        }
+
+        private IEnumerator StasisFieldRoutine(StasisField field)
+        {
+            _stasisFieldSlowdown = 1f - field.Slowdown;
+            float timer = 0f;
+
+            while (timer < field.Duration)
+            {
+                timer += Time.deltaTime;
+
+                yield return null;
+                while (s_gamePauser.Access.Paused == true) yield return null;
+            }
+
+            _stasisFieldSlowdown = 1f;
+            _stasisFieldRoutine = null;
         }
     }
 }

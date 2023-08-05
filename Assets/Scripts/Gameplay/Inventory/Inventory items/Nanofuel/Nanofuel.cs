@@ -23,9 +23,7 @@ namespace SpaceAce.Gameplay.Inventories
 
         public float SpeedIncrease { get; private set; }
 
-        public Nanofuel(ItemRarity rerity,
-                        float duration,
-                        float flankingSpeedup) : base(rerity, duration)
+        public Nanofuel(ItemRarity rerity, float duration, float flankingSpeedup) : base(rerity, duration)
         {
             SpeedIncrease = Mathf.Clamp(flankingSpeedup, MinSpeedIncrease, MaxSpeedIncrease);
         }

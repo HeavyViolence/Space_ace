@@ -23,9 +23,7 @@ namespace SpaceAce.Gameplay.Inventories
 
         public float RegenPerSecond { get; private set; }
 
-        public RepairKit(ItemRarity rarity,
-                         float duration,
-                         float regenPerSecond) : base(rarity, duration)
+        public RepairKit(ItemRarity rarity, float duration, float regenPerSecond) : base(rarity, duration)
         {
             RegenPerSecond = Mathf.Clamp(regenPerSecond, MinRegenPerSecond, MaxRegenPerSecond);
         }

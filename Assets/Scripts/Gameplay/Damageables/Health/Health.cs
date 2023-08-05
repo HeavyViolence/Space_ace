@@ -12,7 +12,7 @@ namespace SpaceAce.Gameplay.Damageables
 {
     public abstract class Health : MonoBehaviour, IExperienceSource, IHealthView
     {
-        private const float DeathEffectLifetime = 3f;
+        private const float DeathEffectDuration = 3f;
 
         private static readonly GameServiceFastAccess<CameraShaker> s_cameraShaker = new();
         private static readonly GameServiceFastAccess<MultiobjectPool> s_multiobjectPool = new();
@@ -135,7 +135,7 @@ namespace SpaceAce.Gameplay.Damageables
         {
             GameObject deathEffect = s_multiobjectPool.Access.GetObject(_config.DeathEffectAnchorName);
             deathEffect.transform.SetPositionAndRotation(transform.position, Quaternion.identity);
-            s_multiobjectPool.Access.ReleaseObject(_config.DeathEffectAnchorName, deathEffect, () => true, DeathEffectLifetime);
+            s_multiobjectPool.Access.ReleaseObject(_config.DeathEffectAnchorName, deathEffect, () => true, DeathEffectDuration);
 
             _config.DeathAudio.PlayRandomAudioClip(transform.position);
             s_cameraShaker.Access.ShakeOnDeath();

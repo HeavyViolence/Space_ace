@@ -45,10 +45,10 @@ namespace SpaceAce.Gameplay.Players
             if (StringID.IsValid(id) == false) throw new InvalidStringIDException();
             ID = id;
 
-            if (defaultPlayerShip == null) throw new ArgumentNullException(nameof(defaultPlayerShip), "Attempted to pass an empty default player ship!");
+            if (defaultPlayerShip == null) throw new ArgumentNullException(nameof(defaultPlayerShip));
             _defaultShip = defaultPlayerShip;
 
-            if (table == null) throw new ArgumentNullException(nameof(table), $"Attempted to pass an empty {nameof(ObjectPoolEntryLookupTable)}!");
+            if (table == null) throw new ArgumentNullException(nameof(table));
             _objectPoolEntryLookupTable = table;
 
             _gameControls.Gameplay.Disable();
@@ -171,6 +171,14 @@ namespace SpaceAce.Gameplay.Players
 
         public override int GetHashCode() => ID.GetHashCode();
 
+        public void SetSelectedPlayerShip(ObjectPoolEntry entry)
+        {
+            if (entry == null) throw new ArgumentNullException(nameof(entry));
+
+            _selectedShip = entry;
+            SavingRequested?.Invoke(this, EventArgs.Empty);
+        }
+
         #endregion
 
         private void MoveShip()
@@ -282,13 +290,5 @@ namespace SpaceAce.Gameplay.Players
         }
 
         #endregion
-
-        public void SetSelectedPlayerShip(ObjectPoolEntry entry)
-        {
-            if (entry == null) throw new ArgumentNullException(nameof(entry), "Attempted to pass an empty selected ship!");
-
-            _selectedShip = entry;
-            SavingRequested?.Invoke(this, EventArgs.Empty);
-        }
     }
 }

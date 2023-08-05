@@ -166,7 +166,7 @@ namespace SpaceAce.Levels
                 float newReward = oldReward + e.EarnedExperience;
 
                 ExperienceReward += e.EarnedExperience;
-                ExperienceRewardChanged?.Invoke(this, new LevelExperienceRewardChangedEventArgs(oldReward, newReward));
+                ExperienceRewardChanged?.Invoke(this, new(oldReward, newReward));
             };
         }
 

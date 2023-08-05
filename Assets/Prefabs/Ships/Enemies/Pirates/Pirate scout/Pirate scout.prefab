@@ -345,7 +345,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc78f0ad3acc95a4e86f2e5a69b11fa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _lootConfig: {fileID: 11400000, guid: 74e4547e9e27e9646b5fa0c9a09443a3, type: 2}
+  _lootConfig: {fileID: 11400000, guid: 62ebe73c7cd4bfb489fd06652891077f, type: 2}
   _enableAmplifiedLoot: 1
   _amplifiedLootConfig: {fileID: 11400000, guid: 86dd9d49721fc4b4eb7f02fdb34d6d71, type: 2}
 --- !u!114 &-8866387648781782954

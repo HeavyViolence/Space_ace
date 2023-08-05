@@ -2,6 +2,7 @@ using SpaceAce.Auxiliary;
 using SpaceAce.Gameplay.Movement;
 using SpaceAce.Main.Audio;
 using SpaceAce.Main.ObjectPooling;
+using System;
 using UnityEngine;
 
 namespace SpaceAce.Gameplay.Shooting
@@ -86,7 +87,7 @@ namespace SpaceAce.Gameplay.Shooting
         public ObjectPoolEntry HitEffect => _hitEffect;
 
         public MovementBehaviour MovementBehaviour => _behaviour.Behaviour;
-        public TargetSupplier TargetSupplier => _targetSupplier;
+        public Func<Vector2, Transform> TargetSupplier => _targetSupplier.GetTarget;
         public RotationConfig RotationConfig => _rotationConfig;
 
         public RangedFloat TopSpeed { get; private set; }

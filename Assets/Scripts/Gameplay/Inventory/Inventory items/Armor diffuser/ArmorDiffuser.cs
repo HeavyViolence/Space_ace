@@ -13,7 +13,7 @@ namespace SpaceAce.Gameplay.Inventories
         public const float MinArmorReduction = 10f;
         public const float MaxArmorReduction = 1000f;
 
-        private static Coroutine _armorDiffusionRoutine = null;
+        private static Coroutine s_armorDiffusionRoutine = null;
 
         [JsonIgnore]
         public override string Title => throw new NotImplementedException();
@@ -29,16 +29,14 @@ namespace SpaceAce.Gameplay.Inventories
 
         public float ArmorReduction { get; private set; }
 
-        public ArmorDiffuser(ItemRarity rarity,
-                             float duration,
-                             float armorReduction) : base(rarity, duration)
+        public ArmorDiffuser(ItemRarity rarity, float duration, float armorReduction) : base(rarity, duration)
         {
             ArmorReduction = Mathf.Clamp(armorReduction, MinArmorReduction, MaxArmorReduction);
         }
 
         private IEnumerator ArmorDiffuserRoutine(ArmorDiffuser diffuser)
         {
-            SpecialEffectsMediator.Access.RegisteredReceiverBehaviourUpdate += TryApplyItem;
+            SpecialEffectsMediator.Access.RegisteredReceiverBehaviourUpdate += TryApplyArmorDiffuser;
             float timer = 0f;
 
             while (timer < diffuser.Duration)
@@ -51,11 +49,11 @@ namespace SpaceAce.Gameplay.Inventories
                 while (GamePauser.Access.Paused == true) yield return null;
             }
 
-            SpecialEffectsMediator.Access.RegisteredReceiverBehaviourUpdate -= TryApplyItem;
-            _armorDiffusionRoutine = null;
+            SpecialEffectsMediator.Access.RegisteredReceiverBehaviourUpdate -= TryApplyArmorDiffuser;
+            s_armorDiffusionRoutine = null;
         }
 
-        private void TryApplyItem(object receiver)
+        private void TryApplyArmorDiffuser(object receiver)
         {
             if (receiver is IArmorDiffuserUser user) user.Use(this);
         }
@@ -83,9 +81,9 @@ namespace SpaceAce.Gameplay.Inventories
 
         public override bool Use()
         {
-            if (GameModeLoader.Access.GameState == GameState.Level && _armorDiffusionRoutine == null)
+            if (GameModeLoader.Access.GameState == GameState.Level && s_armorDiffusionRoutine == null)
             {
-                _armorDiffusionRoutine = CoroutineRunner.RunRoutine(ArmorDiffuserRoutine(this));
+                s_armorDiffusionRoutine = CoroutineRunner.RunRoutine(ArmorDiffuserRoutine(this));
                 HUDDisplay.Access.RegisterActiveItem(this);
 
                 if (SpecialEffectsMediator.Access.TryGetEffectReceivers(out IEnumerable<IArmorDiffuserUser> users) == true)

@@ -4,12 +4,12 @@ namespace SpaceAce.Gameplay.Movement
 {
     public sealed class MovementBehaviourSettings
     {
-        public Vector3 InitialDirection { get; private set; }
-        public float TopSpeed { get; private set; }
-        public float TopSpeedGainDuration { get; private set; }
-        public float RevolutionsPerMinute { get; private set; }
-        public Transform Target { get; private set; }
-        public float TargetSeekingSpeed { get; private set; }
+        public Vector3 InitialDirection { get; }
+        public float TopSpeed { get; }
+        public float TopSpeedGainDuration { get; }
+        public float RevolutionsPerMinute { get; }
+        public Transform Target { get; }
+        public float TargetSeekingSpeed { get; }
 
         public MovementBehaviourSettings(Vector3 initialDirection,
                                          float topSpeed,

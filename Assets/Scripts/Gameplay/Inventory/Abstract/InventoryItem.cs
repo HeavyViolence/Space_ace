@@ -25,12 +25,14 @@ namespace SpaceAce.Gameplay.Inventories
         public const float DurationUnitWorth = 0.8f;
         public const float HealthUnitWorth = 0.3f;
         public const float ArmorUnitWorth = 0.5f;
-        public const float SlowdownUnitWorth = -100f;
+        public const float PlayerSlowdownUnitWorth = -100f;
+        public const float SlowdownUnitWorth = -1f * PlayerSlowdownUnitWorth;
         public const float ConversionUnitWorth = 100f;
         public const float SpeedUnitWorth = 10f;
+        public const float AmmoHomingSpeedUnitWoth = 5f;
 
-        public const float MinDuration = 15f;
-        public const float MaxDuration = 500f;
+        public const float MinDuration = 10f;
+        public const float MaxDuration = 600f;
 
         public const int ItemsPerInfusion = 3;
 

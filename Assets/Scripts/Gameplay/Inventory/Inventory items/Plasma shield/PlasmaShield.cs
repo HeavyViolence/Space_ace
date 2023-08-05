@@ -10,7 +10,7 @@ namespace SpaceAce.Gameplay.Inventories
         public const float MinArmorBoost = 100f;
         public const float MaxArmorBoost = 10000f;
 
-        public const float MinProjectilesSlowdown = 0.1f;
+        public const float MinProjectilesSlowdown = 0.05f;
         public const float MaxProjectilesSlowdown = 0.5f;
 
         [JsonIgnore]
@@ -25,16 +25,13 @@ namespace SpaceAce.Gameplay.Inventories
         [JsonIgnore]
         public override float Worth => (base.Worth +
                                        ArmorBoost * ArmorUnitWorth +
-                                       ProjectilesSlowdown * SlowdownUnitWorth) *
+                                       ProjectilesSlowdown * PlayerSlowdownUnitWorth) *
                                        (float)(Rarity + 1);
 
         public float ArmorBoost { get; private set; }
         public float ProjectilesSlowdown { get; private set; }
 
-        public PlasmaShield(ItemRarity rarity,
-                            float duration,
-                            float armorBoost,
-                            float projectilesSlowdown) : base(rarity, duration)
+        public PlasmaShield(ItemRarity rarity, float duration, float armorBoost, float projectilesSlowdown) : base(rarity, duration)
         {
             ArmorBoost = Mathf.Clamp(armorBoost, MinArmorBoost, MaxArmorBoost);
             ProjectilesSlowdown = Mathf.Clamp01(projectilesSlowdown);

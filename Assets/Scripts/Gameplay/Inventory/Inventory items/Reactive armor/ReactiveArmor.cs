@@ -10,8 +10,8 @@ namespace SpaceAce.Gameplay.Inventories
         public const float MinMovementSlowdown = 0.1f;
         public const float MaxMovementSlowdown = 0.5f;
 
-        public const float MinHealthIncrease = 1000f;
-        public const float MaxHealthIncrease = 10000f;
+        public const float MinHealthIncrease = 500f;
+        public const float MaxHealthIncrease = 5000f;
 
         public const float MinDamageToArmorConversionRate = 0.1f;
         public const float MaxDamageToArmorConversionRate = 1f;
@@ -27,7 +27,7 @@ namespace SpaceAce.Gameplay.Inventories
 
         [JsonIgnore]
         public override float Worth => (base.Worth +
-                                       MovementSlowdown * SlowdownUnitWorth +
+                                       MovementSlowdown * PlayerSlowdownUnitWorth +
                                        HealthIncrease * HealthUnitWorth +
                                        DamageToArmorConversionRate * ConversionUnitWorth) *
                                        (float)(Rarity + 1);

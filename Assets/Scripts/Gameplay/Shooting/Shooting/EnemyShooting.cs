@@ -109,9 +109,6 @@ namespace SpaceAce.Gameplay.Shooting
             }
         }
 
-        public void Amplify(float factor)
-        {
-            _amplificationFactor = factor;
-        }
+        public void Amplify(float factor) => _amplificationFactor = factor;
     }
 }

@@ -17,3 +17,5 @@ MonoBehaviour:
   _armorDiffuserIcon: {fileID: 21300000, guid: b9029aca882b209449cadec05ed165b5, type: 3}
   _reactiveArmorIcon: {fileID: 21300000, guid: 329c15f0e82d0644394508174f3777f5, type: 3}
   _nanofuelIcon: {fileID: 21300000, guid: b3ffe1d0e8843184992370878f050d23, type: 3}
+  _stasisFieldIcon: {fileID: 21300000, guid: 25603bf73a7272247a6fda993895b164, type: 3}
+  _homingAmmoIcon: {fileID: 21300000, guid: e6d09c12954c5ad4984c0297ee91050f, type: 3}
