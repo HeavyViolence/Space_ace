@@ -30,6 +30,14 @@ namespace SpaceAce.Editors
 
             _speedIncreaseRandomDeviation.floatValue = Mathf.Clamp(_speedIncreaseRandomDeviation.floatValue, 0f, _speedIncrease.floatValue);
 
+            EditorGUILayout.Separator();
+
+            if (GUILayout.Button("Apply settings"))
+            {
+                var config = target as NanofuelConfig;
+                config.ApplySettings();
+            }
+
             serializedObject.ApplyModifiedProperties();
         }
     }

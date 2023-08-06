@@ -1,6 +1,6 @@
 namespace SpaceAce.Gameplay.Damageables
 {
-    public sealed class BossHealth : EnemyHealth
+    public sealed class BossHealth : Health
     {
 
     }

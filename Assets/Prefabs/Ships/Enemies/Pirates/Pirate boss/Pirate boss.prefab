@@ -159,9 +159,9 @@ GameObject:
   - component: {fileID: 1188530917719322767}
   - component: {fileID: 1188530917719322759}
   - component: {fileID: 1188530917719322758}
-  - component: {fileID: 776134742791499926}
   - component: {fileID: 2902183330523086700}
   - component: {fileID: 3987024169022250188}
+  - component: {fileID: 4530262826194983193}
   m_Layer: 10
   m_Name: Pirate boss
   m_TagString: Untagged
@@ -348,21 +348,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _config: {fileID: 11400000, guid: ea583fcedfa051447a9f0c42d617e2b1, type: 2}
---- !u!114 &776134742791499926
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1188530917719322764}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc78f0ad3acc95a4e86f2e5a69b11fa1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _lootConfig: {fileID: 11400000, guid: 86dd9d49721fc4b4eb7f02fdb34d6d71, type: 2}
-  _enableAmplifiedLoot: 0
-  _amplifiedLootConfig: {fileID: 0}
 --- !u!114 &2902183330523086700
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -388,6 +373,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39914f330372bc54dba192d6268336cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4530262826194983193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1188530917719322764}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cfc862dc67024a4c89c1e1678112a88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _lootConfig: {fileID: 11400000, guid: a32739dc09e537b469e8311b55596e45, type: 2}
+  _enableAmplifiedLoot: 0
+  _amplifiedLootConfig: {fileID: 0}
 --- !u!1 &1188530918464576436
 GameObject:
   m_ObjectHideFlags: 0
@@ -397,7 +397,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1188530918464576437}
-  - component: {fileID: 1188530918464576438}
+  - component: {fileID: 4497542596281556643}
   m_Layer: 10
   m_Name: Gun center
   m_TagString: Untagged
@@ -420,7 +420,7 @@ Transform:
   m_Father: {fileID: 1188530917515554516}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
---- !u!114 &1188530918464576438
+--- !u!114 &4497542596281556643
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -429,7 +429,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1188530918464576436}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 55476a7fe6233bc4486d62ba58021b65, type: 3}
+  m_Script: {fileID: 11500000, guid: 7f1a96e690cd33f489cc233761e39109, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _config: {fileID: 11400000, guid: b4d137f63508ee14794fb88854343f98, type: 2}
@@ -442,7 +442,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1188530918487709607}
-  - component: {fileID: 1188530918487709600}
+  - component: {fileID: 2185246430988963101}
   m_Layer: 10
   m_Name: Gun left
   m_TagString: Untagged
@@ -465,7 +465,7 @@ Transform:
   m_Father: {fileID: 1188530917515554516}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
---- !u!114 &1188530918487709600
+--- !u!114 &2185246430988963101
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -474,7 +474,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1188530918487709606}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 55476a7fe6233bc4486d62ba58021b65, type: 3}
+  m_Script: {fileID: 11500000, guid: 7f1a96e690cd33f489cc233761e39109, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _config: {fileID: 11400000, guid: ba1a22b52e5371048b067bae511b2ebe, type: 2}
@@ -487,7 +487,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1188530919010554251}
-  - component: {fileID: 1188530919010554244}
+  - component: {fileID: 4716673908823742338}
   m_Layer: 10
   m_Name: Gun right
   m_TagString: Untagged
@@ -510,7 +510,7 @@ Transform:
   m_Father: {fileID: 1188530917515554516}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
---- !u!114 &1188530919010554244
+--- !u!114 &4716673908823742338
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -519,7 +519,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1188530919010554250}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 55476a7fe6233bc4486d62ba58021b65, type: 3}
+  m_Script: {fileID: 11500000, guid: 7f1a96e690cd33f489cc233761e39109, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _config: {fileID: 11400000, guid: ba1a22b52e5371048b067bae511b2ebe, type: 2}

@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rarity: 6
   _duration: 300
-  _durationRandomDeviation: 5
-  _movementSlowdown: 0.45
+  _durationRandomDeviation: 10
+  _movementSlowdown: 0.4
   _movementSlowdownRandomDeviation: 0.025
   _healthIncrease: 4000
   _healthIncreaseRandomDeviation: 200
-  _damageToArmorConversionRate: 0.5
+  _damageToArmorConversionRate: 0.4
   _damageToArmorConversionRateRandomDeviation: 0.025

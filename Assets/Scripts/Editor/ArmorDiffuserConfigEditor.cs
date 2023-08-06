@@ -30,6 +30,14 @@ namespace SpaceAce.Editors
 
             _armorReductionRandomDeviation.floatValue = Mathf.Clamp(_armorReductionRandomDeviation.floatValue, 0f, _armorReduction.floatValue);
 
+            EditorGUILayout.Separator();
+
+            if (GUILayout.Button("Apply settings"))
+            {
+                var config = target as ArmorDiffuserConfig;
+                config.ApplySettings();
+            }
+
             serializedObject.ApplyModifiedProperties();
         }
     }

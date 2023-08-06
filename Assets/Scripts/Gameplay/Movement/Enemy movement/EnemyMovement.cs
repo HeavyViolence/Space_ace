@@ -1,8 +1,6 @@
 using SpaceAce.Architecture;
 using SpaceAce.Auxiliary.StateMachines;
-using SpaceAce.Gameplay.Amplifications;
 using SpaceAce.Gameplay.Experience;
-using SpaceAce.Gameplay.Inventories;
 using SpaceAce.Gameplay.Shooting;
 using SpaceAce.Main;
 using System;
@@ -13,55 +11,34 @@ namespace SpaceAce.Gameplay.Movement.EnemyMovement
 {
     [RequireComponent(typeof(DamageDealer))]
     [RequireComponent(typeof(Rigidbody2D))]
-    public abstract class EnemyMovement : MonoBehaviourStateMachine, IEscapable,
-                                                                     IExperienceSource,
-                                                                     IAmplifiable,
-                                                                     IStasisFieldUser
+    public abstract class EnemyMovement : MonoBehaviourStateMachine, IEscapable, IExperienceSource
     {
-        private const float BoundsNarrowingFactor = 0.85f;
-
         private static readonly GameServiceFastAccess<CameraShaker> s_cameraShaker = new();
-        private static readonly GameServiceFastAccess<MasterCameraHolder> s_masterCameraHolder = new();
-        private static readonly GameServiceFastAccess<GamePauser> s_gamePauser = new();
+        protected static readonly GameServiceFastAccess<GamePauser> GamePauser = new();
+        protected static readonly GameServiceFastAccess<MasterCameraHolder> MasterCameraHolder = new();
 
         public event EventHandler Escaped;
 
-        private Coroutine _escapeAwaitingRoutine;
-
         [SerializeField] private ShipMovementConfig _config;
+
+        private Coroutine _escapeAwaitingRoutine;
 
         private DamageDealer _collisionDamageDealer;
 
-        private float _amplificationFactor = 1f;
+        protected ShipMovementConfig Config => _config;
 
-        private float _stasisFieldSlowdown = 1f;
-        private Coroutine _stasisFieldRoutine = null;
+        public virtual float NextHorizontalSpeed => _config.HorizontalSpeed.RandomValue;
+        public virtual float NextHorizontalSpeedDuration => _config.HorizontalSpeedDuration.RandomValue;
+        public virtual float NextHorizontalSpeedTransitionDuration => _config.HorizontalSpeedTransitionDuration.RandomValue;
+        public virtual float NextVerticalSpeed => _config.VerticalSpeed.RandomValue;
+        public virtual float NextVerticalSpeedDuration => _config.VerticalSpeedDuration.RandomValue;
+        public virtual float NextVerticalSpeedTransitionDuration => _config.VerticalSpeedTransitionDuration.RandomValue;
+        public virtual float NextCollisionDamage => _config.CollisionDamageEnabled ? _config.CollisionDamage.RandomValue : 0f;
 
-        public float NextHorizontalSpeed => _config.HorizontalSpeed.RandomValue *
-                                            _amplificationFactor *
-                                            _stasisFieldSlowdown;
-
-        public float NextHorizontalSpeedDuration => _config.HorizontalSpeedDuration.RandomValue / _amplificationFactor;
-
-        public float NextHorizontalSpeedTransitionDuration => _config.HorizontalSpeedTransitionDuration.RandomValue /
-                                                              _amplificationFactor *
-                                                              _stasisFieldSlowdown;
-
-        public float NextVerticalSpeed => _config.VerticalSpeed.RandomValue *
-                                          _amplificationFactor *
-                                          _stasisFieldSlowdown;
-
-        public float NextVerticalSpeedDuration => _config.VerticalSpeedDuration.RandomValue / _amplificationFactor;
-
-        public float NextVerticalSpeedTransitionDuration => _config.VerticalSpeedTransitionDuration.RandomValue /
-                                                            _amplificationFactor *
-                                                            _stasisFieldSlowdown;
-
-        public float LeftBound => _amplificationFactor == 1f ? _config.LeftBound : _config.LeftBound * BoundsNarrowingFactor;
-        public float RightBound => _amplificationFactor == 1f ? _config.RightBound : _config.RightBound * BoundsNarrowingFactor;
-        public float UpperBound => _amplificationFactor == 1f ? _config.UpperBound : _config.UpperBound * BoundsNarrowingFactor;
-        public float LowerBound => _config.LowerBound;
-        public float NextCollisionDamage => _config.CollisionDamageEnabled ? _config.CollisionDamage.RandomValue * _amplificationFactor : 0f;
+        public virtual float LeftBound => _config.LeftBound;
+        public virtual float RightBound => _config.RightBound;
+        public virtual float UpperBound => _config.UpperBound;
+        public virtual float LowerBound => _config.LowerBound;
 
         public Vector2 PreviousStateExitVelocity { get; set; }
         public Rigidbody2D Body { get; private set; }
@@ -75,34 +52,24 @@ namespace SpaceAce.Gameplay.Movement.EnemyMovement
         protected override void OnInitialize()
         {
             _collisionDamageDealer.Hit += CollisionHitEventHandler;
-
-            _amplificationFactor = 1f;
         }
 
         protected override void OnDeinitialize()
         {
             _collisionDamageDealer.Hit -= CollisionHitEventHandler;
-
-            Escaped = null;
             StopWatchingForEscape();
-
-            if (_stasisFieldRoutine != null)
-            {
-                StopCoroutine(_stasisFieldRoutine);
-                _stasisFieldRoutine = null;
-            }
         }
 
         protected override void OnUpdate()
         {
-            if (s_gamePauser.Access.Paused == true) return;
+            if (GamePauser.Access.Paused == true) return;
 
             base.OnUpdate();
         }
 
         protected override void OnFixedUpdate()
         {
-            if (s_gamePauser.Access.Paused == true) return;
+            if (GamePauser.Access.Paused == true) return;
 
             base.OnFixedUpdate();
         }
@@ -138,11 +105,10 @@ namespace SpaceAce.Gameplay.Movement.EnemyMovement
 
             IEnumerator AwaitEscape(Func<bool> escapeCondition)
             {
-                while (s_masterCameraHolder.Access.InsideViewport(transform.position) == false) yield return null;
-
+                while (MasterCameraHolder.Access.InsideViewport(transform.position) == false) yield return null;
                 yield return null;
 
-                while (s_masterCameraHolder.Access.InsideViewport(transform.position) == true) yield return null;
+                while (MasterCameraHolder.Access.InsideViewport(transform.position) == true) yield return null;
 
                 yield return null;
 
@@ -160,46 +126,18 @@ namespace SpaceAce.Gameplay.Movement.EnemyMovement
                 StopCoroutine(_escapeAwaitingRoutine);
                 _escapeAwaitingRoutine = null;
             }
+
+            Escaped = null;
         }
 
         public float GetExperience()
         {
             float value = 0f;
 
-            value += _config.HorizontalSpeed.MaxValue / _config.HorizontalSpeedTransitionDuration.MinValue;
-            value += _config.VerticalSpeed.MaxValue / _config.VerticalSpeedTransitionDuration.MinValue;
+            value += Config.HorizontalSpeed.MaxValue / Config.HorizontalSpeedTransitionDuration.MinValue;
+            value += Config.VerticalSpeed.MaxValue / Config.VerticalSpeedTransitionDuration.MinValue;
 
             return value;
-        }
-
-        public void Amplify(float factor) => _amplificationFactor = factor;
-
-        public bool Use(StasisField field)
-        {
-            if (_stasisFieldRoutine == null)
-            {
-                _stasisFieldRoutine = StartCoroutine(StasisFieldRoutine(field));
-                return true;
-            }
-
-            return false;
-        }
-
-        private IEnumerator StasisFieldRoutine(StasisField field)
-        {
-            _stasisFieldSlowdown = 1f - field.Slowdown;
-            float timer = 0f;
-
-            while (timer < field.Duration)
-            {
-                timer += Time.deltaTime;
-
-                yield return null;
-                while (s_gamePauser.Access.Paused == true) yield return null;
-            }
-
-            _stasisFieldSlowdown = 1f;
-            _stasisFieldRoutine = null;
         }
     }
 }

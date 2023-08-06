@@ -15,6 +15,7 @@ namespace SpaceAce.Visualization
         [SerializeField] private Sprite _nanofuelIcon;
         [SerializeField] private Sprite _stasisFieldIcon;
         [SerializeField] private Sprite _homingAmmoIcon;
+        [SerializeField] private Sprite _antimatterAmmoIcon;
 
         public Sprite GetIcon(Type itemType)
         {
@@ -27,6 +28,7 @@ namespace SpaceAce.Visualization
             if (itemType == typeof(Nanofuel)) return _nanofuelIcon;
             if (itemType == typeof(StasisField)) return _stasisFieldIcon;
             if (itemType == typeof(HomingAmmo)) return _homingAmmoIcon;
+            if (itemType == typeof(AntimatterAmmo)) return _antimatterAmmoIcon;
 
             return null;
         }

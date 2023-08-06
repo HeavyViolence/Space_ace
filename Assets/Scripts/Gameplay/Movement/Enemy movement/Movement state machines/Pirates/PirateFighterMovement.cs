@@ -1,6 +1,6 @@
 namespace SpaceAce.Gameplay.Movement.EnemyMovement
 {
-    public sealed class PirateFighterMovement : EnemyMovement
+    public sealed class PirateFighterMovement : SharedEnemyMovement
     {
         private FlyForward _flyForward;
 

@@ -19,3 +19,4 @@ MonoBehaviour:
   _nanofuelIcon: {fileID: 21300000, guid: b3ffe1d0e8843184992370878f050d23, type: 3}
   _stasisFieldIcon: {fileID: 21300000, guid: 25603bf73a7272247a6fda993895b164, type: 3}
   _homingAmmoIcon: {fileID: 21300000, guid: e6d09c12954c5ad4984c0297ee91050f, type: 3}
+  _antimatterAmmoIcon: {fileID: 21300000, guid: 3c4b5ba8e8509404d86a867a56abf618, type: 3}

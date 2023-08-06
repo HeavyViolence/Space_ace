@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Reactive armor 5
   m_EditorClassIdentifier: 
   _rarity: 4
-  _duration: 240
-  _durationRandomDeviation: 5
-  _movementSlowdown: 0.35
+  _duration: 300
+  _durationRandomDeviation: 10
+  _movementSlowdown: 0.3
   _movementSlowdownRandomDeviation: 0.025
   _healthIncrease: 3000
   _healthIncreaseRandomDeviation: 150
-  _damageToArmorConversionRate: 0.4
+  _damageToArmorConversionRate: 0.3
   _damageToArmorConversionRateRandomDeviation: 0.025

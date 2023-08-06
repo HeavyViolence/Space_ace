@@ -126,9 +126,9 @@ GameObject:
   - component: {fileID: 5640788989309713554}
   - component: {fileID: 5276054906954220333}
   - component: {fileID: 9146119332202750384}
-  - component: {fileID: 6184103255177572962}
   - component: {fileID: -5658496600173169646}
   - component: {fileID: 9012162308855471839}
+  - component: {fileID: 299864328938500156}
   m_Layer: 8
   m_Name: Pirate sniper
   m_TagString: Untagged
@@ -317,21 +317,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _config: {fileID: 11400000, guid: e288ef33a71e916478f6485555105543, type: 2}
---- !u!114 &6184103255177572962
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5030308264750687169}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc78f0ad3acc95a4e86f2e5a69b11fa1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _lootConfig: {fileID: 11400000, guid: 62ebe73c7cd4bfb489fd06652891077f, type: 2}
-  _enableAmplifiedLoot: 1
-  _amplifiedLootConfig: {fileID: 11400000, guid: 86dd9d49721fc4b4eb7f02fdb34d6d71, type: 2}
 --- !u!114 &-5658496600173169646
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -357,6 +342,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39914f330372bc54dba192d6268336cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &299864328938500156
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5030308264750687169}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14d0f1d5e54eab44fa4869d8e34d99e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _lootConfig: {fileID: 11400000, guid: 62ebe73c7cd4bfb489fd06652891077f, type: 2}
+  _enableAmplifiedLoot: 1
+  _amplifiedLootConfig: {fileID: 11400000, guid: 86dd9d49721fc4b4eb7f02fdb34d6d71, type: 2}
 --- !u!1 &5030308265648707055
 GameObject:
   m_ObjectHideFlags: 0

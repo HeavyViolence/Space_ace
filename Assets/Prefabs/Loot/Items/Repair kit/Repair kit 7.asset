@@ -16,4 +16,4 @@ MonoBehaviour:
   _duration: 90
   _durationRandomDeviation: 2.5
   _regenPerSecond: 50
-  _regenPerSecondRandomDeviation: 5
+  _regenPerSecondRandomDeviation: 2.5

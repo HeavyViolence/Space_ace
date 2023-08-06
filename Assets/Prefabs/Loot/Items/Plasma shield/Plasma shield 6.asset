@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Plasma shield 6
   m_EditorClassIdentifier: 
   _rarity: 5
-  _duration: 80
-  _durationRandomDeviation: 2.5
+  _duration: 60
+  _durationRandomDeviation: 5
   _armorBoost: 2100
   _armorBoostRandomDeviation: 105
   _projectilesSlowdown: 0.15
-  _projectilesSlowdownRandomDeviation: 0.05
+  _projectilesSlowdownRandomDeviation: 0.025

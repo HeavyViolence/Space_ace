@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rarity: 3
   _duration: 60
-  _durationRandomDeviation: 2.5
+  _durationRandomDeviation: 5
   _armorBoost: 800
   _armorBoostRandomDeviation: 40
   _projectilesSlowdown: 0.25
-  _projectilesSlowdownRandomDeviation: 0.05
+  _projectilesSlowdownRandomDeviation: 0.025

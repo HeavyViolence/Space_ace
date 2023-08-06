@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Armor diffuser 5
   m_EditorClassIdentifier: 
   _rarity: 4
-  _duration: 70
-  _durationRandomDeviation: 2.5
+  _duration: 30
+  _durationRandomDeviation: 3
   _armorReduction: 210
   _armorReductionRandomDeviation: 21

@@ -44,7 +44,7 @@ namespace SpaceAce.Editors
 
             EditorGUILayout.Separator();
 
-            if (GUILayout.Button("Apply properties"))
+            if (GUILayout.Button("Apply settings"))
             {
                 var config = target as PlasmaShieldConfig;
                 config.ApplySettings();

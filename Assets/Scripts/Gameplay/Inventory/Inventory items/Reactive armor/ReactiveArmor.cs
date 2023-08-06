@@ -7,13 +7,13 @@ namespace SpaceAce.Gameplay.Inventories
 {
     public sealed class ReactiveArmor : InventoryItem, IEquatable<ReactiveArmor>
     {
-        public const float MinMovementSlowdown = 0.1f;
+        public const float MinMovementSlowdown = 0f;
         public const float MaxMovementSlowdown = 0.5f;
 
         public const float MinHealthIncrease = 500f;
         public const float MaxHealthIncrease = 5000f;
 
-        public const float MinDamageToArmorConversionRate = 0.1f;
+        public const float MinDamageToArmorConversionRate = 0f;
         public const float MaxDamageToArmorConversionRate = 1f;
 
         [JsonIgnore]

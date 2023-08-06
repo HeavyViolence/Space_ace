@@ -5,7 +5,7 @@ using UnityEngine;
 namespace SpaceAce.Editors
 {
     [CustomEditor(typeof(StasisFieldConfig))]
-    public sealed class StasisFieldEditor : InventoryItemConfigEditor
+    public sealed class StasisFieldConfigEditor : InventoryItemConfigEditor
     {
         private SerializedProperty _slowdown;
         private SerializedProperty _slowdownRandomDeviation;
@@ -29,6 +29,14 @@ namespace SpaceAce.Editors
             EditorGUILayout.Slider(_slowdownRandomDeviation, 0f, _slowdown.floatValue, "Random deviation");
 
             _slowdownRandomDeviation.floatValue = Mathf.Clamp(_slowdownRandomDeviation.floatValue, 0f, _slowdown.floatValue);
+
+            EditorGUILayout.Separator();
+
+            if (GUILayout.Button("Apply settings"))
+            {
+                var config = target as StasisFieldConfig;
+                config.ApplySettings();
+            }
 
             serializedObject.ApplyModifiedProperties();
         }

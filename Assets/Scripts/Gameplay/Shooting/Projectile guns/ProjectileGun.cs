@@ -19,6 +19,8 @@ namespace SpaceAce.Gameplay.Shooting
         private static readonly GameServiceFastAccess<SpecialEffectsMediator> s_specialEffectsMediator = new();
         protected static readonly GameServiceFastAccess<GamePauser> GamePauser = new();
 
+        //protected event EventHandler
+
         [SerializeField] private ProjectileGunConfig _config;
 
         private float _cooldownTimer = Mathf.Infinity;
@@ -158,6 +160,7 @@ namespace SpaceAce.Gameplay.Shooting
             {
                 dealer.Hit += (s, e) =>
                 {
+                    float damage = GetNextProjectileDamage(e.DamageReceiver.ID);
                     e.DamageReceiver.ApplyDamage(NextProjectileDamage);
 
                     s_multiobjectPool.Access.ReleaseObject(_config.Projectile.AnchorName, projectile, () => true);
@@ -172,8 +175,10 @@ namespace SpaceAce.Gameplay.Shooting
             }
             else
             {
-                throw new MissingComponentException($"Projectile doesn't have mandatory {typeof(DamageDealer)} component!");
+                throw new MissingComponentException($"Projectile doesn't have a mandatory {typeof(DamageDealer)} component!");
             }
         }
+
+        protected abstract float GetNextProjectileDamage(string hitID);
     }
 }

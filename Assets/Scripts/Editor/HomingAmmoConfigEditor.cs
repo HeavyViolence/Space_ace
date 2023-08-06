@@ -30,6 +30,14 @@ namespace SpaceAce.Editors
 
             _homingSpeedRandomDeviation.floatValue = Mathf.Clamp(_homingSpeedRandomDeviation.floatValue, 0f, _homingSpeed.floatValue);
 
+            EditorGUILayout.Separator();
+
+            if (GUILayout.Button("Apply settings"))
+            {
+                var config = target as HomingAmmoConfig;
+                config.ApplySettings();
+            }
+
             serializedObject.ApplyModifiedProperties();
         }
     }

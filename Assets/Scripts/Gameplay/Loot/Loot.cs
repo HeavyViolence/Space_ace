@@ -8,9 +8,10 @@ using UnityEngine;
 
 namespace SpaceAce.Gameplay.Loot
 {
-    public sealed class Loot : MonoBehaviour
+    public abstract class Loot : MonoBehaviour
     {
         private static readonly GameServiceFastAccess<LootSpawner> s_lootSpawner = new();
+        private static readonly GameServiceFastAccess<SpecialEffectsMediator> s_specialEffectsMediator = new();
 
         [SerializeField] private LootConfig _lootConfig;
 
@@ -22,29 +23,22 @@ namespace SpaceAce.Gameplay.Loot
 
         private void Awake()
         {
-            if (transform.TryGetComponent(out IDestroyable destroyable) == true)
-            {
-                _destroyable = destroyable;
-            }
-            else
-            {
-                throw new MissingComponentException($"Object {name} is missing a mandatory component of type {typeof(IDestroyable)}!");
-            }
+            if (transform.TryGetComponent(out IDestroyable destroyable) == true) _destroyable = destroyable;
+            else throw new MissingComponentException();
 
-            if (_enableAmplifiedLoot && transform.TryGetComponent(out Amplifier amplifier) == true)
-            {
-                _amplifier = amplifier;
-            }
+            if (_enableAmplifiedLoot && transform.TryGetComponent(out Amplifier amplifier) == true) _amplifier = amplifier;
         }
 
         private void OnEnable()
         {
             _destroyable.Destroyed += DestroyedEventHandler;
+            s_specialEffectsMediator.Access.Register(this);
         }
 
         private void OnDisable()
         {
             _destroyable.Destroyed -= DestroyedEventHandler;
+            s_specialEffectsMediator.Access.Deregister(this);
         }
 
         private void DestroyedEventHandler(object sender, DestroyedEventArgs e)

@@ -1,6 +1,6 @@
 namespace SpaceAce.Gameplay.Damageables
 {
-    public sealed class BossArmor : EnemyArmor
+    public sealed class BossArmor : Armor
     {
 
     }

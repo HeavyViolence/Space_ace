@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Stasis field 2
   m_EditorClassIdentifier: 
   _rarity: 1
-  _duration: 20
-  _durationRandomDeviation: 2.5
+  _duration: 30
+  _durationRandomDeviation: 5
   _slowdown: 0.25
   _slowdownRandomDeviation: 0.025

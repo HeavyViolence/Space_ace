@@ -171,9 +171,9 @@ GameObject:
   - component: {fileID: 8141591677267987530}
   - component: {fileID: 8141591677267987523}
   - component: {fileID: 6606324550945652180}
-  - component: {fileID: 8257643157508217671}
   - component: {fileID: 1039469102124636813}
   - component: {fileID: 3109969208157464621}
+  - component: {fileID: 1115242817330629477}
   m_Layer: 8
   m_Name: Pirate bomber
   m_TagString: Untagged
@@ -270,7 +270,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb2c16a4e7a083641849a958309c90c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _config: {fileID: 11400000, guid: d796bb1aed15035448752795555a1260, type: 2}
+  _config: {fileID: 11400000, guid: c96291ce9484bdb4589e61f809018001, type: 2}
   _experienceDisabled: 0
 --- !u!114 &8141591677267987529
 MonoBehaviour:
@@ -362,21 +362,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _config: {fileID: 11400000, guid: acc11280ecc031d498f2cb37680074e1, type: 2}
---- !u!114 &8257643157508217671
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8141591677267987533}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc78f0ad3acc95a4e86f2e5a69b11fa1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _lootConfig: {fileID: 11400000, guid: 62ebe73c7cd4bfb489fd06652891077f, type: 2}
-  _enableAmplifiedLoot: 1
-  _amplifiedLootConfig: {fileID: 11400000, guid: 86dd9d49721fc4b4eb7f02fdb34d6d71, type: 2}
 --- !u!114 &1039469102124636813
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -402,6 +387,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39914f330372bc54dba192d6268336cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1115242817330629477
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8141591677267987533}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14d0f1d5e54eab44fa4869d8e34d99e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _lootConfig: {fileID: 11400000, guid: 62ebe73c7cd4bfb489fd06652891077f, type: 2}
+  _enableAmplifiedLoot: 1
+  _amplifiedLootConfig: {fileID: 11400000, guid: 86dd9d49721fc4b4eb7f02fdb34d6d71, type: 2}
 --- !u!1 &8141591677457923629
 GameObject:
   m_ObjectHideFlags: 0

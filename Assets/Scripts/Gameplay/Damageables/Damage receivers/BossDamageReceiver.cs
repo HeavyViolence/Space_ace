@@ -4,7 +4,7 @@ namespace SpaceAce.Gameplay.Damageables
 {
     [RequireComponent(typeof(BossHealth))]
     [RequireComponent(typeof(BossArmor))]
-    public sealed class EnemyBossDamageReceiver : DamageReceiver
+    public sealed class BossDamageReceiver : DamageReceiver
     {
 
     }

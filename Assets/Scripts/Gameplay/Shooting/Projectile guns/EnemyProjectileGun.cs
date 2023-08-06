@@ -70,5 +70,7 @@ namespace SpaceAce.Gameplay.Shooting
             _stasisFieldSlowdown = 1f;
             _stasisFieldRoutine = null;
         }
+
+        protected override float GetNextProjectileDamage(string hitID) => NextProjectileDamage;
     }
 }

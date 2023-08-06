@@ -29,6 +29,14 @@ public sealed class RepairKitConfigEditor : InventoryItemConfigEditor
 
         _regenPerSecondRandomDeviation.floatValue = Mathf.Clamp(_regenPerSecondRandomDeviation.floatValue, 0f, _regenPerSecond.floatValue);
 
+        EditorGUILayout.Separator();
+
+        if (GUILayout.Button("Apply settings"))
+        {
+            var config = target as RepairKitConfig;
+            config.ApplySettings();
+        }
+
         serializedObject.ApplyModifiedProperties();
     }
 }

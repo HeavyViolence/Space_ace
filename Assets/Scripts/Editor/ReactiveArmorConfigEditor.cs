@@ -59,6 +59,14 @@ namespace SpaceAce.Editors
                                                                                  0f,
                                                                                  _damageToArmorConversionRate.floatValue);
 
+            EditorGUILayout.Separator();
+
+            if (GUILayout.Button("Apply settings"))
+            {
+                var config = target as ReactiveArmorConfig;
+                config.ApplySettings();
+            }
+
             serializedObject.ApplyModifiedProperties();
         }
     }

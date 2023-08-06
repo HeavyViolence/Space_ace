@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Homing ammo 4
   m_EditorClassIdentifier: 
   _rarity: 3
-  _duration: 75
+  _duration: 120
   _durationRandomDeviation: 5
   _homingSpeed: 60
   _homingSpeedRandomDeviation: 5

@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 392299e44fbf01144ba9541c3260f0ee, type: 3}
-  m_Name: Pirate fighter experience config
+  m_Name: Pirate experience config
   m_EditorClassIdentifier: 
   _experienceDepletionEnabled: 1
   _experienceDepletionPeriod: 30
@@ -28,12 +28,12 @@ MonoBehaviour:
       outWeight: 0.9984448
     - serializedVersion: 3
       time: 1
-      value: 0.1
-      inSlope: -2.714293
-      outSlope: -2.714293
+      value: 0.4
+      inSlope: -1.7505184
+      outSlope: -1.7505184
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.040435433
+      inWeight: 0.030954182
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2

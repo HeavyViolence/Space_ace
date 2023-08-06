@@ -3,6 +3,7 @@ using SpaceAce.Auxiliary;
 using SpaceAce.Gameplay.Inventories;
 using SpaceAce.Gameplay.Spawning;
 using SpaceAce.Levels;
+using SpaceAce.Main;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -127,12 +128,14 @@ namespace SpaceAce.UI
 
         public override void OnSubscribe()
         {
-            
+            if (GameServices.TryGetService(out GameModeLoader loader) == true) loader.MainMenuLoadingStarted += MainMenuLoadingStartedEventHandler;
+            else throw new UnregisteredGameServiceAccessAttemptException(typeof(GameModeLoader));
         }
 
         public override void OnUnsubscribe()
         {
-            
+            if (GameServices.TryGetService(out GameModeLoader loader) == true) loader.MainMenuLoadingStarted -= MainMenuLoadingStartedEventHandler;
+            else throw new UnregisteredGameServiceAccessAttemptException(typeof(GameModeLoader));
         }
 
         public override void OnClear()
@@ -297,6 +300,11 @@ namespace SpaceAce.UI
             {
                 throw new ArgumentException($"{nameof(sender)} is being expected to be of a {typeof(EntityView)} type!", nameof(sender));
             }
+        }
+
+        private void MainMenuLoadingStartedEventHandler(object sender, LoadingStartedEventArgs e)
+        {
+            _activeItems.Clear();
         }
 
         #endregion
