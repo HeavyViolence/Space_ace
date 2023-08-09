@@ -31,6 +31,8 @@ namespace SpaceAce.Gameplay.Inventories
         public const float SpeedUnitWorth = 10f;
         public const float AmmoHomingSpeedUnitWoth = 5f;
         public const float ConsecutiveDamageFactorUnitWorth = 300f;
+        public const float CooldownReductionUnitWorth = 1000f;
+        public const float FireRateBoostUnitWorth = 1000f;
 
         public const float MinDuration = 10f;
         public const float MaxDuration = 600f;

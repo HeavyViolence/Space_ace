@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rarity: 0
   _duration: 120
-  _durationRandomDeviation: 5
+  _durationRandomDeviation: 10
   _consecutiveDamageFactor: 1.1
   _consecutiveDamageFactorRandomDeviation: 0.0125

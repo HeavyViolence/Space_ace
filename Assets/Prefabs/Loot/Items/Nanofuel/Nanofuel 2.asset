@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Nanofuel 2
   m_EditorClassIdentifier: 
   _rarity: 1
-  _duration: 60
+  _duration: 65
   _durationRandomDeviation: 5
   _speedIncrease: 7
   _speedIncreaseRandomDeviation: 0.5

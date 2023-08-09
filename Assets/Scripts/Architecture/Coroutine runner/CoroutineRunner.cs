@@ -47,7 +47,7 @@ namespace SpaceAce
 
             public static void StopRoutine(Coroutine routine)
             {
-                if (routine is null) throw new EmptyRoutineStopAttemptException();
+                if (routine == null) throw new EmptyRoutineStopAttemptException();
 
                 Instance.StopCoroutine(routine);
             }

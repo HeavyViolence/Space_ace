@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Plasma shield 7
   m_EditorClassIdentifier: 
   _rarity: 6
-  _duration: 60
+  _duration: 90
   _durationRandomDeviation: 5
   _armorBoost: 3400
   _armorBoostRandomDeviation: 170

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Repair kit 7
   m_EditorClassIdentifier: 
   _rarity: 6
-  _duration: 90
+  _duration: 60
   _durationRandomDeviation: 2.5
   _regenPerSecond: 50
   _regenPerSecondRandomDeviation: 2.5
