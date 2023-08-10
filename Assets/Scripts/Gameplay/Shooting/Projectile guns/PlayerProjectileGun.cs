@@ -9,7 +9,8 @@ namespace SpaceAce.Gameplay.Shooting
     public sealed class PlayerProjectileGun : ProjectileGun, IPlasmaShieldUser,
                                                              IHomingAmmoUser,
                                                              IAntimatterAmmoUser,
-                                                             IWeaponCoolantUser
+                                                             IWeaponCoolantUser,
+                                                             IWeaponAccelerantUser
     {
         private Coroutine _slowProjectiles = null;
         private float _projectileSlowdown = 1f;
@@ -26,16 +27,41 @@ namespace SpaceAce.Gameplay.Shooting
         private float _weaponCoolantCooldownReduction = 1f;
         private float _weaponCoolantFireRateBoost = 1f;
 
-        protected override float NextProjectileTopSpeed => base.NextProjectileTopSpeed * _projectileSlowdown;
+        private Coroutine _weaponAccelerant = null;
+        private float _weaponAccelerantAmmoSpeedBoost = 1f;
+        private float _weaponAccelerantDamageBoost = 1f;
+        private float _weaponAccelerantCooldownIncrease = 1f;
+
+        protected override float NextProjectileTopSpeed
+        {
+            get
+            {
+                if (_projectileSlowdown != 1f) return base.NextProjectileTopSpeed * _projectileSlowdown;
+                if (_weaponAccelerantAmmoSpeedBoost != 1f) return base.NextProjectileTopSpeed * _weaponAccelerantAmmoSpeedBoost;
+
+                return base.NextProjectileTopSpeed;
+            }
+        }
 
         protected override float NextProjectileTargetSeekingSpeed => _homingSpeed == 0f ? base.NextProjectileTargetSeekingSpeed
                                                                                         : _homingSpeed;
 
-        protected override float NextCooldown => _weaponCoolantCooldownReduction == 1f ? base.NextCooldown
-                                                                                       : base.NextCooldown * _weaponCoolantCooldownReduction;
+        protected override float NextCooldown
+        {
+            get
+            {
+                if (_weaponCoolantCooldownReduction != 1f) return base.NextCooldown * _weaponCoolantCooldownReduction;
+                if (_weaponAccelerantCooldownIncrease != 1f) return base.NextCooldown * _weaponAccelerantCooldownIncrease;
+
+                return base.NextCooldown;
+            }
+        }
 
         protected override float NextFireRate => _weaponCoolantFireRateBoost == 1f ? base.NextFireRate
                                                                                    : base.NextFireRate * _weaponCoolantFireRateBoost;
+
+        protected override float NextProjectileDamage => _weaponAccelerantDamageBoost != 1f ? base.NextProjectileDamage * _weaponAccelerantDamageBoost
+                                                                                            : base.NextProjectileDamage;
 
         protected override void OnDisable()
         {
@@ -69,6 +95,15 @@ namespace SpaceAce.Gameplay.Shooting
                 _weaponCoolant = null;
                 _weaponCoolantCooldownReduction = 1f;
                 _weaponCoolantFireRateBoost = 1f;
+            }
+
+            if (_weaponAccelerant != null)
+            {
+                StopCoroutine(_weaponAccelerant);
+                _weaponAccelerant = null;
+                _weaponAccelerantAmmoSpeedBoost = 1f;
+                _weaponAccelerantDamageBoost = 1f;
+                _weaponAccelerantCooldownIncrease = 1f;
             }
         }
 
@@ -206,6 +241,41 @@ namespace SpaceAce.Gameplay.Shooting
             _weaponCoolantCooldownReduction = 1f;
             _weaponCoolantFireRateBoost = 1f;
             _weaponCoolant = null;
+        }
+
+        public bool Use(WeaponAccelerant accelerant)
+        {
+            if (accelerant is null) throw new ArgumentNullException(nameof(accelerant));
+
+            if (_weaponAccelerant == null)
+            {
+                _weaponAccelerant = StartCoroutine(ApplyWeaponAccelerant(accelerant));
+                return true;
+            }
+
+            return false;
+        }
+
+        private IEnumerator ApplyWeaponAccelerant(WeaponAccelerant accelerant)
+        {
+            _weaponAccelerantAmmoSpeedBoost = 1f + accelerant.AmmoSpeedBoost;
+            _weaponAccelerantDamageBoost = 1f + accelerant.DamageBoost;
+            _weaponAccelerantCooldownIncrease = 1f + accelerant.CooldownIncrease;
+
+            float timer = 0f;
+
+            while (timer < accelerant.Duration)
+            {
+                timer += Time.deltaTime;
+
+                yield return null;
+                while (GamePauser.Access.Paused == true) yield return null;
+            }
+
+            _weaponAccelerant = null;
+            _weaponAccelerantAmmoSpeedBoost = 1f;
+            _weaponAccelerantDamageBoost = 1f;
+            _weaponAccelerantCooldownIncrease = 1f;
         }
 
         protected override float GetNextProjectileDamage(string hitID)

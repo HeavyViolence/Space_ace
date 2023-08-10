@@ -22,7 +22,7 @@ namespace SpaceAce.Gameplay.Inventories
         public override string Stats => throw new NotImplementedException();
 
         [JsonIgnore]
-        public override float Worth => (base.Worth + HomingSpeed * AmmoHomingSpeedUnitWoth) * (float)(Rarity + 1);
+        public override float Worth => (base.Worth + HomingSpeed * AmmoHomingSpeedUnitWorth) * (float)(Rarity + 1);
 
         public float HomingSpeed { get; private set; }
 

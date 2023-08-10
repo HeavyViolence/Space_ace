@@ -1,4 +1,3 @@
-using SpaceAce.Gameplay.Experience;
 using SpaceAce.Main.Audio;
 using SpaceAce.UI;
 using System.Collections.Generic;
@@ -6,7 +5,7 @@ using UnityEngine;
 
 namespace SpaceAce.Gameplay.Shooting
 {
-    public abstract class Shooting : MonoBehaviour, IExperienceSource, IWeaponView
+    public abstract class Shooting : MonoBehaviour, IWeaponView
     {
         [SerializeField] private AudioCollection _weaponsSwitchAudio;
 
@@ -84,7 +83,5 @@ namespace SpaceAce.Gameplay.Shooting
         {
             foreach (var gun in _activeWeaponGroup) gun.StopFire();
         }
-
-        public float GetExperience() => MaxDamagePerSecond;
     }
 }

@@ -13,7 +13,7 @@ namespace SpaceAce.Gameplay.Inventories
         public const float MinArmorReduction = 10f;
         public const float MaxArmorReduction = 1000f;
 
-        private static Coroutine s_armorDiffusionRoutine = null;
+        private static Coroutine s_armorDiffuser = null;
 
         [JsonIgnore]
         public override string Title => throw new NotImplementedException();
@@ -50,7 +50,7 @@ namespace SpaceAce.Gameplay.Inventories
             }
 
             SpecialEffectsMediator.Access.RegisteredReceiverBehaviourUpdate -= TryApplyArmorDiffuser;
-            s_armorDiffusionRoutine = null;
+            s_armorDiffuser = null;
         }
 
         private void TryApplyArmorDiffuser(object receiver)
@@ -81,9 +81,9 @@ namespace SpaceAce.Gameplay.Inventories
 
         public override bool Use()
         {
-            if (GameModeLoader.Access.GameState == GameState.Level && s_armorDiffusionRoutine == null)
+            if (GameModeLoader.Access.GameState == GameState.Level && s_armorDiffuser == null)
             {
-                s_armorDiffusionRoutine = CoroutineRunner.RunRoutine(ArmorDiffuserRoutine(this));
+                s_armorDiffuser = CoroutineRunner.RunRoutine(ArmorDiffuserRoutine(this));
                 HUDDisplay.Access.RegisterActiveItem(this);
 
                 if (SpecialEffectsMediator.Access.TryGetEffectReceivers(out IEnumerable<IArmorDiffuserUser> users) == true)

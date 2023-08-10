@@ -42,16 +42,11 @@ namespace SpaceAce.Gameplay.Movement.EnemyMovement
         public override float UpperBound => _amplificationFactor == 1f ? Config.UpperBound : Config.UpperBound * BoundsNarrowingFactor;
         public override float LowerBound => Config.LowerBound;
 
-        protected override void OnInitialize()
-        {
-            base.OnInitialize();
-
-            _amplificationFactor = 1f;
-        }
-
         protected override void OnDeinitialize()
         {
             base.OnDeinitialize();
+
+            _amplificationFactor = 1f;
 
             if (_stasisFieldRoutine != null)
             {

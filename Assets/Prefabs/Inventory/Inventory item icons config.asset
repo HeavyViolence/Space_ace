@@ -21,3 +21,5 @@ MonoBehaviour:
   _homingAmmoIcon: {fileID: 21300000, guid: e6d09c12954c5ad4984c0297ee91050f, type: 3}
   _antimatterAmmoIcon: {fileID: 21300000, guid: 3c4b5ba8e8509404d86a867a56abf618, type: 3}
   _weaponCoolantIcon: {fileID: 21300000, guid: 3cde1c4402e1c7149a0a1a66a7fff6bb, type: 3}
+  _weaponAccelerantIcon: {fileID: 21300000, guid: d0a70987cb26311478f408d847a526c1, type: 3}
+  _EMPIcon: {fileID: 21300000, guid: 61d89470c2ad09e419011fe3b205b538, type: 3}

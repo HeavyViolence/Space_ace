@@ -26,13 +26,17 @@ namespace SpaceAce.Gameplay.Inventories
         public const float HealthUnitWorth = 0.3f;
         public const float ArmorUnitWorth = 0.5f;
         public const float PlayerSlowdownUnitWorth = -100f;
-        public const float SlowdownUnitWorth = -1f * PlayerSlowdownUnitWorth;
+        public const float SlowdownUnitWorth = 100f;
         public const float ConversionUnitWorth = 100f;
         public const float SpeedUnitWorth = 10f;
-        public const float AmmoHomingSpeedUnitWoth = 5f;
+        public const float AmmoHomingSpeedUnitWorth = 5f;
+        public const float AmmoSpeedBoostUnitWorth = 1000f;
         public const float ConsecutiveDamageFactorUnitWorth = 300f;
-        public const float CooldownReductionUnitWorth = 1000f;
-        public const float FireRateBoostUnitWorth = 1000f;
+        public const float CooldownReductionUnitWorth = 500f;
+        public const float CooldownIncreaseUnitWorth = -500f;
+        public const float FireRateBoostUnitWorth = 500f;
+        public const float DamageBoostUnitWorth = 500f;
+        public const float JamProbabilityUnitWorth = 800f;
 
         public const float MinDuration = 10f;
         public const float MaxDuration = 600f;

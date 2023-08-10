@@ -156,12 +156,12 @@ GameObject:
   - component: {fileID: 1188530917719322762}
   - component: {fileID: 1188530917719322761}
   - component: {fileID: 1188530917719322760}
-  - component: {fileID: 1188530917719322767}
   - component: {fileID: 1188530917719322759}
   - component: {fileID: 1188530917719322758}
   - component: {fileID: 2902183330523086700}
   - component: {fileID: 3987024169022250188}
   - component: {fileID: 4530262826194983193}
+  - component: {fileID: 3528043278365611340}
   m_Layer: 10
   m_Name: Pirate boss
   m_TagString: Untagged
@@ -309,20 +309,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bf0b18b696c05041836fd055c932527, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1188530917719322767
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1188530917719322764}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 532b2848c583b164bbd456922411af6a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _weaponsSwitchAudio: {fileID: 11400000, guid: 05cb6b5bff9df5d4d9feecb459303045, type: 2}
-  _config: {fileID: 11400000, guid: 815f1c1e94eeaf84b900765ff3e9a249, type: 2}
 --- !u!114 &1188530917719322759
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -388,6 +374,20 @@ MonoBehaviour:
   _lootConfig: {fileID: 11400000, guid: a32739dc09e537b469e8311b55596e45, type: 2}
   _enableAmplifiedLoot: 0
   _amplifiedLootConfig: {fileID: 0}
+--- !u!114 &3528043278365611340
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1188530917719322764}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d161d16d1d436149803efda55b2c487, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _weaponsSwitchAudio: {fileID: 11400000, guid: 05cb6b5bff9df5d4d9feecb459303045, type: 2}
+  _config: {fileID: 11400000, guid: 815f1c1e94eeaf84b900765ff3e9a249, type: 2}
 --- !u!1 &1188530918464576436
 GameObject:
   m_ObjectHideFlags: 0
