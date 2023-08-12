@@ -48,7 +48,7 @@ namespace SpaceAce.Gameplay.Shooting
         protected virtual float ConvergenceAngle => _config.GetConvergenceAngle(IsRightHandedGun);
         protected virtual MovementBehaviour ProjectileBehaviour { get; set; }
         protected virtual Func<Vector2, Transform> TargetSupplier { get; set; }
-        protected virtual bool CanFire => true;
+        protected virtual bool CanFireNextShot => true;
 
         protected virtual void OnEnable()
         {
@@ -101,27 +101,19 @@ namespace SpaceAce.Gameplay.Shooting
         {
             int shotsToFire = Mathf.RoundToInt(NextFireRate * NextFireDuration);
             Transform target = TargetSupplier?.Invoke(transform.position);
-            bool shotsFired;
 
             for (int i = 0; i < shotsToFire; i++)
             {
-                shotsFired = false;
-
                 while (GamePauser.Access.Paused == true) yield return null;
 
-                int projectilesPerShot = NextProjectilesPerShot;
-
-                for (int y = 0; y < projectilesPerShot; y++)
+                if (CanFireNextShot)
                 {
-                    if (CanFire)
-                    {
-                        PerformShot(target);
+                    int projectilesPerShot = NextProjectilesPerShot;
 
-                        if (shotsFired == false) shotsFired = true;
-                    }
+                    for (int y = 0; y < projectilesPerShot; y++) PerformShot(target);
+
+                    _config.FireAudio.PlayRandomAudioClip(transform.position);
                 }
-
-                if (shotsFired) _config.FireAudio.PlayRandomAudioClip(transform.position);
 
                 yield return new WaitForSeconds(1f / NextFireRate);
             }

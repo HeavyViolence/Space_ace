@@ -12,8 +12,8 @@ namespace SpaceAce.Gameplay.Shooting
                                                              IWeaponCoolantUser,
                                                              IWeaponAccelerantUser
     {
-        private Coroutine _slowProjectiles = null;
-        private float _projectileSlowdown = 1f;
+        private Coroutine _plasmaShield = null;
+        private float _plasmaShieldProjectileSlowdown = 1f;
 
         private Coroutine _homingAmmo = null;
         private float _homingSpeed = 0f;
@@ -36,10 +36,12 @@ namespace SpaceAce.Gameplay.Shooting
         {
             get
             {
-                if (_projectileSlowdown != 1f) return base.NextProjectileTopSpeed * _projectileSlowdown;
-                if (_weaponAccelerantAmmoSpeedBoost != 1f) return base.NextProjectileTopSpeed * _weaponAccelerantAmmoSpeedBoost;
+                float result = base.NextProjectileTopSpeed;
 
-                return base.NextProjectileTopSpeed;
+                if (_plasmaShieldProjectileSlowdown != 1f) result *= _plasmaShieldProjectileSlowdown;
+                if (_weaponAccelerantAmmoSpeedBoost != 1f) result *= _weaponAccelerantAmmoSpeedBoost;
+
+                return result;
             }
         }
 
@@ -50,10 +52,12 @@ namespace SpaceAce.Gameplay.Shooting
         {
             get
             {
-                if (_weaponCoolantCooldownReduction != 1f) return base.NextCooldown * _weaponCoolantCooldownReduction;
-                if (_weaponAccelerantCooldownIncrease != 1f) return base.NextCooldown * _weaponAccelerantCooldownIncrease;
+                float result = base.NextCooldown;
 
-                return base.NextCooldown;
+                if (_weaponCoolantCooldownReduction != 1f) result *= _weaponCoolantCooldownReduction;
+                if (_weaponAccelerantCooldownIncrease != 1f) result *= _weaponAccelerantCooldownIncrease;
+
+                return result;
             }
         }
 
@@ -67,11 +71,11 @@ namespace SpaceAce.Gameplay.Shooting
         {
             base.OnDisable();
 
-            if (_slowProjectiles != null)
+            if (_plasmaShield != null)
             {
-                StopCoroutine(_slowProjectiles);
-                _slowProjectiles = null;
-                _projectileSlowdown = 1f;
+                StopCoroutine(_plasmaShield);
+                _plasmaShield = null;
+                _plasmaShieldProjectileSlowdown = 1f;
             }
 
             if (_homingAmmo != null)
@@ -111,9 +115,9 @@ namespace SpaceAce.Gameplay.Shooting
         {
             if (shield is null) throw new ArgumentNullException(nameof(shield));
 
-            if (_slowProjectiles == null)
+            if (_plasmaShield == null)
             {
-                _slowProjectiles = StartCoroutine(ApplySlowProjectiles(shield));
+                _plasmaShield = StartCoroutine(ApplySlowProjectiles(shield));
                 return true;
             }
 
@@ -122,7 +126,7 @@ namespace SpaceAce.Gameplay.Shooting
 
         private IEnumerator ApplySlowProjectiles(PlasmaShield shield)
         {
-            _projectileSlowdown = 1f - shield.ProjectilesSlowdown;
+            _plasmaShieldProjectileSlowdown = 1f - shield.ProjectilesSlowdown;
 
             float timer = 0f;
 
@@ -134,8 +138,8 @@ namespace SpaceAce.Gameplay.Shooting
                 while (GamePauser.Access.Paused == true) yield return null;
             }
 
-            _projectileSlowdown = 1f;
-            _slowProjectiles = null;
+            _plasmaShieldProjectileSlowdown = 1f;
+            _plasmaShield = null;
         }
 
         public bool Use(HomingAmmo ammo)

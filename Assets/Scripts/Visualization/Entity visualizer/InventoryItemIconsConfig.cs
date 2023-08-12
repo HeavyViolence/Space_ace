@@ -19,6 +19,7 @@ namespace SpaceAce.Visualization
         [SerializeField] private Sprite _weaponCoolantIcon;
         [SerializeField] private Sprite _weaponAccelerantIcon;
         [SerializeField] private Sprite _EMPIcon;
+        [SerializeField] private Sprite _combatBeaconIcon;
 
         public Sprite GetIcon(Type itemType)
         {
@@ -35,6 +36,7 @@ namespace SpaceAce.Visualization
             if (itemType == typeof(WeaponCoolant)) return _weaponCoolantIcon;
             if (itemType == typeof(WeaponAccelerant)) return _weaponAccelerantIcon;
             if (itemType == typeof(EMP)) return _EMPIcon;
+            if (itemType == typeof(CombatBeacon)) return _combatBeaconIcon;
 
             return null;
         }

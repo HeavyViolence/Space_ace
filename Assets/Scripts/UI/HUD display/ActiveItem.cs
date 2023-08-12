@@ -8,6 +8,8 @@ namespace SpaceAce.UI
 {
     public sealed class ActiveItem : IEquatable<ActiveItem>
     {
+        private const string InfiniteTime = "Inf";
+
         private readonly Label _timerLabel;
 
         public float Timer { get; private set; }
@@ -31,8 +33,15 @@ namespace SpaceAce.UI
 
         public void Tick()
         {
-            Timer -= Time.deltaTime;
-            _timerLabel.text = AuxMath.GetFormattedTime((int)Timer);
+            if (Timer == float.PositiveInfinity && _timerLabel.text != InfiniteTime)
+            {
+                _timerLabel.text = InfiniteTime;
+            }
+            else
+            {
+                Timer -= Time.deltaTime;
+                _timerLabel.text = AuxMath.GetFormattedTime((int)Timer);
+            }
         }
 
         public override bool Equals(object obj) => Equals(obj as ActiveItem);

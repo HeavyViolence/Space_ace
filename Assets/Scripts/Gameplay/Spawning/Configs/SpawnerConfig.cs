@@ -101,9 +101,11 @@ namespace SpaceAce.Gameplay.Spawning
             foreach (var entity in _spawnableEntities) entity.EnsureObjectPoolExistence();
         }
 
-        public IEnumerable<(string anchorName, float spawnDelay)> GetProceduralWave(int lengthOverride = 0)
+        public IEnumerable<(string anchorName, float spawnDelay)> GetProceduralWave(int additionalEntitiesAmount = 0)
         {
-            int waveLength = lengthOverride <= 0 ? WaveLength.RandomValue : lengthOverride;
+            if (additionalEntitiesAmount < 0) throw new ArgumentOutOfRangeException(nameof(additionalEntitiesAmount));
+
+            int waveLength = WaveLength.RandomValue + additionalEntitiesAmount;
 
             List<(string anchorname, float spawnDelay)> proceduralWave = new(waveLength);
             List<string> entitiesToSpawnAnchorNames = GetEntitiesToSpawnAnchorNames(UniqueEntitiesInWave.RandomValue);

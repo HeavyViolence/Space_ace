@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eaa1fa508fc988c4181c983b65cf53c3, type: 3}
+  m_Name: Combat beacon 2
+  m_EditorClassIdentifier: 
+  _rarity: 1
+  _duration: 10
+  _durationRandomDeviation: 0
+  _additionalEnemies: 40
+  _additionalEnemiesRandomDeviation: 5
+  _additionalWaveLength: 1
+  _additionalWaveLengthRandomDeviation: 1

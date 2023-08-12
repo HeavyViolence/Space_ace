@@ -22,12 +22,17 @@ namespace SpaceAce.Gameplay.Damageables
         {
             _invulnerable = true;
 
-            while (MasterCameraHolder.Access.InsideViewport(transform.position) == false)
-            {
-                yield return null;
-            }
+            while (MasterCameraHolder.Access.InsideViewport(transform.position) == false) yield return null;
 
-            yield return new WaitForSeconds(InvulnerabilityPeriod);
+            float timer = 0f;
+
+            while (timer < InvulnerabilityPeriod)
+            {
+                timer += Time.deltaTime;
+
+                yield return null;
+                while (GamePauser.Access.Paused == true) yield return null;
+            }
 
             _invulnerable = false;
         }

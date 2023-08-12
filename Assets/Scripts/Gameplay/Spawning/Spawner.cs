@@ -2,6 +2,7 @@ using SpaceAce.Architecture;
 using SpaceAce.Auxiliary;
 using SpaceAce.Gameplay.Amplifications;
 using SpaceAce.Gameplay.Damageables;
+using SpaceAce.Gameplay.Inventories;
 using SpaceAce.Gameplay.Movement;
 using SpaceAce.Levels;
 using SpaceAce.Main;
@@ -37,6 +38,7 @@ namespace SpaceAce.Gameplay.Spawning
         public int ALiveCount => _aliveEntities.Count;
         public int ToSpawnCount { get; protected set; }
         public int DestroyedCount { get; private set; }
+        public int AdditionalCountPerWave { get; protected set; }
         public bool SpawnIsActive => _spawningRoutine != null;
 
         private void StartSpawn()
@@ -60,7 +62,7 @@ namespace SpaceAce.Gameplay.Spawning
 
             while (SpawnedCount < ToSpawnCount)
             {
-                foreach (var (anchorName, spawnDelay) in Config.GetProceduralWave())
+                foreach (var (anchorName, spawnDelay) in Config.GetProceduralWave(AdditionalCountPerWave))
                 {
                     yield return CoroutineRunner.RunRoutine(SpawnDelayer(spawnDelay));
 
@@ -191,6 +193,9 @@ namespace SpaceAce.Gameplay.Spawning
 
             if (GameServices.TryGetService(out LevelCompleter completer) == true) completer.LevelConcluded += LevelConcludedEventHandler;
             else throw new UnregisteredGameServiceAccessAttemptException(typeof(LevelCompleter));
+
+            if (GameServices.TryGetService(out SpecialEffectsMediator mediator) == true) mediator.Register(this);
+            else throw new UnregisteredGameServiceAccessAttemptException(typeof(SpecialEffectsMediator));
         }
 
         public virtual void OnUnsubscribe()
@@ -209,6 +214,9 @@ namespace SpaceAce.Gameplay.Spawning
 
             if (GameServices.TryGetService(out LevelCompleter completer) == true) completer.LevelConcluded -= LevelConcludedEventHandler;
             else throw new UnregisteredGameServiceAccessAttemptException(typeof(LevelCompleter));
+
+            if (GameServices.TryGetService(out SpecialEffectsMediator mediator) == true) mediator.Deregister(this);
+            else throw new UnregisteredGameServiceAccessAttemptException(typeof(SpecialEffectsMediator));
         }
 
         public virtual void OnClear()
@@ -227,6 +235,7 @@ namespace SpaceAce.Gameplay.Spawning
             SpawnedCount = 0;
             ToSpawnCount = Config.AmountToSpawn.RandomValue;
             DestroyedCount = 0;
+            AdditionalCountPerWave = 0;
 
             StartSpawn();
         }
@@ -245,11 +254,7 @@ namespace SpaceAce.Gameplay.Spawning
 
         private void MainMenuLoadedEventHandler(object sender, EventArgs e)
         {
-            foreach (var (entity, anchorName) in _aliveEntities)
-            {
-                s_multiobjectPool.Access.ReleaseObject(anchorName, entity, () => true);
-            }
-
+            foreach (var (entity, anchorName) in _aliveEntities) s_multiobjectPool.Access.ReleaseObject(anchorName, entity, () => true);
             _aliveEntities.Clear();
         }
 

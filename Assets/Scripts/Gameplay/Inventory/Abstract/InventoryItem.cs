@@ -37,6 +37,8 @@ namespace SpaceAce.Gameplay.Inventories
         public const float FireRateBoostUnitWorth = 500f;
         public const float DamageBoostUnitWorth = 500f;
         public const float JamProbabilityUnitWorth = 800f;
+        public const float AdditionalEnemyWorth = 50f;
+        public const float KillWorth = 100f;
 
         public const float MinDuration = 10f;
         public const float MaxDuration = 600f;
@@ -73,7 +75,7 @@ namespace SpaceAce.Gameplay.Inventories
         [JsonIgnore]
         public virtual float Worth => Duration * DurationUnitWorth;
 
-        public float Duration { get; private set; }
+        public virtual float Duration { get; private set; }
 
         public static float GetHighestSpawnProbabilityFromRarity(ItemRarity rarity)
         {

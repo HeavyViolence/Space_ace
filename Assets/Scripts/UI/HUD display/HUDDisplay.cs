@@ -13,7 +13,7 @@ using UnityEngine.UIElements;
 
 namespace SpaceAce.UI
 {
-    public sealed class HUDDisplay : UIDisplay, IUpdatable
+    public sealed class HUDDisplay : UIDisplay, IUpdatable, ICombatBeaconUser
     {
         private const float EasingDuration = 2f;
 
@@ -23,6 +23,8 @@ namespace SpaceAce.UI
         private static readonly GameServiceFastAccess<LevelTimer> s_levelTimer = new();
         private static readonly GameServiceFastAccess<LevelRewardCollector> s_levelRewardCollector = new();
         private static readonly GameServiceFastAccess<GamePauser> s_gamePauser = new();
+
+        private bool _combatBeaconActive = false;
 
         private readonly GameControls _gameControls = new();
 
@@ -147,7 +149,9 @@ namespace SpaceAce.UI
         {
             if (Active)
             {
-                _enemiesKilledLabel.text = $"{s_enemySpawner.Access.DestroyedCount}/{s_enemySpawner.Access.ToSpawnCount}";
+                if (_combatBeaconActive) _enemiesKilledLabel.text = $"{s_enemySpawner.Access.DestroyedCount}/<?>";
+                else _enemiesKilledLabel.text = $"{s_enemySpawner.Access.DestroyedCount}/{s_enemySpawner.Access.ToSpawnCount}";
+
                 _meteorsKilledLabel.text = $"{s_meteorSpawner.Access.DestroyedCount}/{s_meteorSpawner.Access.SpawnedCount}";
                 _spaceDebrisKilledLabel.text = $"{s_spaceDebrisSpawner.Access.DestroyedCount}/{s_spaceDebrisSpawner.Access.SpawnedCount}";
                 _levelTimeLabel.text = $"{s_levelTimer.Access.Minutes:###0}:{s_levelTimer.Access.Seconds:00}";
@@ -232,10 +236,7 @@ namespace SpaceAce.UI
 
         private void PopulateActiveItemsDisplay()
         {
-            if (_activeItems.Count > 0)
-            {
-                foreach (var item in _activeItems) _activeItemsDisplay.Add(item.Thumbnail);
-            }
+            if (_activeItems.Count > 0) foreach (var item in _activeItems) _activeItemsDisplay.Add(item.Thumbnail);
         }
 
         private void UpdateActiveItemsDisplay()
@@ -305,6 +306,8 @@ namespace SpaceAce.UI
         private void MainMenuLoadingStartedEventHandler(object sender, LoadingStartedEventArgs e)
         {
             _activeItems.Clear();
+            
+            if (_combatBeaconActive) _combatBeaconActive = false;
         }
 
         #endregion
@@ -401,6 +404,21 @@ namespace SpaceAce.UI
                 $"({_playerShipView.Weapons.ActiveWeaponGroupIndex + 1}/{_playerShipView.Weapons.WeaponGroupsAmount})";
 
             _playerShipHealthbar.style.width = new(Length.Percent(_playerShipView.Health.ValuePercentage));
+        }
+
+        public bool Use(CombatBeacon beacon)
+        {
+            if (beacon is null) throw new ArgumentNullException(nameof(beacon));
+
+            if (_combatBeaconActive)
+            {
+                return false;
+            }
+            else
+            {
+                _combatBeaconActive = true;
+                return true;
+            }
         }
     }
 }

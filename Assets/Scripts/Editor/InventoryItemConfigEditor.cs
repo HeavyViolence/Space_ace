@@ -12,12 +12,17 @@ namespace SpaceAce.Editors
         private SerializedProperty _duration;
         private SerializedProperty _durationRandomDeviation;
 
+        protected virtual bool DurationEditorEnabled => true;
+
         protected virtual void OnEnable()
         {
             _rarity = serializedObject.FindProperty("_rarity");
 
-            _duration = serializedObject.FindProperty("_duration");
-            _durationRandomDeviation = serializedObject.FindProperty("_durationRandomDeviation");
+            if (DurationEditorEnabled)
+            {
+                _duration = serializedObject.FindProperty("_duration");
+                _durationRandomDeviation = serializedObject.FindProperty("_durationRandomDeviation");
+            }
         }
 
         public override void OnInspectorGUI()
@@ -26,11 +31,14 @@ namespace SpaceAce.Editors
 
             EditorGUILayout.PropertyField(_rarity, new GUIContent("Rarity"));
 
-            EditorGUILayout.Separator();
-            EditorGUILayout.Slider(_duration, InventoryItem.MinDuration, InventoryItem.MaxDuration, "Duration");
-            EditorGUILayout.Slider(_durationRandomDeviation, 0f, _duration.floatValue, "Max random deviation");
+            if (DurationEditorEnabled)
+            {
+                EditorGUILayout.Separator();
+                EditorGUILayout.Slider(_duration, InventoryItem.MinDuration, InventoryItem.MaxDuration, "Duration");
+                EditorGUILayout.Slider(_durationRandomDeviation, 0f, _duration.floatValue, "Max random deviation");
 
-            _durationRandomDeviation.floatValue = Mathf.Clamp(_durationRandomDeviation.floatValue, 0f, _duration.floatValue);
+                _durationRandomDeviation.floatValue = Mathf.Clamp(_durationRandomDeviation.floatValue, 0f, _duration.floatValue);
+            }
 
             serializedObject.ApplyModifiedProperties();
         }

@@ -1,6 +1,7 @@
 using SpaceAce.Architecture;
 using SpaceAce.Auxiliary;
 using SpaceAce.Gameplay.Experience;
+using SpaceAce.Gameplay.Inventories;
 using SpaceAce.Main;
 using System;
 using System.Collections;
@@ -14,8 +15,10 @@ namespace SpaceAce.Gameplay.Damageables
         public event EventHandler<DamageReceivedEventArgs> DamageReceived;
         public event EventHandler BeforeDestroyed;
         public event EventHandler<DestroyedEventArgs> Destroyed;
-        
+
+        private static readonly GameServiceFastAccess<SpecialEffectsMediator> s_specialEffectsMediator = new();
         protected static readonly GameServiceFastAccess<MasterCameraHolder> MasterCameraHolder = new();
+        protected static readonly GameServiceFastAccess<GamePauser> GamePauser = new();
 
         private Health _health;
         private Armor _armor;
@@ -33,6 +36,8 @@ namespace SpaceAce.Gameplay.Damageables
 
         protected virtual void OnEnable()
         {
+            s_specialEffectsMediator.Access.Register(this);
+
             _health.Depleted += (s, e) => StartCoroutine(DestructionRoutine());
 
             _lifetime = 0f;
@@ -40,6 +45,8 @@ namespace SpaceAce.Gameplay.Damageables
 
         protected virtual void OnDisable()
         {
+            s_specialEffectsMediator.Access.Deregister(this);
+
             _health.Depleted -= (s, e) => StartCoroutine(DestructionRoutine());
 
             DamageReceived = null;

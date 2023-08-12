@@ -26,7 +26,7 @@ namespace SpaceAce.Gameplay.Shooting
         protected override float NextCooldown => base.NextCooldown / _amplificationFactor;
         protected override float NextFireDuration => base.NextFireDuration * _amplificationFactor;
         protected override float NextFireRate => base.NextFireRate * _amplificationFactor;
-        protected override bool CanFire => _jamProbability == 0f || AuxMath.Random > _jamProbability;
+        protected override bool CanFireNextShot => _jamProbability == 0f || AuxMath.Random > _jamProbability;
 
         protected override void OnDisable()
         {
