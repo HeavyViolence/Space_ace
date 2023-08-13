@@ -24,7 +24,7 @@ namespace SpaceAce.Gameplay.Inventories
         [JsonIgnore]
         public override float Worth => (base.Worth + HomingSpeed * AmmoHomingSpeedUnitWorth) * (float)(Rarity + 1);
 
-        public float HomingSpeed { get; private set; }
+        public float HomingSpeed { get; }
 
         public HomingAmmo(ItemRarity rarity, float duration, float homingSpeed) : base(rarity, duration)
         {

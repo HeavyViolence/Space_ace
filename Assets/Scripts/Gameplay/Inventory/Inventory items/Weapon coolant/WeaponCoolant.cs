@@ -14,10 +14,6 @@ namespace SpaceAce.Gameplay.Inventories
         public const float MinFireRateBoost = 0f;
         public const float MaxFirerateBoost = 1f;
 
-        public float CooldownReduction { get; private set; }
-
-        public float FireRateBoost { get; private set; }
-
         [JsonIgnore]
         public override string Title => throw new NotImplementedException();
 
@@ -32,6 +28,10 @@ namespace SpaceAce.Gameplay.Inventories
                                         CooldownReduction * CooldownReductionUnitWorth +
                                         FireRateBoost * FireRateBoostUnitWorth) *
                                         (float)(Rarity + 1);
+
+        public float CooldownReduction { get; }
+
+        public float FireRateBoost { get; }
 
         public WeaponCoolant(ItemRarity rarity, float duration, float cooldownReduction, float fireRateBoost) : base(rarity, duration)
         {

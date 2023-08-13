@@ -21,7 +21,8 @@ namespace SpaceAce.Gameplay.Spawning
 
         private static readonly GameServiceFastAccess<MultiobjectPool> s_multiobjectPool = new();
         private static readonly GameServiceFastAccess<MasterCameraHolder> s_masterCameraHolder = new();
-        private static readonly GameServiceFastAccess<GamePauser> s_gamePauser = new();
+        protected static readonly GameServiceFastAccess<GamePauser> GamePauser = new();
+        protected static readonly GameServiceFastAccess<GameModeLoader> GameModeLoader = new();
 
         public event EventHandler SpawnStarted, SpawnPaused, SpawnResumed, SpawnEnded;
         public event EventHandler<EntitySpawnedEventArgs> EntitySpawned;
@@ -39,6 +40,7 @@ namespace SpaceAce.Gameplay.Spawning
         public int ToSpawnCount { get; protected set; }
         public int DestroyedCount { get; private set; }
         public int AdditionalCountPerWave { get; protected set; }
+        public float SpawnDelayFactor { get; protected set; }
         public bool SpawnIsActive => _spawningRoutine != null;
 
         private void StartSpawn()
@@ -64,7 +66,7 @@ namespace SpaceAce.Gameplay.Spawning
             {
                 foreach (var (anchorName, spawnDelay) in Config.GetProceduralWave(AdditionalCountPerWave))
                 {
-                    yield return CoroutineRunner.RunRoutine(SpawnDelayer(spawnDelay));
+                    yield return CoroutineRunner.RunRoutine(SpawnDelayer(spawnDelay * SpawnDelayFactor));
 
                     SpawnEntity(anchorName);
 
@@ -164,7 +166,7 @@ namespace SpaceAce.Gameplay.Spawning
                 timer += Time.deltaTime;
 
                 yield return null;
-                while (s_gamePauser.Access.Paused == true) yield return null;
+                while (GamePauser.Access.Paused == true) yield return null;
             }
         }
 
@@ -236,6 +238,7 @@ namespace SpaceAce.Gameplay.Spawning
             ToSpawnCount = Config.AmountToSpawn.RandomValue;
             DestroyedCount = 0;
             AdditionalCountPerWave = 0;
+            SpawnDelayFactor = 1f;
 
             StartSpawn();
         }

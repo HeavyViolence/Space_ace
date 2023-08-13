@@ -21,7 +21,7 @@ namespace SpaceAce.Gameplay.Inventories
         [JsonIgnore]
         public override float Worth => (base.Worth + RegenPerSecond * HealthUnitWorth * DurationUnitWorth) * (float)(Rarity + 1);
 
-        public float RegenPerSecond { get; private set; }
+        public float RegenPerSecond { get; }
 
         public RepairKit(ItemRarity rarity, float duration, float regenPerSecond) : base(rarity, duration)
         {

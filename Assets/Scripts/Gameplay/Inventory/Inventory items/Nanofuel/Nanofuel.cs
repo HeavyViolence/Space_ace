@@ -21,7 +21,7 @@ namespace SpaceAce.Gameplay.Inventories
         [JsonIgnore]
         public override float Worth => (base.Worth + SpeedIncrease * SpeedUnitWorth) * (float)(Rarity + 1);
 
-        public float SpeedIncrease { get; private set; }
+        public float SpeedIncrease { get; }
 
         public Nanofuel(ItemRarity rerity, float duration, float flankingSpeedup) : base(rerity, duration)
         {

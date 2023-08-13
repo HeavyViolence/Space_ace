@@ -32,9 +32,9 @@ namespace SpaceAce.Gameplay.Inventories
         [JsonIgnore]
         public override float Duration => float.PositiveInfinity;
 
-        public int AdditionalEnemies { get; private set; }
+        public int AdditionalEnemies { get; }
 
-        public int AdditionalWaveLength { get; private set; }
+        public int AdditionalWaveLength { get; }
 
         public CombatBeacon(ItemRarity rarity,
                             int additionalEnemies,

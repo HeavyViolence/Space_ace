@@ -12,7 +12,7 @@ namespace SpaceAce.Gameplay.Inventories
         public const int MinEntitiesToBeDestroyed = 1;
         public const int MaxEntitiesToBeDestroyed = 100;
 
-        private static Coroutine _atomizer = null;
+        private static Coroutine s_atomizer = null;
 
         [JsonIgnore]
         public override string Title => throw new NotImplementedException();
@@ -29,7 +29,7 @@ namespace SpaceAce.Gameplay.Inventories
         [JsonIgnore]
         public override float Worth => (base.Worth + EntitiesToBeDestroyed * KillWorth) * (float)(Rarity + 1);
 
-        public int EntitiesToBeDestroyed { get; private set; }
+        public int EntitiesToBeDestroyed { get; }
 
         private static IEnumerator ApplyAtomizer(Atomizer atomizer)
         {
@@ -37,6 +37,12 @@ namespace SpaceAce.Gameplay.Inventories
 
             for (int i = 0; i < atomizer.EntitiesToBeDestroyed; i++)
             {
+                if (GameModeLoader.Access.GameState != GameState.Level)
+                {
+                    s_atomizer = null;
+                    yield break;
+                }
+
                 timer = 0f;
 
                 while (timer < atomizer.EntityDestructionPeriod)
@@ -50,7 +56,7 @@ namespace SpaceAce.Gameplay.Inventories
                 if (SpecialEffectsMediator.Access.TryGetFirstEffectReceiver(out IAtomizerUser user)) user.Use(atomizer);
             }
 
-            _atomizer = null;
+            s_atomizer = null;
         }
 
         public Atomizer(ItemRarity rarity, float duration, int entitiesToBeDestroyed) : base(rarity, duration)
@@ -84,9 +90,9 @@ namespace SpaceAce.Gameplay.Inventories
 
         public override bool Use()
         {
-            if (GameModeLoader.Access.GameState == GameState.Level && _atomizer == null)
+            if (GameModeLoader.Access.GameState == GameState.Level && s_atomizer == null)
             {
-                _atomizer = CoroutineRunner.RunRoutine(ApplyAtomizer(this));
+                s_atomizer = CoroutineRunner.RunRoutine(ApplyAtomizer(this));
                 HUDDisplay.Access.RegisterActiveItem(this);
 
                 return true;

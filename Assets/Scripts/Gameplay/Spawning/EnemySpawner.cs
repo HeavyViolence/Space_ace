@@ -8,7 +8,7 @@ namespace SpaceAce.Gameplay.Spawning
 {
     public sealed class EnemySpawner : Spawner, ICombatBeaconUser
     {
-        private bool _combatBeaconActive = false;
+        private bool _combatBeaconIsActive = false;
 
         public EnemySpawner() { }
 
@@ -33,14 +33,14 @@ namespace SpaceAce.Gameplay.Spawning
             Config = levelConfig.EnemySpawnerConfig;
             Config.EnsureNecessaryObjectPoolsExistence();
 
-            if (_combatBeaconActive) _combatBeaconActive = false;
+            if (_combatBeaconIsActive) _combatBeaconIsActive = false;
         }
 
         public bool Use(CombatBeacon beacon)
         {
             if (beacon is null) throw new ArgumentNullException(nameof(beacon));
 
-            if (_combatBeaconActive)
+            if (_combatBeaconIsActive)
             {
                 return false;
             }
@@ -48,7 +48,7 @@ namespace SpaceAce.Gameplay.Spawning
             {
                 ToSpawnCount += beacon.AdditionalEnemies;
                 AdditionalCountPerWave += beacon.AdditionalWaveLength;
-                _combatBeaconActive = true;
+                _combatBeaconIsActive = true;
 
                 return true;
             }

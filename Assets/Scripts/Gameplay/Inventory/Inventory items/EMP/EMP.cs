@@ -27,7 +27,7 @@ namespace SpaceAce.Gameplay.Inventories
         [JsonIgnore]
         public override float Worth => (base.Worth + JamProbability * JamProbabilityUnitWorth) * (float)(Rarity + 1);
 
-        public float JamProbability { get; private set; }
+        public float JamProbability { get; }
 
         public EMP(ItemRarity rarity, float duration, float jamProbability) : base(rarity, duration)
         {
@@ -80,9 +80,15 @@ namespace SpaceAce.Gameplay.Inventories
 
             while (timer < emp.Duration)
             {
-                timer += Time.deltaTime;
+                if (GameModeLoader.Access.GameState != GameState.Level)
+                {
+                    SpecialEffectsMediator.Access.RegisteredReceiverBehaviourUpdate -= TryApplyEMP;
+                    s_EMP = null;
 
-                if (GameModeLoader.Access.GameState != GameState.Level) yield break;
+                    yield break;
+                }
+
+                timer += Time.deltaTime;
 
                 yield return null;
                 while (GamePauser.Access.Paused == true) yield return null;

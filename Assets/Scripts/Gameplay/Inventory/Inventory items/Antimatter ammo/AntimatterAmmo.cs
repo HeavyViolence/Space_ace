@@ -23,7 +23,7 @@ namespace SpaceAce.Gameplay.Inventories
         [JsonIgnore]
         public override float Worth => (base.Worth + ConsecutiveDamageFactor * ConsecutiveDamageFactorUnitWorth) * (float)(Rarity + 1);
 
-        public float ConsecutiveDamageFactor { get; private set; }
+        public float ConsecutiveDamageFactor { get; }
 
         public AntimatterAmmo(ItemRarity rarity, float duration, float consecutiveDamageFactor) : base(rarity, duration)
         {

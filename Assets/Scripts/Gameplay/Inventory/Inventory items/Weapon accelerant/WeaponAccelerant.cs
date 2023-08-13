@@ -26,11 +26,11 @@ namespace SpaceAce.Gameplay.Inventories
         [JsonIgnore]
         public override string Stats => throw new NotImplementedException();
 
-        public float AmmoSpeedBoost { get; private set; }
+        public float AmmoSpeedBoost { get; }
 
-        public float DamageBoost { get; private set; }
+        public float DamageBoost { get; }
 
-        public float CooldownIncrease { get; private set; }
+        public float CooldownIncrease { get; }
 
         [JsonIgnore]
         public override float Worth => (base.Worth +

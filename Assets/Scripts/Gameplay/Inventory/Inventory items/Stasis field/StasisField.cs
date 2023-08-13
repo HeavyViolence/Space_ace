@@ -13,7 +13,7 @@ namespace SpaceAce.Gameplay.Inventories
         public const float MinSlowdown = 0.1f;
         public const float MaxSlowdown = 0.75f;
 
-        private static Coroutine s_stasisFieldRoutine = null;
+        private static Coroutine s_stasisField = null;
 
         [JsonIgnore]
         public override string Title => throw new NotImplementedException();
@@ -27,7 +27,7 @@ namespace SpaceAce.Gameplay.Inventories
         [JsonIgnore]
         public override float Worth => (base.Worth + Slowdown * SlowdownUnitWorth) * (float)(Rarity + 1);
 
-        public float Slowdown { get; private set; }
+        public float Slowdown { get; }
 
         public StasisField(ItemRarity rarity, float duration, float slowdown) : base(rarity, duration)
         {
@@ -41,16 +41,22 @@ namespace SpaceAce.Gameplay.Inventories
 
             while (timer < field.Duration)
             {
-                timer += Time.deltaTime;
+                if (GameModeLoader.Access.GameState != GameState.Level)
+                {
+                    SpecialEffectsMediator.Access.RegisteredReceiverBehaviourUpdate -= TryApplyStasisField;
+                    s_stasisField = null;
 
-                if (GameModeLoader.Access.GameState != GameState.Level) yield break;
+                    yield break;
+                }
+
+                timer += Time.deltaTime;
 
                 yield return null;
                 while (GamePauser.Access.Paused == true) yield return null;
             }
 
             SpecialEffectsMediator.Access.RegisteredReceiverBehaviourUpdate -= TryApplyStasisField;
-            s_stasisFieldRoutine = null;
+            s_stasisField = null;
         }
 
         private void TryApplyStasisField(object receiver)
@@ -81,9 +87,9 @@ namespace SpaceAce.Gameplay.Inventories
 
         public override bool Use()
         {
-            if (GameModeLoader.Access.GameState == Main.GameState.Level && s_stasisFieldRoutine == null)
+            if (GameModeLoader.Access.GameState == Main.GameState.Level && s_stasisField == null)
             {
-                s_stasisFieldRoutine = CoroutineRunner.RunRoutine(StasisFieldRoutine(this));
+                s_stasisField = CoroutineRunner.RunRoutine(StasisFieldRoutine(this));
                 HUDDisplay.Access.RegisterActiveItem(this);
 
                 if (SpecialEffectsMediator.Access.TryGetEffectReceivers(out IEnumerable<IStasisFieldUser> users) == true)

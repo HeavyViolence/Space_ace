@@ -28,8 +28,9 @@ namespace SpaceAce.Gameplay.Inventories
                                        ProjectilesSlowdown * PlayerSlowdownUnitWorth) *
                                        (float)(Rarity + 1);
 
-        public float ArmorBoost { get; private set; }
-        public float ProjectilesSlowdown { get; private set; }
+        public float ArmorBoost { get; }
+
+        public float ProjectilesSlowdown { get; }
 
         public PlasmaShield(ItemRarity rarity, float duration, float armorBoost, float projectilesSlowdown) : base(rarity, duration)
         {

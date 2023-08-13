@@ -32,11 +32,11 @@ namespace SpaceAce.Gameplay.Inventories
                                        DamageToArmorConversionRate * ConversionUnitWorth) *
                                        (float)(Rarity + 1);
 
-        public float MovementSlowdown { get; private set; }
+        public float MovementSlowdown { get; }
 
-        public float HealthIncrease { get; private set; }
+        public float HealthIncrease { get; }
 
-        public float DamageToArmorConversionRate { get; private set; }
+        public float DamageToArmorConversionRate { get; }
 
         public ReactiveArmor(ItemRarity rarity,
                              float duration,
