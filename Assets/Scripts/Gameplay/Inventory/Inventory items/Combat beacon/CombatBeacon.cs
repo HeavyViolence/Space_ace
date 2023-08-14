@@ -24,8 +24,7 @@ namespace SpaceAce.Gameplay.Inventories
         public override string Stats => throw new NotImplementedException();
 
         [JsonIgnore]
-        public override float Worth => (base.Worth +
-                                        AdditionalEnemies * AdditionalEnemyWorth +
+        public override float Worth => (AdditionalEnemies * AdditionalEnemyWorth +
                                         AdditionalWaveLength * AdditionalEnemyWorth) *
                                        (float)(Rarity + 1);
 

@@ -25,3 +25,5 @@ MonoBehaviour:
   _EMPIcon: {fileID: 21300000, guid: 61d89470c2ad09e419011fe3b205b538, type: 3}
   _combatBeaconIcon: {fileID: 21300000, guid: 64469e4478a91f04b94cc9b8938461a0, type: 3}
   _spaceDebrisRouterIcon: {fileID: 21300000, guid: 204558f8da96c354badacdb0eb4933b0, type: 3}
+  _meteorRouterIcon: {fileID: 21300000, guid: 0135b25f2842d134d8f0399ce1539227, type: 3}
+  _oreIcon: {fileID: 21300000, guid: b52fd9aa53375f84c99e6231a924e768, type: 3}

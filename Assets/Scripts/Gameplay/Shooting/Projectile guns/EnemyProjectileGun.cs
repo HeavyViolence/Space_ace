@@ -108,7 +108,5 @@ namespace SpaceAce.Gameplay.Shooting
             _jamProbability = 0f;
             _emp = null;
         }
-
-        protected override float GetNextProjectileDamage(string hitID) => NextProjectileDamage;
     }
 }

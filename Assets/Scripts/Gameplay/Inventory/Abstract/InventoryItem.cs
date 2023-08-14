@@ -40,6 +40,7 @@ namespace SpaceAce.Gameplay.Inventories
         public const float AdditionalEnemyWorth = 50f;
         public const float KillWorth = 100f;
         public const float SpawnSpeedupUnitWorth = 80f;
+        public const float OreDensityUnitWorth = 30f;
 
         public const float MinDuration = 10f;
         public const float MaxDuration = 600f;

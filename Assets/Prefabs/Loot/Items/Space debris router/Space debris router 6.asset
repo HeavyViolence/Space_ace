@@ -16,4 +16,4 @@ MonoBehaviour:
   _duration: 145
   _durationRandomDeviation: 10
   _spaceDebrisSpawnSpeedup: 4
-  _spaceDebrisSpawnSpeedupRandomDeviation: 0.4
+  _spaceDebrisSpawnSpeedupRandomDeviation: 0.25

@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72d2d998f413d9e44a653d98009a9ea8, type: 3}
+  m_Name: Meteor loot very rich
+  m_EditorClassIdentifier: 
+  _loot:
+  - {fileID: 11400000, guid: c095642b6e29e7a4faaaccb384ac585a, type: 2}
+  - {fileID: 11400000, guid: e3a12b3537b943941b0629af22970d90, type: 2}
+  - {fileID: 11400000, guid: 807dc4654d9448b47b3910160564d07e, type: 2}
+  - {fileID: 11400000, guid: 91753c46a36a82242a7eba5c09be8f5d, type: 2}
+  - {fileID: 11400000, guid: 492ff64767c129c42ab160440b6e97a8, type: 2}
+  - {fileID: 11400000, guid: f603d409d97c279449a5ba599d064274, type: 2}
+  - {fileID: 11400000, guid: 2a0f4510577635743b5a943a37552f9a, type: 2}
+  _lootAmount: 3
+  _lootAmountRandomDeviation: 1
+  _spawnProbability: 0.25

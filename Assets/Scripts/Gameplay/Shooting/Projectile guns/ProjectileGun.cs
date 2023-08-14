@@ -25,11 +25,15 @@ namespace SpaceAce.Gameplay.Shooting
         private float _currentCooldown = 0f;
         private Coroutine _firingRoutine;
 
+        private string _previousEntityHitID = string.Empty;
+        private string _lastEntityHitID = string.Empty;
+
         public virtual float MaxDamagePerSecond => _config.Damage.MaxValue *
                                                    _config.ProjectilesPerShot.MaxValue *
                                                    _config.FireRate.MaxValue *
                                                    _config.FireDuration.MaxValue * 2f /
                                                    (_config.FireDuration.MaxValue + _config.Cooldown.MinValue);
+
         public bool ReadyToFire => _firingRoutine == null && _cooldownTimer > _currentCooldown;
         public bool CoolingDown => _firingRoutine == null && _cooldownTimer < _currentCooldown;
         public bool IsFiring => _firingRoutine != null;
@@ -49,6 +53,9 @@ namespace SpaceAce.Gameplay.Shooting
         protected virtual MovementBehaviour ProjectileBehaviour { get; set; }
         protected virtual Func<Vector2, Transform> TargetSupplier { get; set; }
         protected virtual bool CanFireNextShot => true;
+        protected bool TheSameEntityIsHit => _previousEntityHitID != string.Empty &&
+                                             _lastEntityHitID != string.Empty &&
+                                             _previousEntityHitID == _lastEntityHitID;
 
         protected virtual void OnEnable()
         {
@@ -58,6 +65,9 @@ namespace SpaceAce.Gameplay.Shooting
         protected virtual void OnDisable()
         {
             s_specialEffectsMediator.Access.Deregister(this);
+
+            _previousEntityHitID = string.Empty;
+            _lastEntityHitID = string.Empty;
         }
 
         protected virtual void Awake()
@@ -162,7 +172,9 @@ namespace SpaceAce.Gameplay.Shooting
             {
                 dealer.Hit += (s, e) =>
                 {
-                    float damage = GetNextProjectileDamage(e.DamageReceiver.ID);
+                    _previousEntityHitID = _lastEntityHitID;
+                    _lastEntityHitID = e.DamageReceiver.ID;
+
                     e.DamageReceiver.ApplyDamage(NextProjectileDamage);
 
                     s_multiobjectPool.Access.ReleaseObject(_config.Projectile.AnchorName, projectile, () => true);
@@ -180,7 +192,5 @@ namespace SpaceAce.Gameplay.Shooting
                 throw new MissingComponentException($"Projectile doesn't have a mandatory {typeof(DamageDealer)} component!");
             }
         }
-
-        protected abstract float GetNextProjectileDamage(string hitID);
     }
 }

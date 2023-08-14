@@ -21,6 +21,8 @@ namespace SpaceAce.Visualization
         [SerializeField] private Sprite _EMPIcon;
         [SerializeField] private Sprite _combatBeaconIcon;
         [SerializeField] private Sprite _spaceDebrisRouterIcon;
+        [SerializeField] private Sprite _meteorRouterIcon;
+        [SerializeField] private Sprite _oreIcon;
 
         public Sprite GetIcon(Type itemType)
         {
@@ -39,6 +41,8 @@ namespace SpaceAce.Visualization
             if (itemType == typeof(EMP)) return _EMPIcon;
             if (itemType == typeof(CombatBeacon)) return _combatBeaconIcon;
             if (itemType == typeof(SpaceDebrisRouter)) return _spaceDebrisRouterIcon;
+            if (itemType == typeof(MeteorRouter)) return _meteorRouterIcon;
+            if (itemType == typeof(Ore)) return _oreIcon;
 
             return null;
         }

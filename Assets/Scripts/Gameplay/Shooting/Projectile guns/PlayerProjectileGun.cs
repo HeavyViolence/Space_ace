@@ -21,7 +21,6 @@ namespace SpaceAce.Gameplay.Shooting
         private Coroutine _antimatterAmmo = null;
         private float _antimatterAmmoDamageFactor = 1f;
         private float _antimatterAmmoConsecutiveDamageFactor = 1f;
-        private string _previousHitID = string.Empty;
 
         private Coroutine _weaponCoolant = null;
         private float _weaponCoolantCooldownReduction = 1f;
@@ -64,8 +63,27 @@ namespace SpaceAce.Gameplay.Shooting
         protected override float NextFireRate => _weaponCoolantFireRateBoost == 1f ? base.NextFireRate
                                                                                    : base.NextFireRate * _weaponCoolantFireRateBoost;
 
-        protected override float NextProjectileDamage => _weaponAccelerantDamageBoost != 1f ? base.NextProjectileDamage * _weaponAccelerantDamageBoost
-                                                                                            : base.NextProjectileDamage;
+        protected override float NextProjectileDamage
+        {
+            get
+            {
+                float result = base.NextProjectileDamage;
+
+                if (_weaponAccelerantDamageBoost != 1f) result *= _weaponAccelerantDamageBoost;
+
+                if (_antimatterAmmo != null && TheSameEntityIsHit)
+                {
+                    _antimatterAmmoDamageFactor *= _antimatterAmmoConsecutiveDamageFactor;
+                    result *= _antimatterAmmoDamageFactor;
+                }
+                else
+                {
+                    _antimatterAmmoDamageFactor = 1f;
+                }
+
+                return result;
+            }
+        }
 
         protected override void OnDisable()
         {
@@ -280,30 +298,6 @@ namespace SpaceAce.Gameplay.Shooting
             _weaponAccelerantAmmoSpeedBoost = 1f;
             _weaponAccelerantDamageBoost = 1f;
             _weaponAccelerantCooldownIncrease = 1f;
-        }
-
-        protected override float GetNextProjectileDamage(string hitID)
-        {
-            if (_antimatterAmmo == null)
-            {
-                return NextProjectileDamage;
-            }
-            else
-            {
-                if (hitID == _previousHitID)
-                {
-                    _antimatterAmmoDamageFactor *= _antimatterAmmoConsecutiveDamageFactor;
-
-                    return NextProjectileDamage * _antimatterAmmoDamageFactor;
-                }
-                else
-                {
-                    _antimatterAmmoDamageFactor = 1f;
-                    _previousHitID = hitID;
-
-                    return NextProjectileDamage;
-                }
-            }
         }
     }
 }
