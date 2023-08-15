@@ -1,5 +1,6 @@
 using SpaceAce.Auxiliary;
 using SpaceAce.Gameplay.Inventories;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -61,9 +62,13 @@ namespace SpaceAce.Gameplay.Loot
             LootAmount = new(_lootAmount, _lootAmountRandomDeviation, MinLootAmount, MaxLootAmount * 2);
         }
 
-        public bool GetLootIfProbable(out IEnumerable<InventoryItem> loot)
+        public bool GetLootIfProbable(out IEnumerable<InventoryItem> loot, float probabilityIncrease = 0f)
         {
-            if (AuxMath.Random < _spawnProbability)
+            if (probabilityIncrease < 0f || probabilityIncrease > 1f) throw new ArgumentOutOfRangeException(nameof(probabilityIncrease));
+
+            float lootSpawnProbability = Mathf.Clamp01(_spawnProbability + probabilityIncrease);
+
+            if (AuxMath.Random < lootSpawnProbability)
             {
                 List<InventoryItem> lootToSpawn = new(LootAmount.RandomValue);
 
@@ -77,7 +82,7 @@ namespace SpaceAce.Gameplay.Loot
 
                         if (seed < spawnProbability)
                         {
-                            int lootConfigIndex = Random.Range(0, lootGroup.Value.Count);
+                            int lootConfigIndex = UnityEngine.Random.Range(0, lootGroup.Value.Count);
                             InventoryItem item = lootGroup.Value[lootConfigIndex].GetItem();
 
                             lootToSpawn.Add(item);

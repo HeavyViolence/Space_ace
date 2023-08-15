@@ -24,7 +24,7 @@ namespace SpaceAce.Gameplay.Inventories
         public override string Stats => throw new NotImplementedException();
 
         [JsonIgnore]
-        public float EntityDestructionPeriod => Duration / EntitiesToBeDestroyed;
+        public float EntityDestructionDelay => Duration / EntitiesToBeDestroyed;
 
         [JsonIgnore]
         public override float Worth => (base.Worth + EntitiesToBeDestroyed * KillWorth) * (float)(Rarity + 1);
@@ -45,7 +45,7 @@ namespace SpaceAce.Gameplay.Inventories
 
                 timer = 0f;
 
-                while (timer < atomizer.EntityDestructionPeriod)
+                while (timer < atomizer.EntityDestructionDelay)
                 {
                     timer += Time.deltaTime;
 

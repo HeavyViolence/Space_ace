@@ -15,10 +15,7 @@ namespace SpaceAce.Gameplay.Damageables
             _armorDiffused = false;
         }
 
-        public void Amplify(float factor)
-        {
-            Value *= factor;
-        }
+        public void Amplify(float factor) => Value *= factor;
 
         public bool Use(ArmorDiffuser diffuser)
         {

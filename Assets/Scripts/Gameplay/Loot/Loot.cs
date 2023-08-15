@@ -12,6 +12,7 @@ namespace SpaceAce.Gameplay.Loot
     {
         private static readonly GameServiceFastAccess<LootSpawner> s_lootSpawner = new();
         private static readonly GameServiceFastAccess<SpecialEffectsMediator> s_specialEffectsMediator = new();
+        protected static readonly GameServiceFastAccess<GamePauser> GamePauser = new();
 
         [SerializeField] private LootConfig _lootConfig;
 
@@ -21,7 +22,9 @@ namespace SpaceAce.Gameplay.Loot
         private IDestroyable _destroyable;
         private Amplifier _amplifier;
 
-        private void Awake()
+        protected float SpawnProbabilityIncrease = 0f;
+
+        protected virtual void Awake()
         {
             if (transform.TryGetComponent(out IDestroyable destroyable) == true) _destroyable = destroyable;
             else throw new MissingComponentException();
@@ -29,23 +32,25 @@ namespace SpaceAce.Gameplay.Loot
             if (_enableAmplifiedLoot && transform.TryGetComponent(out Amplifier amplifier) == true) _amplifier = amplifier;
         }
 
-        private void OnEnable()
+        protected virtual void OnEnable()
         {
             _destroyable.Destroyed += DestroyedEventHandler;
             s_specialEffectsMediator.Access.Register(this);
         }
 
-        private void OnDisable()
+        protected virtual void OnDisable()
         {
             _destroyable.Destroyed -= DestroyedEventHandler;
             s_specialEffectsMediator.Access.Deregister(this);
+
+            SpawnProbabilityIncrease = 0f;
         }
 
         private void DestroyedEventHandler(object sender, DestroyedEventArgs e)
         {
             if (_amplifier != null &&
                 _amplifier.Active &&
-                _amplifiedLootConfig.GetLootIfProbable(out IEnumerable<InventoryItem> amplifiedLoot) == true)
+                _amplifiedLootConfig.GetLootIfProbable(out IEnumerable<InventoryItem> amplifiedLoot, SpawnProbabilityIncrease) == true)
             {
                 s_lootSpawner.Access.SpawnLoot(amplifiedLoot, e.DeathPosition);
             }

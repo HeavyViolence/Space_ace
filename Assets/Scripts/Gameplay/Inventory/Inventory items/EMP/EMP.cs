@@ -64,7 +64,7 @@ namespace SpaceAce.Gameplay.Inventories
                     foreach (var user in users) user.Use(this);
                 }
 
-                s_EMP = CoroutineRunner.RunRoutine(EMPRoutine(this));
+                s_EMP = CoroutineRunner.RunRoutine(ApplyEMP(this));
                 HUDDisplay.Access.RegisterActiveItem(this);
 
                 return true;
@@ -73,7 +73,7 @@ namespace SpaceAce.Gameplay.Inventories
             return false;
         }
 
-        private IEnumerator EMPRoutine(EMP emp)
+        private IEnumerator ApplyEMP(EMP emp)
         {
             SpecialEffectsMediator.Access.RegisteredReceiverBehaviourUpdate += TryApplyEMP;
             float timer = 0f;

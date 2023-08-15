@@ -27,3 +27,4 @@ MonoBehaviour:
   _spaceDebrisRouterIcon: {fileID: 21300000, guid: 204558f8da96c354badacdb0eb4933b0, type: 3}
   _meteorRouterIcon: {fileID: 21300000, guid: 0135b25f2842d134d8f0399ce1539227, type: 3}
   _oreIcon: {fileID: 21300000, guid: b52fd9aa53375f84c99e6231a924e768, type: 3}
+  _oreScannerIcon: {fileID: 21300000, guid: 3ba0fc5562ba8e44b8402eb9630481f1, type: 3}
