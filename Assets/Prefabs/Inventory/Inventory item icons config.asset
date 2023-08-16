@@ -28,3 +28,6 @@ MonoBehaviour:
   _meteorRouterIcon: {fileID: 21300000, guid: 0135b25f2842d134d8f0399ce1539227, type: 3}
   _oreIcon: {fileID: 21300000, guid: b52fd9aa53375f84c99e6231a924e768, type: 3}
   _oreScannerIcon: {fileID: 21300000, guid: 3ba0fc5562ba8e44b8402eb9630481f1, type: 3}
+  _hardwareScannerIcon: {fileID: 21300000, guid: 68904bbca73c417409a02be612260f30, type: 3}
+  _sponsorshipIcon: {fileID: 21300000, guid: 9a893b7e0177c7b44b8cc8e2ad323706, type: 3}
+  _advancedLearningIcon: {fileID: 21300000, guid: 266f4961e4c13e540bbb0d7f078b0f72, type: 3}

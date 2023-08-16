@@ -42,6 +42,9 @@ namespace SpaceAce.Gameplay.Inventories
         public const float SpawnSpeedupUnitWorth = 80f;
         public const float OreDensityUnitWorth = 30f;
         public const float ItemSpawnProbabilityUnitWorth = 800f;
+        public const float ExperienceToCreditsConversionRateUnitWorth = 1300f;
+        public const float ExperienceBoostUnitWorth = 1300f;
+        public const float ExperienceDepletionSlowdownUnitWorth = 800f;
 
         public const float MinDuration = 10f;
         public const float MaxDuration = 600f;

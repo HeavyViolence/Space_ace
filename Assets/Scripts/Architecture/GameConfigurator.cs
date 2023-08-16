@@ -63,6 +63,10 @@ namespace SpaceAce.Architecture
         #region private fields
 
         private readonly List<object> _gameServices = new();
+
+        private List<IUpdatable> _updatableGameServices = null;
+        private List<IFixedUpdatable> _fixedUpdatableGameServices = null;
+
         private StringID _idGenerator;
 
         #endregion
@@ -175,12 +179,26 @@ namespace SpaceAce.Architecture
 
         private void UpdateGameServices()
         {
-            foreach (var service in _gameServices) if (service is IUpdatable value) value.OnUpdate();
+            if (_updatableGameServices is null)
+            {
+                _updatableGameServices = new();
+
+                foreach (var service in _gameServices) if (service is IUpdatable value) _updatableGameServices.Add(value);
+            }
+
+            foreach (var service in _updatableGameServices) service.OnUpdate();
         }
 
         private void FixedUpdateGameServices()
         {
-            foreach (var service in _gameServices) if (service is IFixedUpdatable value) value.OnFixedUpdate();
+            if (_fixedUpdatableGameServices is null)
+            {
+                _fixedUpdatableGameServices = new();
+
+                foreach (var service in _gameServices) if (service is IFixedUpdatable value) _fixedUpdatableGameServices.Add(value);
+            }
+
+            foreach (var service in _fixedUpdatableGameServices) service.OnFixedUpdate();
         }
 
         private void RunGameServices()

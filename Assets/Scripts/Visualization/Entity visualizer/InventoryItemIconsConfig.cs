@@ -25,6 +25,8 @@ namespace SpaceAce.Visualization
         [SerializeField] private Sprite _oreIcon;
         [SerializeField] private Sprite _oreScannerIcon;
         [SerializeField] private Sprite _hardwareScannerIcon;
+        [SerializeField] private Sprite _sponsorshipIcon;
+        [SerializeField] private Sprite _advancedLearningIcon;
 
         public Sprite GetIcon(Type itemType)
         {
@@ -47,6 +49,8 @@ namespace SpaceAce.Visualization
             if (itemType == typeof(Ore)) return _oreIcon;
             if (itemType == typeof(OreScanner)) return _oreScannerIcon;
             if (itemType == typeof(HardwareScanner)) return _hardwareScannerIcon;
+            if (itemType == typeof(Sponsorship)) return _sponsorshipIcon;
+            if (itemType == typeof(AdvancedLearning)) return _advancedLearningIcon;
 
             return null;
         }
