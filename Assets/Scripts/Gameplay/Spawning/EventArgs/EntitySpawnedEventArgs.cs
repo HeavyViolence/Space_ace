@@ -1,19 +1,15 @@
-using SpaceAce.Gameplay.Damageables;
-using SpaceAce.Gameplay.Movement;
 using System;
+using UnityEngine;
 
 namespace SpaceAce.Gameplay.Spawning
 {
     public sealed class EntitySpawnedEventArgs : EventArgs
     {
-        public IEscapable Escapable { get; }
-        public IDestroyable Destroyable { get; }
+        public GameObject Entity { get; }
 
-        public EntitySpawnedEventArgs(IEscapable escapable,
-                                      IDestroyable destroyable)
+        public EntitySpawnedEventArgs(GameObject entity)
         {
-            Escapable = escapable;
-            Destroyable = destroyable;
+            Entity = entity;
         }
     }
 }

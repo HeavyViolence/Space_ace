@@ -51,45 +51,45 @@ namespace SpaceAce.Main.Saving
 
         private void SaveEntityState(ISavable entity)
         {
-            using FileStream saveFileStream = new(GetSaveFilePath(entity), FileMode.Create, FileAccess.Write);
-
             string state = entity.GetState();
             byte[] serializedState = Encoding.UTF8.GetBytes(state);
-            byte[] encryptionKey = GetRandomBytes(entity.GetHashCode(), EncryptionKeyLength);
+            byte[] encryptionKey = GenerateKey(entity.GetHashCode(), EncryptionKeyLength);
             byte[] encryptedSerializedState = Encrypt(serializedState, encryptionKey);
+            string encryptedSerializedStateAsBase64 = Convert.ToBase64String(encryptedSerializedState);
 
-            saveFileStream.Write(encryptedSerializedState);
-            saveFileStream.Close();
+            string savePath = GetSavePath(entity);
+            File.WriteAllText(savePath, encryptedSerializedStateAsBase64);
         }
 
         private bool TryLoadEntityState(ISavable entity, out string state)
         {
-            string saveFilePath = GetSaveFilePath(entity);
+            string savePath = GetSavePath(entity);
 
-            if (File.Exists(saveFilePath))
+            if (File.Exists(savePath))
             {
-                using FileStream saveFileStream = new(saveFilePath, FileMode.Open, FileAccess.Read);
-                using BinaryReader saveFileReader = new(saveFileStream);
+                try
+                {
+                    string encryptedSerializedStateAsBase64 = File.ReadAllText(savePath);
+                    byte[] encryptedSerializedState = Convert.FromBase64String(encryptedSerializedStateAsBase64);
+                    byte[] decryptionKey = GenerateKey(entity.GetHashCode(), EncryptionKeyLength);
+                    byte[] decryptedSerializedState = Decrypt(encryptedSerializedState, decryptionKey);
+                    UTF8Encoding utf8 = new(true, true);
 
-                byte[] encryptedSerializedState = saveFileReader.ReadBytes((int)saveFileStream.Length);
-                byte[] decryptionKey = GetRandomBytes(entity.GetHashCode(), EncryptionKeyLength);
-                byte[] decryptedSerializedState = Decrypt(encryptedSerializedState, decryptionKey);
-
-                state = Encoding.UTF8.GetString(decryptedSerializedState);
-
-                saveFileReader.Close();
-                saveFileStream.Close();
-
-                return true;
+                    state = utf8.GetString(decryptedSerializedState);
+                    return true;
+                }
+                catch (Exception)
+                {
+                    state = string.Empty;
+                    return false;
+                }
             }
-            else
-            {
-                state = default;
-                return false;
-            }
+
+            state = string.Empty;
+            return false;
         }
 
-        private string GetSaveFilePath(ISavable entity) => Path.Combine(SavesDirectory, entity.SaveName + SavesExtension);
+        private string GetSavePath(ISavable entity) => Path.Combine(SavesDirectory, entity.ID + SavesExtension);
 
         private byte[] Encrypt(byte[] input, byte[] key)
         {
@@ -121,7 +121,7 @@ namespace SpaceAce.Main.Saving
             return output;
         }
 
-        private byte[] GetRandomBytes(int seed, int length)
+        private byte[] GenerateKey(int seed, int length)
         {
             Random random = new(seed);
             var randomBytes = new byte[length];

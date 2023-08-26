@@ -37,7 +37,7 @@ namespace SpaceAce.Gameplay.Inventories
 
             for (int i = 0; i < atomizer.EntitiesToBeDestroyed; i++)
             {
-                if (GameModeLoader.Access.GameState != GameState.Level)
+                if (GameModeLoader.Access.GameMode != GameMode.Level)
                 {
                     s_atomizer = null;
                     yield break;
@@ -90,7 +90,7 @@ namespace SpaceAce.Gameplay.Inventories
 
         public override bool Use()
         {
-            if (GameModeLoader.Access.GameState == GameState.Level && s_atomizer == null)
+            if (GameModeLoader.Access.GameMode == GameMode.Level && s_atomizer == null)
             {
                 s_atomizer = CoroutineRunner.RunRoutine(ApplyAtomizer(this));
                 HUDDisplay.Access.RegisterActiveItem(this);

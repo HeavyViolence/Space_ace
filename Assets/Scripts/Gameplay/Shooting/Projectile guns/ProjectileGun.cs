@@ -19,6 +19,8 @@ namespace SpaceAce.Gameplay.Shooting
         private static readonly GameServiceFastAccess<SpecialEffectsMediator> s_specialEffectsMediator = new();
         protected static readonly GameServiceFastAccess<GamePauser> GamePauser = new();
 
+        public event EventHandler ShotFired, Hit;
+
         [SerializeField] private ProjectileGunConfig _config;
 
         private float _cooldownTimer = Mathf.Infinity;
@@ -158,6 +160,8 @@ namespace SpaceAce.Gameplay.Shooting
             AwaitProjectileHit(projectile);
 
             if (_config.CameraShakeOnShotEnabled) s_cameraShaker.Access.ShakeOnShotFired();
+
+            ShotFired?.Invoke(this, EventArgs.Empty);
         }
 
         private void SupplyProjectileBehaviour(GameObject projectile, MovementBehaviour behaviour, MovementBehaviourSettings settings)
@@ -185,6 +189,8 @@ namespace SpaceAce.Gameplay.Shooting
                     s_multiobjectPool.Access.ReleaseObject(_config.HitEffect.AnchorName, hitEffect, () => true, HitEffectDuration);
 
                     if (_config.HitAudio != null) _config.HitAudio.PlayRandomAudioClip(e.HitPosition);
+
+                    Hit?.Invoke(this, EventArgs.Empty);
                 };
             }
             else

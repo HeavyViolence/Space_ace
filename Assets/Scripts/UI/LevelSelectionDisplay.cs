@@ -102,7 +102,7 @@ namespace SpaceAce.UI
 
             if (GameServices.TryGetService<HUDDisplay>(out var display) == true)
             {
-                CoroutineRunner.RunRoutine(() => display.Enable(), () => s_gameModeLoader.Access.GameState == GameState.Level);
+                CoroutineRunner.RunRoutine(() => display.Enable(), () => s_gameModeLoader.Access.GameMode == GameMode.Level);
             }
             else
             {
@@ -162,16 +162,16 @@ namespace SpaceAce.UI
                 experienceEarnedLabel.text = "0";
                 enemiesDefeatedLabel.text = "0";
 
-                shootingAccuracyIndicatorLabel.text = "Shooting accuracy (0%)";
+                shootingAccuracyIndicatorLabel.text = "Shooting mastery (0%)";
                 shootingAccuracyIndicator.style.width = new(Length.Percent(0f));
 
-                playerDamageIndicatorLabel.text = "Player damage (0%)";
+                playerDamageIndicatorLabel.text = "Damage received mastery (0%)";
                 playerDamageIndicator.style.width = new(Length.Percent(0f));
 
-                meteorsCrushedIndicatorLabel.text = "Meteors crushed (0%)";
+                meteorsCrushedIndicatorLabel.text = "Meteors destroyed mastery (0%)";
                 meteorsCrushedIndicator.style.width = new(Length.Percent(0f));
 
-                spaceDebrisCrushedIndicatorLabel.text = "Space debris crushed (0%)";
+                spaceDebrisCrushedIndicatorLabel.text = "Space debris destroyed mastery (0%)";
                 spaceDebrisCrushedIndicator.style.width = new(Length.Percent(0f));
 
                 levelMasteryIndicatorLabel.text = "Level mastery (0%)";
@@ -179,22 +179,22 @@ namespace SpaceAce.UI
             }
             else
             {
-                timeSpentLabel.text = $"{statistics.Minutes:n0}:{statistics.Seconds:n0}";
+                timeSpentLabel.text = $"{statistics.TimeSpent.minutes:n0}:{statistics.TimeSpent.seconds:n0}";
                 crystalsEarnedLabel.text = $"{statistics.CreditsEarned:n0}";
                 experienceEarnedLabel.text = $"{statistics.ExperienceEarned:n0}";
-                enemiesDefeatedLabel.text = $"{statistics.EnemiesDefeated:n0}";
+                enemiesDefeatedLabel.text = $"{statistics.EnemiesKilled:n0}";
 
-                shootingAccuracyIndicatorLabel.text = $"Shooting accuracy ({statistics.ShootingAccuracy * 100f:n2}%)";
-                shootingAccuracyIndicator.style.width = new(Length.Percent(statistics.ShootingAccuracy * 100f));
+                shootingAccuracyIndicatorLabel.text = $"Shooting mastery ({statistics.ShootingMastery * 100f:n2}%)";
+                shootingAccuracyIndicator.style.width = new(Length.Percent(statistics.ShootingMastery * 100f));
 
-                playerDamageIndicatorLabel.text = $"Player damage ({statistics.PlayerDamagePercentage * 100f:n2}%)";
-                playerDamageIndicator.style.width = new(Length.Percent(statistics.PlayerDamagePercentage * 100f));
+                playerDamageIndicatorLabel.text = $"Damage received mastery ({statistics.DamageReceived * 100f:n2}%)";
+                playerDamageIndicator.style.width = new(Length.Percent(statistics.DamageReceived * 100f));
 
-                meteorsCrushedIndicatorLabel.text = $"Meteors crushed ({statistics.MeteorsCrushedPercentage * 100f:n2}%)";
-                meteorsCrushedIndicator.style.width = new(Length.Percent(statistics.MeteorsCrushedPercentage * 100f));
+                meteorsCrushedIndicatorLabel.text = $"Meteors destroyed mastery ({statistics.MeteorsMastery * 100f:n2}%)";
+                meteorsCrushedIndicator.style.width = new(Length.Percent(statistics.MeteorsMastery * 100f));
 
-                spaceDebrisCrushedIndicatorLabel.text = $"Space debris crushed ({statistics.SpaceDebrisCrushedPercentage * 100f:n2}%)";
-                spaceDebrisCrushedIndicator.style.width = new(Length.Percent(statistics.SpaceDebrisCrushedPercentage * 100f));
+                spaceDebrisCrushedIndicatorLabel.text = $"Space debris destroyed mastery ({statistics.SpaceDebrisMastery * 100f:n2}%)";
+                spaceDebrisCrushedIndicator.style.width = new(Length.Percent(statistics.SpaceDebrisMastery * 100f));
 
                 levelMasteryIndicatorLabel.text = $"Level mastery ({statistics.LevelMastery * 100f:n2}%)";
                 levelMasteryIndicator.style.width = new(Length.Percent(statistics.LevelMastery * 100f));

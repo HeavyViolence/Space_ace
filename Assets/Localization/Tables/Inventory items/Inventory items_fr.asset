@@ -1,0 +1,267 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Inventory items_fr
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: fr
+  m_SharedData: {fileID: 11400000, guid: 728e57727bc57cf498f349828975e45f, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 201032323072
+    m_Localized: "Kit de r\xE9paration"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 568147169280
+    m_Localized: "Kit de r\xE9paration polyvalent de qualit\xE9 militaire. Contient
+      des composants de coque et des attaches courants, ainsi que des outils automatiques.
+      Con\xE7u pour \xEAtre utilis\xE9 dans des conditions de combat."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6328642031616
+    m_Localized: "Contient un puissant g\xE9n\xE9rateur de champ magn\xE9tique, une
+      source d'alimentation \xE0 fusion pr\xE9fabriqu\xE9e et de nombreuses cellules
+      \xE0 plasma froid. Le g\xE9n\xE9rateur guide le plasma lib\xE9r\xE9 pour former
+      une coque autour du vaisseau. Le plasma est maintenu en place et est surchauff\xE9
+      par un champ magn\xE9tique pour \xE9vaporer tous les projectiles qui le frappent.
+      Le champ magn\xE9tique ralentit \xE9galement les projectiles des joueurs car
+      le champ de plasma doit \xEAtre guid\xE9 en toute s\xE9curit\xE9 autour d'eux
+      en temps r\xE9el. Un tel syst\xE8me s'est av\xE9r\xE9 capable de fournir de
+      grandes capacit\xE9s d\xE9fensives \xE0 son porteur pendant une courte dur\xE9e."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3157727236096
+    m_Localized: "Bouclier \xE0 plasma"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6750358327296
+    m_Localized: Diffuseur d'armure
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6895590297600
+    m_Localized: "Un \xE9metteur gamma de haute puissance est utilis\xE9 pour \xE9roder
+      les couches sup\xE9rieures de l'armure, la cro\xFBte de m\xE9t\xE9ores dure
+      ou les d\xE9bris spatiaux denses et p\xE9trifi\xE9s. Une fois affect\xE9es,
+      les entit\xE9s garderont leurs couches sup\xE9rieures faibles et instables
+      inconditionnellement longtemps. Une arme parfaite pour adoucir l'esprit malicieux
+      de quelqu'un."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11462541430784
+    m_Localized: "Armure r\xE9active"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11568242085888
+    m_Localized: "Contient un car\xE9nage pi\xE9zo-cin\xE9tique fin et souple fabriqu\xE9
+      \xE0 partir d'un m\xE9tamat\xE9riau connu sous le nom de \"custodium\". Son
+      r\xE9seau est constitu\xE9 de particules de domaine hautement r\xE9actives
+      qui sont li\xE9es entre elles par un champ magn\xE9tique pr\xE9-appliqu\xE9
+      et suspendues \xE0 l'int\xE9rieur d'un confinement de nanotubes de carbone.
+      Un tel mat\xE9riau pr\xE9sente une r\xE9sistance toujours croissante aux effets
+      m\xE9caniques et \xE0 l'usure. Plus vous le forcez, plus il deviendra fort,
+      accumulant seulement toute l'\xE9nergie appliqu\xE9e pour le briser sous la
+      forme d'un champ magn\xE9tique. Ce mat\xE9riau a \xE9t\xE9 r\xE9tro-con\xE7u
+      \xE0 partir d'un morceau de d\xE9bris spatial indestructible inconnu. Bien
+      que rare et difficile \xE0 fabriquer, c'est un \xE9l\xE9ment crucial dans la
+      production d'armures actives haut de gamme. Tout navire portant un tel linceul
+      blind\xE9 doit se d\xE9placer plus lentement afin d'att\xE9nuer les interf\xE9rences
+      \xE9lectromagn\xE9tiques du blindage inflig\xE9es aux syst\xE8mes du navire."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25669970284544
+    m_Localized: Champ de stase
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25784231514112
+    m_Localized: "Pistolet \xE0 impulsion \xE9lectromagn\xE9tique con\xE7u pour cibler
+      les moteurs et les canons des navires ennemis afin de r\xE9duire la puissance
+      de propulsion."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30473933148160
+    m_Localized: "R\xE9servoir de carburant haute pression avec un nanocatalyseur
+      de r\xE9action en cha\xEEne de type militaire. Convient pour augmenter la maniabilit\xE9
+      de presque tous les navires ou d'une entit\xE9 propulsable."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30419675631616
+    m_Localized: Nanocarburant
+    m_Metadata:
+      m_Items: []
+  - m_Id: 33074087055360
+    m_Localized: "Un conteneur avec des pointes d'antimati\xE8re sp\xE9ciales pour
+      les projectiles et les munitions propulsables. Permet \xE0 n'importe quelle
+      munition d'avoir de l'importance, aussi nulle soit-elle. Chaque coup cons\xE9cutif
+      de la m\xEAme cible inflige de plus en plus de d\xE9g\xE2ts, mais en frapper
+      un autre r\xE9initialise l'effet."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 33001550761984
+    m_Localized: "Munitions antimati\xE8re"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 33259336880128
+    m_Localized: "Munitions \xE0 t\xEAte chercheuse"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 33332284215296
+    m_Localized: "Un conteneur contenant de nombreux kits jetables compos\xE9s de
+      petits bo\xEEtiers avec propulseurs et \xE9quipement de suivi. Convient pour
+      convertir \xE0 peu pr\xE8s tous les projectiles en projectiles \xE0 t\xEAte
+      chercheuse pendant une courte p\xE9riode."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37490496229376
+    m_Localized: "Un ensemble de bobines super magn\xE9tiques en remplacement des
+      bobines r\xE9guli\xE8res pour l'\xE9quipement de tir. Permet d'augmenter la
+      vitesse et les d\xE9g\xE2ts des projectiles au prix d'une dur\xE9e de recharge
+      plus longue des condensateurs des armes \xE0 feu."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37349915742208
+    m_Localized: "Acc\xE9l\xE9rateur d'arme"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37724383203328
+    m_Localized: Liquide de refroidissement pour arme
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37857653018624
+    m_Localized: "R\xE9servoir d'hydrog\xE8ne liquide. Utilis\xE9 pour remplacer
+      le liquide de refroidissement commun dans l'\xE9quipement de tir pour augmenter
+      la cadence de tir et r\xE9duire les temps de recharge. Ne peut pas \xEAtre
+      utilis\xE9 constamment car les f\xFBts ont tendance \xE0 d\xE9passer le seuil
+      de s\xE9curit\xE9 et \xE0 devenir cassants \xE0 cause des gradients de temp\xE9rature
+      fr\xE9quents et intenses."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 510008378118144
+    m_Localized: PEM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 510179107262464
+    m_Localized: "G\xE9n\xE9rateur d'impulsions \xE9lectromagn\xE9tiques ajust\xE9
+      pour cibler les condensateurs des armes. Des chocs \xE9lectromagn\xE9tiques
+      fr\xE9quents et pr\xE9cis polarisent les condensateurs, les for\xE7ant effectivement
+      \xE0 perdre la capacit\xE9 d'accumuler une charge \xE9lectrique. Cela conduit
+      \xE0 son tour \xE0 l'\xE9puisement de la puissance du railgun et \xE0 l'\xE9chec
+      de l'acc\xE9l\xE9ration du projectile. Plus les rafales sont puissantes, plus
+      grandes sont les chances de succ\xE8s."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 514764211343360
+    m_Localized: Balise de combat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 514869421264896
+    m_Localized: "\xC9tend une balise de combat depuis le vaisseau du joueur. Il
+      \xE9mettra de puissantes ondes sonores de toutes les fr\xE9quences et dans
+      toutes les directions, et augmentera consid\xE9rablement la signature radar
+      du navire. Utilisez-le si vous n'\xEAtes pas s\xFBr que tout le monde vous
+      ait vu venir, mais notez que votre propre radar n'aura aucune chance devant
+      un tel appareil."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 519785720172544
+    m_Localized: Atomiseur
+    m_Metadata:
+      m_Items: []
+  - m_Id: 519870747103232
+    m_Localized: "Un s\xE9quenceur gamma irr\xE9versible aliment\xE9 par des cellules
+      \xE0 fusion. An\xE9antit compl\xE8tement la cible en charge quoi qu'il arrive.
+      La technologie a \xE9t\xE9 d\xE9velopp\xE9e pour permettre aux navires alli\xE9s
+      de se regrouper, de battre en retraite ou de se r\xE9parer dans des conditions
+      de combat tout en \xE9tant capables de riposter \xE0 distance s\xFBre."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 873073204383744
+    m_Localized: "Routeur de d\xE9bris spatiaux"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 876053492256768
+    m_Localized: "D\xE9velopp\xE9 par des mineurs pour les mineurs. Un canon \xE0
+      puits gravitationnel et un \xE9quipement de suivi fonctionnent ensemble pour
+      rapprocher davantage d'ast\xE9ro\xEFdes d'un mineur. Gr\xE2ce \xE0 cette technologie,
+      il n\u2019est pas n\xE9cessaire de rechercher des ast\xE9ro\xEFdes. Les ast\xE9ro\xEFdes
+      vous chercheront."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 876006771904512
+    m_Localized: "Routeur m\xE9t\xE9ore"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 873280906317824
+    m_Localized: "Une version du routeur m\xE9t\xE9ore calibr\xE9e pour d\xE9tecter
+      les d\xE9bris spatiaux. Tr\xE8s appr\xE9ci\xE9 des r\xE9cup\xE9rateurs d'\xE9paves."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 877612171120640
+    m_Localized: Minerai
+    m_Metadata:
+      m_Items: []
+  - m_Id: 877679263207424
+    m_Localized: "Minerai riche en min\xE9raux. Une raffinerie bien \xE9quip\xE9e
+      peut extraire toutes sortes de m\xE9taux de ce minerai. Assurez-vous de l'enrichir
+      avant de le vendre, car la densit\xE9 du minerai et son prix augmenteront consid\xE9rablement."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1798818927857664
+    m_Localized: "Scanner mat\xE9riel"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1798962511466496
+    m_Localized: "Une base de donn\xE9es de signatures pr\xE9-calibr\xE9es couramment
+      trouv\xE9es. Permet \xE0 votre radar de rechercher un \xE9quipement mat\xE9riel
+      sp\xE9cifique parmi les d\xE9bris spatiaux et les \xE9paves de vaisseaux spatiaux.
+      Vous avez du mal \xE0 trouver quelque chose ? Pas plus!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1800465431252992
+    m_Localized: Scanner de minerai
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1800560398684160
+    m_Localized: "Scanners \xE0 impulsions haute fr\xE9quence que l\u2019on trouve
+      le plus souvent \xE0 bord des navires miniers. Ils n\xE9cessitent une puissance
+      importante pour fonctionner correctement et des cartes de signature pr\xE9cises,
+      mais r\xE9compensent en retour leurs utilisateurs avec un ping de minerai pr\xE9cis
+      dans les champs d'ast\xE9ro\xEFdes ou sur les plan\xE8tes."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1804677103865856
+    m_Localized: Parrainage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1804767818272768
+    m_Localized: "Il est toujours difficile de trouver la bonne personne pour impressionner.
+      Cet \xE9quipement de suivi, une fois connect\xE9 \xE0 votre navire, transmettra
+      toutes les actions \xE0 quelqu'un vraiment int\xE9ress\xE9 \xE0 les surveiller.
+      Qui sait qui ils sont ? La seule chose que vous savez, c'est qu'ils vous paieront
+      pour toute action ardente que vous entreprendrez. Il est temps d'impressionner
+      celui qui n'a pas de visage\_!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1808354652835840
+    m_Localized: "Apprentissage avanc\xE9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1808478128951296
+    m_Localized: "Chaque humain veut apprendre comme un surhumain. Gr\xE2ce aux implants
+      neuronaux et \xE0 l'\xE9quipement g\xE9n\xE9ral d'augmentation de la perception,
+      vous remarquerez bien plus et deviendrez un pilote habile plus rapidement que
+      jamais."
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

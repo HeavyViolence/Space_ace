@@ -1,12 +1,15 @@
 using SpaceAce.Main.Audio;
 using SpaceAce.UI;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace SpaceAce.Gameplay.Shooting
 {
-    public abstract class Shooting : MonoBehaviour, IWeaponView
+    public abstract class Shooting : MonoBehaviour, IWeaponView, IGunner
     {
+        public event EventHandler GunFired, TargetHit;
+
         [SerializeField] private AudioCollection _weaponsSwitchAudio;
 
         private readonly Dictionary<int, List<IGun>> _availableWeaponGroups = new();
@@ -19,6 +22,7 @@ namespace SpaceAce.Gameplay.Shooting
 
         public int ActiveWeaponGroupIndex { get; private set; } = -1;
         public int WeaponGroupsAmount => _availableWeaponGroups.Count;
+
         public float MaxDamagePerSecond
         {
             get
@@ -27,7 +31,7 @@ namespace SpaceAce.Gameplay.Shooting
 
                 foreach (var activeGun in _activeWeaponGroup) value += activeGun.MaxDamagePerSecond;
 
-                return value / _activeWeaponGroup.Count;
+                return value;
             }
         }
 
@@ -39,13 +43,37 @@ namespace SpaceAce.Gameplay.Shooting
         protected virtual void OnEnable()
         {
             ActivateFirstWeaponGroup(false);
+
+            foreach (var group in _availableWeaponGroups)
+            {
+                foreach (var gun in group.Value)
+                {
+                    gun.ShotFired += (sender, args) => GunFired?.Invoke(this, EventArgs.Empty);
+                    gun.Hit += (sender, args) => TargetHit?.Invoke(this, EventArgs.Empty);
+                }
+            }
+        }
+
+        protected virtual void OnDisable()
+        {
+            foreach (var group in _availableWeaponGroups)
+            {
+                foreach (var gun in group.Value)
+                {
+                    gun.ShotFired -= (sender, args) => GunFired?.Invoke(this, EventArgs.Empty);
+                    gun.Hit -= (sender, args) => TargetHit?.Invoke(this, EventArgs.Empty);
+                }
+            }
+
+            GunFired = null;
+            TargetHit = null;
         }
 
         private void AssembleWeaponGroups()
         {
             foreach (var gun in gameObject.transform.root.GetComponentsInChildren<IGun>())
             {
-                if (_availableWeaponGroups.TryGetValue(gun.GroupID, out var guns)) guns.Add(gun);
+                if (_availableWeaponGroups.TryGetValue(gun.GroupID, out var guns) == true) guns.Add(gun);
                 else _availableWeaponGroups.Add(gun.GroupID, new List<IGun>() { gun });
             }
         }
@@ -54,10 +82,7 @@ namespace SpaceAce.Gameplay.Shooting
         {
             if (index < 0 ||
                 index > WeaponGroupsAmount - 1 ||
-                index == ActiveWeaponGroupIndex)
-            {
-                return false;
-            }
+                index == ActiveWeaponGroupIndex) return false;
 
             _activeWeaponGroup = _availableWeaponGroups[index];
             ActiveWeaponGroupIndex = index;
@@ -77,7 +102,7 @@ namespace SpaceAce.Gameplay.Shooting
 
         protected bool ActivatePreviousWeaponGroup(bool playAudioEffect) =>
             ActivateWeaponGroup(--ActiveWeaponGroupIndex < 0 ? WeaponGroupsAmount - 1
-                                                              : ActiveWeaponGroupIndex, playAudioEffect);
+                                                             : ActiveWeaponGroupIndex, playAudioEffect);
 
         protected void StopActiveWeaponGroupShooting()
         {

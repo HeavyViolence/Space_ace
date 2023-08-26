@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 
@@ -7,41 +8,98 @@ namespace SpaceAce.Levels
                                                  IComparable<BestLevelRunStatistics>,
                                                  IComparer<BestLevelRunStatistics>
     {
-        public static BestLevelRunStatistics Default => new(0f, 0f, 0f, 0f, (0, 0), 0, 0, 0);
+        public static BestLevelRunStatistics Default => new(0, 0, 0, 0, 0, 0, 0, 0f, 0f, 0f, 0f, 0, 0f, 0f, (0, 0));
 
-        public float ShootingAccuracy { get; }
-        public float PlayerDamagePercentage { get; }
-        public float MeteorsCrushedPercentage { get; }
-        public float SpaceDebrisCrushedPercentage { get; }
-        public int Minutes { get; }
-        public int Seconds { get; }
+        public int EnemiesKilled { get; }
+
+        public int SpaceDebrisDestroyed { get; }
+        public int SpaceDebrisMissed { get; }
+
+        [JsonIgnore]
+        public float SpaceDebrisMastery => SpaceDebrisDestroyed == 0 ? 0f : SpaceDebrisDestroyed / (SpaceDebrisDestroyed + SpaceDebrisMissed);
+
+        public int MeteorsDestroyed { get; }
+        public int MeteorsMissed { get; }
+
+        [JsonIgnore]
+        public float MeteorsMastery => MeteorsDestroyed == 0 ? 0f : MeteorsDestroyed / (MeteorsDestroyed + MeteorsMissed);
+
+        public int ShotsFired { get; }
+        public int TargetHits { get; }
+
+        [JsonIgnore]
+        public int ShotsMissed => ShotsFired - TargetHits;
+
+        [JsonIgnore]
+        public float ShootingMastery => ShotsFired == 0 ? 0f : (ShotsFired + ShotsMissed) / (float)ShotsFired;
+
+        public float DamageReceived { get; }
+        public float DamageTaken { get; }
+
+        [JsonIgnore]
+        public float DamageAverted => DamageReceived - DamageTaken;
+
+        [JsonIgnore]
+        public float DamageTakenMastery => DamageReceived == 0f ? 0f : DamageTaken / DamageReceived;
+
+        public float DamageDelivered { get; }
+        public float DamageDealt { get; }
+
+        [JsonIgnore]
+        public float DamageLost => DamageDelivered - DamageDealt;
+
+        [JsonIgnore]
+        public float DamageDealtMastery => DamageDelivered == 0f ? 0f : DamageDealt / DamageDelivered;
+
         public int CreditsEarned { get; }
-        public int ExperienceEarned { get; }
-        public int EnemiesDefeated { get; }
 
-        public float LevelMastery => ShootingAccuracy *
-                                     MeteorsCrushedPercentage *
-                                     SpaceDebrisCrushedPercentage /
-                                     (1f + PlayerDamagePercentage);
+        public float ExperienceEarned { get; }
+        public float ExperienceLost { get; }
 
-        public BestLevelRunStatistics(float shootingAccuracy,
-                                      float playerDamagePercentage,
-                                      float meteorsCrushedPercentage,
-                                      float spacedebrisCrushedPercentage,
-                                      (int minutes, int seconds) timeSpent,
+        [JsonIgnore]
+        public float ExperienceMastery => ExperienceEarned == 0f ? 0f : ExperienceEarned / (ExperienceEarned + ExperienceLost);
+
+        public (int minutes, int seconds) TimeSpent { get; }
+
+        [JsonIgnore]
+        public float LevelMastery => SpaceDebrisMastery *
+                                     MeteorsMastery *
+                                     ShootingMastery *
+                                     DamageTakenMastery *
+                                     DamageDealtMastery *
+                                     ExperienceMastery;
+
+        public BestLevelRunStatistics(int enemiesKilled,
+                                      int spaceDebrisDestroyed,
+                                      int spaceDebrisMissed,
+                                      int meteorsDestroyed,
+                                      int meteorsMissed,
+                                      int shotsFired,
+                                      int targetHits,
+                                      float damageReceived,
+                                      float damageTaken,
+                                      float damageDelivered,
+                                      float damageDealt,
                                       int creditsEarned,
-                                      int experienceEarned,
-                                      int enemiesDefeated)
+                                      float experienceEarned,
+                                      float experienceLost,
+                                      (int minutes, int seconds) timeSpent)
         {
-            ShootingAccuracy = shootingAccuracy;
-            PlayerDamagePercentage = Math.Clamp(playerDamagePercentage, 0f, 1f);
-            MeteorsCrushedPercentage = meteorsCrushedPercentage;
-            SpaceDebrisCrushedPercentage = spacedebrisCrushedPercentage;
-            Minutes = timeSpent.minutes;
-            Seconds = timeSpent.seconds;
+            EnemiesKilled = enemiesKilled;
+            SpaceDebrisDestroyed = spaceDebrisDestroyed;
+            SpaceDebrisMissed = spaceDebrisMissed;
+            MeteorsDestroyed = meteorsDestroyed;
+            MeteorsMissed = meteorsMissed;
+            ShotsFired = shotsFired;
+            TargetHits = targetHits;
+            DamageReceived = damageReceived;
+            DamageTaken = damageTaken;
+            DamageDelivered = damageDelivered;
+            DamageDealt = damageDealt;
             CreditsEarned = creditsEarned;
             ExperienceEarned = experienceEarned;
-            EnemiesDefeated = enemiesDefeated;
+            ExperienceLost = experienceLost;
+            TimeSpent = timeSpent;
         }
 
         #region interfaces
@@ -74,10 +132,7 @@ namespace SpaceAce.Levels
         {
             if (x is null)
             {
-                if (y is null)
-                {
-                    return true;
-                }
+                if (y is null) return true;
 
                 return false;
             }

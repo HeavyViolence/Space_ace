@@ -17,6 +17,8 @@ namespace SpaceAce.Gameplay.Shooting
         private IDestroyable _bombDestroyable;
 
         private static readonly GameServiceFastAccess<MasterCameraHolder> s_masterCameraHolder = new();
+        private static readonly GameServiceFastAccess<GamePauser> s_gamePuaser = new();
+        private static readonly GameServiceFastAccess<GameModeLoader> s_gameModeLoader = new();
 
         private float NextExplosionDamage => _config.Damage.RandomValue;
         private float NextDamageDelay => _config.DamageDelay.RandomValue;
@@ -44,14 +46,28 @@ namespace SpaceAce.Gameplay.Shooting
                                                float.PositiveInfinity,
                                                LayerMask.GetMask("Player", "Enemies", "Bosses", "Meteors", "Space debris"));
 
-            CoroutineRunner.RunRoutine(DamageablesDestructionRoutine(hits));
+            CoroutineRunner.RunRoutine(DamageEntities(hits));
         }
 
-        private IEnumerator DamageablesDestructionRoutine(IEnumerable<RaycastHit2D> hits)
+        private IEnumerator DamageEntities(IEnumerable<RaycastHit2D> hits)
         {
+            float timer;
+            float delay;
+
             foreach (var hit in hits)
             {
-                yield return new WaitForSeconds(NextDamageDelay);
+                timer = 0f;
+                delay = NextDamageDelay;
+
+                while (timer < delay)
+                {
+                    timer += Time.deltaTime;
+
+                    if (s_gameModeLoader.Access.GameMode != GameMode.Level) yield break;
+
+                    yield return null;
+                    if (s_gamePuaser.Access.Paused == true) yield return null;
+                }
 
                 if (s_masterCameraHolder.Access.InsideViewport(hit.transform.position) == true &&
                     hit.transform.gameObject.TryGetComponent(out IDamageable damageable) == true)

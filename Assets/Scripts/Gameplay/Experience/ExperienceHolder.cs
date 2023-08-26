@@ -2,7 +2,6 @@ using SpaceAce.Architecture;
 using SpaceAce.Gameplay.Inventories;
 using SpaceAce.Main;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -21,7 +20,7 @@ namespace SpaceAce.Gameplay.Experience
         private IEnumerable<IExperienceSource> _experienceSources = null;
         private float _lifespanTimer;
 
-        private Coroutine _advancedLearning = null;
+        private bool _advancedLearningActive = false;
         private float _experienceBoost = 1f;
         private float _experienceDepletionSlowdown = 1f;
 
@@ -43,10 +42,9 @@ namespace SpaceAce.Gameplay.Experience
         {
             s_specialEffectsMediator.Access.Deregister(this);
 
-            if (_advancedLearning != null)
+            if (_advancedLearningActive)
             {
-                StopCoroutine(_advancedLearning);
-                _advancedLearning = null;
+                _advancedLearningActive = false;
                 _experienceBoost = 1f;
                 _experienceDepletionSlowdown = 1f;
             }
@@ -88,9 +86,9 @@ namespace SpaceAce.Gameplay.Experience
             return 1f - GetEarnedExperienceFactor();
         }
 
-        public (float earned, float lost, float total) GetValues()
+        public (float earned, float lost) GetValues()
         {
-            if (_experienceDisabled) return (0f, 0f, 0f);
+            if (_experienceDisabled) return ( 0f, 0f);
 
             float totalValue = 0f;
 
@@ -98,42 +96,23 @@ namespace SpaceAce.Gameplay.Experience
 
             if (_experienceBoost != 1f) totalValue *= _experienceBoost;
 
-            float earnedExperience = totalValue * GetEarnedExperienceFactor();
-            float lostExperience = totalValue * GetLostExperienceFactor();
+            float experienceEarned = totalValue * GetEarnedExperienceFactor();
+            float experienceLost = totalValue * GetLostExperienceFactor();
 
-            return (earnedExperience, lostExperience, totalValue);
+            return (experienceEarned, experienceLost);
         }
 
         public bool Use(AdvancedLearning learning)
         {
             if (learning is null) throw new ArgumentNullException(nameof(learning));
 
-            if (_advancedLearning == null)
-            {
-                _advancedLearning = StartCoroutine(ApplyAdvancedLearning(learning));
-                return true;
-            }
+            if (_advancedLearningActive) return false;
 
-            return false;
-        }
-
-        private IEnumerator ApplyAdvancedLearning(AdvancedLearning learning)
-        {
+            _advancedLearningActive = true;
             _experienceBoost = learning.ExperienceBoost;
             _experienceDepletionSlowdown = learning.ExperienceDepletionSlowdown;
-            float timer = 0f;
 
-            while (timer < learning.Duration)
-            {
-                timer += Time.deltaTime;
-
-                yield return null;
-                while (s_gamePauser.Access.Paused == true) yield return null;
-            }
-
-            _experienceBoost = 1f;
-            _experienceDepletionSlowdown = 1f;
-            _advancedLearning = null;
+            return true;
         }
     }
 }

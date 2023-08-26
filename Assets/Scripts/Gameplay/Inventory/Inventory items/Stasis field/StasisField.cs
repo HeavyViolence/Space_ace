@@ -41,7 +41,7 @@ namespace SpaceAce.Gameplay.Inventories
 
             while (timer < field.Duration)
             {
-                if (GameModeLoader.Access.GameState != GameState.Level)
+                if (GameModeLoader.Access.GameMode != GameMode.Level)
                 {
                     SpecialEffectsMediator.Access.RegisteredReceiverBehaviourUpdate -= TryApplyStasisField;
                     s_stasisField = null;
@@ -87,7 +87,7 @@ namespace SpaceAce.Gameplay.Inventories
 
         public override bool Use()
         {
-            if (GameModeLoader.Access.GameState == Main.GameState.Level && s_stasisField == null)
+            if (GameModeLoader.Access.GameMode == Main.GameMode.Level && s_stasisField == null)
             {
                 s_stasisField = CoroutineRunner.RunRoutine(StasisFieldRoutine(this));
                 HUDDisplay.Access.RegisterActiveItem(this);

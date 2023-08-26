@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Atomizer 5
   m_EditorClassIdentifier: 
   _rarity: 4
-  _duration: 85
-  _durationRandomDeviation: 8.5
-  _entitiesToBeDestroyed: 17
+  _duration: 55
+  _durationRandomDeviation: 5.5
+  _entitiesToBeDestroyed: 11
   _entitiesToBeDestroyedRandomDeviation: 1

@@ -43,7 +43,7 @@ namespace SpaceAce.Gameplay.Inventories
 
             while (timer < scanner.Duration)
             {
-                if (GameModeLoader.Access.GameState != GameState.Level)
+                if (GameModeLoader.Access.GameMode != GameMode.Level)
                 {
                     SpecialEffectsMediator.Access.RegisteredReceiverBehaviourUpdate -= TryApplyHardwareScanner;
                     s_hardwareScanner = null;
@@ -92,7 +92,7 @@ namespace SpaceAce.Gameplay.Inventories
 
         public override bool Use()
         {
-            if (GameModeLoader.Access.GameState == GameState.Level && s_hardwareScanner == null)
+            if (GameModeLoader.Access.GameMode == GameMode.Level && s_hardwareScanner == null)
             {
                 s_hardwareScanner = CoroutineRunner.RunRoutine(ApplyHardwareScanner(this));
                 HUDDisplay.Access.RegisterActiveItem(this);

@@ -1,6 +1,8 @@
 using Newtonsoft.Json;
+using SpaceAce.Architecture;
 using SpaceAce.Main;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,6 +15,8 @@ namespace SpaceAce.Gameplay.Inventories
 
         public const float MinExperienceDepletionSlowdown = 1f;
         public const float MaxExperienceDepletionSlowdown = 10f;
+
+        private static Coroutine s_advancedLearning = null;
 
         [JsonIgnore]
         public override string Title => throw new NotImplementedException();
@@ -69,21 +73,50 @@ namespace SpaceAce.Gameplay.Inventories
 
         public override bool Use()
         {
-            if (GameModeLoader.Access.GameState == GameState.Level &&
-                SpecialEffectsMediator.Access.TryGetEffectReceivers(out IEnumerable<IAdvancedLearningUser> users) == true)
+            if (GameModeLoader.Access.GameMode == GameMode.Level && s_advancedLearning == null)
             {
-                bool used = false;
+                s_advancedLearning = CoroutineRunner.RunRoutine(ApplyAdvancedLearning(this));
+                HUDDisplay.Access.RegisterActiveItem(this);
 
-                foreach (var user in users) if (user.Use(this) == true) used = true;
-
-                if (used)
+                if (SpecialEffectsMediator.Access.TryGetEffectReceivers(out IEnumerable<IAdvancedLearningUser> users) == true)
                 {
-                    HUDDisplay.Access.RegisterActiveItem(this);
-                    return true;
+                    foreach (var user in users) user.Use(this);
                 }
+
+                return true;
             }
 
             return false;
+        }
+
+        private IEnumerator ApplyAdvancedLearning(AdvancedLearning learning)
+        {
+            SpecialEffectsMediator.Access.RegisteredReceiverBehaviourUpdate += TryApplyAdvancedLearning;
+            float timer = 0f;
+
+            while (timer < learning.Duration)
+            {
+                if (GameModeLoader.Access.GameMode != GameMode.Level)
+                {
+                    SpecialEffectsMediator.Access.RegisteredReceiverBehaviourUpdate -= TryApplyAdvancedLearning;
+                    s_advancedLearning = null;
+
+                    yield break;
+                }
+
+                timer += Time.deltaTime;
+
+                yield return null;
+                while (GamePauser.Access.Paused == true) yield return null;
+            }
+
+            SpecialEffectsMediator.Access.RegisteredReceiverBehaviourUpdate -= TryApplyAdvancedLearning;
+            s_advancedLearning = null;
+        }
+
+        private void TryApplyAdvancedLearning(object receiver)
+        {
+            if (receiver is IAdvancedLearningUser user) user.Use(this);
         }
 
         public override bool Equals(object obj) => Equals(obj as AdvancedLearning);

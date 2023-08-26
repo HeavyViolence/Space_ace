@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5be51871efa6c3e4eae1703925c8f5ac, type: 3}
-  m_Name: UI
+  m_Name: Inventory items
   m_EditorClassIdentifier: 
-  m_SharedTableData: {fileID: 11400000, guid: 61b5f207eb8108d42baad577c03b429c, type: 2}
+  m_SharedTableData: {fileID: 11400000, guid: 728e57727bc57cf498f349828975e45f, type: 2}
   m_Tables:
-  - {fileID: 11400000, guid: 939f2c1d960f78047b9f175305b70b8f, type: 2}
-  - {fileID: 11400000, guid: f425be37b19c5eb4fbaff6c2fc13dd4e, type: 2}
+  - {fileID: 11400000, guid: 89eaf8d04edbc4a449455e3ebefd3f39, type: 2}
+  - {fileID: 11400000, guid: f75ae58b2c6fbc94a9b912147ed80239, type: 2}
   m_Extensions: []
   m_Group: String Table
   references:

@@ -18,8 +18,8 @@ namespace SpaceAce.Auxiliary
 		private static readonly byte[] s_randomCryptosafeBytes = new byte[IDLength];
 		private static readonly StringBuilder s_cryptosafeIDBuilder = new(Default.Length);
 
-		private Random _random;
-		private StringBuilder _idBuilder = new(Default.Length);
+		private readonly Random _random;
+		private readonly StringBuilder _idBuilder = new(Default.Length);
 
 		public int Seed { get; }
 
@@ -40,11 +40,8 @@ namespace SpaceAce.Auxiliary
 
 				_idBuilder.Append(symbol);
 
-				if (i % ChunkSize == ChunkSize - 1 && i != IDLength - 1)
-				{
-					_idBuilder.Append(ChunkSeparator);
-				}
-			}
+				if (i % ChunkSize == ChunkSize - 1 && i != IDLength - 1) _idBuilder.Append(ChunkSeparator);
+            }
 
 			return _idBuilder.ToString();
 		}
@@ -61,38 +58,21 @@ namespace SpaceAce.Auxiliary
 
 				s_cryptosafeIDBuilder.Append(symbol);
 
-				if (i % ChunkSize == ChunkSize - 1 && i != IDLength - 1)
-				{
-					s_cryptosafeIDBuilder.Append(ChunkSeparator);
-				}
-			}
+				if (i % ChunkSize == ChunkSize - 1 && i != IDLength - 1) s_cryptosafeIDBuilder.Append(ChunkSeparator);
+            }
 
 			return s_cryptosafeIDBuilder.ToString();
 		}
 
 		public static bool IsValid(string candidate)
 		{
-			if (string.IsNullOrEmpty(candidate) || string.IsNullOrWhiteSpace(candidate))
-			{
-				return false;
-			}
-
-			if (candidate.Length != Default.Length)
-			{
-				return false;
-			}
+			if (string.IsNullOrEmpty(candidate) || string.IsNullOrWhiteSpace(candidate)) return false;
+			if (candidate.Length != Default.Length) return false;
 
 			for (int i = 0; i < candidate.Length; i++)
 			{
-				if (candidate[i] == ChunkSeparator && Default[i] != ChunkSeparator)
-				{
-					return false;
-				}
-
-				if (char.IsLetterOrDigit(candidate[i]) != char.IsLetterOrDigit(Default[i]))
-				{
-					return false;
-				}
+				if (candidate[i] == ChunkSeparator && Default[i] != ChunkSeparator) return false;
+				if (char.IsLetterOrDigit(candidate[i]) != char.IsLetterOrDigit(Default[i])) return false;
 			}
 
 			return true;
@@ -108,12 +88,9 @@ namespace SpaceAce.Auxiliary
 		{
 			if (x == null)
 			{
-				if (y == null)
-				{
-					return true;
-				}
+				if (y == null) return true;
 
-				return false;
+                return false;
 			}
 
 			return x.Equals(y);

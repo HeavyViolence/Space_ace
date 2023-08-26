@@ -25,7 +25,6 @@ namespace SpaceAce.Main.Audio
         private Transform _audioSourcePoolAnchor;
 
         public string ID { get; }
-        public string SaveName => "Audio player settings";
         public AudioPlayerSettings Settings { get; private set; }
 
         public AudioPlayer(string id, AudioMixer audioMixer)

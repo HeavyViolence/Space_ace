@@ -24,7 +24,6 @@ namespace SpaceAce.Main
 
         public bool ShakingEnabled { get; private set; } = true;
 
-        public string SaveName => "Camera shaker settings";
         public string ID { get; }
 
         public CameraShaker(string id, GameObject masterCameraAnchor)

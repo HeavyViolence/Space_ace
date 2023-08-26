@@ -1,15 +1,15 @@
-using SpaceAce.Gameplay.Damageables;
 using System;
+using UnityEngine;
 
 namespace SpaceAce.Gameplay.Players
 {
     public sealed class PlayerShipSpawnedEventArgs : EventArgs
     {
-        public IDestroyable Destroyable { get; }
+        public GameObject Ship { get; }
 
-        public PlayerShipSpawnedEventArgs(IDestroyable destroyable)
+        public PlayerShipSpawnedEventArgs(GameObject ship)
         {
-            Destroyable = destroyable;
+            Ship = ship;
         }
     }
 }

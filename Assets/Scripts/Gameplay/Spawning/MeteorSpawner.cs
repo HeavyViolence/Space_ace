@@ -59,7 +59,7 @@ namespace SpaceAce.Gameplay.Spawning
             {
                 timer += Time.deltaTime;
 
-                if (GameModeLoader.Access.GameState != GameState.Level)
+                if (GameModeLoader.Access.GameMode != GameMode.Level)
                 {
                     SpawnDelayFactor = 1f;
                     _meteorRouter = null;

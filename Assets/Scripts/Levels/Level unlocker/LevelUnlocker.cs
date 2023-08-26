@@ -15,7 +15,6 @@ namespace SpaceAce.Levels
         private HashSet<int> _unlockedLevels = new();
 
         public string ID { get; }
-        public string SaveName => "Levels progress";
 
         public LevelUnlocker(string id)
         {

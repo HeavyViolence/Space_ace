@@ -23,7 +23,6 @@ namespace SpaceAce.Main.Audio
         private AudioAccess _currentTrackAccess = null;
 
         public string ID { get; }
-        public string SaveName => "Music player settings";
         public float PlaybackInterval { get; private set; }
         public bool IsPlaying => _musicRoutine != null;
 

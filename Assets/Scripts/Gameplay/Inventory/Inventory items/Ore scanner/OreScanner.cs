@@ -43,7 +43,7 @@ namespace SpaceAce.Gameplay.Inventories
 
             while (timer < scanner.Duration)
             {
-                if (GameModeLoader.Access.GameState != GameState.Level)
+                if (GameModeLoader.Access.GameMode != GameMode.Level)
                 {
                     SpecialEffectsMediator.Access.RegisteredReceiverBehaviourUpdate -= TryApplyOreScanner;
                     s_oreScanner = null;
@@ -92,7 +92,7 @@ namespace SpaceAce.Gameplay.Inventories
 
         public override bool Use()
         {
-            if (GameModeLoader.Access.GameState == GameState.Level && s_oreScanner == null)
+            if (GameModeLoader.Access.GameMode == GameMode.Level && s_oreScanner == null)
             {
                 s_oreScanner = CoroutineRunner.RunRoutine(ApplyOreScanner(this));
                 HUDDisplay.Access.RegisterActiveItem(this);

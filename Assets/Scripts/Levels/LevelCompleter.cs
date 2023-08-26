@@ -1,4 +1,6 @@
 using SpaceAce.Architecture;
+using SpaceAce.Gameplay.Damageables;
+using SpaceAce.Gameplay.Movement;
 using SpaceAce.Gameplay.Players;
 using SpaceAce.Gameplay.Spawning;
 using SpaceAce.Main;
@@ -124,11 +126,18 @@ namespace SpaceAce.Levels
 
         private void PlayerShipSpawnedEventHandler(object sender, PlayerShipSpawnedEventArgs e)
         {
-            e.Destroyable.Destroyed += (s, e) =>
+            if (e.Ship.TryGetComponent(out IDestroyable destroyable) == true)
             {
-                LevelFailed?.Invoke(this, new LevelDataEventArgs(_loadedLevelIndex));
-                LevelConcluded?.Invoke(this, new LevelDataEventArgs(_loadedLevelIndex));
-            };
+                destroyable.Destroyed += (s, e) =>
+                {
+                    LevelFailed?.Invoke(this, new LevelDataEventArgs(_loadedLevelIndex));
+                    LevelConcluded?.Invoke(this, new LevelDataEventArgs(_loadedLevelIndex));
+                };
+            }
+            else
+            {
+                throw new MissingComponentException(typeof(IDestroyable).ToString());
+            }
         }
 
         private void EnemySpawnEndedEventHandler(object sender, EventArgs e)
@@ -138,35 +147,33 @@ namespace SpaceAce.Levels
 
         private void EnemySpawnedEventHandler(object sender, EntitySpawnedEventArgs e)
         {
-            e.Escapable.Escaped += (s, e) =>
+            if (e.Entity.TryGetComponent(out IEscapable escapable) == true)
             {
-                LevelFailed?.Invoke(this, new LevelDataEventArgs(_loadedLevelIndex));
-                LevelConcluded?.Invoke(this, new LevelDataEventArgs(_loadedLevelIndex));
-            };
+                escapable.Escaped += (s, e) =>
+                {
+                    LevelFailed?.Invoke(this, new LevelDataEventArgs(_loadedLevelIndex));
+                    LevelConcluded?.Invoke(this, new LevelDataEventArgs(_loadedLevelIndex));
+                };
+            }
+            else
+            {
+                throw new MissingComponentException(typeof(IEscapable).ToString());
+            }
         }
 
         #endregion
 
         IEnumerator AwaitEnemiesDefeatThenConcludeLevel(EnemySpawner enemySpawner)
         {
-            while (enemySpawner.ALiveCount > 0)
-            {
-                yield return null;
-            }
+            while (enemySpawner.ALiveCount > 0) yield return null;
 
             if (GameServices.TryGetService(out BossSpawner bossSpawner) == true)
             {
-                while (bossSpawner.Active)
-                {
-                    yield return null;
-                }
+                while (bossSpawner.Active) yield return null;
 
                 yield return null;
 
-                while (bossSpawner.BossIsAlive)
-                {
-                    yield return null;
-                }
+                while (bossSpawner.BossIsAlive) yield return null;
             }
             else
             {

@@ -7,7 +7,6 @@ namespace SpaceAce.Main.Saving
         event EventHandler SavingRequested;
         
         string ID { get; }
-        string SaveName { get; }
 
         string GetState();
         void SetState(string state);

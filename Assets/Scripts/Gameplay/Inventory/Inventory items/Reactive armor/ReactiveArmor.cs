@@ -74,7 +74,7 @@ namespace SpaceAce.Gameplay.Inventories
 
         public override bool Use()
         {
-            if (GameModeLoader.Access.GameState == GameState.Level &&
+            if (GameModeLoader.Access.GameMode == GameMode.Level &&
                 SpecialEffectsMediator.Access.TryGetFirstEffectReceiver(out IReactiveArmorUser user) == true &&
                 user.Use(this) == true)
             {

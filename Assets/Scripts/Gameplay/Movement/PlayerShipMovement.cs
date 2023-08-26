@@ -17,7 +17,7 @@ namespace SpaceAce.Gameplay.Movement
         private Coroutine _reactiveArmorRoutine = null;
         private float _reactiveArmorSlowdownFactor = 1f;
 
-        private Coroutine _nanofuelRoutine = null;
+        private Coroutine _nanofuel = null;
         private float _nanofuelSpeedup = 0f;
 
         protected override void OnEnable()
@@ -39,10 +39,10 @@ namespace SpaceAce.Gameplay.Movement
                 _reactiveArmorSlowdownFactor = 1f;
             }
 
-            if (_nanofuelRoutine != null)
+            if (_nanofuel != null)
             {
-                StopCoroutine(_nanofuelRoutine);
-                _nanofuelRoutine = null;
+                StopCoroutine(_nanofuel);
+                _nanofuel = null;
                 _nanofuelSpeedup = 0f;
             }
         }
@@ -104,9 +104,9 @@ namespace SpaceAce.Gameplay.Movement
         {
             if (fuel is null) throw new ArgumentNullException(nameof(fuel));
 
-            if (_nanofuelRoutine == null)
+            if (_nanofuel == null)
             {
-                _nanofuelRoutine = StartCoroutine(ApplyNanofuel(fuel));
+                _nanofuel = StartCoroutine(ApplyNanofuel(fuel));
                 return true;
             }
 
@@ -126,7 +126,7 @@ namespace SpaceAce.Gameplay.Movement
                 while (GamePauser.Access.Paused == true) yield return null;
             }
 
-            _nanofuelRoutine = null;
+            _nanofuel = null;
             _nanofuelSpeedup = 0f;
         }
     }

@@ -40,11 +40,7 @@ namespace SpaceAce.Gameplay.Spawning
         {
             if (beacon is null) throw new ArgumentNullException(nameof(beacon));
 
-            if (_combatBeaconIsActive)
-            {
-                return false;
-            }
-            else
+            if (_combatBeaconIsActive == false)
             {
                 ToSpawnCount += beacon.AdditionalEnemies;
                 AdditionalCountPerWave += beacon.AdditionalWaveLength;
@@ -52,6 +48,8 @@ namespace SpaceAce.Gameplay.Spawning
 
                 return true;
             }
+
+            return false;
         }
     }
 }

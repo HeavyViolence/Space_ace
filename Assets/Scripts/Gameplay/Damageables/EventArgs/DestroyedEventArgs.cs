@@ -7,21 +7,19 @@ namespace SpaceAce.Gameplay.Damageables
     {
         public Vector2 DeathPosition { get; }
         public float Lifetime { get; }
-        public float EarnedExperience { get; }
-        public float LostExperience { get; }
-        public float TotalExperience { get; }
+        public float ExperienceEarned { get; }
+        public float ExperienceLost { get; }
+        public float ExperienceTotal => ExperienceEarned + ExperienceLost;
 
         public DestroyedEventArgs(Vector2 deathPosition,
                                   float lifetime,
-                                  float earnedExperience,
-                                  float lostExperience,
-                                  float totalExperience)
+                                  float experienceEarned,
+                                  float experienceLost)
         {
             DeathPosition = deathPosition;
             Lifetime = lifetime;
-            EarnedExperience = earnedExperience;
-            LostExperience = lostExperience;
-            TotalExperience = totalExperience;
+            ExperienceEarned = experienceEarned;
+            ExperienceLost = experienceLost;
         }
     }
 }

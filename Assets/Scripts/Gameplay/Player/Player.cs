@@ -3,6 +3,7 @@ using SpaceAce.Architecture;
 using SpaceAce.Auxiliary;
 using SpaceAce.Gameplay.Damageables;
 using SpaceAce.Gameplay.Inventories;
+using SpaceAce.Gameplay.Shooting;
 using SpaceAce.Levels;
 using SpaceAce.Main;
 using SpaceAce.Main.ObjectPooling;
@@ -34,7 +35,6 @@ namespace SpaceAce.Gameplay.Players
         private IShootingController _shipShootingController;
 
         public string ID { get; }
-        public string SaveName => "Player";
         public ObjectPoolEntry SelectedShip => _selectedShip != null ? _selectedShip : _defaultShip;
         public Inventory Inventory { get; } = new();
         public Wallet Wallet { get; } = new();
@@ -151,7 +151,6 @@ namespace SpaceAce.Gameplay.Players
         public string GetState()
         {
             PlayerSavableData data = new(SelectedShip.AnchorName, Inventory.GetContent(), Wallet.Credits, Experience.Value);
-
             return JsonConvert.SerializeObject(data, _serializationSettings);
         }
 
@@ -218,15 +217,13 @@ namespace SpaceAce.Gameplay.Players
             _activeShip = s_multiobjectPool.Access.GetObject(SelectedShip.AnchorName);
 
             if (_activeShip.TryGetComponent(out IMovementController movementController) == true) _shipMovementController = movementController;
-            else throw new MissingComponentException($"Player ship is missing a mandatory component of type {typeof(IMovementController)}!");
+            else throw new MissingComponentException(typeof(IMovementController).ToString());
 
             if (_activeShip.TryGetComponent(out IShootingController shootingController) == true) _shipShootingController = shootingController;
-            else throw new MissingComponentException($"Player ship is missing a mandatory component of type {typeof(IShootingController)}!");
+            else throw new MissingComponentException(typeof(IShootingController).ToString());
 
             if (_activeShip.TryGetComponent(out IDestroyable destroyable) == true)
             {
-                ShipSpawned?.Invoke(this, new PlayerShipSpawnedEventArgs(destroyable));
-
                 destroyable.Destroyed += (s, e) =>
                 {
                     s_multiobjectPool.Access.ReleaseObject(SelectedShip.AnchorName, _activeShip, () => true);
@@ -235,9 +232,10 @@ namespace SpaceAce.Gameplay.Players
             }
             else
             {
-                throw new MissingComponentException($"Player ship is missing a mandatory component of type {typeof(IDestroyable)}!");
+                throw new MissingComponentException(typeof(IDestroyable).ToString());
             }
 
+            ShipSpawned?.Invoke(this, new PlayerShipSpawnedEventArgs(_activeShip));
             _gameControls.Gameplay.Enable();
         }
 
@@ -274,10 +272,10 @@ namespace SpaceAce.Gameplay.Players
 
         private void HUDDisplayEnabledEventHandler(object sender, EventArgs e)
         {
-            if (s_gameModeLoader.Access.GameState == GameState.Level) _gameControls.Gameplay.Enable();
+            if (s_gameModeLoader.Access.GameMode == GameMode.Level) _gameControls.Gameplay.Enable();
 
-            if (s_gameModeLoader.Access.GameState == GameState.LevelPassed ||
-                s_gameModeLoader.Access.GameState == GameState.LevelFailed)
+            if (s_gameModeLoader.Access.GameMode == GameMode.LevelPassed ||
+                s_gameModeLoader.Access.GameMode == GameMode.LevelFailed)
             {
                 _gameControls.Gameplay.Movement.Enable();
             }

@@ -16,17 +16,11 @@ namespace SpaceAce.Gameplay.Amplifications
         {
             _amplifiables = gameObject.GetComponentsInChildren<IAmplifiable>();
 
-            if (_amplifiables.Count() == 0)
-            {
-                throw new MissingComponentException($"Amplifiable entity is missing at least one component of type {typeof(IAmplifiable)}!");
-            }
+            if (_amplifiables.Count() == 0) throw new MissingComponentException(typeof(IAmplifiable).ToString());
 
             _animator = gameObject.transform.root.GetComponentInChildren<Animator>();
 
-            if (_animator == null)
-            {
-                throw new MissingComponentException($"Amplifiable entity is missing a mandatory component of type {typeof(Animator)}!");
-            }
+            if (_animator == null) throw new MissingComponentException(typeof(Animator).ToString());
         }
 
         private void OnDisable()
@@ -37,10 +31,7 @@ namespace SpaceAce.Gameplay.Amplifications
 
         public void Amplify(RangedFloat factor)
         {
-            foreach (var amplifiable in _amplifiables)
-            {
-                amplifiable.Amplify(factor.RandomValue);
-            }
+            foreach (var amplifiable in _amplifiables) amplifiable.Amplify(factor.RandomValue);
 
             _animator.SetTrigger("Amplified");
             Active = true;

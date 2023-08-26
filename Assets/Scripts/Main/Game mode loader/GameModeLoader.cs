@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace SpaceAce.Main
 {
-    public enum GameState
+    public enum GameMode
     {
         Booting,
         MainMenu,
@@ -30,7 +30,7 @@ namespace SpaceAce.Main
 
         private readonly HashSet<LevelConfig> _levelConfigs;
 
-        public GameState GameState { get; private set; } = GameState.Booting;
+        public GameMode GameMode { get; private set; } = GameMode.Booting;
 
         public GameModeLoader(IEnumerable<LevelConfig> levelConfigs)
         {
@@ -45,12 +45,12 @@ namespace SpaceAce.Main
             IEnumerator MainMenuLoader()
             {
                 MainMenuLoadingStarted?.Invoke(this, new LoadingStartedEventArgs(GameModeLoadingDelay));
-                GameState = GameState.MainMenuLoading;
+                GameMode = GameMode.MainMenuLoading;
 
                 yield return new WaitForSeconds(GameModeLoadingDelay);
 
                 MainMenuLoaded?.Invoke(this, EventArgs.Empty);
-                GameState = GameState.MainMenu;
+                GameMode = GameMode.MainMenu;
             }
         }
 
@@ -64,7 +64,7 @@ namespace SpaceAce.Main
             IEnumerator GameLevelLoader()
             {
                 LevelLoadingStarted?.Invoke(this, new LoadingStartedEventArgs(GameModeLoadingDelay));
-                GameState = GameState.LevelLoading;
+                GameMode = GameMode.LevelLoading;
 
                 yield return new WaitForSeconds(GameModeLoadingDelay);
 
@@ -77,7 +77,7 @@ namespace SpaceAce.Main
                         necessaryLevelConfigFound = true;
 
                         LevelLoaded?.Invoke(this, new LevelLoadedEventArgs(config));
-                        GameState = GameState.Level;
+                        GameMode = GameMode.Level;
 
                         break;
                     }
@@ -105,8 +105,8 @@ namespace SpaceAce.Main
         {
             if (GameServices.TryGetService(out LevelCompleter completer) == true)
             {
-                completer.LevelPassed += (s, e) => GameState = GameState.LevelPassed;
-                completer.LevelFailed += (s, e) => GameState = GameState.LevelFailed;
+                completer.LevelPassed += (s, e) => GameMode = GameMode.LevelPassed;
+                completer.LevelFailed += (s, e) => GameMode = GameMode.LevelFailed;
             }
             else
             {
@@ -118,8 +118,8 @@ namespace SpaceAce.Main
         {
             if (GameServices.TryGetService(out LevelCompleter completer) == true)
             {
-                completer.LevelPassed -= (s, e) => GameState = GameState.LevelPassed;
-                completer.LevelFailed -= (s, e) => GameState = GameState.LevelFailed;
+                completer.LevelPassed -= (s, e) => GameMode = GameMode.LevelPassed;
+                completer.LevelFailed -= (s, e) => GameMode = GameMode.LevelFailed;
             }
             else
             {
@@ -141,7 +141,7 @@ namespace SpaceAce.Main
         public void OnRun()
         {
             MainMenuLoaded(this, EventArgs.Empty);
-            GameState = GameState.MainMenu;
+            GameMode = GameMode.MainMenu;
         }
 
         #endregion

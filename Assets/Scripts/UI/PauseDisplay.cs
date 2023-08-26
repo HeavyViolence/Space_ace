@@ -100,7 +100,7 @@ namespace SpaceAce.UI
 
         private static IEnumerator MainMenuLoadingAwaiter(GameModeLoader loader)
         {
-            while (loader.GameState != GameState.MainMenu) yield return null;
+            while (loader.GameMode != GameMode.MainMenu) yield return null;
 
             if (GameServices.TryGetService(out MainMenuDisplay display) == true) display.Enable();
             else throw new UnregisteredGameServiceAccessAttemptException(typeof(MainMenuDisplay));

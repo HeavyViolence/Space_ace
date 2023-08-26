@@ -106,7 +106,7 @@ namespace SpaceAce.Gameplay.Inventories
 
         public override bool Use()
         {
-            if (GameModeLoader.Access.GameState == Main.GameState.Level &&
+            if (GameModeLoader.Access.GameMode == Main.GameMode.Level &&
                 SpecialEffectsMediator.Access.TryGetEffectReceivers(out IEnumerable<IHomingAmmoUser> users) == true)
             {
                 bool used = false;

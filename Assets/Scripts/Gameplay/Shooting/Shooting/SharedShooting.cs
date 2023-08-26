@@ -34,8 +34,10 @@ namespace SpaceAce.Gameplay.Shooting
             LevelCompleter.Access.LevelConcluded += (s, e) => StopShooting();
         }
 
-        protected virtual void OnDisable()
+        protected override void OnDisable()
         {
+            base.OnDisable();
+
             StopShooting();
 
             GameModeLoader.Access.MainMenuLoadingStarted -= (s, e) => StopShooting();

@@ -1,4 +1,5 @@
 using SpaceAce.Architecture;
+using SpaceAce.Gameplay.Damageables;
 using SpaceAce.Gameplay.Inventories;
 using SpaceAce.Gameplay.Spawning;
 using SpaceAce.Main;
@@ -115,23 +116,30 @@ namespace SpaceAce.Levels
 
         private void EntitySpawnedEventHandler(object sender, EntitySpawnedEventArgs e)
         {
-            e.Destroyable.Destroyed += (s, e) =>
+            if (e.Entity.TryGetComponent(out IDestroyable destroyable) == true)
             {
-                float oldExperienceReward = ExperienceReward;
-                float newExperienceReward = oldExperienceReward + e.EarnedExperience;
-
-                ExperienceReward += e.EarnedExperience;
-                ExperienceRewardChanged?.Invoke(this, new(oldExperienceReward, newExperienceReward));
-
-                if (_sponsorship != null)
+                destroyable.Destroyed += (s, e) =>
                 {
-                    int oldCreditReward = CreditReward;
-                    int newCreditReward = oldCreditReward + (int)(e.EarnedExperience * _experienceToCreditsConversionRate);
+                    float oldExperienceReward = ExperienceReward;
+                    float newExperienceReward = oldExperienceReward + e.ExperienceEarned;
 
-                    CreditReward = newCreditReward;
-                    CreditRewardChanged?.Invoke(this, new(oldCreditReward, newCreditReward));
-                }
-            };
+                    ExperienceReward += e.ExperienceEarned;
+                    ExperienceRewardChanged?.Invoke(this, new(oldExperienceReward, newExperienceReward));
+
+                    if (_sponsorship != null)
+                    {
+                        int oldCreditReward = CreditReward;
+                        int newCreditReward = oldCreditReward + (int)(e.ExperienceEarned * _experienceToCreditsConversionRate);
+
+                        CreditReward = newCreditReward;
+                        CreditRewardChanged?.Invoke(this, new(oldCreditReward, newCreditReward));
+                    }
+                };
+            }
+            else
+            {
+                throw new MissingComponentException(typeof(IDestroyable).ToString());
+            }
         }
 
         private void LevelPassedEventHandler(object sender, LevelDataEventArgs e)
@@ -163,7 +171,7 @@ namespace SpaceAce.Levels
             {
                 timer += Time.deltaTime;
 
-                if (s_gameModeLoader.Access.GameState != GameState.Level)
+                if (s_gameModeLoader.Access.GameMode != GameMode.Level)
                 {
                     _experienceToCreditsConversionRate = 0f;
                     _sponsorship = null;

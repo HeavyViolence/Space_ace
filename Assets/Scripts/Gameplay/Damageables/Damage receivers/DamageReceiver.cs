@@ -76,8 +76,8 @@ namespace SpaceAce.Gameplay.Damageables
 
             yield return null;
 
-            (float earned, float lost, float total) = _experience.GetValues();
-            Destroyed?.Invoke(this, new DestroyedEventArgs(transform.position, _lifetime, earned, lost, total));
+            (float earned, float lost) = _experience.GetValues();
+            Destroyed?.Invoke(this, new(transform.position, _lifetime, earned, lost));
         }
 
         public virtual void ApplyDamage(float damage)

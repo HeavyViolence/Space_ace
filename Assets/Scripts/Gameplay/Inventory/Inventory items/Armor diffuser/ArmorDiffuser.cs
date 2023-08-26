@@ -41,7 +41,7 @@ namespace SpaceAce.Gameplay.Inventories
 
             while (timer < diffuser.Duration)
             {
-                if (GameModeLoader.Access.GameState != GameState.Level)
+                if (GameModeLoader.Access.GameMode != GameMode.Level)
                 {
                     SpecialEffectsMediator.Access.RegisteredReceiverBehaviourUpdate -= TryApplyArmorDiffuser;
                     s_armorDiffuser = null;
@@ -87,7 +87,7 @@ namespace SpaceAce.Gameplay.Inventories
 
         public override bool Use()
         {
-            if (GameModeLoader.Access.GameState == GameState.Level && s_armorDiffuser == null)
+            if (GameModeLoader.Access.GameMode == GameMode.Level && s_armorDiffuser == null)
             {
                 s_armorDiffuser = CoroutineRunner.RunRoutine(ApplyArmorDiffuser(this));
                 HUDDisplay.Access.RegisterActiveItem(this);

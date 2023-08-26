@@ -27,9 +27,7 @@ namespace SpaceAce.Gameplay.Spawning
         private AudioCollection _bossSpawnAlarm;
 
         private ObjectPoolEntry _bossToSpawn;
-        private GameObject _spawnedBoss;
-        private IDestroyable _bossDestroyable;
-        private IEscapable _bossEscapable;
+        private GameObject _boss;
 
         private Coroutine _bossSpawningRoutine;
 
@@ -38,11 +36,7 @@ namespace SpaceAce.Gameplay.Spawning
 
         public BossSpawner(AudioCollection bossSpawnAlarm)
         {
-            if (bossSpawnAlarm == null)
-            {
-                throw new ArgumentNullException(nameof(bossSpawnAlarm), $"Attempted to pass an empty boss spawn alarm {nameof(AudioCollection)}!");
-            }
-
+            if (bossSpawnAlarm == null) throw new ArgumentNullException(nameof(bossSpawnAlarm));
             _bossSpawnAlarm = bossSpawnAlarm;
         }
 
@@ -92,14 +86,8 @@ namespace SpaceAce.Gameplay.Spawning
         {
             if (e.LevelConfig.BossEnabled)
             {
-                if (GameServices.TryGetService(out EnemySpawner spawner) == true)
-                {
-                    spawner.SpawnEnded += EnemySpawnEndedEventHandler;
-                }
-                else
-                {
-                    throw new UnregisteredGameServiceAccessAttemptException(typeof(EnemySpawner));
-                }
+                if (GameServices.TryGetService(out EnemySpawner spawner) == true) spawner.SpawnEnded += EnemySpawnEndedEventHandler;
+                else throw new UnregisteredGameServiceAccessAttemptException(typeof(EnemySpawner));
 
                 _bossToSpawn = e.LevelConfig.Boss;
                 _bossToSpawn.EnsureObjectPoolExistence();
@@ -117,19 +105,13 @@ namespace SpaceAce.Gameplay.Spawning
 
         private void MainMenuLoadedEventHandler(object sender, EventArgs e)
         {
-            if (GameServices.TryGetService(out EnemySpawner spawner) == true)
-            {
-                spawner.SpawnEnded -= EnemySpawnEndedEventHandler;
-            }
-            else
-            {
-                throw new UnregisteredGameServiceAccessAttemptException(typeof(EnemySpawner));
-            }
+            if (GameServices.TryGetService(out EnemySpawner spawner) == true) spawner.SpawnEnded -= EnemySpawnEndedEventHandler;
+            else throw new UnregisteredGameServiceAccessAttemptException(typeof(EnemySpawner));
 
-            if (_spawnedBoss != null)
+            if (_boss != null)
             {
-                s_multiobjectPool.Access.ReleaseObject(_bossToSpawn.AnchorName, _spawnedBoss, () => true);
-                _spawnedBoss = null;
+                s_multiobjectPool.Access.ReleaseObject(_bossToSpawn.AnchorName, _boss, () => true);
+                _boss = null;
             }
 
             if (_bossSpawningRoutine != null)
@@ -153,25 +135,20 @@ namespace SpaceAce.Gameplay.Spawning
 
         private IEnumerator AwaitEnemiesDefeatThenSpawnBoss(EnemySpawner spawner)
         {
-            while (spawner.ALiveCount > 0)
-            {
-                yield return null;
-            }
+            while (spawner.ALiveCount > 0) yield return null;
 
             yield return new WaitForSeconds(BossSpawnDelay);
 
-            _spawnedBoss = s_multiobjectPool.Access.GetObject(_bossToSpawn.AnchorName);
-            _spawnedBoss.transform.SetLocalPositionAndRotation(BossSpawnPosition, BossSpawnRotation);
+            _boss = s_multiobjectPool.Access.GetObject(_bossToSpawn.AnchorName);
+            _boss.transform.SetLocalPositionAndRotation(BossSpawnPosition, BossSpawnRotation);
 
             _bossSpawnAlarm.PlayRandomAudioClip(Vector2.zero);
 
-            if (_spawnedBoss.TryGetComponent(out IDestroyable d) == true)
+            if (_boss.TryGetComponent(out IDestroyable destroyable) == true)
             {
-                _bossDestroyable = d;
-
-                _bossDestroyable.Destroyed += (s, e) =>
+                destroyable.Destroyed += (s, e) =>
                 {
-                    s_multiobjectPool.Access.ReleaseObject(_bossToSpawn.AnchorName, _spawnedBoss, () => true);
+                    s_multiobjectPool.Access.ReleaseObject(_bossToSpawn.AnchorName, _boss, () => true);
                     BossIsAlive = false;
                 };
             }
@@ -180,16 +157,15 @@ namespace SpaceAce.Gameplay.Spawning
                 throw new MissingComponentException($"Spawned boss missing a mandatory component of type {typeof(IDestroyable)}!");
             }
 
-            if (_spawnedBoss.TryGetComponent(out IEscapable e) == true)
+            if (_boss.TryGetComponent(out IEscapable escapable) == true)
             {
-                _bossEscapable = e;
-                _bossEscapable.StartWatchingForEscape(() => s_masterCameraHolder.Access.InsideViewport(_spawnedBoss.transform.position, BossEscapeDelta) == false);
+                escapable.StartWatchingForEscape(() => s_masterCameraHolder.Access.InsideViewport(_boss.transform.position, BossEscapeDelta) == false);
 
-                _bossEscapable.Escaped += (s, e) =>
+                escapable.Escaped += (s, e) =>
                 {
-                    s_multiobjectPool.Access.ReleaseObject(_bossToSpawn.AnchorName, _spawnedBoss, () => true);
+                    s_multiobjectPool.Access.ReleaseObject(_bossToSpawn.AnchorName, _boss, () => true);
 
-                    _spawnedBoss = null;
+                    _boss = null;
                     BossIsAlive = false;
                 };
             }
@@ -198,7 +174,7 @@ namespace SpaceAce.Gameplay.Spawning
                 throw new MissingComponentException($"Spawned boss missing a mandatory component of type {typeof(IEscapable)}!");
             }
 
-            BossSpawned?.Invoke(this, new EntitySpawnedEventArgs(_bossEscapable, _bossDestroyable));
+            BossSpawned?.Invoke(this, new(_boss));
 
             Active = false;
             BossIsAlive = true;

@@ -54,7 +54,7 @@ namespace SpaceAce.UI
         {
             base.Enable();
 
-            if (s_gameModeLoader.Access.GameState == GameState.Level) s_gamePauser.Access.Pause();
+            if (s_gameModeLoader.Access.GameMode == GameMode.Level) s_gamePauser.Access.Pause();
 
             DisplayedDocument.visualTreeAsset = Display;
 
@@ -114,19 +114,19 @@ namespace SpaceAce.UI
                 var useItemButton = inventorySlot.Q<Button>("Use-item-button");
                 useItemButton.clicked += () => UseItem(item);
 
-                if (s_gameModeLoader.Access.GameState == GameState.Level) useItemButton.SetEnabled(true);
+                if (s_gameModeLoader.Access.GameMode == GameMode.Level) useItemButton.SetEnabled(true);
                 else useItemButton.SetEnabled(false);
 
                 var sellItemButton = inventorySlot.Q<Button>("Sell-item-button");
                 sellItemButton.clicked += () => SellItem(item);
 
-                if (s_gameModeLoader.Access.GameState == GameState.MainMenu) sellItemButton.SetEnabled(true);
+                if (s_gameModeLoader.Access.GameMode == GameMode.MainMenu) sellItemButton.SetEnabled(true);
                 else sellItemButton.SetEnabled(false);
 
                 var fuseItemButton = inventorySlot.Q<Button>("Fuse-item-button");
                 fuseItemButton.clicked += () => AddItemToInfuse(item);
 
-                if (s_gameModeLoader.Access.GameState == GameState.MainMenu) fuseItemButton.SetEnabled(true);
+                if (s_gameModeLoader.Access.GameMode == GameMode.MainMenu) fuseItemButton.SetEnabled(true);
                 else fuseItemButton.SetEnabled(false);
 
                 var itemIcon = inventorySlot.Q<VisualElement>("Item-icon");
@@ -144,7 +144,7 @@ namespace SpaceAce.UI
             Disable();
             UIAudio.BackButtonClick.PlayRandomAudioClip(Vector2.zero);
 
-            if (s_gameModeLoader.Access.GameState == GameState.Level)
+            if (s_gameModeLoader.Access.GameMode == GameMode.Level)
             {
                 if (GameServices.TryGetService<HUDDisplay>(out var display) == true) display.Enable();
                 else throw new UnregisteredGameServiceAccessAttemptException(typeof(HUDDisplay));

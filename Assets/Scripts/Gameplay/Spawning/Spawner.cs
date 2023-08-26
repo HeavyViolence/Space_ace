@@ -96,14 +96,9 @@ namespace SpaceAce.Gameplay.Spawning
 
             _aliveEntities.Add((entity, anchorName));
 
-            IEscapable escapable;
-            IDestroyable destroyable;
-
             if (entity.TryGetComponent(out IDestroyable d) == true)
             {
-                destroyable = d;
-
-                destroyable.Destroyed += (s, e) =>
+                d.Destroyed += (s, e) =>
                 {
                     s_multiobjectPool.Access.ReleaseObject(anchorName, entity, () => true);
                     _aliveEntities.Remove((entity, anchorName));
@@ -112,15 +107,14 @@ namespace SpaceAce.Gameplay.Spawning
             }
             else
             {
-                throw new MissingComponentException($"Spawned entity is missing a mandatory component of type {typeof(IDestroyable)}!");
+                throw new MissingComponentException(typeof(IDestroyable).ToString());
             }
 
             if (entity.TryGetComponent(out IEscapable e) == true)
             {
-                escapable = e;
-                escapable.StartWatchingForEscape(() => s_masterCameraHolder.Access.InsideViewport(entity.transform.position, Config.EscapeDelta) == false);
+                e.StartWatchingForEscape(() => s_masterCameraHolder.Access.InsideViewport(entity.transform.position, Config.EscapeDelta) == false);
 
-                escapable.Escaped += (s, e) =>
+                e.Escaped += (s, e) =>
                 {
                     s_multiobjectPool.Access.ReleaseObject(anchorName, entity, () => true);
                     _aliveEntities.Remove((entity, anchorName));
@@ -128,7 +122,7 @@ namespace SpaceAce.Gameplay.Spawning
             }
             else
             {
-                throw new MissingComponentException($"Spawned entity is missing a mandatory component of type {typeof(IEscapable)}!");
+                throw new MissingComponentException(typeof(IEscapable).ToString());
             }
 
             if (Config.AmplificationEnabled && AuxMath.Random < Config.AmplificationConfig.AmplificationProbability.RandomValue)
@@ -140,12 +134,12 @@ namespace SpaceAce.Gameplay.Spawning
                 }
                 else
                 {
-                    throw new MissingComponentException($"Spawned entity is missing a mandatory component of type {typeof(Amplifier)}!");
+                    throw new MissingComponentException(typeof(Amplifier).ToString());
                 }
             }
 
             SpawnedCount++;
-            EntitySpawned?.Invoke(this, new(escapable, destroyable));
+            EntitySpawned?.Invoke(this, new(entity));
         }
 
         private Vector3 GetSpawnedEntityPosition()

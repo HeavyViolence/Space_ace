@@ -57,7 +57,7 @@ namespace SpaceAce.Gameplay.Inventories
 
         public override bool Use()
         {
-            if (GameModeLoader.Access.GameState == GameState.Level && s_EMP == null)
+            if (GameModeLoader.Access.GameMode == GameMode.Level && s_EMP == null)
             {
                 if (SpecialEffectsMediator.Access.TryGetEffectReceivers(out IEnumerable<IEMPUser> users) == true)
                 {
@@ -80,7 +80,7 @@ namespace SpaceAce.Gameplay.Inventories
 
             while (timer < emp.Duration)
             {
-                if (GameModeLoader.Access.GameState != GameState.Level)
+                if (GameModeLoader.Access.GameMode != GameMode.Level)
                 {
                     SpecialEffectsMediator.Access.RegisteredReceiverBehaviourUpdate -= TryApplyEMP;
                     s_EMP = null;
