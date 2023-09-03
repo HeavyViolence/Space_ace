@@ -17,15 +17,148 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: 4f95f06144ec54f4f8013c2336d43a38
   m_SerializeEntries:
-  - m_GUID: f425be37b19c5eb4fbaff6c2fc13dd4e
-    m_Address: UI_fr
+  - m_GUID: b4276f725b63bdc4fbd10249bbcd75f6
+    m_Address: Rarity_fr
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-fr
     - Preload
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: f75ae58b2c6fbc94a9b912147ed80239
-    m_Address: Inventory items_fr
+  - m_GUID: 48a5a589eb0ce914a988eb2f0cfd56bd
+    m_Address: Repair kit_fr
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-fr
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 64b35c1e69d1a4d40b4bd3350c946c95
+    m_Address: Plasma shield_fr
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-fr
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 375fc24b558f145418e501795d4f177c
+    m_Address: Armor diffuser_fr
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-fr
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6d0b37391447b184785366a3f3496697
+    m_Address: Reactive armor_fr
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-fr
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: abf2b89aff4af634dbffae715932ce0f
+    m_Address: Stasis field_fr
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-fr
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8f51a4bcc0b583d439d68c805bfb493a
+    m_Address: Nanofuel_fr
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-fr
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7defa2814bc7c644cbf02991aeb3f91f
+    m_Address: Antimatter ammo_fr
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-fr
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 382d2b714f02ed743b660dfa32758e7d
+    m_Address: Homing ammo_fr
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-fr
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 658467e8c4391fc4f8ef997fa396a36b
+    m_Address: Weapon accelerant_fr
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-fr
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 91c9718291b5c1646a33410fcceb3565
+    m_Address: Weapon coolant_fr
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-fr
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0774ce4bbbcb7df47b9550ea78f16f34
+    m_Address: EMP_fr
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-fr
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 01ff658ac22a57d4798bc0d3b58b0a58
+    m_Address: Combat beacon_fr
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-fr
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2a4d82ad4874eed4fb1ebe3f4372390c
+    m_Address: Atomizer_fr
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-fr
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fc5a94bbcb9e98745aaa68c83209a964
+    m_Address: Space debris router_fr
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-fr
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5379b121d76c7eb43913376863999a2e
+    m_Address: Meteor router_fr
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-fr
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b9271eeeccccd2d428758fcd37a220a3
+    m_Address: Ore_fr
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-fr
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: be036acfec0cb384fa7cfefb76b516f4
+    m_Address: Hardware scanner_fr
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-fr
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7f8ab95752c5461438470ecef723ec83
+    m_Address: Ore scanner_fr
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-fr
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 33cff877787096a449819abbddc6503f
+    m_Address: Sponsorship_fr
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-fr
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 77f5b7c52f44d2f4db60f3a85adf2c8c
+    m_Address: Advanced learning_fr
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-fr

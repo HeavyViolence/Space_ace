@@ -1,6 +1,5 @@
 using Newtonsoft.Json;
 using SpaceAce.Architecture;
-using SpaceAce.Auxiliary;
 using SpaceAce.Gameplay.Damageables;
 using SpaceAce.Gameplay.Movement;
 using SpaceAce.Gameplay.Players;
@@ -40,13 +39,9 @@ namespace SpaceAce.Levels
         private float _experienceEarned = 0f;
         private float _experienceLost = 0f;
 
-        public string ID { get; }
+        public string ID => "Best levels runs statistics";
 
-        public BestLevelsRunsStatisticsCollector(string id)
-        {
-            if (StringID.IsValid(id) == false) throw new InvalidStringIDException();
-            ID = id;
-        }
+        public BestLevelsRunsStatisticsCollector() { }
 
         public BestLevelRunStatistics GetStatistics(int levelIndex)
         {

@@ -1,6 +1,8 @@
+using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
 using System;
 using UnityEngine;
+using UnityEngine.Localization;
 
 namespace SpaceAce.Gameplay.Inventories
 {
@@ -10,22 +12,13 @@ namespace SpaceAce.Gameplay.Inventories
         public const float MaxSpeedIncrease = 30f;
 
         [JsonIgnore]
-        public override string Title => throw new NotImplementedException();
-
-        [JsonIgnore]
-        public override string Description => throw new NotImplementedException();
-
-        [JsonIgnore]
-        public override string Stats => throw new NotImplementedException();
-
-        [JsonIgnore]
         public override float Worth => (base.Worth + SpeedIncrease * SpeedUnitWorth) * (float)(Rarity + 1);
 
         public float SpeedIncrease { get; }
 
-        public Nanofuel(ItemRarity rerity, float duration, float flankingSpeedup) : base(rerity, duration)
+        public Nanofuel(ItemRarity rerity, float duration, float speedIncrease) : base(rerity, duration)
         {
-            SpeedIncrease = Mathf.Clamp(flankingSpeedup, MinSpeedIncrease, MaxSpeedIncrease);
+            SpeedIncrease = Mathf.Clamp(speedIncrease, MinSpeedIncrease, MaxSpeedIncrease);
         }
 
         public override bool Fuse(InventoryItem item1, InventoryItem item2, out InventoryItem result)
@@ -39,9 +32,9 @@ namespace SpaceAce.Gameplay.Inventories
             {
                 ItemRarity nextRarity = GetNextRarity(Rarity);
                 float newDuration = (Duration + other1.Duration + other2.Duration) * FusedPropertyFactor;
-                float newFlankingSpeedup = (SpeedIncrease + other1.SpeedIncrease + other2.SpeedIncrease) * FusedPropertyFactor;
+                float newSpeedIncrease = (SpeedIncrease + other1.SpeedIncrease + other2.SpeedIncrease) * FusedPropertyFactor;
 
-                result = new Nanofuel(nextRarity, newDuration, newFlankingSpeedup);
+                result = new Nanofuel(nextRarity, newDuration, newSpeedIncrease);
                 return true;
             }
 
@@ -60,6 +53,32 @@ namespace SpaceAce.Gameplay.Inventories
             }
 
             return false;
+        }
+
+        public override async UniTask<string> GetDescription()
+        {
+            LocalizedString title = new("Nanofuel", "Title");
+            LocalizedString rarity = new("Rarity", Rarity.ToString());
+            LocalizedString stats = new("Nanofuel", "Stats") { Arguments = new[] { this } };
+            LocalizedString description = new("Nanofuel", "Description");
+
+            var titleOperation = title.GetLocalizedStringAsync();
+            await titleOperation;
+            string localizedTitle = titleOperation.Result;
+
+            var rarityOperation = rarity.GetLocalizedStringAsync();
+            await rarityOperation;
+            string localizedRarity = rarityOperation.Result;
+
+            var statsOperation = stats.GetLocalizedStringAsync();
+            await statsOperation;
+            string localizedStats = statsOperation.Result;
+
+            var descriptionOperation = description.GetLocalizedStringAsync();
+            await descriptionOperation;
+            string localizedDescription = descriptionOperation.Result;
+
+            return $"{localizedTitle}\n{localizedRarity}\n\n{localizedStats}\n\n{localizedDescription}";
         }
 
         public override bool Equals(object obj) => Equals(obj as Nanofuel);

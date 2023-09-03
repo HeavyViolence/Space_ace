@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Armor diffuser_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: 2fbdcfa76f553c54a9d3d6054ebf904c, type: 2}
+  m_Metadata:
+    m_Items:
+    - rid: 6712054566513803265
+  m_TableData:
+  - m_Id: 57679400960
+    m_Localized: 'Worth: ${Worth:n0}
+
+      Duration: {FormattedDuration}
+
+      Armor
+      reduction: {ArmorReduction:n0} AP'
+    m_Metadata:
+      m_Items:
+      - rid: 6712054566513803265
+  - m_Id: 8983531520
+    m_Localized: Armor diffuser
+    m_Metadata:
+      m_Items: []
+  - m_Id: 82035724288
+    m_Localized: High-power gamma emitter is used to erode the top layers armor,
+      hard meteor crust, or dense and petrified space debris. Once affected, entities
+      will keep their topmost layers weak and unstable unconditionally long. A perfect
+      weapon to soften someone's malitious mind.
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 6712054566513803265
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 00d0f56d0d000000

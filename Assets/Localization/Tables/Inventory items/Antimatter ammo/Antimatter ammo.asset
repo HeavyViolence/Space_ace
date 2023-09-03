@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5be51871efa6c3e4eae1703925c8f5ac, type: 3}
+  m_Name: Antimatter ammo
+  m_EditorClassIdentifier: 
+  m_SharedTableData: {fileID: 11400000, guid: 238a10ee0880df1429655662e4789fce, type: 2}
+  m_Tables:
+  - {fileID: 11400000, guid: dbeac788db2ef104b8605c3487934424, type: 2}
+  - {fileID: 11400000, guid: 7defa2814bc7c644cbf02991aeb3f91f, type: 2}
+  m_Extensions: []
+  m_Group: String Table
+  references:
+    version: 2
+    RefIds: []

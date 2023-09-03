@@ -67,8 +67,6 @@ namespace SpaceAce.Architecture
         private List<IUpdatable> _updatableGameServices = null;
         private List<IFixedUpdatable> _fixedUpdatableGameServices = null;
 
-        private StringID _idGenerator;
-
         #endregion
 
         #region game setup
@@ -107,8 +105,6 @@ namespace SpaceAce.Architecture
 
         private void CreateGameServices()
         {
-            _idGenerator = new(_idGeneratorSeed);
-
             MasterCameraHolder cameraHolder = new(_cameraSize);
             MasterAudioListenerHolder audioListenerHolder = new(cameraHolder.MasterCameraAnchor);
 
@@ -141,12 +137,12 @@ namespace SpaceAce.Architecture
             _gameServices.Add(new SpecialEffectsMediator());
 
             _gameServices.Add(new SavingSystem());
-            _gameServices.Add(new CameraShaker(_idGenerator.Next(), cameraHolder.MasterCameraAnchor));
-            _gameServices.Add(new AudioPlayer(_idGenerator.Next(), _audioMixer));
-            _gameServices.Add(new MusicPlayer(_idGenerator.Next(), _music));
-            _gameServices.Add(new LevelUnlocker(_idGenerator.Next()));
-            _gameServices.Add(new BestLevelsRunsStatisticsCollector(_idGenerator.Next()));
-            _gameServices.Add(new Player(_idGenerator.Next(), _defaultPlayerShip, _objectPoolEntryLookupTable));
+            _gameServices.Add(new CameraShaker(cameraHolder.MasterCameraAnchor));
+            _gameServices.Add(new AudioPlayer(_audioMixer));
+            _gameServices.Add(new MusicPlayer(_music));
+            _gameServices.Add(new LevelUnlocker());
+            _gameServices.Add(new BestLevelsRunsStatisticsCollector());
+            _gameServices.Add(new Player(_defaultPlayerShip, _objectPoolEntryLookupTable));
 
             _gameServices.Add(new MainMenuDisplay(_uiAssets));
             _gameServices.Add(new LevelSelectionDisplay(_uiAssets));

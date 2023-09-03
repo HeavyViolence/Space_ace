@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Reactive armor_fr
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: fr
+  m_SharedData: {fileID: 11400000, guid: 060ac8e0f4168ba4ab00ffd59332bbfe, type: 2}
+  m_Metadata:
+    m_Items:
+    - rid: 6712054566513803275
+  m_TableData:
+  - m_Id: 23500017664
+    m_Localized: "Vaut: {Worth} $\nDur\xE9e: {FormattedDuration}\nRalentissement
+      du d\xE9placement: {MovementSlowdownPercentage:n0}%\nAugmentation de la sant\xE9:
+      {HealthIncrease:n0} HP\nDommages \xE0 la conversion de l'armure: {DamageToArmorConversionRatePercentage:n0}%"
+    m_Metadata:
+      m_Items:
+      - rid: 6712054566513803275
+  - m_Id: 5233823744
+    m_Localized: "Armure r\xE9active"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46409306112
+    m_Localized: "Contient un car\xE9nage pi\xE9zo-cin\xE9tique fin et souple fabriqu\xE9
+      \xE0 partir d'un m\xE9tamat\xE9riau connu sous le nom de \"custodium\". Son
+      r\xE9seau est constitu\xE9 de particules de domaine hautement r\xE9actives
+      qui sont li\xE9es entre elles par un champ magn\xE9tique pr\xE9-appliqu\xE9
+      et suspendues \xE0 l'int\xE9rieur d'un confinement de nanotubes de carbone.
+      Un tel mat\xE9riau pr\xE9sente une r\xE9sistance toujours croissante aux effets
+      m\xE9caniques et \xE0 l'usure. Plus vous le forcez, plus il deviendra fort,
+      accumulant seulement toute l'\xE9nergie appliqu\xE9e pour le briser sous la
+      forme d'un champ magn\xE9tique. Ce mat\xE9riau a \xE9t\xE9 r\xE9tro-con\xE7u
+      \xE0 partir d'un morceau de d\xE9bris spatial indestructible inconnu. Bien
+      que rare et difficile \xE0 fabriquer, c'est un \xE9l\xE9ment crucial dans la
+      production d'armures actives haut de gamme. Tout navire portant un tel linceul
+      blind\xE9 doit se d\xE9placer plus lentement afin d'att\xE9nuer les interf\xE9rences
+      \xE9lectromagn\xE9tiques du blindage inflig\xE9es aux syst\xE8mes du navire."
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 6712054566513803275
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 00d0b57805000000

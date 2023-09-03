@@ -1,5 +1,4 @@
 using SpaceAce.Architecture;
-using SpaceAce.Auxiliary;
 using SpaceAce.Gameplay.Experience;
 using SpaceAce.Gameplay.Inventories;
 using SpaceAce.Main;
@@ -25,11 +24,11 @@ namespace SpaceAce.Gameplay.Damageables
         private ExperienceHolder _experience;
         private float _lifetime = 0f;
 
-        public string ID { get; private set; }
+        public Guid ID { get; private set; }
 
         protected virtual void Awake()
         {
-            ID = StringID.NextCryptosafe();
+            ID = Guid.NewGuid();
 
             CacheRequiredComponents();
         }

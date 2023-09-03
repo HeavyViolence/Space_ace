@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Advanced learning_fr
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: fr
+  m_SharedData: {fileID: 11400000, guid: 3cc7047fe5e84244aa89ce7d127ac448, type: 2}
+  m_Metadata:
+    m_Items:
+    - rid: 6712054578863145027
+  m_TableData:
+  - m_Id: 20161351680
+    m_Localized: "Vaut: {Worth:n0} $\nDur\xE9e: {FormattedDuration}\nGain d'exp\xE9rience
+      accru: {ExperienceBoostPercentage:n0}%\nDiminution de l'\xE9puisement de l'exp\xE9rience:
+      {ExperienceDepletionSlowdownPercentage:n0}%"
+    m_Metadata:
+      m_Items:
+      - rid: 6712054578863145027
+  - m_Id: 7653937152
+    m_Localized: "Apprentissage avanc\xE9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30345121792
+    m_Localized: "Chaque humain veut apprendre comme un surhumain. Gr\xE2ce aux implants
+      neuronaux et \xE0 l'\xE9quipement g\xE9n\xE9ral d'augmentation de la perception,
+      vous remarquerez bien plus et deviendrez un pilote habile plus rapidement que
+      jamais."
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 6712054578863145027
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 00d0b5b104000000

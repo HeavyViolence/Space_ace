@@ -24,13 +24,10 @@ namespace SpaceAce.Main
 
         public bool ShakingEnabled { get; private set; } = true;
 
-        public string ID { get; }
+        public string ID => "Camera shake";
 
-        public CameraShaker(string id, GameObject masterCameraAnchor)
+        public CameraShaker(GameObject masterCameraAnchor)
         {
-            if (StringID.IsValid(id) == false) throw new InvalidStringIDException();
-            ID = id;
-
             if (masterCameraAnchor == null) throw new ArgumentNullException(nameof(masterCameraAnchor));
             _body = masterCameraAnchor.AddComponent<Rigidbody2D>();
 

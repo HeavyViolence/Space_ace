@@ -8,8 +8,6 @@ namespace SpaceAce.Editors
     [CustomEditor(typeof(GameConfigurator))]
     public sealed class GameConfiguratorEditor : Editor
     {
-        private SerializedProperty _idGeneratorSeed;
-
         private bool _showCameraSettings = false;
         private SerializedProperty _cameraSize;
 
@@ -49,8 +47,6 @@ namespace SpaceAce.Editors
 
         private void OnEnable()
         {
-            _idGeneratorSeed = serializedObject.FindProperty("_idGeneratorSeed");
-
             _cameraSize = serializedObject.FindProperty("_cameraSize");
 
             _spaceBackgroundWidthDelta = serializedObject.FindProperty("_spaceBackgroundWidthDelta");
@@ -85,14 +81,6 @@ namespace SpaceAce.Editors
         {
             serializedObject.Update();
 
-            EditorGUILayout.LabelField($"ID generator seed: {_idGeneratorSeed.intValue}");
-
-            if (_idGeneratorSeed.intValue == 0)
-            {
-                _idGeneratorSeed.intValue = Random.Range(1, int.MaxValue);
-            }
-
-            EditorGUILayout.Separator();
             _showCameraSettings = EditorGUILayout.Foldout(_showCameraSettings, "Camera");
 
             if (_showCameraSettings == true)

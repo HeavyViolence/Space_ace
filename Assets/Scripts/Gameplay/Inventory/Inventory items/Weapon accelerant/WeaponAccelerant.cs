@@ -1,8 +1,10 @@
+using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
 using SpaceAce.Main;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Localization;
 
 namespace SpaceAce.Gameplay.Inventories
 {
@@ -17,20 +19,20 @@ namespace SpaceAce.Gameplay.Inventories
         public const float MinCooldownIncrease = 0f;
         public const float MaxCooldownIncrease = 1f;
 
-        [JsonIgnore]
-        public override string Title => throw new NotImplementedException();
-
-        [JsonIgnore]
-        public override string Description => throw new NotImplementedException();
-
-        [JsonIgnore]
-        public override string Stats => throw new NotImplementedException();
-
         public float AmmoSpeedBoost { get; }
+
+        [JsonIgnore]
+        public float AmmoSpeedBoostPercentage => AmmoSpeedBoost * 100f;
 
         public float DamageBoost { get; }
 
+        [JsonIgnore]
+        public float DamageBoostPercentage => DamageBoost * 100f;
+
         public float CooldownIncrease { get; }
+
+        [JsonIgnore]
+        public float CooldownIncreasePercentage => CooldownIncrease * 100f;
 
         [JsonIgnore]
         public override float Worth => (base.Worth +
@@ -90,6 +92,32 @@ namespace SpaceAce.Gameplay.Inventories
             }
 
             return false;
+        }
+
+        public override async UniTask<string> GetDescription()
+        {
+            LocalizedString title = new("Weapon accelerant", "Title");
+            LocalizedString rarity = new("Rarity", Rarity.ToString());
+            LocalizedString stats = new("Weapon accelerant", "Stats") { Arguments = new[] { this } };
+            LocalizedString description = new("Weapon accelerant", "Description");
+
+            var titleOperation = title.GetLocalizedStringAsync();
+            await titleOperation;
+            string localizedTitle = titleOperation.Result;
+
+            var rarityOperation = rarity.GetLocalizedStringAsync();
+            await rarityOperation;
+            string localizedRarity = rarityOperation.Result;
+
+            var statsOperation = stats.GetLocalizedStringAsync();
+            await statsOperation;
+            string localizedStats = statsOperation.Result;
+
+            var descriptionOperation = description.GetLocalizedStringAsync();
+            await descriptionOperation;
+            string localizedDescription = descriptionOperation.Result;
+
+            return $"{localizedTitle}\n{localizedRarity}\n\n{localizedStats}\n\n{localizedDescription}";
         }
 
         public override bool Equals(object obj) => Equals(obj as WeaponAccelerant);

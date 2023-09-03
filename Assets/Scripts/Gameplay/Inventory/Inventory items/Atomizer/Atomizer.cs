@@ -1,9 +1,11 @@
+using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
 using SpaceAce.Architecture;
 using SpaceAce.Main;
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Localization;
 
 namespace SpaceAce.Gameplay.Inventories
 {
@@ -13,15 +15,6 @@ namespace SpaceAce.Gameplay.Inventories
         public const int MaxEntitiesToBeDestroyed = 100;
 
         private static Coroutine s_atomizer = null;
-
-        [JsonIgnore]
-        public override string Title => throw new NotImplementedException();
-
-        [JsonIgnore]
-        public override string Description => throw new NotImplementedException();
-
-        [JsonIgnore]
-        public override string Stats => throw new NotImplementedException();
 
         [JsonIgnore]
         public float EntityDestructionDelay => Duration / EntitiesToBeDestroyed;
@@ -99,6 +92,32 @@ namespace SpaceAce.Gameplay.Inventories
             }
 
             return false;
+        }
+
+        public override async UniTask<string> GetDescription()
+        {
+            LocalizedString title = new("Atomizer", "Title");
+            LocalizedString rarity = new("Rarity", Rarity.ToString());
+            LocalizedString stats = new("Atomizer", "Stats") { Arguments = new[] { this } };
+            LocalizedString description = new("Atomizer", "Description");
+
+            var titleOperation = title.GetLocalizedStringAsync();
+            await titleOperation;
+            string localizedTitle = titleOperation.Result;
+
+            var rarityOperation = rarity.GetLocalizedStringAsync();
+            await rarityOperation;
+            string localizedRarity = rarityOperation.Result;
+
+            var statsOperation = stats.GetLocalizedStringAsync();
+            await statsOperation;
+            string localizedStats = statsOperation.Result;
+
+            var descriptionOperation = description.GetLocalizedStringAsync();
+            await descriptionOperation;
+            string localizedDescription = descriptionOperation.Result;
+
+            return $"{localizedTitle}\n{localizedRarity}\n\n{localizedStats}\n\n{localizedDescription}";
         }
 
         public override bool Equals(object obj) => Equals(obj as Atomizer);

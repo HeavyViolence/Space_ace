@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Hardware scanner_fr
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: fr
+  m_SharedData: {fileID: 11400000, guid: 86a98bdfbf9f7a245bee4e4a926596ad, type: 2}
+  m_Metadata:
+    m_Items:
+    - rid: 6712054578863145006
+  m_TableData:
+  - m_Id: 34522648576
+    m_Localized: "Vaut: {Worth:n0} $\nDur\xE9e: {FormattedDuration}\nProbabilit\xE9
+      d'apparition du mat\xE9riel: {HardwareSpawnProbabilityIncreasePercentage:n0}%"
+    m_Metadata:
+      m_Items:
+      - rid: 6712054578863145006
+  - m_Id: 12489969664
+    m_Localized: "Scanner mat\xE9riel"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50926571520
+    m_Localized: "Une base de donn\xE9es de signatures pr\xE9-calibr\xE9es couramment
+      trouv\xE9es. Permet \xE0 votre radar de rechercher un \xE9quipement mat\xE9riel
+      sp\xE9cifique parmi les d\xE9bris spatiaux et les \xE9paves de vaisseaux spatiaux.
+      Vous avez du mal \xE0 trouver quelque chose? Pas plus!"
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 6712054578863145006
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 00d0b50908000000

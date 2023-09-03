@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Ore scanner_fr
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: fr
+  m_SharedData: {fileID: 11400000, guid: add43814f91d37d4fb4fe1dd185a75e0, type: 2}
+  m_Metadata:
+    m_Items:
+    - rid: 6712054578863145013
+  m_TableData:
+  - m_Id: 21256065024
+    m_Localized: "Vaut: {Worth:n0} $\nDur\xE9e: {FormattedDuration}\nAugmentation
+      du frai du minerai: {OreSpawnProbabilityIncreasePercentage:n0}%"
+    m_Metadata:
+      m_Items:
+      - rid: 6712054578863145013
+  - m_Id: 41917206528
+    m_Localized: "Scanners \xE0 impulsions haute fr\xE9quence que l\u2019on trouve
+      le plus souvent \xE0 bord des navires miniers. Ils n\xE9cessitent une puissance
+      importante pour fonctionner correctement et des cartes de signature pr\xE9cises,
+      mais r\xE9compensent en retour leurs utilisateurs avec un ping de minerai pr\xE9cis
+      dans les champs d'ast\xE9ro\xEFdes ou sur les plan\xE8tes."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7402278912
+    m_Localized: Scanner de minerai
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 6712054578863145013
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 00d0f5f204000000

@@ -1,6 +1,8 @@
+using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
 using System;
 using UnityEngine;
+using UnityEngine.Localization;
 
 namespace SpaceAce.Gameplay.Inventories
 {
@@ -10,18 +12,12 @@ namespace SpaceAce.Gameplay.Inventories
         public const float MaxRegenPerSecond = 100f;
 
         [JsonIgnore]
-        public override string Title => throw new NotImplementedException();
-
-        [JsonIgnore]
-        public override string Description => throw new NotImplementedException();
-
-        [JsonIgnore]
-        public override string Stats => throw new NotImplementedException();
-
-        [JsonIgnore]
-        public override float Worth => (base.Worth + RegenPerSecond * HealthUnitWorth * DurationUnitWorth) * (float)(Rarity + 1);
+        public override float Worth => (base.Worth + RegenTotal * HealthUnitWorth) * (float)(Rarity + 1);
 
         public float RegenPerSecond { get; }
+
+        [JsonIgnore]
+        public float RegenTotal => RegenPerSecond * Duration;
 
         public RepairKit(ItemRarity rarity, float duration, float regenPerSecond) : base(rarity, duration)
         {
@@ -44,11 +40,9 @@ namespace SpaceAce.Gameplay.Inventories
                 result = new RepairKit(nextRarity, newDuration, newRegenPerSecond);
                 return true;
             }
-            else
-            {
-                result = null;
-                return false;
-            }
+
+            result = null;
+            return false;
         }
 
         public override bool Use()
@@ -62,6 +56,32 @@ namespace SpaceAce.Gameplay.Inventories
             }
 
             return false;
+        }
+
+        public override async UniTask<string> GetDescription()
+        {
+            LocalizedString title = new("Repair kit", "Title");
+            LocalizedString rarity = new("Rarity", Rarity.ToString());
+            LocalizedString stats = new("Repair kit", "Stats") { Arguments = new[] { this } };
+            LocalizedString description = new("Repair kit", "Description");
+
+            var titleOperation = title.GetLocalizedStringAsync();
+            await titleOperation;
+            string localizedTitle = titleOperation.Result;
+
+            var rarityOperation = rarity.GetLocalizedStringAsync();
+            await rarityOperation;
+            string localizedRarity = rarityOperation.Result;
+
+            var statsOperation = stats.GetLocalizedStringAsync();
+            await statsOperation;
+            string localizedStats = statsOperation.Result;
+
+            var descriptionOperation = description.GetLocalizedStringAsync();
+            await descriptionOperation;
+            string localizedDescription = descriptionOperation.Result;
+
+            return $"{localizedTitle}\n{localizedRarity}\n\n{localizedStats}\n\n{localizedDescription}";
         }
 
         public override bool Equals(object obj) => Equals(obj as RepairKit);

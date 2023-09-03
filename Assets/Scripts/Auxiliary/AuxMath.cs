@@ -68,5 +68,13 @@ namespace SpaceAce.Auxiliary
 
             return $"{minutes:###0}:{seconds:00}";
         }
+
+        public static string GetFormattedTime(float time)
+        {
+            int minutes = (int)time / SecondsPerMinute;
+            int seconds = (int)time % SecondsPerMinute;
+
+            return $"{minutes:###0}:{seconds:00}";
+        }
     }
 }

@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Ore_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: 0aa15e7fd1e794c42820448570b84439, type: 2}
+  m_Metadata:
+    m_Items:
+    - rid: 6712054578863144998
+  m_TableData:
+  - m_Id: 23189639168
+    m_Localized: 'Worth: ${Worth:n0}
+
+      Density: {Density:n0} t/m^3'
+    m_Metadata:
+      m_Items:
+      - rid: 6712054578863144998
+  - m_Id: 7544885248
+    m_Localized: Ore
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35025965056
+    m_Localized: Mineral-rich ore. A well-equipped refinery can extract all sorts
+      of metals form this ore piece. Make sure to enrich it before selling as the
+      ore density and its price will increase dramatically.
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 6712054578863144998
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 00d0356605000000

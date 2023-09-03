@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
 using SpaceAce.Architecture;
 using SpaceAce.Main;
@@ -5,6 +6,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Localization;
 
 namespace SpaceAce.Gameplay.Inventories
 {
@@ -16,18 +18,12 @@ namespace SpaceAce.Gameplay.Inventories
         private static Coroutine s_stasisField = null;
 
         [JsonIgnore]
-        public override string Title => throw new NotImplementedException();
-
-        [JsonIgnore]
-        public override string Description => throw new NotImplementedException();
-
-        [JsonIgnore]
-        public override string Stats => throw new NotImplementedException();
-
-        [JsonIgnore]
         public override float Worth => (base.Worth + Slowdown * SlowdownUnitWorth) * (float)(Rarity + 1);
 
         public float Slowdown { get; }
+
+        [JsonIgnore]
+        public float SlowdownPercentage => Slowdown * 100f;
 
         public StasisField(ItemRarity rarity, float duration, float slowdown) : base(rarity, duration)
         {
@@ -101,6 +97,32 @@ namespace SpaceAce.Gameplay.Inventories
             }
 
             return false;
+        }
+
+        public override async UniTask<string> GetDescription()
+        {
+            LocalizedString title = new("Stasis field", "Title");
+            LocalizedString rarity = new("Rarity", Rarity.ToString());
+            LocalizedString stats = new("Stasis field", "Stats") { Arguments = new[] { this } };
+            LocalizedString description = new("Stasis field", "Description");
+
+            var titleOperation = title.GetLocalizedStringAsync();
+            await titleOperation;
+            string localizedTitle = titleOperation.Result;
+
+            var rarityOperation = rarity.GetLocalizedStringAsync();
+            await rarityOperation;
+            string localizedRarity = rarityOperation.Result;
+
+            var statsOperation = stats.GetLocalizedStringAsync();
+            await statsOperation;
+            string localizedStats = statsOperation.Result;
+
+            var descriptionOperation = description.GetLocalizedStringAsync();
+            await descriptionOperation;
+            string localizedDescription = descriptionOperation.Result;
+
+            return $"{localizedTitle}\n{localizedRarity}\n\n{localizedStats}\n\n{localizedDescription}";
         }
 
         public override bool Equals(object obj) => Equals(obj as StasisField);

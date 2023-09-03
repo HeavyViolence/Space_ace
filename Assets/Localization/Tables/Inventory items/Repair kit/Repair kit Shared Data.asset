@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: Repair kit Shared Data
+  m_EditorClassIdentifier: 
+  m_TableCollectionName: Repair kit
+  m_TableCollectionNameGuidString: 809d0b31f150b0e41983fd939ed9908c
+  m_Entries:
+  - m_Id: 61697544192
+    m_Key: Title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 333106761728
+    m_Key: Stats
+    m_Metadata:
+      m_Items: []
+  - m_Id: 410294538240
+    m_Key: Description
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 6712054521693995013
+  references:
+    version: 2
+    RefIds:
+    - rid: 6712054521693995013
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1693548668862

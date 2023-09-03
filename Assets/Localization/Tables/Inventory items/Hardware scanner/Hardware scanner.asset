@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5be51871efa6c3e4eae1703925c8f5ac, type: 3}
+  m_Name: Hardware scanner
+  m_EditorClassIdentifier: 
+  m_SharedTableData: {fileID: 11400000, guid: 86a98bdfbf9f7a245bee4e4a926596ad, type: 2}
+  m_Tables:
+  - {fileID: 11400000, guid: f91bdbfb747d8e34f8efadbf5cc0ec3e, type: 2}
+  - {fileID: 11400000, guid: be036acfec0cb384fa7cfefb76b516f4, type: 2}
+  m_Extensions: []
+  m_Group: String Table
+  references:
+    version: 2
+    RefIds: []

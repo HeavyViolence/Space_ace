@@ -27,8 +27,8 @@ namespace SpaceAce.Gameplay.Shooting
         private float _currentCooldown = 0f;
         private Coroutine _firingRoutine;
 
-        private string _previousEntityHitID = string.Empty;
-        private string _lastEntityHitID = string.Empty;
+        private Guid _previousEntityHitID = Guid.Empty;
+        private Guid _lastEntityHitID = Guid.Empty;
 
         public virtual float MaxDamagePerSecond => _config.Damage.MaxValue *
                                                    _config.ProjectilesPerShot.MaxValue *
@@ -55,9 +55,9 @@ namespace SpaceAce.Gameplay.Shooting
         protected virtual MovementBehaviour ProjectileBehaviour { get; set; }
         protected virtual Func<Vector2, Transform> TargetSupplier { get; set; }
         protected virtual bool CanFireNextShot => true;
-        protected bool TheSameEntityIsHit => _previousEntityHitID != string.Empty &&
-                                             _lastEntityHitID != string.Empty &&
-                                             _previousEntityHitID == _lastEntityHitID;
+        protected bool TheSameEntityIsHit => _previousEntityHitID.Equals(Guid.Empty) == false &&
+                                             _lastEntityHitID.Equals(Guid.Empty) == false &&
+                                             _previousEntityHitID.Equals(_lastEntityHitID) == true;
 
         protected virtual void OnEnable()
         {
@@ -68,8 +68,8 @@ namespace SpaceAce.Gameplay.Shooting
         {
             s_specialEffectsMediator.Access.Deregister(this);
 
-            _previousEntityHitID = string.Empty;
-            _lastEntityHitID = string.Empty;
+            _previousEntityHitID = Guid.Empty;
+            _lastEntityHitID = Guid.Empty;
         }
 
         protected virtual void Awake()

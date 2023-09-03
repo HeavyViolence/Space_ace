@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Reactive armor_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: 060ac8e0f4168ba4ab00ffd59332bbfe, type: 2}
+  m_Metadata:
+    m_Items:
+    - rid: 6712054566513803274
+  m_TableData:
+  - m_Id: 23500017664
+    m_Localized: 'Worth: ${Worth:n0}
+
+      Duration: {FormattedDuration}
+
+      Movement
+      slowdown: {MovementSlowdownPercentage:n0}%
+
+      Health increase: {HealthIncrease:n0}
+      HP
+
+      Damage to armor conversion: {DamageToArmorConversionRatePercentage:n0}%'
+    m_Metadata:
+      m_Items:
+      - rid: 6712054566513803274
+  - m_Id: 5233823744
+    m_Localized: Reactive armor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46409306112
+    m_Localized: Contains a thin and pliant piezo kinetic shroud made out of a metamaterial
+      known as "custodium". Its lattice consists of highly reactive domain particles
+      that are bounded together by a pre applied magnetic field and suspended inside
+      a carbon nanotube confinement. Such material has ever increasing resistance
+      to any mechanical effects and wear. The harder you strain it, the stronger
+      it will become, only accumulating all the energy applied to break it in a form
+      of a magnetic field. This material was reverse-engineered from an unknown indestructible
+      piece of space debris. Though rare and hard to manufacture, it is a crucial
+      component in high-end active armor production. Any ship wielding such armor
+      shroud has to move slower in order to mitigate electromagnetic interference
+      of the armor inflicted on the ship systems.
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 6712054566513803274
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 00d0b57805000000

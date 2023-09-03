@@ -17,14 +17,126 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: 8c7d37ed17cf82e4f822a04f468fda92
   m_SerializeEntries:
-  - m_GUID: 61b5f207eb8108d42baad577c03b429c
-    m_Address: Assets/Localization/Tables/UI Shared Data.asset
+  - m_GUID: a6fd3c2cbfbb33d4380e337f71ce9bc8
+    m_Address: Assets/Localization/Tables/Rarity/Rarity Shared Data.asset
     m_ReadOnly: 1
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 728e57727bc57cf498f349828975e45f
-    m_Address: Assets/Localization/Tables/Inventory items/Inventory items Shared
+  - m_GUID: 809d0b31f150b0e41983fd939ed9908c
+    m_Address: Assets/Localization/Tables/Inventory items/Repair pack/Repair pack
+      Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1aecc52ed168ace4aa009b138322dde4
+    m_Address: Assets/Localization/Tables/Inventory items/Plasma shield/Plasma shield
+      Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2fbdcfa76f553c54a9d3d6054ebf904c
+    m_Address: Assets/Localization/Tables/Inventory items/Armor diffuser/Armor diffuser
+      Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 060ac8e0f4168ba4ab00ffd59332bbfe
+    m_Address: Assets/Localization/Tables/Inventory items/Reactive armor/Reactive
+      armor Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0ff1f8034798c9e47a945d92c45c83f7
+    m_Address: Assets/Localization/Tables/Inventory items/Stasis field/Stasis field
+      Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 984e69dce956e5547b9bd3fe23f05def
+    m_Address: Assets/Localization/Tables/Inventory items/Nanofuel/Nanofuel Shared
       Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 238a10ee0880df1429655662e4789fce
+    m_Address: Assets/Localization/Tables/Inventory items/Antimatter ammo/Antimatter
+      ammo Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 78089f3a8f4deb04c86c0f1b627ad787
+    m_Address: Assets/Localization/Tables/Inventory items/Homing ammo/Homing ammo
+      Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 07d433080f18ce34ab7dc797b242b076
+    m_Address: Assets/Localization/Tables/Inventory items/Weapon accelerant/Weapon
+      accelerant Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 55d99fd352b7f5749997f8f9f674757b
+    m_Address: Assets/Localization/Tables/Inventory items/Weapon coolant/Weapon coolant
+      Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4e423f8eaa3e9194987c04064547aa4c
+    m_Address: Assets/Localization/Tables/Inventory items/EMP/EMP Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b1aed6f718e90fe4685b5e195425ecc6
+    m_Address: Assets/Localization/Tables/Inventory items/Combat beacon/Combat beacon
+      Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a4da61dab16d9264fa71665e34c412a9
+    m_Address: Assets/Localization/Tables/Inventory items/Atomizer/Atomizer Shared
+      Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8ea6da2b878b4164ea29c81c16bf9e40
+    m_Address: Assets/Localization/Tables/Inventory items/Space debris router/Space
+      debris router Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 67631fedac350c447be98a6d5f3c6a30
+    m_Address: Assets/Localization/Tables/Inventory items/Meteor router/Meteor router
+      Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0aa15e7fd1e794c42820448570b84439
+    m_Address: Assets/Localization/Tables/Inventory items/Ore/Ore Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 86a98bdfbf9f7a245bee4e4a926596ad
+    m_Address: Assets/Localization/Tables/Inventory items/Hardware scanner/Hardware
+      scanner Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: add43814f91d37d4fb4fe1dd185a75e0
+    m_Address: Assets/Localization/Tables/Inventory items/Ore scanner/Ore scanner
+      Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 10a25e55648a05945a5174a3cd2e67af
+    m_Address: Assets/Localization/Tables/Inventory items/Sponsorship/Sponsorship
+      Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3cc7047fe5e84244aa89ce7d127ac448
+    m_Address: Assets/Localization/Tables/Inventory items/Advanced learning/Advanced
+      learning Shared Data.asset
     m_ReadOnly: 1
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

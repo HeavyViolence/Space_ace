@@ -1,8 +1,10 @@
+using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
 using SpaceAce.Main;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Localization;
 
 namespace SpaceAce.Gameplay.Inventories
 {
@@ -12,18 +14,12 @@ namespace SpaceAce.Gameplay.Inventories
         public const float MaxConsecutiveDamageFactor = 2f;
 
         [JsonIgnore]
-        public override string Title => throw new NotImplementedException();
-
-        [JsonIgnore]
-        public override string Description => throw new NotImplementedException();
-
-        [JsonIgnore]
-        public override string Stats => throw new NotImplementedException();
-
-        [JsonIgnore]
         public override float Worth => (base.Worth + ConsecutiveDamageFactor * ConsecutiveDamageFactorUnitWorth) * (float)(Rarity + 1);
 
         public float ConsecutiveDamageFactor { get; }
+
+        [JsonIgnore]
+        public float ConsecutiveDamageFactorPercentage => ConsecutiveDamageFactor * 100f;
 
         public AntimatterAmmo(ItemRarity rarity, float duration, float consecutiveDamageFactor) : base(rarity, duration)
         {
@@ -68,6 +64,32 @@ namespace SpaceAce.Gameplay.Inventories
             }
 
             return false;
+        }
+
+        public override async UniTask<string> GetDescription()
+        {
+            LocalizedString title = new("Antimatter ammo", "Title");
+            LocalizedString rarity = new("Rarity", Rarity.ToString());
+            LocalizedString stats = new("Antimatter ammo", "Stats") { Arguments = new[] { this } };
+            LocalizedString description = new("Antimatter ammo", "Description");
+
+            var titleOperation = title.GetLocalizedStringAsync();
+            await titleOperation;
+            string localizedTitle = titleOperation.Result;
+
+            var rarityOperation = rarity.GetLocalizedStringAsync();
+            await rarityOperation;
+            string localizedRarity = rarityOperation.Result;
+
+            var statsOperation = stats.GetLocalizedStringAsync();
+            await statsOperation;
+            string localizedStats = statsOperation.Result;
+
+            var descriptionOperation = description.GetLocalizedStringAsync();
+            await descriptionOperation;
+            string localizedDescription = descriptionOperation.Result;
+
+            return $"{localizedTitle}\n{localizedRarity}\n\n{localizedStats}\n\n{localizedDescription}";
         }
 
         public override bool Equals(object obj) => Equals(obj as AntimatterAmmo);

@@ -1,7 +1,9 @@
+using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
 using SpaceAce.Main;
 using System;
 using UnityEngine;
+using UnityEngine.Localization;
 
 namespace SpaceAce.Gameplay.Inventories
 {
@@ -14,15 +16,6 @@ namespace SpaceAce.Gameplay.Inventories
         public const float MaxProjectilesSlowdown = 0.5f;
 
         [JsonIgnore]
-        public override string Title => throw new NotImplementedException();
-
-        [JsonIgnore]
-        public override string Description => throw new NotImplementedException();
-
-        [JsonIgnore]
-        public override string Stats => throw new NotImplementedException();
-
-        [JsonIgnore]
         public override float Worth => (base.Worth +
                                        ArmorBoost * ArmorUnitWorth +
                                        ProjectilesSlowdown * PlayerSlowdownUnitWorth) *
@@ -31,6 +24,9 @@ namespace SpaceAce.Gameplay.Inventories
         public float ArmorBoost { get; }
 
         public float ProjectilesSlowdown { get; }
+
+        [JsonIgnore]
+        public float ProjectilesSlowdownPercentage => ProjectilesSlowdown * 100f;
 
         public PlasmaShield(ItemRarity rarity, float duration, float armorBoost, float projectilesSlowdown) : base(rarity, duration)
         {
@@ -68,11 +64,35 @@ namespace SpaceAce.Gameplay.Inventories
                 result = new PlasmaShield(nextRarity, newDuration, newArmorBoost, newProjectilesSlowdown);
                 return true;
             }
-            else
-            {
-                result = null;
-                return false;
-            }
+
+            result = null;
+            return false;
+        }
+
+        public override async UniTask<string> GetDescription()
+        {
+            LocalizedString title = new("Plasma shield", "Title");
+            LocalizedString rarity = new("Rarity", Rarity.ToString());
+            LocalizedString stats = new("Plasma shield", "Stats") { Arguments = new[] { this } };
+            LocalizedString description = new("Plasma shield", "Description");
+
+            var titleOperation = title.GetLocalizedStringAsync();
+            await titleOperation;
+            string localizedTitle = titleOperation.Result;
+
+            var rarityOperation = rarity.GetLocalizedStringAsync();
+            await rarityOperation;
+            string localizedRarity = rarityOperation.Result;
+
+            var statsOperation = stats.GetLocalizedStringAsync();
+            await statsOperation;
+            string localizedStats = statsOperation.Result;
+
+            var descriptionOperation = description.GetLocalizedStringAsync();
+            await descriptionOperation;
+            string localizedDescription = descriptionOperation.Result;
+
+            return $"{localizedTitle}\n{localizedRarity}\n\n{localizedStats}\n\n{localizedDescription}";
         }
 
         public override bool Equals(object obj) => Equals(obj as PlasmaShield);

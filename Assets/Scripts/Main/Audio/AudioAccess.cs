@@ -4,23 +4,14 @@ namespace SpaceAce.Main.Audio
 {
     public sealed class AudioAccess : IEquatable<AudioAccess>
     {
-        public string ID { get; }
+        public Guid ID { get; }
         public float PlaybackDuration { get; }
 
-        public AudioAccess(string id, float playbackDuration)
+        public AudioAccess(Guid id, float playbackDuration)
         {
-            if (string.IsNullOrEmpty(id) || string.IsNullOrWhiteSpace(id))
-            {
-                throw new ArgumentNullException(nameof(id), "Attempted to assign an invalid ID!");
-            }
-
             ID = id;
 
-            if (playbackDuration <= 0f)
-            {
-                throw new ArgumentOutOfRangeException(nameof(playbackDuration), $"Playback duration must be positive!");
-            }
-
+            if (playbackDuration <= 0f) throw new ArgumentOutOfRangeException(nameof(playbackDuration));
             PlaybackDuration = playbackDuration;
         }
 

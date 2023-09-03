@@ -1,7 +1,9 @@
+using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
 using SpaceAce.Main;
 using System;
 using UnityEngine;
+using UnityEngine.Localization;
 
 namespace SpaceAce.Gameplay.Inventories
 {
@@ -11,18 +13,12 @@ namespace SpaceAce.Gameplay.Inventories
         public const float MaxMeteorSpawnSpeedup = 10f;
 
         [JsonIgnore]
-        public override string Title => throw new NotImplementedException();
-
-        [JsonIgnore]
-        public override string Description => throw new NotImplementedException();
-
-        [JsonIgnore]
-        public override string Stats => throw new NotImplementedException();
-
-        [JsonIgnore]
         public override float Worth => (base.Worth + MeteorSpawnSpeedup * SpawnSpeedupUnitWorth) * (float)(Rarity + 1);
 
         public float MeteorSpawnSpeedup { get; }
+
+        [JsonIgnore]
+        public float MeteorSpawnSpeedupPercentage => MeteorSpawnSpeedup * 100f;
 
         public MeteorRouter(ItemRarity rarity, float duration, float meteorSpawnSpeedup) : base(rarity, duration)
         {
@@ -64,6 +60,32 @@ namespace SpaceAce.Gameplay.Inventories
             }
 
             return false;
+        }
+
+        public override async UniTask<string> GetDescription()
+        {
+            LocalizedString title = new("Meteor router", "Title");
+            LocalizedString rarity = new("Rarity", Rarity.ToString());
+            LocalizedString stats = new("Meteor router", "Stats") { Arguments = new[] { this } };
+            LocalizedString description = new("Meteor router", "Description");
+
+            var titleOperation = title.GetLocalizedStringAsync();
+            await titleOperation;
+            string localizedTitle = titleOperation.Result;
+
+            var rarityOperation = rarity.GetLocalizedStringAsync();
+            await rarityOperation;
+            string localizedRarity = rarityOperation.Result;
+
+            var statsOperation = stats.GetLocalizedStringAsync();
+            await statsOperation;
+            string localizedStats = statsOperation.Result;
+
+            var descriptionOperation = description.GetLocalizedStringAsync();
+            await descriptionOperation;
+            string localizedDescription = descriptionOperation.Result;
+
+            return $"{localizedTitle}\n{localizedRarity}\n\n{localizedStats}\n\n{localizedDescription}";
         }
 
         public override bool Equals(object obj) => Equals(obj as MeteorRouter);

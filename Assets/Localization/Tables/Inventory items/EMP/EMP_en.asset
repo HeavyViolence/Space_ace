@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: EMP_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: 4e423f8eaa3e9194987c04064547aa4c, type: 2}
+  m_Metadata:
+    m_Items:
+    - rid: 6712054578863144961
+  m_TableData:
+  - m_Id: 27081953280
+    m_Localized: 'Worth: ${Worth:n0}
+
+      Duration: {FormattedDuration}
+
+      Interference
+      probability: {JamProbabilityPercentage:n0}%'
+    m_Metadata:
+      m_Items:
+      - rid: 6712054578863144961
+  - m_Id: 50372923392
+    m_Localized: Electromagnetic pulse generator adjusted to target weapons capacitors.
+      Frequent and accurate electromagnetic shock bursts polarize capacitors, effectively
+      forcing them to lose the ability to accumulate electric charge. This in turn
+      leads to railgun power depletion and projectile acceleration failure. The more
+      powerful the bursts, the greater the chance of success.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9239384064
+    m_Localized: EMP
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 6712054578863144961
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 00d0354e06000000

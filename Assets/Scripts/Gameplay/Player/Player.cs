@@ -1,9 +1,7 @@
 using Newtonsoft.Json;
 using SpaceAce.Architecture;
-using SpaceAce.Auxiliary;
 using SpaceAce.Gameplay.Damageables;
 using SpaceAce.Gameplay.Inventories;
-using SpaceAce.Gameplay.Shooting;
 using SpaceAce.Levels;
 using SpaceAce.Main;
 using SpaceAce.Main.ObjectPooling;
@@ -34,17 +32,14 @@ namespace SpaceAce.Gameplay.Players
         private IMovementController _shipMovementController;
         private IShootingController _shipShootingController;
 
-        public string ID { get; }
+        public string ID => "Player";
         public ObjectPoolEntry SelectedShip => _selectedShip != null ? _selectedShip : _defaultShip;
         public Inventory Inventory { get; } = new();
         public Wallet Wallet { get; } = new();
         public Experience Experience { get; } = new();
 
-        public Player(string id, ObjectPoolEntry defaultPlayerShip, ObjectPoolEntryLookupTable table)
+        public Player(ObjectPoolEntry defaultPlayerShip, ObjectPoolEntryLookupTable table)
         {
-            if (StringID.IsValid(id) == false) throw new InvalidStringIDException();
-            ID = id;
-
             if (defaultPlayerShip == null) throw new ArgumentNullException(nameof(defaultPlayerShip));
             _defaultShip = defaultPlayerShip;
 

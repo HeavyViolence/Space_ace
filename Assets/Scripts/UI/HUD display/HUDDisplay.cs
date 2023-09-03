@@ -76,10 +76,8 @@ namespace SpaceAce.UI
                 view.DisplayRequested += EntityViewDisplayRequestedEventHandler;
                 return true;
             }
-            else
-            {
-                return false;
-            }
+
+            return false;
         }
 
         public bool DeregisterEntityView(EntityView view)
@@ -91,10 +89,8 @@ namespace SpaceAce.UI
                 view.DisplayRequested -= EntityViewDisplayRequestedEventHandler;
                 return true;
             }
-            else
-            {
-                return false;
-            }
+
+            return false;
         }
 
         public bool RegisterPlayerView(EntityView playerView)
@@ -106,10 +102,8 @@ namespace SpaceAce.UI
                 _playerShipView = playerView;
                 return true;
             }
-            else
-            {
-                return false;
-            }
+
+            return false;
         }
 
         public bool DeregisterPlayerView()

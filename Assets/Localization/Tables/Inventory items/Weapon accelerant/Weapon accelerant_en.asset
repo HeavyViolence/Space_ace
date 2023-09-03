@@ -1,0 +1,53 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Weapon accelerant_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: 07d433080f18ce34ab7dc797b242b076, type: 2}
+  m_Metadata:
+    m_Items:
+    - rid: 6712054566513803309
+  m_TableData:
+  - m_Id: 19863556096
+    m_Localized: 'Worth: ${Worth:n0}
+
+      Duration: {FormattedDuration}
+
+      Ammo
+      speed increase: {AmmoSpeedBoostPercentage:n0}%
+
+      Damage increase: {DamageBoostPercentage:n0}%
+
+      Cooldown
+      increase: {CooldownIncreasePercentage:n0}%'
+    m_Metadata:
+      m_Items:
+      - rid: 6712054566513803309
+  - m_Id: 6710218752
+    m_Localized: Weapon accelerant
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37995532288
+    m_Localized: A set of super magnetic coils in replacement of a regular ones for
+      gunning equipment. Increases speed and damage of projectiles at a cost of gun
+      capacitors longer recharge duration.
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 6712054566513803309
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 00d0f59f04000000

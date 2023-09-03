@@ -1,5 +1,7 @@
+using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
 using SpaceAce.Architecture;
+using SpaceAce.Auxiliary;
 using SpaceAce.Gameplay.Players;
 using SpaceAce.Main;
 using SpaceAce.UI;
@@ -70,18 +72,12 @@ namespace SpaceAce.Gameplay.Inventories
         public Sprite Icon => EntityVisualizer.Access.GetInventoryItemIcon(GetType());
 
         [JsonIgnore]
-        public abstract string Title { get; }
-
-        [JsonIgnore]
-        public abstract string Description { get; }
-
-        [JsonIgnore]
-        public abstract string Stats { get; }
-
-        [JsonIgnore]
         public virtual float Worth => Duration * DurationUnitWorth;
 
         public virtual float Duration { get; }
+
+        [JsonIgnore]
+        public string FormattedDuration => AuxMath.GetFormattedTime(Duration);
 
         public static float GetHighestSpawnProbabilityFromRarity(ItemRarity rarity)
         {
@@ -104,7 +100,10 @@ namespace SpaceAce.Gameplay.Inventories
         }
 
         public abstract bool Use();
+
         public abstract bool Fuse(InventoryItem item1, InventoryItem item2, out InventoryItem result);
+
+        public abstract UniTask<string> GetDescription();
 
         public override bool Equals(object obj) => Equals(obj as InventoryItem);
 

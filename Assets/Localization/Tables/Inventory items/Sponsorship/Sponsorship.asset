@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5be51871efa6c3e4eae1703925c8f5ac, type: 3}
+  m_Name: Sponsorship
+  m_EditorClassIdentifier: 
+  m_SharedTableData: {fileID: 11400000, guid: 10a25e55648a05945a5174a3cd2e67af, type: 2}
+  m_Tables:
+  - {fileID: 11400000, guid: dd2e901362acc8948b18041a359c89ab, type: 2}
+  - {fileID: 11400000, guid: 33cff877787096a449819abbddc6503f, type: 2}
+  m_Extensions: []
+  m_Group: String Table
+  references:
+    version: 2
+    RefIds: []

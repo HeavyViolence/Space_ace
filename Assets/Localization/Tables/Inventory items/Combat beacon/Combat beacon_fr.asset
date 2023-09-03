@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Combat beacon_fr
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: fr
+  m_SharedData: {fileID: 11400000, guid: b1aed6f718e90fe4685b5e195425ecc6, type: 2}
+  m_Metadata:
+    m_Items:
+    - rid: 6712054578863144971
+  m_TableData:
+  - m_Id: 22715682816
+    m_Localized: "Vaut: {Worth:n0} $\nDuration: inf\nEnnemis suppl\xE9mentaires:
+      {AdditionalEnemies:n0}\nLongueur d'onde ennemie suppl\xE9mentaire: {AdditionalWaveLength:n0}"
+    m_Metadata:
+      m_Items:
+      - rid: 6712054578863144971
+  - m_Id: 7767183360
+    m_Localized: Balise de combat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41426472960
+    m_Localized: "\xC9tend une balise de combat depuis le vaisseau du joueur. Il
+      \xE9mettra de puissantes ondes sonores de toutes les fr\xE9quences et dans
+      toutes les directions, et augmentera consid\xE9rablement la signature radar
+      du navire. Utilisez-le si vous n'\xEAtes pas s\xFBr que tout le monde vous
+      ait vu venir, mais notez que votre propre radar n'aura aucune chance devant
+      un tel appareil."
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 6712054578863144971
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 00d0f54905000000

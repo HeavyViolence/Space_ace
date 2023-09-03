@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Plasma shield_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: 1aecc52ed168ace4aa009b138322dde4, type: 2}
+  m_Metadata:
+    m_Items:
+    - rid: 6712054551972937731
+  m_TableData:
+  - m_Id: 26234703872
+    m_Localized: 'Worth: ${Worth:n0}
+
+      Duration: {FormattedDuration}
+
+      Armor
+      boost: {ArmorBoost:n0} AP
+
+      Projectiles slowdown: {ProjectilesSlowdownPercentage:n0}%'
+    m_Metadata:
+      m_Items:
+      - rid: 6712054551972937731
+  - m_Id: 7708463104
+    m_Localized: Plasma shield
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45310398464
+    m_Localized: Contains a powerful magnetic field generator, prefabricated fusion
+      power source, and lots of cold plasma cells. The generator guides freed plasma
+      to form a shell around the ship. Plasma is kept in place and gets superheated
+      by a magnetic field to evaporate any projectiles that hit it. Magnetic field
+      also slows player projectiles as the plasma field needs to be safely guided
+      around them in real time. Such system is proven to be able to provide a great
+      defensive capabilities for its carrier for a short duration.
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 6712054551972937731
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 00d0b51b06000000

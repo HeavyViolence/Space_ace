@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Meteor router_fr
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: fr
+  m_SharedData: {fileID: 11400000, guid: 67631fedac350c447be98a6d5f3c6a30, type: 2}
+  m_Metadata:
+    m_Items:
+    - rid: 6712054578863144992
+  m_TableData:
+  - m_Id: 21520306176
+    m_Localized: "Vaut: {Worth:n0} $\nDur\xE9e: {FormattedDuration}\nAugmentation
+      du nombre de m\xE9t\xE9ores: {MeteorSpawnSpeedupPercentage:n0}%"
+    m_Metadata:
+      m_Items:
+      - rid: 6712054578863144992
+  - m_Id: 6831853568
+    m_Localized: "Routeur m\xE9t\xE9ore"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41153843200
+    m_Localized: "D\xE9velopp\xE9 par des mineurs pour les mineurs. Un canon \xE0
+      puits gravitationnel et un \xE9quipement de suivi fonctionnent ensemble pour
+      rapprocher davantage d'ast\xE9ro\xEFdes d'un mineur. Gr\xE2ce \xE0 cette technologie,
+      il n\u2019est pas n\xE9cessaire de rechercher des ast\xE9ro\xEFdes. Les ast\xE9ro\xEFdes
+      vous chercheront."
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 6712054578863144992
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 00d0b50205000000

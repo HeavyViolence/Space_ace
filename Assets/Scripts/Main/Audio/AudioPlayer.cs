@@ -1,6 +1,5 @@
 using Newtonsoft.Json;
 using SpaceAce.Architecture;
-using SpaceAce.Auxiliary;
 using SpaceAce.Main.Saving;
 using System;
 using System.Collections;
@@ -19,19 +18,16 @@ namespace SpaceAce.Main.Audio
         private const float MinVolume = -80f;
         private const float MaxVolume = 0f;
 
-        private readonly Dictionary<string, AudioSource> _activeAudioSources = new(MaxAudioSources);
+        private readonly Dictionary<Guid, AudioSource> _activeAudioSources = new(MaxAudioSources);
         private readonly Stack<AudioSource> _availableAudioSources = new(MaxAudioSources);
         private readonly AudioMixer _audioMixer;
         private Transform _audioSourcePoolAnchor;
 
-        public string ID { get; }
+        public string ID => "Audio settings";
         public AudioPlayerSettings Settings { get; private set; }
 
-        public AudioPlayer(string id, AudioMixer audioMixer)
+        public AudioPlayer(AudioMixer audioMixer)
         {
-            if (StringID.IsValid(id) == false) throw new InvalidStringIDException();
-            ID = id;
-
             if (audioMixer == null) throw new ArgumentNullException(nameof(audioMixer));
             _audioMixer = audioMixer;
 
@@ -65,7 +61,7 @@ namespace SpaceAce.Main.Audio
 
         public AudioAccess Play(AudioProperties properties) => ConfigureAudioSource(FindAvailableAudioSource(), properties);
 
-        public bool InterruptPlay(string id) => DisableActiveAudioSource(id);
+        public bool InterruptPlay(Guid id) => DisableActiveAudioSource(id);
 
         private void CreateAudioSourcePool()
         {
@@ -82,7 +78,7 @@ namespace SpaceAce.Main.Audio
             }
         }
 
-        private bool DisableActiveAudioSource(string id)
+        private bool DisableActiveAudioSource(Guid id)
         {
             if (_activeAudioSources.TryGetValue(id, out AudioSource source) == true)
             {
@@ -92,10 +88,8 @@ namespace SpaceAce.Main.Audio
 
                 return true;
             }
-            else
-            {
-                return false;
-            }
+
+            return false;
         }
 
         private void SetAudioSourceDefaultState(AudioSource source)
@@ -123,7 +117,7 @@ namespace SpaceAce.Main.Audio
 
         private AudioAccess ConfigureAudioSource(AudioSource source, AudioProperties properties)
         {
-            var id = StringID.NextCryptosafe();
+            var id = Guid.NewGuid();
             AudioAccess access;
 
             source.clip = properties.Clip;
@@ -174,7 +168,7 @@ namespace SpaceAce.Main.Audio
             if (_availableAudioSources.Count > 0) return _availableAudioSources.Pop();
 
             byte priority = 0;
-            string id = string.Empty;
+            Guid id = Guid.Empty;
             AudioSource availableSource = null;
 
             foreach (var source in _activeAudioSources)

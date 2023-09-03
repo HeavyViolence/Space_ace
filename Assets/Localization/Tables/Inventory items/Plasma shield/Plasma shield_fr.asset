@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Plasma shield_fr
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: fr
+  m_SharedData: {fileID: 11400000, guid: 1aecc52ed168ace4aa009b138322dde4, type: 2}
+  m_Metadata:
+    m_Items:
+    - rid: 6712054551972937732
+  m_TableData:
+  - m_Id: 26234703872
+    m_Localized: "Vaut: {Worth:n0} $\nDur\xE9e: {FormattedDuration}\nAugmentation
+      de l'armure: {ArmorBoost:n0} AP\nRalentissement des projectiles: {ProjectilesSlowdownPercentage:n0}%"
+    m_Metadata:
+      m_Items:
+      - rid: 6712054551972937732
+  - m_Id: 7708463104
+    m_Localized: Bouclier plasma
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45310398464
+    m_Localized: "Contient un puissant g\xE9n\xE9rateur de champ magn\xE9tique, une
+      source d'\xE9nergie de fusion pr\xE9fabriqu\xE9e et de nombreuses cellules
+      \xE0 plasma froid. Le g\xE9n\xE9rateur guide le plasma lib\xE9r\xE9 pour former
+      une coque autour du navire. Le plasma est maintenu en place et est surchauff\xE9
+      par un champ magn\xE9tique pour \xE9vaporer tous les projectiles qui le frappent.
+      Le champ magn\xE9tique ralentit \xE9galement les projectiles des joueurs car
+      le champ de plasma doit \xEAtre guid\xE9 en toute s\xE9curit\xE9 autour d'eux
+      en temps r\xE9el. Il est prouv\xE9 qu\u2019un tel syst\xE8me est capable de
+      fournir de grandes capacit\xE9s d\xE9fensives \xE0 son porteur pendant une
+      courte dur\xE9e."
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 6712054551972937732
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 00d0b51b06000000

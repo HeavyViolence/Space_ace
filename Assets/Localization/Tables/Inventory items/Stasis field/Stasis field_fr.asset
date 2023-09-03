@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Stasis field_fr
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: fr
+  m_SharedData: {fileID: 11400000, guid: 0ff1f8034798c9e47a945d92c45c83f7, type: 2}
+  m_Metadata:
+    m_Items:
+    - rid: 6712054566513803282
+  m_TableData:
+  - m_Id: 28885504000
+    m_Localized: "Vaut: {Worth:n0} $\nDur\xE9e: {FormattedDuration}\nRalentissez:
+      {SlowdownPercentage:n0}%"
+    m_Metadata:
+      m_Items:
+      - rid: 6712054566513803282
+  - m_Id: 7758794752
+    m_Localized: Champ de stase
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49374679040
+    m_Localized: "Pistolet \xE0 impulsion \xE9lectromagn\xE9tique con\xE7u pour cibler
+      les moteurs et les canons des navires ennemis afin de r\xE9duire la puissance
+      de propulsion."
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 6712054566513803282
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 00d0b5b906000000

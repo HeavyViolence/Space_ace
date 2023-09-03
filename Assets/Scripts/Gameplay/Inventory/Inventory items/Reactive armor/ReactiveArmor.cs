@@ -1,7 +1,9 @@
+using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
 using SpaceAce.Main;
 using System;
 using UnityEngine;
+using UnityEngine.Localization;
 
 namespace SpaceAce.Gameplay.Inventories
 {
@@ -17,15 +19,6 @@ namespace SpaceAce.Gameplay.Inventories
         public const float MaxDamageToArmorConversionRate = 1f;
 
         [JsonIgnore]
-        public override string Title => throw new NotImplementedException();
-
-        [JsonIgnore]
-        public override string Description => throw new NotImplementedException();
-
-        [JsonIgnore]
-        public override string Stats => throw new NotImplementedException();
-
-        [JsonIgnore]
         public override float Worth => (base.Worth +
                                        MovementSlowdown * PlayerSlowdownUnitWorth +
                                        HealthIncrease * HealthUnitWorth +
@@ -34,9 +27,15 @@ namespace SpaceAce.Gameplay.Inventories
 
         public float MovementSlowdown { get; }
 
+        [JsonIgnore]
+        public float MovementSlowdownPercentage => MovementSlowdown * 100f;
+
         public float HealthIncrease { get; }
 
         public float DamageToArmorConversionRate { get; }
+
+        [JsonIgnore]
+        public float DamageToArmorConversionRatePercentage => DamageToArmorConversionRate * 100f;
 
         public ReactiveArmor(ItemRarity rarity,
                              float duration,
@@ -83,6 +82,32 @@ namespace SpaceAce.Gameplay.Inventories
             }
 
             return false;
+        }
+
+        public override async UniTask<string> GetDescription()
+        {
+            LocalizedString title = new("Reactive armor", "Title");
+            LocalizedString rarity = new("Rarity", Rarity.ToString());
+            LocalizedString stats = new("Reactive armor", "Stats") { Arguments = new[] { this } };
+            LocalizedString description = new("Reactive armor", "Description");
+
+            var titleOperation = title.GetLocalizedStringAsync();
+            await titleOperation;
+            string localizedTitle = titleOperation.Result;
+
+            var rarityOperation = rarity.GetLocalizedStringAsync();
+            await rarityOperation;
+            string localizedRarity = rarityOperation.Result;
+
+            var statsOperation = stats.GetLocalizedStringAsync();
+            await statsOperation;
+            string localizedStats = statsOperation.Result;
+
+            var descriptionOperation = description.GetLocalizedStringAsync();
+            await descriptionOperation;
+            string localizedDescription = descriptionOperation.Result;
+
+            return $"{localizedTitle}\n{localizedRarity}\n\n{localizedStats}\n\n{localizedDescription}";
         }
 
         public override bool Equals(object obj) => Equals(obj as ReactiveArmor);

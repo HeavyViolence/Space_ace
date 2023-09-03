@@ -1,6 +1,5 @@
 using Newtonsoft.Json;
 using SpaceAce.Architecture;
-using SpaceAce.Auxiliary;
 using SpaceAce.Main.Saving;
 using System;
 using System.Collections.Generic;
@@ -14,13 +13,10 @@ namespace SpaceAce.Levels
         private HashSet<int> _passedLevels = new();
         private HashSet<int> _unlockedLevels = new();
 
-        public string ID { get; }
+        public string ID => "Game progress";
 
-        public LevelUnlocker(string id)
+        public LevelUnlocker()
         {
-            if (StringID.IsValid(id) == false) throw new InvalidStringIDException();
-            ID = id;
-
             _unlockedLevels.Add(1);
         }
 

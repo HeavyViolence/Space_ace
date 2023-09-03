@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
 using SpaceAce.Architecture;
 using SpaceAce.Main;
@@ -5,6 +6,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Localization;
 
 namespace SpaceAce.Gameplay.Inventories
 {
@@ -19,15 +21,6 @@ namespace SpaceAce.Gameplay.Inventories
         private static Coroutine s_advancedLearning = null;
 
         [JsonIgnore]
-        public override string Title => throw new NotImplementedException();
-
-        [JsonIgnore]
-        public override string Description => throw new NotImplementedException();
-
-        [JsonIgnore]
-        public override string Stats => throw new NotImplementedException();
-
-        [JsonIgnore]
         public override float Worth => (base.Worth +
                                         ExperienceBoost * ExperienceBoostUnitWorth +
                                         ExperienceDepletionSlowdown * ExperienceDepletionSlowdownUnitWorth) *
@@ -35,7 +28,13 @@ namespace SpaceAce.Gameplay.Inventories
 
         public float ExperienceBoost { get; }
 
+        [JsonIgnore]
+        public float ExperienceBoostPercentage => ExperienceBoost * 100f;
+
         public float ExperienceDepletionSlowdown { get; }
+
+        [JsonIgnore]
+        public float ExperienceDepletionSlowdownPercentage => ExperienceDepletionSlowdown * 100f;
 
         public AdvancedLearning(ItemRarity rarity,
                                 float duration,
@@ -87,6 +86,32 @@ namespace SpaceAce.Gameplay.Inventories
             }
 
             return false;
+        }
+
+        public override async UniTask<string> GetDescription()
+        {
+            LocalizedString title = new("Advanced learning", "Title");
+            LocalizedString rarity = new("Rarity", Rarity.ToString());
+            LocalizedString stats = new("Advanced learning", "Stats") { Arguments = new[] { this } };
+            LocalizedString description = new("Advanced learning", "Description");
+
+            var titleOperation = title.GetLocalizedStringAsync();
+            await titleOperation;
+            string localizedTitle = titleOperation.Result;
+
+            var rarityOperation = rarity.GetLocalizedStringAsync();
+            await rarityOperation;
+            string localizedRarity = rarityOperation.Result;
+
+            var statsOperation = stats.GetLocalizedStringAsync();
+            await statsOperation;
+            string localizedStats = statsOperation.Result;
+
+            var descriptionOperation = description.GetLocalizedStringAsync();
+            await descriptionOperation;
+            string localizedDescription = descriptionOperation.Result;
+
+            return $"{localizedTitle}\n{localizedRarity}\n\n{localizedStats}\n\n{localizedDescription}";
         }
 
         private IEnumerator ApplyAdvancedLearning(AdvancedLearning learning)

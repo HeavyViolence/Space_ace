@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Antimatter ammo_fr
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: fr
+  m_SharedData: {fileID: 11400000, guid: 238a10ee0880df1429655662e4789fce, type: 2}
+  m_Metadata:
+    m_Items:
+    - rid: 6712054566513803296
+  m_TableData:
+  - m_Id: 26897403904
+    m_Localized: "Vaut: {Worth:n0} $\nDur\xE9e: {FormattedDuration}\nAugmentation
+      des d\xE9g\xE2ts successifs: {ConsecutiveDamageFactorPercentage:n0}%"
+    m_Metadata:
+      m_Items:
+      - rid: 6712054566513803296
+  - m_Id: 6546640896
+    m_Localized: "Munitions antimati\xE8re"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46790987776
+    m_Localized: "Un conteneur avec des pointes d'antimati\xE8re sp\xE9ciales pour
+      projectiles et munitions propulsables. Toutes les munitions comptent, quoi
+      qu'il arrive. Chaque coup cons\xE9cutif sur la m\xEAme cible inflige de plus
+      en plus de d\xE9g\xE2ts, mais en toucher une autre r\xE9initialise l'effet."
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 6712054566513803296
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 00d0354306000000

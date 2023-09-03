@@ -1,4 +1,3 @@
-using SpaceAce.Auxiliary;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,29 +14,19 @@ namespace SpaceAce.Main.ObjectPooling
 
         public void AddEntry(ObjectPoolEntry entry)
         {
-            if (entry == null)
-            {
-                throw new ArgumentNullException(nameof(entry), $"Attempted to add an empty {nameof(ObjectPoolEntry)}!");
-            }
+            if (entry == null) throw new ArgumentNullException(nameof(entry));
 
             if (_values.Contains(entry) == false)
             {
-                _keys.Add(StringID.NextCryptosafe());
+                _keys.Add(Guid.NewGuid().ToString());
                 _values.Add(entry);
             }
         }
 
         public void AddSpecificEntry(string id, ObjectPoolEntry entry)
         {
-            if (string.IsNullOrEmpty(id))
-            {
-                throw new ArgumentNullException(nameof(id), "Key is empty!");
-            }
-
-            if (string.IsNullOrWhiteSpace(id) || entry == null)
-            {
-                throw new ArgumentNullException(nameof(entry), "Attempted to add an empty entry!");
-            }
+            if (string.IsNullOrEmpty(id)) throw new ArgumentNullException(nameof(id));
+            if (string.IsNullOrWhiteSpace(id) || entry == null) throw new ArgumentNullException(nameof(entry));
 
             if (_values.Contains(entry) == false)
             {
@@ -48,23 +37,14 @@ namespace SpaceAce.Main.ObjectPooling
 
         public void AddEntries(IEnumerable<ObjectPoolEntry> entries)
         {
-            if (entries is null)
-            {
-                throw new ArgumentNullException(nameof(entries), "Attempted to add an empty entries collection!");
-            }
+            if (entries is null) throw new ArgumentNullException(nameof(entries));
 
-            foreach (var entry in entries)
-            {
-                AddEntry(entry);
-            }
+            foreach (var entry in entries) AddEntry(entry);
         }
 
         public void RemoveEntry(ObjectPoolEntry entry)
         {
-            if (entry == null)
-            {
-                throw new ArgumentNullException(nameof(entry), "Attempted to remove an empty entry!");
-            }
+            if (entry == null) throw new ArgumentNullException(nameof(entry));
 
             if (_values.Contains(entry))
             {
@@ -86,7 +66,6 @@ namespace SpaceAce.Main.ObjectPooling
             if (string.IsNullOrEmpty(id) || string.IsNullOrWhiteSpace(id))
             {
                 entry = default;
-
                 return false;
             }
 
@@ -95,15 +74,11 @@ namespace SpaceAce.Main.ObjectPooling
             if (index != -1)
             {
                 entry = _values[index];
-
                 return true;
             }
-            else
-            {
-                entry = default;
 
-                return false;
-            }
+            entry = default;
+            return false;
         }
 
         public bool TryGetEntryByName(string anchorName, out ObjectPoolEntry entry)
@@ -111,7 +86,6 @@ namespace SpaceAce.Main.ObjectPooling
             if (string.IsNullOrEmpty(anchorName) || string.IsNullOrWhiteSpace(anchorName))
             {
                 entry = default;
-
                 return false;
             }
 
@@ -120,13 +94,11 @@ namespace SpaceAce.Main.ObjectPooling
                 if (value.AnchorName.Equals(anchorName))
                 {
                     entry = value;
-
                     return true;
                 }
             }
 
             entry = default;
-
             return false;
         }
 
@@ -134,10 +106,7 @@ namespace SpaceAce.Main.ObjectPooling
         {
             Dictionary<string, ObjectPoolEntry> result = new(EntriesAmount);
 
-            for (int i = 0; i < EntriesAmount; i++)
-            {
-                result.Add(_keys[i], _values[i]);
-            }
+            for (int i = 0; i < EntriesAmount; i++) result.Add(_keys[i], _values[i]);
 
             return result;
         }

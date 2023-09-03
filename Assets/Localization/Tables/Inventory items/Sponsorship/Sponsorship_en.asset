@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Sponsorship_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: 10a25e55648a05945a5174a3cd2e67af, type: 2}
+  m_Metadata:
+    m_Items:
+    - rid: 6712054578863145019
+  m_TableData:
+  - m_Id: 19733532672
+    m_Localized: 'Worth: ${Worth:n0}
+
+      Duration: {FormattedDuration}
+
+      Experience
+      to credits conversion: {ExperienceToCreditsConversionRatePercentage:n0}%'
+    m_Metadata:
+      m_Items:
+      - rid: 6712054578863145019
+  - m_Id: 6626332672
+    m_Localized: Sponsorship
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37735485440
+    m_Localized: It is always hard to find the right person to impress. This tracking
+      equipment, once wired into your ship, will transmit all actions to someone
+      really interested in watching them over. Who knows who they are? The only thing
+      you know they will pay you for any fiery action you will take. Time to impress
+      the one without the face!
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 6712054578863145019
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 00d0359804000000

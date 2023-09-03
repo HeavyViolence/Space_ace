@@ -6,7 +6,7 @@ namespace SpaceAce.Gameplay.Damageables
     {
         event EventHandler<DamageReceivedEventArgs> DamageReceived;
 
-        string ID { get; }
+        Guid ID { get; }
 
         void ApplyDamage(float damage);
     }

@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Combat beacon_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: b1aed6f718e90fe4685b5e195425ecc6, type: 2}
+  m_Metadata:
+    m_Items:
+    - rid: 6712054578863144970
+  m_TableData:
+  - m_Id: 22715682816
+    m_Localized: 'Worth: ${Worth:n0}
+
+      Duration: inf
+
+      Additional enemies:
+      {AdditionalEnemies:n0}
+
+      Additional enemy wave length: {AdditionalWaveLength:n0}'
+    m_Metadata:
+      m_Items:
+      - rid: 6712054578863144970
+  - m_Id: 7767183360
+    m_Localized: Combat beacon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41426472960
+    m_Localized: Extends a combat beacon from the player ship. It will emit powerful
+      noise waves of all frequencies and in all directions, and will greatly increase
+      radar signature of the ship. Use this if you are not sure that everyone saw
+      you coming, but notice that your own radar will not stand a chance before such
+      a device.
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 6712054578863144970
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 00d0f54905000000

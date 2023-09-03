@@ -1,6 +1,5 @@
 using Newtonsoft.Json;
 using SpaceAce.Architecture;
-using SpaceAce.Auxiliary;
 using SpaceAce.Main.Saving;
 using System;
 using System.Collections;
@@ -22,15 +21,12 @@ namespace SpaceAce.Main.Audio
         private Coroutine _musicRoutine = null;
         private AudioAccess _currentTrackAccess = null;
 
-        public string ID { get; }
+        public string ID => "Music settings";
         public float PlaybackInterval { get; private set; }
         public bool IsPlaying => _musicRoutine != null;
 
-        public MusicPlayer(string id, AudioCollection music)
+        public MusicPlayer(AudioCollection music)
         {
-            if (StringID.IsValid(id) == false) throw new InvalidStringIDException();
-            ID = id;
-
             if (music == null) throw new ArgumentNullException(nameof(music));
             _music = music;
         }
